@@ -1,0 +1,6 @@
+framework module Pods_SimpleRecipeTimer {
+  umbrella header "Pods-SimpleRecipeTimer-umbrella.h"
+
+  export *
+  module * { export * }
+}

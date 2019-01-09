@@ -1,0 +1,1029 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		006032B54B9506C029E0E980F1245DD9 /* SwipeCellKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A8FA6DBCC9AE6059B1AA0B4F1AF277 /* SwipeCellKit-dummy.m */; };
+		17F504FDDC09CAF5149E4BA3523180DD /* SwipeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70684FF0C74D51A16C7D2C652AD0649 /* SwipeTableViewCell.swift */; };
+		1C92716F4A314E83E9EC799C80ECAF25 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */; };
+		1CE91C47A31BB2FF3ABF5AF8DA7852D0 /* Pods-SimpleRecipeTimer-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 57B0A942C591AFFC1334DB7BE0610184 /* Pods-SimpleRecipeTimer-dummy.m */; };
+		20914D9A529F096910D5123A97D06AE2 /* SwipeTableViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADFA09C7B4A9C06F2AACF4FDFF0F802 /* SwipeTableViewCellDelegate.swift */; };
+		226D8362DDDBE8A1382913DE24E631DB /* SwipeActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DC63E696A60DDE081BD3EC8E90EFE4 /* SwipeActionsView.swift */; };
+		263BE367BAAB9697B73CC16588AE7E5D /* SwipeExpansionStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D152118CFC9042FFE718E60238BFC5 /* SwipeExpansionStyle.swift */; };
+		281ED26B3C796DAD0C2BC148145FA788 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AAEA5B5D2785C87FB2253913E686ED /* Extensions.swift */; };
+		2E3A6168EB22A35E4FC87DC2B911D87B /* Swipeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4113D3C18FCC326736C158562FDC6FC4 /* Swipeable.swift */; };
+		2F3B511713E7F8CEC3C4B35417296C27 /* SwipeTableViewCell+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D26CDCF75B782E07A07DD3252E3E380 /* SwipeTableViewCell+Display.swift */; };
+		303AF73DAF8E4B2C1DED879319C015A5 /* SwipeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4081885FB3D652A5406B4A431098BDE /* SwipeController.swift */; };
+		3B6C11AE05229CB872850932C26C679B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */; };
+		4DE45CE453E621066E40BF96FC8F2C8E /* SwipeCollectionViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0C9D5ADE765E39BC0BB6AF105B9D00 /* SwipeCollectionViewCellDelegate.swift */; };
+		52F62550C511081FAED62998AFE71C14 /* SwipeCollectionViewCell+Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804BBB327B33EE0E2BFC5E678EF74BD1 /* SwipeCollectionViewCell+Accessibility.swift */; };
+		5492BEECD317D3F359C3D737E9F0AFD0 /* SwipeTableViewCell+Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBAE04DEF0695F29D8B0BA52A4685E4 /* SwipeTableViewCell+Accessibility.swift */; };
+		681A3E3C08D2CFEA3BF012B98421560B /* SwipeCollectionViewCell+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22239ADDB87FAD1706C881FFC570A8DC /* SwipeCollectionViewCell+Display.swift */; };
+		736AC754BAD3C2CF2D4A73880A1FE876 /* SwipeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23024183045FAC608C3F116796C0BA7A /* SwipeCollectionViewCell.swift */; };
+		81505D6B423EBFF389FC33693820FFE8 /* SwipeExpanding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812F14738E47DFACA7EF95849DD65FD5 /* SwipeExpanding.swift */; };
+		8B8E115ACE777FCA0B743B9D6B8342E5 /* Pods-SimpleRecipeTimer-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 82D64307070E3D730020CFE3254F6C2D /* Pods-SimpleRecipeTimer-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9DBB164B58E4568BED9BCFE818EE5692 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */; };
+		A6ECFAD66F5B7F0A7C56305C6E87AF77 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */; };
+		AB692C24B30D75C2C555847398AA2990 /* SwipeTransitionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC6DC25A614C54ADF1BBD2FD0566A5D /* SwipeTransitionLayout.swift */; };
+		AE423B7D15A1AC4D882DF54EE7A96A30 /* SwipeAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA003A20C3527387C3A39C3452761A1D /* SwipeAnimator.swift */; };
+		C52A0BE06FCF1C345E9BCAA44BD5AC68 /* Pods-SimpleRecipeTimerTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 060A020E7382ADC01B1688DAAB58D625 /* Pods-SimpleRecipeTimerTests-dummy.m */; };
+		CA23E3E1BD478324AEC6E147EB252B5E /* Pods-SimpleRecipeTimerUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D7BF6A236FB2237C91528F03427D963F /* Pods-SimpleRecipeTimerUITests-dummy.m */; };
+		D1A428177E4B1E30F3878D76E0220D48 /* SwipeAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E15CD5EF99AAD2E96EC791213FE621F /* SwipeAction.swift */; };
+		D2652B9258051D1DADE0295C6F5018E7 /* SwipeActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B3F853018F6E95992B4E07CA890613 /* SwipeActionButton.swift */; };
+		D28AC12DDD995DA7FAE7A7125AF62ABB /* Pods-SimpleRecipeTimerTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 077D90A4817689AD84C70B8D5C2006EE /* Pods-SimpleRecipeTimerTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E158EF353201758F233360F37743C1FB /* SwipeActionTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354361ED084775926B8EF62B670FAEA8 /* SwipeActionTransitioning.swift */; };
+		E338DDB8BEA9C44F19721A62FEADEEF2 /* SwipeCellKit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 54DBECC9C72FAC59DC6BA752B4AAE1C6 /* SwipeCellKit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E57EFE8D4A759631EDF7C41AD5A8A5E0 /* Pods-SimpleRecipeTimerUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F712FDE227E6220DEEA7E42CBA8BBB5 /* Pods-SimpleRecipeTimerUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FB6E387F98C03979BFEB155181FF95EF /* SwipeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0F166173353E13F6F5C99A6A347B1 /* SwipeOptions.swift */; };
+		FF490BC72BD1C4DFA4D7D8FC1AB70C7C /* SwipeAccessibilityCustomAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A2C78F90E62D4C6758DE64D2D771F0 /* SwipeAccessibilityCustomAction.swift */; };
+		FFEF5DBF7A9BD2EFEE1E688BD9E931C2 /* SwipeFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E5CF45D2D750123BB078EB7B375B0E /* SwipeFeedback.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3C36081E45EE368358D4EC87B7B479E2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6C50A97C087A39F4C8A8579CB1256F16;
+			remoteInfo = SwipeCellKit;
+		};
+		AA1C5C6BA2551421939F0CB0CBF8FC86 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0E2BBEF17E61F5EBAC5092A76760F9D3;
+			remoteInfo = "Pods-SimpleRecipeTimer";
+		};
+		BE0968B265DE0ED4C3A51AC79F4EBAFE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0E2BBEF17E61F5EBAC5092A76760F9D3;
+			remoteInfo = "Pods-SimpleRecipeTimer";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0353D3F1C0105CC7D5A047DB80B2CAAD /* Pods-SimpleRecipeTimer-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SimpleRecipeTimer-acknowledgements.markdown"; sourceTree = "<group>"; };
+		060A020E7382ADC01B1688DAAB58D625 /* Pods-SimpleRecipeTimerTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SimpleRecipeTimerTests-dummy.m"; sourceTree = "<group>"; };
+		077D90A4817689AD84C70B8D5C2006EE /* Pods-SimpleRecipeTimerTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SimpleRecipeTimerTests-umbrella.h"; sourceTree = "<group>"; };
+		0859F6BC6349EE23AB1601CAC955F76D /* Pods-SimpleRecipeTimerTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SimpleRecipeTimerTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		08A45AF5E3025FA01A7F1C0224C76DBA /* SwipeCellKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwipeCellKit-prefix.pch"; sourceTree = "<group>"; };
+		0A4F44480E114A41B07C11FFBC94B6BD /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1CD1E1F9F9B103D60AAC3EF7748C6087 /* Pods-SimpleRecipeTimerTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-SimpleRecipeTimerTests.modulemap"; sourceTree = "<group>"; };
+		1D26CDCF75B782E07A07DD3252E3E380 /* SwipeTableViewCell+Display.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "SwipeTableViewCell+Display.swift"; path = "Source/SwipeTableViewCell+Display.swift"; sourceTree = "<group>"; };
+		1F03C56AC5B4A7F276D32FD3FB4BEC74 /* Pods-SimpleRecipeTimerUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-SimpleRecipeTimerUITests.modulemap"; sourceTree = "<group>"; };
+		1F712FDE227E6220DEEA7E42CBA8BBB5 /* Pods-SimpleRecipeTimerUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SimpleRecipeTimerUITests-umbrella.h"; sourceTree = "<group>"; };
+		22239ADDB87FAD1706C881FFC570A8DC /* SwipeCollectionViewCell+Display.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "SwipeCollectionViewCell+Display.swift"; path = "Source/SwipeCollectionViewCell+Display.swift"; sourceTree = "<group>"; };
+		23024183045FAC608C3F116796C0BA7A /* SwipeCollectionViewCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwipeCollectionViewCell.swift; path = Source/SwipeCollectionViewCell.swift; sourceTree = "<group>"; };
+		23EF0AC266EB0C30AD17F4C18B4FD82D /* Pods-SimpleRecipeTimer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SimpleRecipeTimer.release.xcconfig"; sourceTree = "<group>"; };
+		26DB755A3CD58B1F7F49C454AC70BFBB /* Pods-SimpleRecipeTimerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SimpleRecipeTimerUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		2D03A633C00DC6F0DAF74857563C71A7 /* Pods_SimpleRecipeTimerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleRecipeTimerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		354361ED084775926B8EF62B670FAEA8 /* SwipeActionTransitioning.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwipeActionTransitioning.swift; path = Source/SwipeActionTransitioning.swift; sourceTree = "<group>"; };
+		35A8FA6DBCC9AE6059B1AA0B4F1AF277 /* SwipeCellKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwipeCellKit-dummy.m"; sourceTree = "<group>"; };
+		4113D3C18FCC326736C158562FDC6FC4 /* Swipeable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Swipeable.swift; path = Source/Swipeable.swift; sourceTree = "<group>"; };
+		451A3E436326FE42C11AAD7774A7EAB8 /* SwipeCellKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SwipeCellKit.modulemap; sourceTree = "<group>"; };
+		46411218DE2B9AF07F9146324DA90DDB /* Pods-SimpleRecipeTimerUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SimpleRecipeTimerUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		4A80C363D6EBB050B501C9AB6594CEEF /* Pods_SimpleRecipeTimerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleRecipeTimerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4DD45CADDCBDA787F24AFE06AA12A9F0 /* Pods-SimpleRecipeTimerUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SimpleRecipeTimerUITests-frameworks.sh"; sourceTree = "<group>"; };
+		4E15CD5EF99AAD2E96EC791213FE621F /* SwipeAction.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwipeAction.swift; path = Source/SwipeAction.swift; sourceTree = "<group>"; };
+		4EBAE04DEF0695F29D8B0BA52A4685E4 /* SwipeTableViewCell+Accessibility.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "SwipeTableViewCell+Accessibility.swift"; path = "Source/SwipeTableViewCell+Accessibility.swift"; sourceTree = "<group>"; };
+		501214F2ED32E9BADB553439DE8E29BF /* SwipeCellKit.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwipeCellKit.xcconfig; sourceTree = "<group>"; };
+		54DBECC9C72FAC59DC6BA752B4AAE1C6 /* SwipeCellKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwipeCellKit-umbrella.h"; sourceTree = "<group>"; };
+		57B0A942C591AFFC1334DB7BE0610184 /* Pods-SimpleRecipeTimer-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SimpleRecipeTimer-dummy.m"; sourceTree = "<group>"; };
+		584AEAC0047B067684732D13E190BA42 /* Pods_SimpleRecipeTimer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleRecipeTimer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5928C48F75A0DD2D6F6582494E5FA48C /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		5C73927D00B932E27112065FBFD5535A /* Pods-SimpleRecipeTimer-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SimpleRecipeTimer-frameworks.sh"; sourceTree = "<group>"; };
+		6AE2DBB52F4D938F2953597D8046B3A3 /* Pods-SimpleRecipeTimer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SimpleRecipeTimer.debug.xcconfig"; sourceTree = "<group>"; };
+		76E5CF45D2D750123BB078EB7B375B0E /* SwipeFeedback.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwipeFeedback.swift; path = Source/SwipeFeedback.swift; sourceTree = "<group>"; };
+		7C0C9D5ADE765E39BC0BB6AF105B9D00 /* SwipeCollectionViewCellDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwipeCollectionViewCellDelegate.swift; path = Source/SwipeCollectionViewCellDelegate.swift; sourceTree = "<group>"; };
+		804BBB327B33EE0E2BFC5E678EF74BD1 /* SwipeCollectionViewCell+Accessibility.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "SwipeCollectionViewCell+Accessibility.swift"; path = "Source/SwipeCollectionViewCell+Accessibility.swift"; sourceTree = "<group>"; };
+		812F14738E47DFACA7EF95849DD65FD5 /* SwipeExpanding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwipeExpanding.swift; path = Source/SwipeExpanding.swift; sourceTree = "<group>"; };
+		82534C4DECC415655B9A41839D3C297A /* SwipeCellKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwipeCellKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		82D64307070E3D730020CFE3254F6C2D /* Pods-SimpleRecipeTimer-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SimpleRecipeTimer-umbrella.h"; sourceTree = "<group>"; };
+		85DC63E696A60DDE081BD3EC8E90EFE4 /* SwipeActionsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwipeActionsView.swift; path = Source/SwipeActionsView.swift; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		986897B5AAD8A891418AF6063FA21608 /* Pods-SimpleRecipeTimerTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SimpleRecipeTimerTests-resources.sh"; sourceTree = "<group>"; };
+		A07F8758B2C0FEB498D5E1C459DB8902 /* Pods-SimpleRecipeTimerTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SimpleRecipeTimerTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		A23A73EB628B2E3229E392320FDF6B3A /* Pods-SimpleRecipeTimer-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SimpleRecipeTimer-acknowledgements.plist"; sourceTree = "<group>"; };
+		AF14FB4FC75F9E9323455255ADC93B1E /* Pods-SimpleRecipeTimerUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SimpleRecipeTimerUITests-acknowledgements.plist"; sourceTree = "<group>"; };
+		BC301DC591742E018249748141EADCF4 /* Pods-SimpleRecipeTimer.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-SimpleRecipeTimer.modulemap"; sourceTree = "<group>"; };
+		C4081885FB3D652A5406B4A431098BDE /* SwipeController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwipeController.swift; path = Source/SwipeController.swift; sourceTree = "<group>"; };
+		C5D152118CFC9042FFE718E60238BFC5 /* SwipeExpansionStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwipeExpansionStyle.swift; path = Source/SwipeExpansionStyle.swift; sourceTree = "<group>"; };
+		C5D538C2B3A05691C3238825D7082E2C /* Pods-SimpleRecipeTimerTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SimpleRecipeTimerTests-frameworks.sh"; sourceTree = "<group>"; };
+		C7AAEA5B5D2785C87FB2253913E686ED /* Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Source/Extensions.swift; sourceTree = "<group>"; };
+		C9FD3BD35E78B062C29934205EA3CBEE /* Pods-SimpleRecipeTimerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SimpleRecipeTimerTests.release.xcconfig"; sourceTree = "<group>"; };
+		CADFA09C7B4A9C06F2AACF4FDFF0F802 /* SwipeTableViewCellDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwipeTableViewCellDelegate.swift; path = Source/SwipeTableViewCellDelegate.swift; sourceTree = "<group>"; };
+		D7BF6A236FB2237C91528F03427D963F /* Pods-SimpleRecipeTimerUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SimpleRecipeTimerUITests-dummy.m"; sourceTree = "<group>"; };
+		E53DD5807AC7DC1BDA0181DC9A5B38F5 /* Pods-SimpleRecipeTimerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SimpleRecipeTimerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E5A0F166173353E13F6F5C99A6A347B1 /* SwipeOptions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwipeOptions.swift; path = Source/SwipeOptions.swift; sourceTree = "<group>"; };
+		E5B3F853018F6E95992B4E07CA890613 /* SwipeActionButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwipeActionButton.swift; path = Source/SwipeActionButton.swift; sourceTree = "<group>"; };
+		E70684FF0C74D51A16C7D2C652AD0649 /* SwipeTableViewCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwipeTableViewCell.swift; path = Source/SwipeTableViewCell.swift; sourceTree = "<group>"; };
+		EA003A20C3527387C3A39C3452761A1D /* SwipeAnimator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwipeAnimator.swift; path = Source/SwipeAnimator.swift; sourceTree = "<group>"; };
+		EB11C1CCBC7212724D0E2D93E856A6C8 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF33715F76F0300798FDA4E54493245D /* Pods-SimpleRecipeTimer-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SimpleRecipeTimer-resources.sh"; sourceTree = "<group>"; };
+		EFC6DC25A614C54ADF1BBD2FD0566A5D /* SwipeTransitionLayout.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwipeTransitionLayout.swift; path = Source/SwipeTransitionLayout.swift; sourceTree = "<group>"; };
+		F2A2C78F90E62D4C6758DE64D2D771F0 /* SwipeAccessibilityCustomAction.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwipeAccessibilityCustomAction.swift; path = Source/SwipeAccessibilityCustomAction.swift; sourceTree = "<group>"; };
+		FAE4B587534B3C3EA2D41F97CFCC55C8 /* Pods-SimpleRecipeTimerUITests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SimpleRecipeTimerUITests-resources.sh"; sourceTree = "<group>"; };
+		FD03DB6E367916090CDE4A3998567938 /* Pods-SimpleRecipeTimerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SimpleRecipeTimerUITests.release.xcconfig"; sourceTree = "<group>"; };
+		FEA0EAFD05EE94FDAA19154AB0FC18EB /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4BC77951B090C511569D73D1F6BD74E7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9DBB164B58E4568BED9BCFE818EE5692 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		708ED4039A0E0F09B7AA8974B3898A58 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6ECFAD66F5B7F0A7C56305C6E87AF77 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92E8C2C7017F018923414995A8E12B73 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3B6C11AE05229CB872850932C26C679B /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C611E1BDF7C5F9587D87066C1B569161 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C92716F4A314E83E9EC799C80ECAF25 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		03E3D2981BD7A7A79DA075AC890A9384 /* SwipeCellKit */ = {
+			isa = PBXGroup;
+			children = (
+				C7AAEA5B5D2785C87FB2253913E686ED /* Extensions.swift */,
+				4113D3C18FCC326736C158562FDC6FC4 /* Swipeable.swift */,
+				F2A2C78F90E62D4C6758DE64D2D771F0 /* SwipeAccessibilityCustomAction.swift */,
+				4E15CD5EF99AAD2E96EC791213FE621F /* SwipeAction.swift */,
+				E5B3F853018F6E95992B4E07CA890613 /* SwipeActionButton.swift */,
+				85DC63E696A60DDE081BD3EC8E90EFE4 /* SwipeActionsView.swift */,
+				354361ED084775926B8EF62B670FAEA8 /* SwipeActionTransitioning.swift */,
+				EA003A20C3527387C3A39C3452761A1D /* SwipeAnimator.swift */,
+				23024183045FAC608C3F116796C0BA7A /* SwipeCollectionViewCell.swift */,
+				804BBB327B33EE0E2BFC5E678EF74BD1 /* SwipeCollectionViewCell+Accessibility.swift */,
+				22239ADDB87FAD1706C881FFC570A8DC /* SwipeCollectionViewCell+Display.swift */,
+				7C0C9D5ADE765E39BC0BB6AF105B9D00 /* SwipeCollectionViewCellDelegate.swift */,
+				C4081885FB3D652A5406B4A431098BDE /* SwipeController.swift */,
+				812F14738E47DFACA7EF95849DD65FD5 /* SwipeExpanding.swift */,
+				C5D152118CFC9042FFE718E60238BFC5 /* SwipeExpansionStyle.swift */,
+				76E5CF45D2D750123BB078EB7B375B0E /* SwipeFeedback.swift */,
+				E5A0F166173353E13F6F5C99A6A347B1 /* SwipeOptions.swift */,
+				E70684FF0C74D51A16C7D2C652AD0649 /* SwipeTableViewCell.swift */,
+				4EBAE04DEF0695F29D8B0BA52A4685E4 /* SwipeTableViewCell+Accessibility.swift */,
+				1D26CDCF75B782E07A07DD3252E3E380 /* SwipeTableViewCell+Display.swift */,
+				CADFA09C7B4A9C06F2AACF4FDFF0F802 /* SwipeTableViewCellDelegate.swift */,
+				EFC6DC25A614C54ADF1BBD2FD0566A5D /* SwipeTransitionLayout.swift */,
+				2C55A9837D6C18B513716D0C672AC8B6 /* Support Files */,
+			);
+			path = SwipeCellKit;
+			sourceTree = "<group>";
+		};
+		2C55A9837D6C18B513716D0C672AC8B6 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				0A4F44480E114A41B07C11FFBC94B6BD /* Info.plist */,
+				451A3E436326FE42C11AAD7774A7EAB8 /* SwipeCellKit.modulemap */,
+				501214F2ED32E9BADB553439DE8E29BF /* SwipeCellKit.xcconfig */,
+				35A8FA6DBCC9AE6059B1AA0B4F1AF277 /* SwipeCellKit-dummy.m */,
+				08A45AF5E3025FA01A7F1C0224C76DBA /* SwipeCellKit-prefix.pch */,
+				54DBECC9C72FAC59DC6BA752B4AAE1C6 /* SwipeCellKit-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/SwipeCellKit";
+			sourceTree = "<group>";
+		};
+		4BD09F2E6B73C7705FC55AA07638A787 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				584AEAC0047B067684732D13E190BA42 /* Pods_SimpleRecipeTimer.framework */,
+				2D03A633C00DC6F0DAF74857563C71A7 /* Pods_SimpleRecipeTimerTests.framework */,
+				4A80C363D6EBB050B501C9AB6594CEEF /* Pods_SimpleRecipeTimerUITests.framework */,
+				82534C4DECC415655B9A41839D3C297A /* SwipeCellKit.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		51298ED2BC17972E920C6979AB9DB43F /* Pods-SimpleRecipeTimer */ = {
+			isa = PBXGroup;
+			children = (
+				FEA0EAFD05EE94FDAA19154AB0FC18EB /* Info.plist */,
+				BC301DC591742E018249748141EADCF4 /* Pods-SimpleRecipeTimer.modulemap */,
+				0353D3F1C0105CC7D5A047DB80B2CAAD /* Pods-SimpleRecipeTimer-acknowledgements.markdown */,
+				A23A73EB628B2E3229E392320FDF6B3A /* Pods-SimpleRecipeTimer-acknowledgements.plist */,
+				57B0A942C591AFFC1334DB7BE0610184 /* Pods-SimpleRecipeTimer-dummy.m */,
+				5C73927D00B932E27112065FBFD5535A /* Pods-SimpleRecipeTimer-frameworks.sh */,
+				EF33715F76F0300798FDA4E54493245D /* Pods-SimpleRecipeTimer-resources.sh */,
+				82D64307070E3D730020CFE3254F6C2D /* Pods-SimpleRecipeTimer-umbrella.h */,
+				6AE2DBB52F4D938F2953597D8046B3A3 /* Pods-SimpleRecipeTimer.debug.xcconfig */,
+				23EF0AC266EB0C30AD17F4C18B4FD82D /* Pods-SimpleRecipeTimer.release.xcconfig */,
+			);
+			name = "Pods-SimpleRecipeTimer";
+			path = "Target Support Files/Pods-SimpleRecipeTimer";
+			sourceTree = "<group>";
+		};
+		5E0D919E635D23B70123790B8308F8EF /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		681CC403AA064C99FB621D3F38F8F554 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				03E3D2981BD7A7A79DA075AC890A9384 /* SwipeCellKit */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
+				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
+				681CC403AA064C99FB621D3F38F8F554 /* Pods */,
+				4BD09F2E6B73C7705FC55AA07638A787 /* Products */,
+				AFB94880F8D4C8F8D28ACDD30D2C03C7 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		AFB94880F8D4C8F8D28ACDD30D2C03C7 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				51298ED2BC17972E920C6979AB9DB43F /* Pods-SimpleRecipeTimer */,
+				CC1B29E9514588F29A575BAE7D894747 /* Pods-SimpleRecipeTimerTests */,
+				E88ADFB918A7FEC88DCCA09A10EE97B3 /* Pods-SimpleRecipeTimerUITests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5E0D919E635D23B70123790B8308F8EF /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CC1B29E9514588F29A575BAE7D894747 /* Pods-SimpleRecipeTimerTests */ = {
+			isa = PBXGroup;
+			children = (
+				5928C48F75A0DD2D6F6582494E5FA48C /* Info.plist */,
+				1CD1E1F9F9B103D60AAC3EF7748C6087 /* Pods-SimpleRecipeTimerTests.modulemap */,
+				0859F6BC6349EE23AB1601CAC955F76D /* Pods-SimpleRecipeTimerTests-acknowledgements.markdown */,
+				A07F8758B2C0FEB498D5E1C459DB8902 /* Pods-SimpleRecipeTimerTests-acknowledgements.plist */,
+				060A020E7382ADC01B1688DAAB58D625 /* Pods-SimpleRecipeTimerTests-dummy.m */,
+				C5D538C2B3A05691C3238825D7082E2C /* Pods-SimpleRecipeTimerTests-frameworks.sh */,
+				986897B5AAD8A891418AF6063FA21608 /* Pods-SimpleRecipeTimerTests-resources.sh */,
+				077D90A4817689AD84C70B8D5C2006EE /* Pods-SimpleRecipeTimerTests-umbrella.h */,
+				E53DD5807AC7DC1BDA0181DC9A5B38F5 /* Pods-SimpleRecipeTimerTests.debug.xcconfig */,
+				C9FD3BD35E78B062C29934205EA3CBEE /* Pods-SimpleRecipeTimerTests.release.xcconfig */,
+			);
+			name = "Pods-SimpleRecipeTimerTests";
+			path = "Target Support Files/Pods-SimpleRecipeTimerTests";
+			sourceTree = "<group>";
+		};
+		E88ADFB918A7FEC88DCCA09A10EE97B3 /* Pods-SimpleRecipeTimerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				EB11C1CCBC7212724D0E2D93E856A6C8 /* Info.plist */,
+				1F03C56AC5B4A7F276D32FD3FB4BEC74 /* Pods-SimpleRecipeTimerUITests.modulemap */,
+				46411218DE2B9AF07F9146324DA90DDB /* Pods-SimpleRecipeTimerUITests-acknowledgements.markdown */,
+				AF14FB4FC75F9E9323455255ADC93B1E /* Pods-SimpleRecipeTimerUITests-acknowledgements.plist */,
+				D7BF6A236FB2237C91528F03427D963F /* Pods-SimpleRecipeTimerUITests-dummy.m */,
+				4DD45CADDCBDA787F24AFE06AA12A9F0 /* Pods-SimpleRecipeTimerUITests-frameworks.sh */,
+				FAE4B587534B3C3EA2D41F97CFCC55C8 /* Pods-SimpleRecipeTimerUITests-resources.sh */,
+				1F712FDE227E6220DEEA7E42CBA8BBB5 /* Pods-SimpleRecipeTimerUITests-umbrella.h */,
+				26DB755A3CD58B1F7F49C454AC70BFBB /* Pods-SimpleRecipeTimerUITests.debug.xcconfig */,
+				FD03DB6E367916090CDE4A3998567938 /* Pods-SimpleRecipeTimerUITests.release.xcconfig */,
+			);
+			name = "Pods-SimpleRecipeTimerUITests";
+			path = "Target Support Files/Pods-SimpleRecipeTimerUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		1AA4CDBCEC1355BBC680B4E54058AA88 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E57EFE8D4A759631EDF7C41AD5A8A5E0 /* Pods-SimpleRecipeTimerUITests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A86515BAB9895E79B3C1A1C2989ECD4 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B8E115ACE777FCA0B743B9D6B8342E5 /* Pods-SimpleRecipeTimer-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3691D895E0D9AE8E7913F6C3676C1813 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D28AC12DDD995DA7FAE7A7125AF62ABB /* Pods-SimpleRecipeTimerTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		378F26D45A265331C972D78916901B53 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E338DDB8BEA9C44F19721A62FEADEEF2 /* SwipeCellKit-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		095D73238CC6B881F08CBFFBABD2DB3A /* Pods-SimpleRecipeTimerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C11FB3501872D30E5ED37FD84AA5C8F0 /* Build configuration list for PBXNativeTarget "Pods-SimpleRecipeTimerTests" */;
+			buildPhases = (
+				3691D895E0D9AE8E7913F6C3676C1813 /* Headers */,
+				4E55906A829E08338F8E49486D4DF096 /* Sources */,
+				92E8C2C7017F018923414995A8E12B73 /* Frameworks */,
+				5C4B223F9191D4A19475F06904B6A568 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				633D3949D52BAD9235504FC0A39560F5 /* PBXTargetDependency */,
+			);
+			name = "Pods-SimpleRecipeTimerTests";
+			productName = "Pods-SimpleRecipeTimerTests";
+			productReference = 2D03A633C00DC6F0DAF74857563C71A7 /* Pods_SimpleRecipeTimerTests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		0E2BBEF17E61F5EBAC5092A76760F9D3 /* Pods-SimpleRecipeTimer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 12A95750E7AB41AA0A91AC50F2B570C6 /* Build configuration list for PBXNativeTarget "Pods-SimpleRecipeTimer" */;
+			buildPhases = (
+				2A86515BAB9895E79B3C1A1C2989ECD4 /* Headers */,
+				B06EDAA34EFAE081B474611531A49515 /* Sources */,
+				C611E1BDF7C5F9587D87066C1B569161 /* Frameworks */,
+				C36C525A28AA3EBAA44B8D48FB70325F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4F6695551470E241F57A3E1E1544A6E4 /* PBXTargetDependency */,
+			);
+			name = "Pods-SimpleRecipeTimer";
+			productName = "Pods-SimpleRecipeTimer";
+			productReference = 584AEAC0047B067684732D13E190BA42 /* Pods_SimpleRecipeTimer.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		6C50A97C087A39F4C8A8579CB1256F16 /* SwipeCellKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 72F7F3B4C5524A0B2E0A65DD0C6E6F9F /* Build configuration list for PBXNativeTarget "SwipeCellKit" */;
+			buildPhases = (
+				378F26D45A265331C972D78916901B53 /* Headers */,
+				4A258BFA0CF2AEEC011196E3602D0337 /* Sources */,
+				4BC77951B090C511569D73D1F6BD74E7 /* Frameworks */,
+				C1EBB3622843DDFFC594355934B8EA2F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SwipeCellKit;
+			productName = SwipeCellKit;
+			productReference = 82534C4DECC415655B9A41839D3C297A /* SwipeCellKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		92033C99B8DCF5F9F0EC8448FFE0B212 /* Pods-SimpleRecipeTimerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 77144BECCE2D51729E199FD07AB4764D /* Build configuration list for PBXNativeTarget "Pods-SimpleRecipeTimerUITests" */;
+			buildPhases = (
+				1AA4CDBCEC1355BBC680B4E54058AA88 /* Headers */,
+				D9BFEA64FB8587FB2BC5F1817F74F7C2 /* Sources */,
+				708ED4039A0E0F09B7AA8974B3898A58 /* Frameworks */,
+				1EAEAE9B7586EC7818557539C736C319 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7EAA745B8A7C545893C0A73237622816 /* PBXTargetDependency */,
+			);
+			name = "Pods-SimpleRecipeTimerUITests";
+			productName = "Pods-SimpleRecipeTimerUITests";
+			productReference = 4A80C363D6EBB050B501C9AB6594CEEF /* Pods_SimpleRecipeTimerUITests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0930;
+				LastUpgradeCheck = 1010;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = 4BD09F2E6B73C7705FC55AA07638A787 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0E2BBEF17E61F5EBAC5092A76760F9D3 /* Pods-SimpleRecipeTimer */,
+				095D73238CC6B881F08CBFFBABD2DB3A /* Pods-SimpleRecipeTimerTests */,
+				92033C99B8DCF5F9F0EC8448FFE0B212 /* Pods-SimpleRecipeTimerUITests */,
+				6C50A97C087A39F4C8A8579CB1256F16 /* SwipeCellKit */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1EAEAE9B7586EC7818557539C736C319 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C4B223F9191D4A19475F06904B6A568 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C1EBB3622843DDFFC594355934B8EA2F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C36C525A28AA3EBAA44B8D48FB70325F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4A258BFA0CF2AEEC011196E3602D0337 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				281ED26B3C796DAD0C2BC148145FA788 /* Extensions.swift in Sources */,
+				2E3A6168EB22A35E4FC87DC2B911D87B /* Swipeable.swift in Sources */,
+				FF490BC72BD1C4DFA4D7D8FC1AB70C7C /* SwipeAccessibilityCustomAction.swift in Sources */,
+				D1A428177E4B1E30F3878D76E0220D48 /* SwipeAction.swift in Sources */,
+				D2652B9258051D1DADE0295C6F5018E7 /* SwipeActionButton.swift in Sources */,
+				226D8362DDDBE8A1382913DE24E631DB /* SwipeActionsView.swift in Sources */,
+				E158EF353201758F233360F37743C1FB /* SwipeActionTransitioning.swift in Sources */,
+				AE423B7D15A1AC4D882DF54EE7A96A30 /* SwipeAnimator.swift in Sources */,
+				006032B54B9506C029E0E980F1245DD9 /* SwipeCellKit-dummy.m in Sources */,
+				52F62550C511081FAED62998AFE71C14 /* SwipeCollectionViewCell+Accessibility.swift in Sources */,
+				681A3E3C08D2CFEA3BF012B98421560B /* SwipeCollectionViewCell+Display.swift in Sources */,
+				736AC754BAD3C2CF2D4A73880A1FE876 /* SwipeCollectionViewCell.swift in Sources */,
+				4DE45CE453E621066E40BF96FC8F2C8E /* SwipeCollectionViewCellDelegate.swift in Sources */,
+				303AF73DAF8E4B2C1DED879319C015A5 /* SwipeController.swift in Sources */,
+				81505D6B423EBFF389FC33693820FFE8 /* SwipeExpanding.swift in Sources */,
+				263BE367BAAB9697B73CC16588AE7E5D /* SwipeExpansionStyle.swift in Sources */,
+				FFEF5DBF7A9BD2EFEE1E688BD9E931C2 /* SwipeFeedback.swift in Sources */,
+				FB6E387F98C03979BFEB155181FF95EF /* SwipeOptions.swift in Sources */,
+				5492BEECD317D3F359C3D737E9F0AFD0 /* SwipeTableViewCell+Accessibility.swift in Sources */,
+				2F3B511713E7F8CEC3C4B35417296C27 /* SwipeTableViewCell+Display.swift in Sources */,
+				17F504FDDC09CAF5149E4BA3523180DD /* SwipeTableViewCell.swift in Sources */,
+				20914D9A529F096910D5123A97D06AE2 /* SwipeTableViewCellDelegate.swift in Sources */,
+				AB692C24B30D75C2C555847398AA2990 /* SwipeTransitionLayout.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4E55906A829E08338F8E49486D4DF096 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C52A0BE06FCF1C345E9BCAA44BD5AC68 /* Pods-SimpleRecipeTimerTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B06EDAA34EFAE081B474611531A49515 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1CE91C47A31BB2FF3ABF5AF8DA7852D0 /* Pods-SimpleRecipeTimer-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9BFEA64FB8587FB2BC5F1817F74F7C2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA23E3E1BD478324AEC6E147EB252B5E /* Pods-SimpleRecipeTimerUITests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4F6695551470E241F57A3E1E1544A6E4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwipeCellKit;
+			target = 6C50A97C087A39F4C8A8579CB1256F16 /* SwipeCellKit */;
+			targetProxy = 3C36081E45EE368358D4EC87B7B479E2 /* PBXContainerItemProxy */;
+		};
+		633D3949D52BAD9235504FC0A39560F5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-SimpleRecipeTimer";
+			target = 0E2BBEF17E61F5EBAC5092A76760F9D3 /* Pods-SimpleRecipeTimer */;
+			targetProxy = AA1C5C6BA2551421939F0CB0CBF8FC86 /* PBXContainerItemProxy */;
+		};
+		7EAA745B8A7C545893C0A73237622816 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-SimpleRecipeTimer";
+			target = 0E2BBEF17E61F5EBAC5092A76760F9D3 /* Pods-SimpleRecipeTimer */;
+			targetProxy = BE0968B265DE0ED4C3A51AC79F4EBAFE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		16133B598961586EEBA2BAEE000B9E42 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6AE2DBB52F4D938F2953597D8046B3A3 /* Pods-SimpleRecipeTimer.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-SimpleRecipeTimer/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SimpleRecipeTimer/Pods-SimpleRecipeTimer.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		74E87121DD00558CCA911033407DF70D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E53DD5807AC7DC1BDA0181DC9A5B38F5 /* Pods-SimpleRecipeTimerTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-SimpleRecipeTimerTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SimpleRecipeTimerTests/Pods-SimpleRecipeTimerTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		8322AE3FB6DF16A80BCBA121575DBB8A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		8DC861F53B471F106BC8ACC4475EFA12 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		94F30E0715747C139A69C29527378658 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FD03DB6E367916090CDE4A3998567938 /* Pods-SimpleRecipeTimerUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-SimpleRecipeTimerUITests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SimpleRecipeTimerUITests/Pods-SimpleRecipeTimerUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		B5FA1A10AE8F548CCF041E63D1E184FA /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C9FD3BD35E78B062C29934205EA3CBEE /* Pods-SimpleRecipeTimerTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-SimpleRecipeTimerTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SimpleRecipeTimerTests/Pods-SimpleRecipeTimerTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		BDC73E14BFCA046F7B5B3A29BFA5F19C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 501214F2ED32E9BADB553439DE8E29BF /* SwipeCellKit.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/SwipeCellKit/SwipeCellKit-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SwipeCellKit/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/SwipeCellKit/SwipeCellKit.modulemap";
+				PRODUCT_MODULE_NAME = SwipeCellKit;
+				PRODUCT_NAME = SwipeCellKit;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		BE34E5CD6B25CFD9A1E20C086C28114A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 26DB755A3CD58B1F7F49C454AC70BFBB /* Pods-SimpleRecipeTimerUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-SimpleRecipeTimerUITests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SimpleRecipeTimerUITests/Pods-SimpleRecipeTimerUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		D76E0BD5E02EC01567FB24ABEFAC6298 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 501214F2ED32E9BADB553439DE8E29BF /* SwipeCellKit.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/SwipeCellKit/SwipeCellKit-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SwipeCellKit/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/SwipeCellKit/SwipeCellKit.modulemap";
+				PRODUCT_MODULE_NAME = SwipeCellKit;
+				PRODUCT_NAME = SwipeCellKit;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		E7DF8A1FB7F7B9EA4F023154373F7AFA /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 23EF0AC266EB0C30AD17F4C18B4FD82D /* Pods-SimpleRecipeTimer.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-SimpleRecipeTimer/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SimpleRecipeTimer/Pods-SimpleRecipeTimer.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		12A95750E7AB41AA0A91AC50F2B570C6 /* Build configuration list for PBXNativeTarget "Pods-SimpleRecipeTimer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				16133B598961586EEBA2BAEE000B9E42 /* Debug */,
+				E7DF8A1FB7F7B9EA4F023154373F7AFA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8322AE3FB6DF16A80BCBA121575DBB8A /* Debug */,
+				8DC861F53B471F106BC8ACC4475EFA12 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		72F7F3B4C5524A0B2E0A65DD0C6E6F9F /* Build configuration list for PBXNativeTarget "SwipeCellKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BDC73E14BFCA046F7B5B3A29BFA5F19C /* Debug */,
+				D76E0BD5E02EC01567FB24ABEFAC6298 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		77144BECCE2D51729E199FD07AB4764D /* Build configuration list for PBXNativeTarget "Pods-SimpleRecipeTimerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BE34E5CD6B25CFD9A1E20C086C28114A /* Debug */,
+				94F30E0715747C139A69C29527378658 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C11FB3501872D30E5ED37FD84AA5C8F0 /* Build configuration list for PBXNativeTarget "Pods-SimpleRecipeTimerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74E87121DD00558CCA911033407DF70D /* Debug */,
+				B5FA1A10AE8F548CCF041E63D1E184FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}
