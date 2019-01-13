@@ -8,26 +8,28 @@
 
 import UIKit
 
-class StepCell: BaseCell {
-
-    var nameLabel: UILabel = UILabel()
-    var timeLabel: UILabel = UILabel()
-    var step: Step? {
+class StepCell: EntityBaseCell<StepEntity> {
+    override var entity: StepEntity? {
         didSet {
-            self.prepareLabels()
+            if let name = entity?.stepName {
+                self.prepareNameLabel(name)
+            }
         }
     }
+    var nameLabel: UILabel? = nil
+    var timeLabel: UILabel = UILabel()
+
     
     override func setupView() {
+        super.setupView()
         self.backgroundColor = UIColor.blue
-        
-        if let s = step {
+        if let s = entity {
             timeLabel.text = s.timeRemaining()
-            nameLabel.text = s.name
+            nameLabel?.text = s.stepName
         }
     }
     
-    func prepareLabels() {
+    override func prepareNameLabel(_ name: String) {
         timeLabel.backgroundColor = UIColor.white
         timeLabel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(timeLabel)
@@ -35,16 +37,20 @@ class StepCell: BaseCell {
         timeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         timeLabel.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
         
-        nameLabel.backgroundColor = UIColor.white
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(nameLabel)
-        nameLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor).isActive = true
-        nameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        nameLabel.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+        let attributes: [NSAttributedString.Key :Any ] = [NSAttributedString.Key.font: UIFont(name: UIFont.StandardTheme.Font.Style.Black, size: UIFont.StandardTheme.Font.Size.SizeCell)!, NSAttributedString.Key.foregroundColor: UIColor.StandardTheme.Font.TextColour]
+
+        nameLabel = UILabel()
+        nameLabel?.attributedText = NSAttributedString(string: "\(name)", attributes: attributes)
+        nameLabel?.backgroundColor = UIColor.white
+        nameLabel?.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(nameLabel!)
+        nameLabel?.topAnchor.constraint(equalTo: timeLabel.bottomAnchor).isActive = true
+        nameLabel?.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        nameLabel?.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
     }
     
     func updateNameLabel(name: String) {
-        nameLabel.text = name
+        nameLabel?.text = name
     }
     
     func updateTimeLabel(time: String) {

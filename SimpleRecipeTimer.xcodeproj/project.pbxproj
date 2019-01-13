@@ -19,16 +19,17 @@
 		4D0C4B6A21AEC73D00153E76 /* SimpleRecipeTimerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4B6921AEC73D00153E76 /* SimpleRecipeTimerUITests.swift */; };
 		4D0C4B7821AFD4BA00153E76 /* Timepiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4B7721AFD4BA00153E76 /* Timepiece.swift */; };
 		4D53F75B21E2E38100C0AF31 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F75A21E2E38100C0AF31 /* CoreDataHelper.swift */; };
-		4D53F79121E5689D00C0AF31 /* StepEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F78D21E5689D00C0AF31 /* StepEntity+CoreDataClass.swift */; };
-		4D53F79221E5689D00C0AF31 /* StepEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F78E21E5689D00C0AF31 /* StepEntity+CoreDataProperties.swift */; };
-		4D53F79321E5689D00C0AF31 /* RecipeEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F78F21E5689D00C0AF31 /* RecipeEntity+CoreDataClass.swift */; };
-		4D53F79421E5689D00C0AF31 /* RecipeEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F79021E5689D00C0AF31 /* RecipeEntity+CoreDataProperties.swift */; };
+		4D53F7BC21E72B7E00C0AF31 /* RecipeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F7BB21E72B7E00C0AF31 /* RecipeEntity.swift */; };
+		4D53F7BE21E735CD00C0AF31 /* StepEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F7BD21E735CD00C0AF31 /* StepEntity.swift */; };
+		4D53F7C821EC0C7700C0AF31 /* BaseCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F7C721EC0C7700C0AF31 /* BaseCollectionViewController.swift */; };
+		4D53F7CA21EC0DF600C0AF31 /* MainViewControllerA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F7C921EC0DF600C0AF31 /* MainViewControllerA.swift */; };
+		4D53F7CC21EC47E700C0AF31 /* ThemeConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F7CB21EC47E700C0AF31 /* ThemeConstants.swift */; };
 		4DA12F6821B108650049CD75 /* RecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA12F6721B108650049CD75 /* RecipeViewController.swift */; };
 		4DA12F6B21B112190049CD75 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA12F6A21B112190049CD75 /* Recipe.swift */; };
 		4DA12F6D21B17E6B0049CD75 /* Step.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA12F6C21B17E6B0049CD75 /* Step.swift */; };
 		4DA12F6F21B181460049CD75 /* StepsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA12F6E21B181460049CD75 /* StepsProtocol.swift */; };
 		4DA12F7121B2D3990049CD75 /* StepCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA12F7021B2D3990049CD75 /* StepCell.swift */; };
-		4DA12F7321B2D3DD0049CD75 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA12F7221B2D3DD0049CD75 /* BaseCell.swift */; };
+		4DA12F7321B2D3DD0049CD75 /* EntityBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA12F7221B2D3DD0049CD75 /* EntityBaseCell.swift */; };
 		4DA12F7621B358AB0049CD75 /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA12F7521B358AB0049CD75 /* RecipeCell.swift */; };
 		4DA12F7821B606370049CD75 /* StepsConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA12F7721B606370049CD75 /* StepsConfigurationViewController.swift */; };
 		4DA12F7A21B606A20049CD75 /* AddStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA12F7921B606A20049CD75 /* AddStepViewController.swift */; };
@@ -77,16 +78,17 @@
 		4D0C4B6B21AEC73D00153E76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D0C4B7721AFD4BA00153E76 /* Timepiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timepiece.swift; sourceTree = "<group>"; };
 		4D53F75A21E2E38100C0AF31 /* CoreDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
-		4D53F78D21E5689D00C0AF31 /* StepEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StepEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
-		4D53F78E21E5689D00C0AF31 /* StepEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StepEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		4D53F78F21E5689D00C0AF31 /* RecipeEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecipeEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
-		4D53F79021E5689D00C0AF31 /* RecipeEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecipeEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		4D53F7BB21E72B7E00C0AF31 /* RecipeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeEntity.swift; sourceTree = "<group>"; };
+		4D53F7BD21E735CD00C0AF31 /* StepEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepEntity.swift; sourceTree = "<group>"; };
+		4D53F7C721EC0C7700C0AF31 /* BaseCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewController.swift; sourceTree = "<group>"; };
+		4D53F7C921EC0DF600C0AF31 /* MainViewControllerA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewControllerA.swift; sourceTree = "<group>"; };
+		4D53F7CB21EC47E700C0AF31 /* ThemeConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeConstants.swift; sourceTree = "<group>"; };
 		4DA12F6721B108650049CD75 /* RecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewController.swift; sourceTree = "<group>"; };
 		4DA12F6A21B112190049CD75 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		4DA12F6C21B17E6B0049CD75 /* Step.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step.swift; sourceTree = "<group>"; };
 		4DA12F6E21B181460049CD75 /* StepsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepsProtocol.swift; sourceTree = "<group>"; };
 		4DA12F7021B2D3990049CD75 /* StepCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepCell.swift; sourceTree = "<group>"; };
-		4DA12F7221B2D3DD0049CD75 /* BaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
+		4DA12F7221B2D3DD0049CD75 /* EntityBaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityBaseCell.swift; sourceTree = "<group>"; };
 		4DA12F7521B358AB0049CD75 /* RecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
 		4DA12F7721B606370049CD75 /* StepsConfigurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepsConfigurationViewController.swift; sourceTree = "<group>"; };
 		4DA12F7921B606A20049CD75 /* AddStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepViewController.swift; sourceTree = "<group>"; };
@@ -191,15 +193,13 @@
 		4D0C4B7921AFEE2000153E76 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4D53F78D21E5689D00C0AF31 /* StepEntity+CoreDataClass.swift */,
-				4D53F78E21E5689D00C0AF31 /* StepEntity+CoreDataProperties.swift */,
-				4D53F78F21E5689D00C0AF31 /* RecipeEntity+CoreDataClass.swift */,
-				4D53F79021E5689D00C0AF31 /* RecipeEntity+CoreDataProperties.swift */,
 				4D53F75A21E2E38100C0AF31 /* CoreDataHelper.swift */,
 				4DA12F6A21B112190049CD75 /* Recipe.swift */,
 				4DA12F6C21B17E6B0049CD75 /* Step.swift */,
 				4D0C4B7721AFD4BA00153E76 /* Timepiece.swift */,
 				4DA12F6E21B181460049CD75 /* StepsProtocol.swift */,
+				4D53F7BB21E72B7E00C0AF31 /* RecipeEntity.swift */,
+				4D53F7BD21E735CD00C0AF31 /* StepEntity.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -209,11 +209,13 @@
 			children = (
 				4DA12F8521B8A30C0049CD75 /* Protocols */,
 				4D0C4B4821AEC73A00153E76 /* MainViewController.swift */,
+				4D53F7C921EC0DF600C0AF31 /* MainViewControllerA.swift */,
 				4DA12F6721B108650049CD75 /* RecipeViewController.swift */,
 				4DA12F8321B7F8280049CD75 /* StepsViewController.swift */,
 				4DA12F7721B606370049CD75 /* StepsConfigurationViewController.swift */,
 				4DA12F7921B606A20049CD75 /* AddStepViewController.swift */,
 				4DDA39C721D9D14A00D4773A /* AddRecipeViewController.swift */,
+				4D53F7C721EC0C7700C0AF31 /* BaseCollectionViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -221,9 +223,10 @@
 		4DA12F7421B352440049CD75 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				4DA12F7221B2D3DD0049CD75 /* BaseCell.swift */,
+				4DA12F7221B2D3DD0049CD75 /* EntityBaseCell.swift */,
 				4DA12F7521B358AB0049CD75 /* RecipeCell.swift */,
 				4DA12F7021B2D3990049CD75 /* StepCell.swift */,
+				4D53F7CB21EC47E700C0AF31 /* ThemeConstants.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -500,23 +503,24 @@
 				4DA12F8421B7F8280049CD75 /* StepsViewController.swift in Sources */,
 				4DE165C521C4EB81002DEE3E /* ExtensionsTheme.swift in Sources */,
 				4D0C4B4921AEC73A00153E76 /* MainViewController.swift in Sources */,
-				4D53F79321E5689D00C0AF31 /* RecipeEntity+CoreDataClass.swift in Sources */,
 				4DA12F7A21B606A20049CD75 /* AddStepViewController.swift in Sources */,
 				4DA12F7121B2D3990049CD75 /* StepCell.swift in Sources */,
 				4D0C4B4F21AEC73A00153E76 /* SimpleRecipeTimer.xcdatamodeld in Sources */,
-				4D53F79221E5689D00C0AF31 /* StepEntity+CoreDataProperties.swift in Sources */,
 				4DA12F6B21B112190049CD75 /* Recipe.swift in Sources */,
-				4D53F79121E5689D00C0AF31 /* StepEntity+CoreDataClass.swift in Sources */,
 				4DA12F7621B358AB0049CD75 /* RecipeCell.swift in Sources */,
+				4D53F7BE21E735CD00C0AF31 /* StepEntity.swift in Sources */,
 				4DA12F6821B108650049CD75 /* RecipeViewController.swift in Sources */,
 				4D0C4B4721AEC73A00153E76 /* AppDelegate.swift in Sources */,
 				4D53F75B21E2E38100C0AF31 /* CoreDataHelper.swift in Sources */,
-				4DA12F7321B2D3DD0049CD75 /* BaseCell.swift in Sources */,
+				4DA12F7321B2D3DD0049CD75 /* EntityBaseCell.swift in Sources */,
 				4DA12F6F21B181460049CD75 /* StepsProtocol.swift in Sources */,
 				4DA12F7821B606370049CD75 /* StepsConfigurationViewController.swift in Sources */,
-				4D53F79421E5689D00C0AF31 /* RecipeEntity+CoreDataProperties.swift in Sources */,
 				4DA12F8721B8A3A20049CD75 /* Protocols.swift in Sources */,
+				4D53F7C821EC0C7700C0AF31 /* BaseCollectionViewController.swift in Sources */,
+				4D53F7BC21E72B7E00C0AF31 /* RecipeEntity.swift in Sources */,
+				4D53F7CA21EC0DF600C0AF31 /* MainViewControllerA.swift in Sources */,
 				4DA12F7D21B611AF0049CD75 /* Extensions.swift in Sources */,
+				4D53F7CC21EC47E700C0AF31 /* ThemeConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

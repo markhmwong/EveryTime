@@ -13,11 +13,42 @@ enum RecipeCollection: Error {
     case invalidIndex
 }
 
-class MainViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, TimerProtocol {
+extension MainViewController: TimerProtocol {
+    func startTimer() {
+        if (timer == nil) {
+            timer?.invalidate()
+            timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+            
+            RunLoop.current.add(timer!, forMode: .common)
+        }
+    }
     
-    var cellTag = ["1", "2", "3", "4"]
+    func stopTimer() {
+        if (timer != nil) {
+            timer?.invalidate()
+            timer = nil
+        }
+    }
+    
+    @objc func update() {
+        let cells = self.collView.visibleCells as! [RecipeCell]
+        for cell in cells {
+            if let r = cell.entity {
+                if (!r.isPaused) {
+                    r.updateRecipeElapsedTime()
+                    cell.updateTimeLabel(timeRemaining: r.timeRemaining())
+                    if let name = r.recipeName {
+                        cell.updateNameLabel(name: name)
+                    }
+                }
+            }
+        }
+    }
+}
+
+class MainViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout  {
     let recipeCellId = "RecipeCellId"
-    var recipeCollection: [Recipe] = []
+    var recipeCollection: [RecipeEntity] = []
     var indexPathNumber = 0
     var timer: Timer?
 
@@ -27,19 +58,10 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.dataSource = self
         view.delegate = self
-//        view.dragDelegate = self
         view.dragInteractionEnabled = true
         view.backgroundColor = UIColor.StandardTheme.Recipe.Background
         return view
     }()
-    
-//    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-//        let item = self.cellTag[indexPath.row]
-//        let itemProvider = NSItemProvider(object: item as NSString)
-//        let dragItem = UIDragItem(itemProvider: itemProvider)
-//        dragItem.localObject = item
-//        return [dragItem]
-//    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.navigationController?.present(UINavigationController(rootViewController: RecipeViewController(recipe: recipeCollection[indexPath.item], delegate: self)), animated: true, completion: nil)
@@ -54,7 +76,8 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: recipeCellId, for: indexPath) as! RecipeCell
         cell.delegate = self //swipe view
         cell.mainViewController = self
-        cell.recipe = recipeCollection[indexPath.row]
+        cell.entity = recipeCollection[indexPath.row]
+        cell.cellForIndexPath = indexPath
         return cell
     }
     
@@ -74,10 +97,11 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     //MARK: - ViewController Lifecycle -
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.loadDataFromCoreData()
         self.prepareCollectionView()
         self.startTimer()
 
-        self.testCoreData()
+//        self.testCoreData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -109,75 +133,60 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     //MARK: - UI
     @objc func handleAddRecipe() throws {
         self.navigationController?.present(UINavigationController(rootViewController: AddRecipeViewController(delegate: self)), animated: true, completion: nil)
-        
-//        indexPathNumber = 1 + indexPathNumber //just a test variable
-        
-        //multiple recipes
-//        var stepArr: [Step] = []
-//        for index in stride(from:0, to:3, by:1) {
-//            stepArr.append(Step(hours: 0, minutes: 60, seconds: 5, name: "Step No. \(index)", index: index))
-//        }
-        
-
-        
-        //single recipe
-//        let newRecipe = Recipe(withSampleStep: Step(hours: 1, minutes: 0, seconds: 10, name: "Test Step"), indexPathNumber: indexPathNumber)
-//        let newRecipe = Recipe(withMultipleSteps: stepArr)
-//        let start = Date()
-//        newRecipe.updateElapsedTimeToShortestElapsedTime()
-//        let (h,m,s) = newRecipe.totalElapsedTime.secondsToHoursMinutesSeconds()
-//        let end = Date()
-//        newRecipe.updateExpiryTime()
-        
-        //performbatchupdate
-//        recipeCollection.append(newRecipe)
-//        collView.insertItems(at: [IndexPath(item: recipeCollection.count - 1, section: 0)])
+    }
+    
+    func willReloadCellData(indexPath: IndexPath) {
+        DispatchQueue.main.async {
+            self.collView.reloadItems(at: [indexPath])
+        }
     }
     
     func willReloadTableData() {
-//        self.collView.reloadItems(at: [IndexPath(item: 0, section: 0)])
-        self.collView.reloadData()
+        DispatchQueue.main.async {
+            self.collView.reloadData()
+        }
     }
     
     // must be paused at all layers
-    func pauseEntireRecipe(recipe: Recipe) {
+    func pauseEntireRecipe(recipe: RecipeEntity) {
         recipe.pauseStepArr()
     }
     
-    func unpauseEntireRecipe(recipe: Recipe) {
+    func unpauseEntireRecipe(recipe: RecipeEntity) {
         recipe.unpauseStepArr()
         print("unpauseEntireRecipe")
     }
     
     //MARK: Timer Protocol
-    func startTimer() {
-        if (timer == nil) {
-            timer?.invalidate()
-            timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(update), userInfo: nil, repeats: true)
-            RunLoop.current.add(timer!, forMode: .common)
-        }
-    }
+//    func startTimer() {
+//        if (timer == nil) {
+//            timer?.invalidate()
+//            timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+//
+//            RunLoop.current.add(timer!, forMode: .common)
+//        }
+//    }
+//
+//    func stopTimer() {
+//        if (timer != nil) {
+//            timer?.invalidate()
+//            timer = nil
+//        }
+//    }
+//
+//    @objc func update() {
+//        let cells = self.collView.visibleCells as! [RecipeCell]
+//        for cell in cells {
+//            if let r = cell.entity {
+//                if (!r.isPaused) {
+//                    r.updateRecipeElapsedTime()
+//                    cell.updateTimeLabel(timeRemaining: r.timeRemaining())
+//                }
+//            }
+//        }
+//    }
     
-    func stopTimer() {
-        if (timer != nil) {
-            timer?.invalidate()
-            timer = nil
-        }
-    }
-    
-    @objc func update() {
-        let cells = self.collView.visibleCells as! [RecipeCell]
-        for cell in cells {
-            if let r = cell.recipe {
-                if (!r.isPaused) {
-                    r.updateRecipeElapsedTime()
-                    cell.updateTimeLabel()
-                }
-            }
-        }
-    }
-    
-    func addToRecipeCollection(r: Recipe) {
+    func addToRecipeCollection(r: RecipeEntity) {
         recipeCollection.append(r)
     }
     
@@ -185,18 +194,18 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         collView.insertItems(at: [IndexPath(item: recipeCollection.count - 1, section: 0)])
     }
     
-    func testCoreData() {
+    func loadDataFromCoreData() {
         CoreDataHandler.loadContext()
-//        CoreDataHandler.save()
-//        let r = RecipeEntity(context: CoreDataHandler.getContext())
-//        r.date = Date() as NSDate
-//        r.recipeName = "recipeNameThree"
-//        CoreDataHandler.saveEntity()
-//        CoreDataHandler.fetchEntity(in: RecipeEntity.self)
-//        CoreDataHandler.printAllRecordsIn(entity: RecipeEntity.self)
-//        let deleteStatus = CoreDataHandler.deleteAllRecordsIn(entity: RecipeEntity.self)
-//        print("deleteStatus \(deleteStatus)")
-        CoreDataHandler.printAllRecordsIn(entity: StepEntity.self)
+        //TODO: - load in background
+        guard let rEntity = CoreDataHandler.fetchEntity(in: RecipeEntity.self) else {
+            return
+        }
+        self.recipeCollection = rEntity
+    }
+    
+    func testCoreData() {
+//        CoreDataHandler.deleteAllRecordsIn(entity: RecipeEntity.self)
+        CoreDataHandler.printAllRecordsIn(entity: RecipeEntity.self)
     }
 }
 

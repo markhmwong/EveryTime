@@ -119,5 +119,3 @@ class Step: NSObject, StepsProtocol, StepsTimeProtocol {
         return TimeInterval((hours * 3600) + (minutes * 60) + seconds)
     }
 }
-
-

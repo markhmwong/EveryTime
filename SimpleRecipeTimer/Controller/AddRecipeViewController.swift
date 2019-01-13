@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class AddRecipeViewController: UIViewController {
     
@@ -44,8 +45,8 @@ class AddRecipeViewController: UIViewController {
     
     override func viewDidLoad() {
         //prepare navbar buttons
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(handleDismiss))
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddRecipe)) //may repalce this for a uibutton on the main view
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleDismiss))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(handleAddRecipe)) //may repalce this for a uibutton on the main view
         
         //prepare main view in view controller
         self.prepareMainView()
@@ -72,39 +73,20 @@ class AddRecipeViewController: UIViewController {
             return
         }
         
-        let r = Recipe(name: name, step: Step(hours: 1, minutes: 30, seconds: 0, name: "Step1"))
-        
-        let rEntity = RecipeEntity(context: CoreDataHandler.getContext())
-        rEntity.recipeName = r.name
-        rEntity.expiryDate = r.expiryDate as NSDate
-        
-        for step in r.stepArr {
-        
-            let sEntity = StepEntity(context: CoreDataHandler.getContext())
-            sEntity.isPrimaryPaused = step.isPausedPrimary
-            sEntity.stepName = step.name
-            sEntity.starteDate = step.startDate as NSDate
-            sEntity.expiryDate = step.expiryDate as NSDate
-            sEntity.isRepeated = step.isRepeated
-            sEntity.totalElapsedTime = step.totalElapsedTime
-            
-            
-            rEntity.addToStep(sEntity)
-        }
-        
-        
+        let rEntity = RecipeEntity(name: name)
+        //Adding step in Recipe Entity constructor
+//        let sEntity = StepEntity(name: "SampleStep", hours: 1, minutes: 30, seconds: 0)
+//        rEntity.addToStep(sEntity)
+        CoreDataHandler.saveContext()
         if let mvc = delegate {
-            mvc.addToRecipeCollection(r: r)
+            mvc.addToRecipeCollection(r: rEntity)
             mvc.addToCollectionView()
         }
-        
-
-        
     }
     
     @objc func handleAddRecipe() {
         self.createRecipe()
-        CoreDataHandler.saveEntity()
+        CoreDataHandler.saveContext()
         self.dismiss(animated: true) {
             //
         }

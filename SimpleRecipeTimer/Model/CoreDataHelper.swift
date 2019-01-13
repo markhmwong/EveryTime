@@ -27,7 +27,7 @@ class CoreDataHandler {
     /*
         Save to settings entity
     */
-    class func saveEntity() {
+    class func saveContext() {
         do {
             try getContext().save()
         } catch let error as NSError {
@@ -40,9 +40,9 @@ class CoreDataHandler {
     */
     class func fetchEntity<E: NSManagedObject>(in: E.Type) -> [E]? {
         do {
-            let fr = E.fetchRequest()
-            fr.returnsObjectsAsFaults = false
-            let fetchedResults = try getContext().fetch(fr)
+            let fEntity = E.fetchRequest()
+            fEntity.returnsObjectsAsFaults = false
+            let fetchedResults = try getContext().fetch(fEntity)
             return fetchedResults as? [E]
         } catch let error as NSError {
             print("\(error) Could not be fetched")
@@ -62,7 +62,14 @@ class CoreDataHandler {
             print("Nothing In Entity")
         } else {
             for record in e {
+                print("Recipe")
                 print(record)
+                
+                print("Step")
+                let rEntity = record as! RecipeEntity
+                for sEntity in rEntity.step as! Set<StepEntity> {
+                    print(sEntity.stepName)
+                }
             }
         }
     }

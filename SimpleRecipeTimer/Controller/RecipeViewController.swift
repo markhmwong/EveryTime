@@ -13,8 +13,10 @@ class RecipeViewController: UIViewController, UICollectionViewDataSource, UIColl
     //MARK: - Class Variables -
     var timer: Timer?
     let stepCellId = "stepCellId"
-    var recipe: Recipe!
-    var stepArr: [Step] = []
+    var recipe: RecipeEntity!
+//    var stepArr: [Step] = []
+    var stepSet: Set<StepEntity>!
+    var stepArr: [StepEntity] = []
     var stepCompleteTracker: Int = 0
     var mainViewController: MainViewController?
 //    var runningStepArr: [IndexPath] = [] //list of indexPaths
@@ -30,6 +32,19 @@ class RecipeViewController: UIViewController, UICollectionViewDataSource, UIColl
         view.backgroundColor = UIColor.green
         return view
     }()
+    
+    //MARK: - Init -
+    init(recipe: RecipeEntity, delegate: MainViewController) {
+        super.init(nibName: nil, bundle: nil)
+        self.mainViewController = delegate
+        self.recipe = recipe
+        self.stepSet = recipe.step as? Set<StepEntity>
+        self.stepArr = recipe.sortSteps()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     //MARK: - Collection View methods -
     
@@ -52,29 +67,8 @@ class RecipeViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepCellId, for: indexPath) as! StepCell
-        cell.step = stepArr[indexPath.item]
+        cell.entity = stepArr[indexPath.item]
         return cell
-    }
-    
-    //MARK: - Init -
-    init(recipe: Recipe, delegate: MainViewController) {
-        super.init(nibName: nil, bundle: nil)
-        self.recipe = recipe
-        if (recipe.stepArr.count != 0) {
-            stepArr = recipe.stepArr
-        }
-        else {
-            stepArr = []
-        }
-        self.mainViewController = delegate
-//        for index in stride(from: 0, to: stepArr.count, by: 1) {
-//            self.runningStepArr.append(IndexPath(item: stepArr[index].index, section: 0))
-//        }
-        
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     //MARK: - Controller Lifecycle Methods -
@@ -152,9 +146,8 @@ class RecipeViewController: UIViewController, UICollectionViewDataSource, UIColl
         let cells = self.collView.visibleCells as! [StepCell]
 
         for cell in cells {
-            if let s = cell.step {
+            if let s = cell.entity {
                 let primaryPauseState = s.isPausedPrimary
-                
                 //checks if primary level pause is true - primary level being the Step (individual clocks) level
                 if (!primaryPauseState) {
                     s.updateTotalElapsedTime()
@@ -171,21 +164,13 @@ class RecipeViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
 
     //MARK: - RecipeVCDelegate Protocol Functions -
-    func didReturnValues(step: Step) {
-        step.index = self.stepArr.count
-        self.recipe.stepArr.append(step)
+    func didReturnValues(step: StepEntity) {
+        self.recipe.addToStep(step)
         self.stepArr.append(step)
+        CoreDataHandler.saveContext()
     }
     
     func willReloadTableData() {
         self.collView.reloadData()
-    }
-    
-    func addPausedStep(step: Step) {
-//        self.runningStepArr.remove(at: step.index)
-    }
-    
-    func removePausedStep(step: Step) {
-//        self.runningStepArr.append(IndexPath(item: step.index, section: 0))
     }
 }

@@ -64,10 +64,8 @@ class Recipe: NSObject {
     func pauseStepArr() {
         for step in self.stepArr {
             if(!self.isPaused) {
-//            if (!step.isPausedSecondary) {
                 step.updateTotalElapsedTime()
                 step.isPausedPrimary = true
-//                step.isPausedSecondary = true
             }
         }
         self.updateElapsedTimeToShortestElapsedTime()
@@ -104,15 +102,15 @@ class Recipe: NSObject {
         self.expiryDate = Date().addingTimeInterval(totalElapsedTime)
     }
     
-    func timeRemainingDigitalFormat() -> String {
-        var timeStr = "00h00m00s"
-        if (!self.totalElapsedTime.isLess(than: 0.0)) {
-            let desiredComponents: Set<Calendar.Component> = [.hour, .minute, .second]
-            let components = Calendar.current.dateComponents(desiredComponents, from: Date(), to: expiryDate)
-            timeStr = self.componentsFormatter.string(from: components)!
-        }
-        return timeStr
-    }
+//    func timeRemainingDigitalFormat() -> String {
+//        var timeStr = "00h00m00s"
+//        if (!self.totalElapsedTime.isLess(than: 0.0)) {
+//            let desiredComponents: Set<Calendar.Component> = [.hour, .minute, .second]
+//            let components = Calendar.current.dateComponents(desiredComponents, from: Date(), to: expiryDate)
+//            timeStr = self.componentsFormatter.string(from: components)!
+//        }
+//        return timeStr
+//    }
     
     func timeRemainingWithText() -> String {
         var timeStr = "00h00m00s"

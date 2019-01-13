@@ -12,7 +12,7 @@ class StepsViewController: UIViewController, TimerProtocol {
     
     var recipeViewControllerDelegate: RecipeViewController?
     var timer: Timer?
-    fileprivate var step: Step?
+    fileprivate var step: StepEntity?
     fileprivate var timeLabel: UILabel = {
         var label = UILabel()
         label.text = ""
@@ -22,7 +22,7 @@ class StepsViewController: UIViewController, TimerProtocol {
     }()
     fileprivate var pauseButton = UIButton()
     
-    init(stepModel: Step) {
+    init(stepModel: StepEntity) {
         super.init(nibName: nil, bundle: nil)
         self.step = stepModel
     }
@@ -54,7 +54,7 @@ class StepsViewController: UIViewController, TimerProtocol {
     }
     
     // update pause button text
-    func updatePauseButton(s: Step) {
+    func updatePauseButton(s: StepEntity) {
         timeLabel.text = s.timeRemainingPausedState()
 
         if (s.isPausedPrimary) {

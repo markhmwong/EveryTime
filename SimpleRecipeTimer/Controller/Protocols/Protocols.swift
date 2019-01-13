@@ -9,12 +9,11 @@
 import UIKit
 
 protocol RecipeVCDelegate {
-    func didReturnValues(step: Step)
+    func didReturnValues(step: StepEntity)
     func willReloadTableData()
 }
 
 protocol TimerProtocol {
-    var timer: Timer? { get set }
     func startTimer()
     func stopTimer()
     func update()

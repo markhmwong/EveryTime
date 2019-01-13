@@ -74,7 +74,7 @@ class AddStepViewController: UIViewController {
     //MARK: HANDLE DONE BUTTON
     @objc func handleDone() {
         do {
-            try self.grabValues()
+            try self.grabValuesFromInput()
         } catch ErrorsToThrow.labelNotFilled {
             //TODO: BUILD ALERT BOX
             print("Alert Box: Please fill in the label")
@@ -90,7 +90,7 @@ class AddStepViewController: UIViewController {
         self.dismiss(animated: true) { }
     }
     
-    func grabValues() throws {
+    func grabValuesFromInput() throws {
         
         //0
         guard labelTextField.text != "" else {
@@ -116,10 +116,9 @@ class AddStepViewController: UIViewController {
         let min = countDownPicker.selectedRow(inComponent: pickerColumn.min.rawValue)
         let sec = countDownPicker.selectedRow(inComponent: pickerColumn.sec.rawValue)
         
-        let step = Step(hours: hrs, minutes: min, seconds: sec, name: name)
-        
+        let sEntity = StepEntity(name: name, hours: hrs, minutes: min, seconds: sec)
         if let rvc = recipeViewControllerDelegate {
-            rvc.didReturnValues(step: step)
+            rvc.didReturnValues(step: sEntity)
         }
     }
     
