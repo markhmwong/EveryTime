@@ -49,6 +49,20 @@ class CoreDataHandler {
             return nil
         }
     }
+
+    
+    class func fetchByDate<E: NSManagedObject>(in: E.Type, date: Date) -> E? {
+        do {
+            let fEntity = E.fetchRequest()
+            fEntity.returnsObjectsAsFaults = false
+            fEntity.predicate = NSPredicate(format: "createdDate == %@", date as NSDate)
+            let fetchedResults = try getContext().fetch(fEntity)
+            return fetchedResults.first as? E
+        } catch let error as NSError {
+            print("\(error) Could not be fetched")
+            return nil
+        }
+    }
     
     /*
         Print records. Uses fetchEntity(in:)
@@ -62,14 +76,11 @@ class CoreDataHandler {
             print("Nothing In Entity")
         } else {
             for record in e {
-                print("Recipe")
                 print(record)
-                
-                print("Step")
                 let rEntity = record as! RecipeEntity
-                for sEntity in rEntity.step as! Set<StepEntity> {
-                    print(sEntity.stepName)
-                }
+//                for sEntity in rEntity.step as! Set<StepEntity> {
+////                    print(sEntity.stepName!)
+//                }
             }
         }
     }
@@ -95,6 +106,25 @@ class CoreDataHandler {
             return false
         }
     }
+    
+    /*
+        Delete specific entity
+    */
+    class func deleteEntity<E: NSManagedObject>(entity: E.Type, createdDate: Date) -> Bool {
+        let entity = self.fetchByDate(in: E.self, date: createdDate)
+        guard let e = entity else {
+            return false
+        }
+        do {
+            self.getContext().delete(e)
+            try self.getContext().save()
+            return true
+        } catch let error as NSError {
+            print("Trouble deleting all records in entity: \(error)")
+            return false
+        }
+    }
+    
     
     /*
         Count records in entity

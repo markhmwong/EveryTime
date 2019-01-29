@@ -10,17 +10,34 @@ import UIKit
 
 class StepsViewController: UIViewController, TimerProtocol {
     
-    var recipeViewControllerDelegate: RecipeViewController?
-    var timer: Timer?
+    fileprivate var timer: Timer?
     fileprivate var step: StepEntity?
     fileprivate var timeLabel: UILabel = {
         var label = UILabel()
-        label.text = ""
         label.textAlignment = .center
         label.backgroundColor = UIColor.white
         return label
     }()
     fileprivate var pauseButton = UIButton()
+    var recipeViewControllerDelegate: RecipeViewController?
+    var transitionDelegate = OverlayTransitionDelegate()
+    var dismissInteractor: OverlayInteractor!
+    var horizontalTransitionDelegate = HorizontalTransitionDelegate()
+    var horizontalTransitionInteractor: HorizontalTransitionInteractor? = nil
+    
+    lazy var navView: UIView = {
+        let view = UIView()
+        view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
+        return view
+    }()
+    lazy var dismissButton: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(Theme.Font.Color.TextColour, for: .normal)
+        button.setTitle("Back", for: .normal)
+        button.addTarget(self, action: #selector(dismissHandler), for: .touchUpInside)
+        return button
+    }()
+    lazy var nameLabel: UILabel? = nil
     
     init(stepModel: StepEntity) {
         super.init(nibName: nil, bundle: nil)
@@ -34,13 +51,13 @@ class StepsViewController: UIViewController, TimerProtocol {
     //MARK: - VC Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.white
+        self.view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
 
         guard let s = step else {
             return
         }
         
-        self.prepareLabels()
+        self.prepareLabels(s: s)
         self.updatePauseButton(s: s)
     }
     
@@ -66,14 +83,34 @@ class StepsViewController: UIViewController, TimerProtocol {
         }
     }
     
-    func prepareLabels() {
-        let safeGuide = self.view.safeAreaLayoutGuide
-
+    func prepareLabels(s: StepEntity) {
+        let safeLayoutGuide = self.view.safeAreaLayoutGuide
+        navView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(navView)
+        navView.topAnchor.constraint(equalTo: safeLayoutGuide.topAnchor).isActive = true
+        navView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        navView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        navView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.05).isActive = true
+        
+        dismissButton.translatesAutoresizingMaskIntoConstraints = false
+        navView.addSubview(dismissButton)
+        dismissButton.centerYAnchor.constraint(equalTo: navView.centerYAnchor).isActive = true
+        dismissButton.leadingAnchor.constraint(equalTo: navView.leadingAnchor, constant: 10).isActive = true
+        
+        nameLabel = UILabel()
+        nameLabel?.attributedText = NSAttributedString(string: s.stepName!, attributes: Theme.Font.Step.NameAttribute)
+        self.view.addSubview(nameLabel!)
+        nameLabel?.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel?.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -150).isActive = true
+        nameLabel?.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10).isActive = true
+        
+        
+        timeLabel.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Step.NameAttribute)
         timeLabel.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(timeLabel)
-        timeLabel.topAnchor.constraint(equalTo: safeGuide.topAnchor).isActive = true
-        timeLabel.leadingAnchor.constraint(equalTo: safeGuide.leadingAnchor).isActive = true
-        timeLabel.widthAnchor.constraint(equalTo: safeGuide.widthAnchor).isActive = true
+        timeLabel.topAnchor.constraint(equalTo: nameLabel!.bottomAnchor).isActive = true
+        timeLabel.leadingAnchor.constraint(equalTo: safeLayoutGuide.leadingAnchor).isActive = true
+        timeLabel.widthAnchor.constraint(equalTo: safeLayoutGuide.widthAnchor).isActive = true
     
         pauseButton.setTitle("pause", for: .normal)
         pauseButton.backgroundColor = UIColor.yellow
@@ -85,6 +122,8 @@ class StepsViewController: UIViewController, TimerProtocol {
         pauseButton.topAnchor.constraint(equalTo: timeLabel.bottomAnchor).isActive = true
         pauseButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         pauseButton.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
+        
+
     }
     
     //MARK: Button Handlers
@@ -103,6 +142,15 @@ class StepsViewController: UIViewController, TimerProtocol {
         }
     }
     
+    @objc func dismissHandler() {
+        guard let rvc = recipeViewControllerDelegate else {
+            return
+        }
+        rvc.dismiss(animated: true) {
+            self.stopTimer()
+        }
+    }
+    
     //MARK: - Timer Protocol
     func startTimer() {
         timer?.invalidate()
@@ -118,7 +166,7 @@ class StepsViewController: UIViewController, TimerProtocol {
     
     @objc func update() {
         if let s = step {
-            timeLabel.text = s.timeRemaining()
+            timeLabel.attributedText = NSAttributedString(string: s.timeRemaining(), attributes: Theme.Font.Step.TimeAttribute)
         }
     }
 }

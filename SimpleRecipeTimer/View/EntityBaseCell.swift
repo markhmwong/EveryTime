@@ -9,7 +9,7 @@
 import UIKit
 import SwipeCellKit
 
-class EntityBaseCell<E>: SwipeCollectionViewCell {
+class EntityBaseCell<E>: UICollectionViewCell {
     
     var entity: E?
     
@@ -24,14 +24,6 @@ class EntityBaseCell<E>: SwipeCollectionViewCell {
     
     func setupView() {
         //
-    }
-    
-    func prepareNameLabel(_ name: String) {
-        
-    }
-    
-    func prepareLabels(_ name: String, _ time: String) {
-        
     }
     
 }

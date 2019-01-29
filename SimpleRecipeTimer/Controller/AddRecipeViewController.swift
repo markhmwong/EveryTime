@@ -9,93 +9,193 @@
 import UIKit
 import CoreData
 
-class AddRecipeViewController: UIViewController {
+
+extension AddRecipeViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 2
+    }
     
-    var delegate: MainViewController?
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell: UICollectionViewCell? = nil
+        
+        switch indexPath.item {
+        case 0:
+            addRecipeNameCell = collectionView.dequeueReusableCell(withReuseIdentifier: addRecipeNameCellId, for: indexPath) as? AddRecipeNameCell
+            addRecipeNameCell?.backgroundColor = UIColor.clear
+            addRecipeNameCell?.addRecipeViewControllerDelegate = self
+            return addRecipeNameCell!
+        case 1:
+            addRecipeStepCell = collectionView.dequeueReusableCell(withReuseIdentifier: addRecipeStepCellId, for: indexPath) as? AddRecipeStepCell
+            addRecipeStepCell?.backgroundColor = UIColor.clear
+            addRecipeStepCell?.addRecipeViewControllerDelegate = self
+            addRecipeStepCell?.recipeName = recipeNameStr
+            return addRecipeStepCell!
+        default:
+            break
+        }
+        return cell!
+    }
+}
+
+extension AddRecipeViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
+    
+    func scrollToIndex(index: Int) {
+        let indexPath = IndexPath(item: index, section:0)
+        collView.scrollToItem(at: indexPath, at: UICollectionView.ScrollPosition(), animated: true)
+    }
+}
+
+extension AddRecipeViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collView.bounds.width, height: collView.bounds.height)
+    }
+}
+
+class AddRecipeViewController: UIViewController {
+    var addRecipeNameCell: AddRecipeNameCell?
+    var addRecipeStepCell: AddRecipeStepCell?
+    var interactor: OverlayInteractor? = nil
+    let addRecipeNameCellId: String = "AddRecipeNameCellId", addRecipeStepCellId: String = "AddRecipeStepCellId"
+    var mainViewControllerDelegate: MainViewController?
     var recipeNameStr = ""
-    var recipeNameLabel: UILabel = {
+    var invertedCaret: UILabel = {
         let label = UILabel()
-        label.text = "Recipe Name"
+        label.attributedText = NSAttributedString(string: "\u{2304}", attributes: Theme.Font.Recipe.CaretAttribute)
         return label
     }()
-    
-    var recipeNameTextField: UITextField = {
-       let textField = UITextField()
-        textField.placeholder = "name"
-        textField.returnKeyType = UIReturnKeyType.done
-        textField.clearButtonMode = .whileEditing
-        textField.enablesReturnKeyAutomatically = true
-        textField.backgroundColor = UIColor.lightGray
-        textField.becomeFirstResponder()
-        return textField
+    var titleLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Add Recipe".uppercased(), attributes: Theme.Font.Recipe.TitleAttribute)
+        return label
     }()
-    
+    var editButton: UIButton = {
+        let label = UIButton()
+        label.setAttributedTitle(NSAttributedString(string: "edit", attributes: Theme.Font.Recipe.TitleAttribute), for: .normal)
+        return label
+    }()
+    lazy var collView: UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .horizontal
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        cv.delegate = self
+        cv.dataSource = self
+        cv.backgroundColor = UIColor.clear
+        return cv
+    }()
+
     init(delegate: MainViewController) {
         super.init(nibName: nil, bundle: nil)
-        self.delegate = delegate
+        self.mainViewControllerDelegate = delegate
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     override func viewDidAppear(_ animated: Bool) {
+
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.resignFirstResponder()
     }
     
     override func viewDidLoad() {
-        //prepare navbar buttons
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleDismiss))
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(handleAddRecipe)) //may repalce this for a uibutton on the main view
+        self.view.layer.cornerRadius = 14
+        self.view.layer.masksToBounds = true
+
         
         //prepare main view in view controller
         self.prepareMainView()
     }
     
     func prepareMainView() {
-        self.view.backgroundColor = UIColor.white
+
+        self.view.backgroundColor = UIColor.clear
+        let blurView = UIVisualEffectView()
+        blurView.effect = UIBlurEffect(style: .extraLight)
+        blurView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
+        self.view.addSubview(blurView)
         
-        recipeNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(recipeNameLabel)
-        recipeNameLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
-        recipeNameLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        invertedCaret.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(invertedCaret)
         
-        recipeNameTextField.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(recipeNameTextField)
-        recipeNameTextField.topAnchor.constraint(equalTo: self.recipeNameLabel.bottomAnchor).isActive = true
-        recipeNameTextField.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        recipeNameTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(titleLabel)
+
+        collView.isScrollEnabled = false
+        collView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(collView)
+        collView.register(AddRecipeNameCell.self, forCellWithReuseIdentifier: addRecipeNameCellId)
+        collView.register(AddRecipeStepCell.self, forCellWithReuseIdentifier: addRecipeStepCellId)
+        
+        editButton.addTarget(self, action: #selector(handleEditButton), for: .touchUpInside)
+        editButton.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(editButton)
+        
+        self.prepareAutoLayout()
     }
     
-    func createRecipe() {
-        guard let name = recipeNameTextField.text else {
-            //TODO: - Error checking
-            return
-        }
+    func prepareAutoLayout() {
+        invertedCaret.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 10).isActive = true
+        invertedCaret.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         
-        let rEntity = RecipeEntity(name: name)
-        //Adding step in Recipe Entity constructor
-//        let sEntity = StepEntity(name: "SampleStep", hours: 1, minutes: 30, seconds: 0)
-//        rEntity.addToStep(sEntity)
+        titleLabel.topAnchor.constraint(equalTo: invertedCaret.bottomAnchor, constant: 40).isActive = true
+        titleLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        
+        collView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor).isActive = true
+        collView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        collView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        collView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        
+        editButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant:20).isActive = true
+        editButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
+    }
+    
+    
+    func createRecipe(rEntity: RecipeEntity) {
         CoreDataHandler.saveContext()
-        if let mvc = delegate {
+        if let mvc = mainViewControllerDelegate {
             mvc.addToRecipeCollection(r: rEntity)
             mvc.addToCollectionView()
         }
     }
     
+    @objc func handleNextButton() {
+        self.scrollToIndex(index: 1)
+    }
     @objc func handleAddRecipe() {
-        self.createRecipe()
         CoreDataHandler.saveContext()
-        self.dismiss(animated: true) {
-            //
+        guard let mvc = mainViewControllerDelegate else {
+            return
         }
+        mvc.dismiss(animated: true, completion: nil)
     }
     
     @objc func handleDismiss() {
-        self.dismiss(animated: true) {
-            //
+        guard let mvc = mainViewControllerDelegate else {
+            return
         }
+        mvc.dismiss(animated: true, completion: nil)
     }
     
+    @objc func handleEditButton() {
+        let cell = collView.cellForItem(at: IndexPath(item: 1, section: 0)) as! AddRecipeStepCell //the add step cell
+        let tableView = cell.tableView
+        guard let i = interactor else {
+            return
+        }
+        tableView.isEditing = !tableView.isEditing
+        
+        if (tableView.isEditing) {
+            i.pan.isEnabled = false
+            editButton.setAttributedTitle(NSAttributedString(string: "save", attributes: Theme.Font.Recipe.TitleAttribute), for: .normal)
+        } else {
+            i.pan.isEnabled = true
+            editButton.setAttributedTitle(NSAttributedString(string: "edit", attributes: Theme.Font.Recipe.TitleAttribute), for: .normal)
+        }
+    }
 }

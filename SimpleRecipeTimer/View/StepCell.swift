@@ -18,42 +18,67 @@ class StepCell: EntityBaseCell<StepEntity> {
     }
     var nameLabel: UILabel? = nil
     var timeLabel: UILabel = UILabel()
-
+    var priorityLabel: UILabel = {
+       let label = UILabel()
+        
+        return label
+    }()
+    var isComplete: Bool = false
+    var stackView: UIStackView?
+    var completeLabel = UILabel()
     
     override func setupView() {
         super.setupView()
-        self.backgroundColor = UIColor.blue
+        self.backgroundColor = Theme.Background.Color.CellBackgroundColor
         if let s = entity {
-            timeLabel.text = s.timeRemaining()
-            nameLabel?.text = s.stepName
+            timeLabel.attributedText = NSAttributedString(string: "\(s.timeRemaining())", attributes: Theme.Font.Step.CellTimeAttribute)
+            nameLabel?.attributedText = NSAttributedString(string: s.stepName!, attributes: Theme.Font.Step.CellNameAttribute)
         }
     }
     
-    override func prepareNameLabel(_ name: String) {
-        timeLabel.backgroundColor = UIColor.white
-        timeLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(timeLabel)
-        timeLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        timeLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        timeLabel.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+    func prepareNameLabel(_ name: String) {
         
-        let attributes: [NSAttributedString.Key :Any ] = [NSAttributedString.Key.font: UIFont(name: UIFont.StandardTheme.Font.Style.Black, size: UIFont.StandardTheme.Font.Size.SizeCell)!, NSAttributedString.Key.foregroundColor: UIColor.StandardTheme.Font.TextColour]
-
+        stackView = UIStackView()
+        stackView?.translatesAutoresizingMaskIntoConstraints = false
+        stackView?.axis = .horizontal
+        stackView?.alignment = .center
+        stackView?.spacing = 10
+        stackView?.distribution = .fillEqually
+        
+        timeLabel.textAlignment = .center
         nameLabel = UILabel()
-        nameLabel?.attributedText = NSAttributedString(string: "\(name)", attributes: attributes)
-        nameLabel?.backgroundColor = UIColor.white
-        nameLabel?.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(nameLabel!)
-        nameLabel?.topAnchor.constraint(equalTo: timeLabel.bottomAnchor).isActive = true
-        nameLabel?.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        nameLabel?.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+        nameLabel?.attributedText = NSAttributedString(string: name, attributes: Theme.Font.Step.CellNameAttribute)
+        nameLabel?.textAlignment = .left
+        
+        priorityLabel.attributedText = NSAttributedString(string: "\(entity!.priority)", attributes: Theme.Font.Step.CellNameAttribute)
+        
+        completeLabel.attributedText = NSAttributedString(string: "done", attributes: Theme.Font.Step.CellIndicatorIncomplete)
+        completeLabel.textAlignment = .right
+        
+        stackView?.addArrangedSubview(priorityLabel)
+        stackView?.addArrangedSubview(nameLabel!)
+        stackView?.addArrangedSubview(timeLabel)
+        stackView?.addArrangedSubview(completeLabel)
+        self.addSubview(stackView!)
+        stackView?.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
+        stackView?.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10).isActive = true
+        stackView?.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     }
     
     func updateNameLabel(name: String) {
-        nameLabel?.text = name
+        nameLabel?.attributedText = NSAttributedString(string: name, attributes: Theme.Font.Step.CellNameAttribute)
     }
     
     func updateTimeLabel(time: String) {
-        timeLabel.text = time
+        timeLabel.attributedText = NSAttributedString(string: time, attributes: Theme.Font.Step.CellTimeAttribute)
+//
+//        guard let e = entity else {
+//            return
+//        }
+//        if (e.isComplete) {
+//            completeLabel.attributedText = NSAttributedString(string: "done", attributes: Theme.Font.Step.CellIndicatorComplete)
+//        } else {
+//            completeLabel.attributedText = NSAttributedString(string: "done", attributes: Theme.Font.Step.CellIndicatorIncomplete)
+//        }
     }
 }

@@ -103,3 +103,50 @@ extension Int {
     }
     
 }
+
+extension UITextField {
+    func addAddDoneButonToolbar(onDone: (target: Any, action: Selector)? = nil, onAdd: (target: Any, action: Selector)? = nil, onEdit: (target: Any, action: Selector)? = nil) {
+        let onDone = onDone ?? (target: self, action: #selector(handleDoneButton))
+        let onAdd = onAdd ?? (target: self, action: #selector(handleDoneButton))
+        
+        let toolbar: UIToolbar = UIToolbar()
+        toolbar.barStyle = .default
+        toolbar.items = [
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
+            UIBarButtonItem(title: "Done", style: .done, target: onDone.target, action: onDone.action),
+            UIBarButtonItem(title: "Add", style: .done, target: onAdd.target, action: onAdd.action),
+        ]
+        toolbar.sizeToFit()
+        
+        self.inputAccessoryView = toolbar
+    }
+    
+    func addNextButtonToolbar(onNext: (target: Any, action: Selector)? = nil, onCancel: (target: Any, action: Selector)? = nil, onDone: (target: Any, action: Selector)? = nil) {
+        let onNext = onNext ?? (target: self, action: #selector(handleNextButton))
+        let onDone = onDone ?? (target: self, action: #selector(handleDoneButton))
+
+        let toolbar: UIToolbar = UIToolbar()
+        toolbar.barStyle = .default
+        toolbar.items = [
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
+            UIBarButtonItem(title: "Done", style: .done, target: onDone.target, action: onDone.action),
+            UIBarButtonItem(title: "Next", style: .done, target: onNext.target, action: onNext.action)
+        ]
+        toolbar.sizeToFit()
+        
+        self.inputAccessoryView = toolbar
+    }
+    
+    // Default actions:
+    @objc func handleDoneButton() { self.resignFirstResponder() }
+    @objc func handleNextButton() { self.resignFirstResponder() }
+    @objc func handleAddButton() { self.resignFirstResponder() }
+    @objc func handleEditButton() { self.resignFirstResponder() }
+}
+
+extension String {
+    
+    var integerValue:Int? {
+        return NumberFormatter().number(from:self)?.intValue
+    }
+}

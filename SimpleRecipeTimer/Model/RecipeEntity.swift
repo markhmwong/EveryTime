@@ -18,13 +18,8 @@ class RecipeEntity: NSManagedObject {
     convenience init(name: String) {
         self.init(entity: RecipeEntity.entity(), insertInto: CoreDataHandler.getContext())
         self.recipeName = name
-        
-        //to be changed
-        let sEntity = StepEntity(name: "SampleStep", hours: 1, minutes: 30, seconds: 0)
-        self.addToStep(sEntity)
-        
-        self.updateElapsedTimeToShortestElapsedTime()
-        self.updateExpiryTime()
+        self.isPaused = false
+        self.createdDate = Date()
     }
 }
 
@@ -49,6 +44,17 @@ extension RecipeEntity {
         self.expiryDate = Date().addingTimeInterval(self.totalElapsedTime)
     }
     
+    func pauseStepArr() {
+        let stepSet = self.step as! Set<StepEntity>
+        for s in stepSet {
+            if(!self.isPaused) {
+                s.updateTotalElapsedTime()
+                s.isPausedPrimary = true
+            }
+        }
+        self.updateElapsedTimeByPriority()
+    }
+    
     func unpauseStepArr() {
         let stepSet = self.step as! Set<StepEntity>
         for s in stepSet {
@@ -60,36 +66,15 @@ extension RecipeEntity {
         self.updateExpiryTime()
     }
     
-    func pauseStepArr() {
-        let stepSet = self.step as! Set<StepEntity>
-        for s in stepSet {
-            if(!self.isPaused) {
-                s.updateTotalElapsedTime()
-                s.isPausedPrimary = true
-            }
-        }
-        self.updateElapsedTimeToShortestElapsedTime()
-    }
-    
-    func updateElapsedTimeToShortestElapsedTime() {
-        guard let stepSet = self.step as? Set<StepEntity> else {
+    func updateElapsedTimeByPriority() {
+        let entity = self.sortStepsByPriority()
+        guard let firstEntity = entity.first else {
             return
         }
-        
-        guard let firstItem = stepSet.first else {
-            return
-        }
-        var currShortestTime: TimeInterval = firstItem.totalElapsedTime
-        for step in stepSet {
-            
-            if (currShortestTime > step.totalElapsedTime) {
-                currShortestTime = step.totalElapsedTime
-            }
-        }
-        self.totalElapsedTime = currShortestTime
+        self.totalElapsedTime = firstEntity.totalElapsedTime
     }
     
-    func sortSteps() -> [StepEntity] {
+    func sortStepsByDate() -> [StepEntity] {
         let unsortedSet = self.step as! Set<StepEntity>
         let sortedSet = unsortedSet.sorted { (x, y) -> Bool in
             return (x.createdDate?.compare(y.createdDate!) == .orderedAscending)
@@ -97,4 +82,12 @@ extension RecipeEntity {
         return sortedSet
     }
     
+    func sortStepsByPriority() -> [StepEntity] {
+        let unsortedSet = self.step as! Set<StepEntity>
+        print(unsortedSet.count)
+        let sortedSet = unsortedSet.sorted { (x, y) -> Bool in
+            return (x.priority < y.priority)
+        }
+        return sortedSet
+    }
 }

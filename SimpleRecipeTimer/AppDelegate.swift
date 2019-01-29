@@ -21,6 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         window?.rootViewController = UINavigationController(rootViewController: MainViewController())
         CoreDataHandler.loadContext()
+        if NSTimeZone(abbreviation: "UTC") != nil {
+            print(NSTimeZone.default)
+        }
+        
         return true
     }
 

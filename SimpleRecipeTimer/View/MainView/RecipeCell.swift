@@ -26,28 +26,27 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
             
             if (pauseState) {
                 pauseButton.setAttributedTitle(NSAttributedString(string: "unpause", attributes: Theme.Font.Recipe.PauseAttribute), for: .normal)
+                totalTimeLabel?.textColor = Theme.Font.Color.TextColourDisabled
             } else {
                 pauseButton.setAttributedTitle(NSAttributedString(string: "pause", attributes: Theme.Font.Recipe.PauseAttribute), for: .normal)
             }
         }
     }
     fileprivate var nameLabel: UILabel? = nil
-//    fileprivate var switchButtonState: Bool = true
     fileprivate var totalTimeLabel: UILabel? = nil
     fileprivate var nextShortestTimeLabel: UILabel? = nil
     fileprivate var pauseButton: UIButton = {
         let button = UIButton()
         return button
     }()
-    
     lazy var nameLabelAnimationYMovement: CGFloat = 0.0
     var mainViewController: MainViewController? = nil
     var cellForIndexPath: IndexPath?
     
-    override func prepareLabels(_ name: String,_ time: String) {
+    func prepareLabels(_ name: String,_ time: String) {
         nameLabel = UILabel()
         nameLabel?.attributedText = NSAttributedString(string: name, attributes: Theme.Font.Recipe.NameAttribute)
-        nameLabel?.backgroundColor = UIColor.StandardTheme.Font.RecipeLabelBackgroundColour
+        nameLabel?.backgroundColor = UIColor.clear
         
         nameLabel?.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(nameLabel!)
@@ -71,26 +70,32 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
     }
     
     override func setupView() {
-        self.clipsToBounds = false
-        self.backgroundColor = UIColor.StandardTheme.Recipe.RecipeCellBackground
+        layer.cornerRadius = 4
+        layer.borderWidth = 1.0
+        layer.borderColor = UIColor.clear.cgColor
+        layer.masksToBounds = true
+//        self.contentView.layer.backgroundColor = UIColor.clear.cgColor
+//        self.clipsToBounds = false
+        self.backgroundColor = Theme.Background.Color.CellBackgroundColor
         
         pauseButton.addTarget(self, action: #selector(recipePauseHandler), for: .touchUpInside)
-        pauseButton.setTitle("pause", for: .normal)
-
         pauseButton.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(pauseButton)
         pauseButton.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor).isActive = true
+        pauseButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0).isActive = true
+        pauseButton.backgroundColor = UIColor.blue
+        pauseButton.titleEdgeInsets = UIEdgeInsets(top: -10,left: 0,bottom: -10,right: 0)
     }
     
     //combine with pause button handler
-    func updateTextWhenPaused() {
-        if let r = entity {
-            if let name = entity?.recipeName {
-                nameLabel?.attributedText = NSAttributedString(string: name, attributes: Theme.Font.Recipe.NameAttribute)
-            }
-            totalTimeLabel?.attributedText = NSAttributedString(string: "00h00m00s", attributes: Theme.Font.Recipe.TimeAttribute)
-        }
-    }
+//    func updateTextWhenPaused() {
+//        if entity != nil {
+//            if let name = entity?.recipeName {
+//                nameLabel?.attributedText = NSAttributedString(string: name, attributes: Theme.Font.Recipe.NameAttribute)
+//            }
+//            totalTimeLabel?.attributedText = NSAttributedString(string: "00h00m00s", attributes: Theme.Font.Recipe.TimeAttributeInactive)
+//        }
+//    }
     
     @objc func recipePauseHandler() {
         self.updatePauseButton()
@@ -112,16 +117,31 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
                     return
                 }
                 if (!r.isPaused) {
+                    let pauseState = true
                     mvc.pauseEntireRecipe(recipe: r)
+
+                    if let singleEntity = CoreDataHandler.fetchByDate(in: RecipeEntity.self, date: r.createdDate!) {
+                        singleEntity.isPaused = pauseState
+                    }
                     DispatchQueue.main.async {
-                        self.pauseButton.setTitle("unpause", for: .normal)
-                        r.isPaused = !r.isPaused
+                        CoreDataHandler.saveContext()
+                        self.pauseButton.setAttributedTitle(NSAttributedString(string: "unpause", attributes: Theme.Font.Recipe.PauseAttribute), for: .normal)
+                        self.totalTimeLabel?.textColor = Theme.Font.Color.TextColourDisabled
+                        r.isPaused = pauseState
                     }
                 } else {
+                    let pauseState = false
                     mvc.unpauseEntireRecipe(recipe: r)
+
+                    if let singleEntity = CoreDataHandler.fetchByDate(in: RecipeEntity.self, date: r.createdDate!) {
+                        singleEntity.isPaused = pauseState
+                    }
+
                     DispatchQueue.main.async {
-                        self.pauseButton.setTitle("pause", for: .normal)
-                        r.isPaused = !r.isPaused
+                        CoreDataHandler.saveContext()
+                        self.pauseButton.setAttributedTitle(NSAttributedString(string: "pause", attributes: Theme.Font.Recipe.PauseAttribute), for: .normal)
+                        self.totalTimeLabel?.textColor = Theme.Font.Color.TextColour
+                        r.isPaused = pauseState
                     }
                 }
             }
@@ -136,24 +156,24 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
         }
     }
     
-    func updateNameLabel(name: String) {
-        
-    }
+//    func updateNameLabel(name: String) {
+//
+//    }
     
 
     //MARK: - no longer using the animating effect
-    func animateNameLabel(state: Bool) {
-        nameLabelAnimationYMovement = state ? 0 : ((nameLabel?.frame.size.height)! / 2) * -1
-        if (!state) {
-            UIView.animate(withDuration: 0.3) {
-                self.nameLabel?.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-                self.layoutIfNeeded()
-            }
-        } else {
-            UIView.animate(withDuration: 0.3) {
-                self.nameLabel?.transform = CGAffineTransform.identity
-                self.layoutIfNeeded()
-            }
-        }
-    }
+//    func animateNameLabel(state: Bool) {
+//        nameLabelAnimationYMovement = state ? 0 : ((nameLabel?.frame.size.height)! / 2) * -1
+//        if (!state) {
+//            UIView.animate(withDuration: 0.3) {
+//                self.nameLabel?.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+//                self.layoutIfNeeded()
+//            }
+//        } else {
+//            UIView.animate(withDuration: 0.3) {
+//                self.nameLabel?.transform = CGAffineTransform.identity
+//                self.layoutIfNeeded()
+//            }
+//        }
+//    }
 }

@@ -14,16 +14,25 @@ class StepEntity: NSManagedObject {
         self.init(entity: entity, insertInto: context)
     }
     
-    convenience init(name: String, hours: Int, minutes: Int, seconds: Int) {
+    convenience init(name: String, hours: Int, minutes: Int, seconds: Int, priority: Int16) {
         self.init(entity: StepEntity.entity(), insertInto: CoreDataHandler.getContext())
         self.stepName = name
+        self.priority = priority
+        self.isComplete = false
+        self.isLeading = false
+        self.isSequential = true
+        self.isPausedPrimary = false
         self.createdDate = Date()
         self.expiryDate = self.createdDate!.addingTimeInterval(self.timeToSeconds(hours: hours, minutes: minutes, seconds: seconds))
         self.totalElapsedTime = self.expiryDate!.timeIntervalSince(Date())
+        self.storedTotalElapsedTime = self.totalElapsedTime //a stored time for reset purposes
     }
 }
 
 extension StepEntity {
+    func resetStep() {
+        //todo
+    }
     func updateExpiry() {
         self.expiryDate = Date().addingTimeInterval(self.totalElapsedTime)
     }
@@ -34,17 +43,25 @@ extension StepEntity {
     
     func updateTotalElapsedTime() {
         self.totalElapsedTime = expiryDate!.timeIntervalSince(Date())
+        if (self.totalElapsedTime <= 0) {
+            self.totalElapsedTime = 0
+        }        
+    }
+    
+    func isStepComplete() -> Bool {
+        if (self.totalElapsedTime.isLessThanOrEqualTo(0.0)) {
+            self.isComplete = true
+            self.isLeading = false
+            return true
+        } else {
+            return false
+        }
     }
     
     func timeRemaining() -> String {
         var timeStr = "00h00m00s"
-        if (!self.totalElapsedTime.isLess(than: 0.0)) {
-            let desiredComponents: Set<Calendar.Component> = [.hour, .minute, .second]
-            let components = Calendar.current.dateComponents(desiredComponents, from: Date(), to: expiryDate!)
-            let componentsFormatter = DateComponentsFormatter()
-            componentsFormatter.allowedUnits = [.hour, .minute, .second]
-            timeStr = componentsFormatter.string(from: components)!
-        }
+        let (h,m,s) = self.totalElapsedTime.secondsToHoursMinutesSeconds()
+        timeStr = "\(h.prefixZeroToInteger())h\(m.prefixZeroToInteger())m\(s.prefixZeroToInteger())s"
         return timeStr
     }
     
@@ -54,7 +71,7 @@ extension StepEntity {
     }
     
     func hrsMinsSecsToString(h: Int, m: Int, s: Int) -> String {
-        return "\(h):\(m):\(s)"
+        return "\(h)h\(m)m\(s)s"
     }
     
     func updatePauseState() {
