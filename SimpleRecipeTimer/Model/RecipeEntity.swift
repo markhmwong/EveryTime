@@ -32,50 +32,11 @@ extension RecipeEntity {
     /* Called directly from MVC update function */
     func updateRecipeTime() {
         
-        //work in progress. Offscreen cells not correctly updating
-        //the recipe is first updated via updateAllRecipes() then
-        //each recipe will continue from that point forward
-        let sortedStepSet = sortStepsByPriority()
-        //do it step by step
-        let priority = Int(currStepPriority)
-        let currStepEntity = sortedStepSet[priority]
-        let now = Date()
-        guard let start = startDate else {
-            print("updateRecipetime: start is nil")
-            return
-        }
-
-        //update current step state in Recipe
-        guard let stepExpiryDate = currStepEntity.expiryDate else {
-            return
-        }
-        currStepTimeRemaining = stepExpiryDate.timeIntervalSince(now)
-
-        //update Step Entity
-        currStepEntity.timeRemaining = currStepTimeRemaining
-        if (currStepTimeRemaining <= 0.0) {
-            //configure current step as complete
-            currStepEntity.isComplete = true
-
-            //next step
-            let maxItems = sortedStepSet.count - 1
-            if (priority < maxItems) {
-                let nextStepPriority = Int(currStepPriority) + 1
-                let nextStep = sortedStepSet[nextStepPriority]
-                nextStep.expiryDate = Date().addingTimeInterval(nextStep.totalTime)
-                nextStep.isLeading = true
-                currStepPriority = Int16(nextStepPriority)
-                currStepName = nextStep.stepName
-            }
-        }
-        
-        
-        
         //working
-//        calculateTimeToStepByTimePassed()
-//        if (currStepTimeRemaining <= 0.0) {
-//            prepareNextStep()
-//        }
+        calculateTimeToStepByTimePassed()
+        if (currStepTimeRemaining <= 0.0) {
+            prepareNextStep()
+        }
     }
     
     func searchLeadingStep() -> StepEntity? {
