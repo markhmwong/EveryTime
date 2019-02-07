@@ -39,6 +39,7 @@ extension StepEntity {
             return
         }
     }
+    
     func updateTimeRemaining() {
         guard let expiry = expiryDate else {
             return

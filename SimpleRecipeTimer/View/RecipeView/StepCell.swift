@@ -15,7 +15,6 @@ class StepCell: EntityBaseCell<StepEntity> {
                 return
             }
             self.prepareLabel(e)
-
         }
     }
     var nameLabel: UILabel = {
@@ -55,6 +54,7 @@ class StepCell: EntityBaseCell<StepEntity> {
     }
     
     func prepareLabel(_ e: StepEntity) {
+        print(e.timeRemainingToString())
         timeLabel.attributedText = NSAttributedString(string: "\(e.timeRemainingToString())", attributes: Theme.Font.Step.CellTimeAttribute)
         nameLabel.attributedText = NSAttributedString(string: e.stepName!, attributes: Theme.Font.Step.CellNameAttribute)
 //        priorityLabel.attributedText = NSAttributedString(string: "\(entity!.priority)", attributes: Theme.Font.Step.CellNameAttribute)

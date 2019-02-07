@@ -143,10 +143,11 @@ class AddStepViewController: UIViewController {
         self.view.layer.cornerRadius = Theme.View.CornerRadius
         self.view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
         self.view.addSubview(navView)
-        rightNavItemButton.addTarget(self, action: #selector(handleDoneButton), for: .touchUpInside)
         self.view.addSubview(rightNavItemButton)
         self.view.addSubview(labelTextField)
         self.view.addSubview(invertedCaret)
+        
+        rightNavItemButton.addTarget(self, action: #selector(handleDoneButton), for: .touchUpInside)
     }
     
     func preparePicker() {
@@ -173,12 +174,6 @@ class AddStepViewController: UIViewController {
     }
     
     func prepareAutoLayout() {
-//        let safeLayoutGuide = self.view.safeAreaLayoutGuide
-//        navView.topAnchor.constraint(equalTo: safeLayoutGuide.topAnchor).isActive = true
-//        navView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-//        navView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-//        navView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.05).isActive = true
-
         rightNavItemButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 20).isActive = true
         rightNavItemButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -8).isActive = true
         

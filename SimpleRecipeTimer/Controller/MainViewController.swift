@@ -75,7 +75,7 @@ class MainViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.stopTimer()
+        stopTimer()
     }
     
     override func beginAppearanceTransition(_ isAppearing: Bool, animated: Bool) {
@@ -84,7 +84,7 @@ class MainViewController: UIViewController {
     
     override func endAppearanceTransition() {
         super.endAppearanceTransition()
-        self.stopTimer()
+        stopTimer()
     }
     
     override func updateViewConstraints() {
@@ -194,7 +194,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         vc.transitioningDelegate = horizontalDelegate
         vc.modalPresentationStyle = .custom
         vc.indexPath = indexPath
-        self.stopTimer()
+        stopTimer()
         self.present(vc, animated: true, completion: nil)
     }
     

@@ -170,7 +170,7 @@ class RecipeViewController: UIViewController, RecipeVCDelegate {
             //TODO: Error
             return
         }
-        self.stopTimer()
+        stopTimer()
         DispatchQueue.main.async {
             mvc.willReloadTableData()
         }
@@ -207,6 +207,7 @@ class RecipeViewController: UIViewController, RecipeVCDelegate {
         guard let mvc = mainViewControllerDelegate else {
             return
         }
+        stopTimer()
         mvc.dismiss(animated: true) {
             mvc.startTimer()
         }
@@ -271,6 +272,7 @@ extension RecipeViewController: UICollectionViewDataSource, UICollectionViewDele
         horizontalDelegate.dismissInteractor  = horizontalTransitionInteractor
         vc.transitioningDelegate = horizontalDelegate
         vc.modalPresentationStyle = .custom
+        stopTimer()
         self.present(vc, animated: true, completion: nil)
     }
     
@@ -307,6 +309,7 @@ extension RecipeViewController: TimerProtocol {
     }
     
     @objc func update() {
+        //updates specific cell only
         if (!recipe.isPaused) {
             let visibleCellIndexPaths = self.collView.indexPathsForVisibleItems.sorted { (x, y) -> Bool in
                 return x < y
@@ -318,6 +321,9 @@ extension RecipeViewController: TimerProtocol {
             //on screen
             
             let s = stepArr[stepPriorityToUpdate]
+            print(s.stepName!)
+            print(s.timeRemaining)
+
             if (s.timeRemaining.isLessThanOrEqualTo(0.0) && s.isComplete == true) {
                 //to next step
                 updateCurrentStep(step: s)

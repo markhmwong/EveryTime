@@ -116,7 +116,6 @@ class StepsViewController: UIViewController, TimerProtocol {
         self.view.addSubview(timeLabel)
         self.view.addSubview(pauseButton)
         pauseButton.addTarget(self, action: #selector(handlePause), for: .touchUpInside)
-
     }
     
     // update pause button text
@@ -175,8 +174,9 @@ class StepsViewController: UIViewController, TimerProtocol {
         guard let rvc = recipeViewControllerDelegate else {
             return
         }
+        self.stopTimer()
         rvc.dismiss(animated: true) {
-            self.stopTimer()
+            rvc.startTimer()
         }
     }
     
@@ -194,8 +194,10 @@ class StepsViewController: UIViewController, TimerProtocol {
     }
     
     @objc func update() {
-        if let s = step {
-            timeLabel.attributedText = NSAttributedString(string: s.timeRemainingToString(), attributes: Theme.Font.Step.TimeAttribute)
+        guard let s = step else {
+            timeLabel.attributedText = NSAttributedString(string: "nil", attributes: Theme.Font.Step.TimeAttribute)
+            return
         }
+        timeLabel.attributedText = NSAttributedString(string: s.timeRemainingToString(), attributes: Theme.Font.Step.TimeAttribute)
     }
 }

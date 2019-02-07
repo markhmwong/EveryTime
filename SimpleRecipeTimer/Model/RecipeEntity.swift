@@ -78,6 +78,7 @@ extension RecipeEntity {
             } else {
                 //step complete
                 currStepTimeRemaining = 0.0
+                step.timeRemaining = currStepTimeRemaining
                 step.isComplete = true
             }
         }
@@ -140,10 +141,8 @@ extension RecipeEntity {
         currStep.isLeading = false
         currStep.isComplete = true
         currStep.timeRemaining = 0.0
-        
         if (index < maxItems) {
             currStepPriority = Int16(index + 1)
-
             let nextStep = sortedSet[Int(currStepPriority)]
             currStepTimeRemaining = nextStep.timeRemaining
             nextStep.isLeading = true
