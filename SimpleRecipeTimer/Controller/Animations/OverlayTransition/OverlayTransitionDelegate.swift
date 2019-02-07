@@ -15,6 +15,7 @@ class OverlayTransitionDelegate: NSObject, UIViewControllerTransitioningDelegate
         self.init()
         self.dismissInteractor = interactor
     }
+    
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return OverlayPresentationController(presentedViewController: presented, presenting: presenting)
     }

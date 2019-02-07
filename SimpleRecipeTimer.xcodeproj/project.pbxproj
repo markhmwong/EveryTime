@@ -17,8 +17,8 @@
 		4D0C4B5421AEC73C00153E76 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D0C4B5221AEC73C00153E76 /* LaunchScreen.storyboard */; };
 		4D0C4B5F21AEC73D00153E76 /* SimpleRecipeTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4B5E21AEC73D00153E76 /* SimpleRecipeTimerTests.swift */; };
 		4D0C4B6A21AEC73D00153E76 /* SimpleRecipeTimerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4B6921AEC73D00153E76 /* SimpleRecipeTimerUITests.swift */; };
-		4D0C4B7821AFD4BA00153E76 /* Timepiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4B7721AFD4BA00153E76 /* Timepiece.swift */; };
 		4D205DB121FE8252008006BD /* StepTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D205DB021FE8252008006BD /* StepTableViewCell.swift */; };
+		4D53C2172203F8C900EED75C /* HorizontalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53C2162203F8C900EED75C /* HorizontalPresentationController.swift */; };
 		4D53F75B21E2E38100C0AF31 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F75A21E2E38100C0AF31 /* CoreDataHelper.swift */; };
 		4D53F7BC21E72B7E00C0AF31 /* RecipeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F7BB21E72B7E00C0AF31 /* RecipeEntity.swift */; };
 		4D53F7BE21E735CD00C0AF31 /* StepEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F7BD21E735CD00C0AF31 /* StepEntity.swift */; };
@@ -85,8 +85,8 @@
 		4D0C4B6521AEC73D00153E76 /* SimpleRecipeTimerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleRecipeTimerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D0C4B6921AEC73D00153E76 /* SimpleRecipeTimerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleRecipeTimerUITests.swift; sourceTree = "<group>"; };
 		4D0C4B6B21AEC73D00153E76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4D0C4B7721AFD4BA00153E76 /* Timepiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timepiece.swift; sourceTree = "<group>"; };
 		4D205DB021FE8252008006BD /* StepTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTableViewCell.swift; sourceTree = "<group>"; };
+		4D53C2162203F8C900EED75C /* HorizontalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalPresentationController.swift; sourceTree = "<group>"; };
 		4D53F75A21E2E38100C0AF31 /* CoreDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
 		4D53F7BB21E72B7E00C0AF31 /* RecipeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeEntity.swift; sourceTree = "<group>"; };
 		4D53F7BD21E735CD00C0AF31 /* StepEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepEntity.swift; sourceTree = "<group>"; };
@@ -213,7 +213,6 @@
 			children = (
 				4D53F75A21E2E38100C0AF31 /* CoreDataHelper.swift */,
 				4DA12F6E21B181460049CD75 /* StepsProtocol.swift */,
-				4D0C4B7721AFD4BA00153E76 /* Timepiece.swift */,
 				4D53F7BB21E72B7E00C0AF31 /* RecipeEntity.swift */,
 				4D53F7BD21E735CD00C0AF31 /* StepEntity.swift */,
 			);
@@ -227,6 +226,22 @@
 				4D205DB021FE8252008006BD /* StepTableViewCell.swift */,
 			);
 			path = AddRecipe;
+			sourceTree = "<group>";
+		};
+		4D205DB3220122AA008006BD /* MainView */ = {
+			isa = PBXGroup;
+			children = (
+				4DA12F7521B358AB0049CD75 /* RecipeCell.swift */,
+			);
+			path = MainView;
+			sourceTree = "<group>";
+		};
+		4D53C21822065FE300EED75C /* Theming */ = {
+			isa = PBXGroup;
+			children = (
+				4D53F7CB21EC47E700C0AF31 /* ThemeConstants.swift */,
+			);
+			path = Theming;
 			sourceTree = "<group>";
 		};
 		4D53F7D621EF0C2900C0AF31 /* Animations */ = {
@@ -245,6 +260,7 @@
 				4D53F8A621F36DDA00C0AF31 /* HideHorizontalAnimator.swift */,
 				4D53F8A821F36E1B00C0AF31 /* HorizontalTransitionInteractor.swift */,
 				4D53F8AA21F36F5500C0AF31 /* HorizontalTransitionDelegate.swift */,
+				4D53C2162203F8C900EED75C /* HorizontalPresentationController.swift */,
 			);
 			path = HorizontalTransition;
 			sourceTree = "<group>";
@@ -253,10 +269,10 @@
 			isa = PBXGroup;
 			children = (
 				4D53F89B21F1A42100C0AF31 /* OverlayInteractor.swift */,
-				4D53F7D421EF0C2400C0AF31 /* OverlayTransitionDelegate.swift */,
 				4D53F7D721EF0C6500C0AF31 /* ViewControllerOverlayAnimator.swift */,
 				4D53F89D21F1CBF800C0AF31 /* ShowOverlayAnimator.swift */,
 				4D53F89F21F1CC0800C0AF31 /* DismissOverlayAnimator.swift */,
+				4D53F7D421EF0C2400C0AF31 /* OverlayTransitionDelegate.swift */,
 				4D53F7D921EF0D7600C0AF31 /* OverlayPresentationController.swift */,
 			);
 			path = OverlayTransition;
@@ -280,11 +296,11 @@
 		4DA12F7421B352440049CD75 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4D53C21822065FE300EED75C /* Theming */,
+				4D205DB3220122AA008006BD /* MainView */,
 				4D205DB221FE82B5008006BD /* AddRecipe */,
 				4DA12F7221B2D3DD0049CD75 /* EntityBaseCell.swift */,
-				4DA12F7521B358AB0049CD75 /* RecipeCell.swift */,
 				4DA12F7021B2D3990049CD75 /* StepCell.swift */,
-				4D53F7CB21EC47E700C0AF31 /* ThemeConstants.swift */,
 				4D53F7CD21ED6CB200C0AF31 /* NavView.swift */,
 			);
 			path = View;
@@ -557,9 +573,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D53F7DA21EF0D7700C0AF31 /* OverlayPresentationController.swift in Sources */,
+				4D53C2172203F8C900EED75C /* HorizontalPresentationController.swift in Sources */,
 				4DDA39C821D9D14A00D4773A /* AddRecipeViewController.swift in Sources */,
 				4D53F8EE21F69D7200C0AF31 /* AddRecipeBaseCell.swift in Sources */,
-				4D0C4B7821AFD4BA00153E76 /* Timepiece.swift in Sources */,
 				4D53F8A921F36E1B00C0AF31 /* HorizontalTransitionInteractor.swift in Sources */,
 				4D53F89E21F1CBF800C0AF31 /* ShowOverlayAnimator.swift in Sources */,
 				4DA12F8421B7F8280049CD75 /* StepsViewController.swift in Sources */,

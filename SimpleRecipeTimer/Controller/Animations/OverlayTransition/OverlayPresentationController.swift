@@ -14,6 +14,12 @@ class OverlayPresentationController: UIPresentationController {
         view.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
         return view
     }()
+    override var frameOfPresentedViewInContainerView: CGRect {
+        let offset: CGFloat = 60.0
+        var size = containerView!.bounds.size
+        size.height = size.height - offset
+        return CGRect(origin: CGPoint(x: 0, y: offset), size: size)
+    }
     
     override func presentationTransitionWillBegin() {
         dimmingView.frame = containerView!.bounds
@@ -39,12 +45,7 @@ class OverlayPresentationController: UIPresentationController {
         }
     }
     
-    override var frameOfPresentedViewInContainerView: CGRect {
-        let offset: CGFloat = 60.0
-        var size = containerView!.bounds.size
-        size.height = size.height - offset
-        return CGRect(origin: CGPoint(x: 0, y: offset), size: size)
-    }
+
     
     override func containerViewWillLayoutSubviews() {
         dimmingView.frame = containerView!.bounds

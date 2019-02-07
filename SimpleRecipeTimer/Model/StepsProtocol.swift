@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+/*
 protocol StepsProtocol {
     var isPausedPrimary: Bool { get set }
     var isRepeated: Bool { get set }
@@ -19,3 +19,4 @@ protocol StepsTimeProtocol {
     func updatePauseState()
     func resetTimer()
 }
+*/

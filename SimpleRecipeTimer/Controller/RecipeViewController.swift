@@ -8,12 +8,12 @@
 
 import UIKit
 
-class RecipeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,  RecipeVCDelegate, TimerProtocol {
+class RecipeViewController: UIViewController, RecipeVCDelegate {
 
     //MARK: - Class Variables -
     var timer: Timer?
     let stepCellId = "stepCellId"
-    var recipe: RecipeEntity!
+
     var stepSet: Set<StepEntity>!
     var stepArr: [StepEntity] = []
     var stepCompleteTracker: Int = 0
@@ -25,13 +25,39 @@ class RecipeViewController: UIViewController, UICollectionViewDataSource, UIColl
     var horizontalTransitionInteractor: HorizontalTransitionInteractor? = nil
     var indexPath: IndexPath? = nil
     
-    fileprivate var addStepButton: UIButton?
-    fileprivate var nav: UIView?
-    lazy var dismissButton: UIButton = {
+    var recipe: RecipeEntity! {
+        didSet {
+            recipeName.attributedText = NSAttributedString(string: recipe.recipeName!, attributes: Theme.Font.Nav.RecipeTitle)
+        }
+    }
+    fileprivate lazy var recipeName: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString(string: recipe.recipeName!, attributes: Theme.Font.Nav.RecipeTitle)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    
+    fileprivate lazy var addStepButton: UIButton = {
+        let button = UIButton()
+        button.setAttributedTitle(NSAttributedString(string: "Add", attributes: Theme.Font.Nav.Item), for: .normal)
+        button.addTarget(self, action: #selector(handleAddStep), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    fileprivate lazy var navView: UIView = {
+        let view = UIView()
+        view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    fileprivate lazy var dismissButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(Theme.Font.Color.TextColour, for: .normal)
         button.setAttributedTitle(NSAttributedString(string: "Back", attributes: Theme.Font.Nav.Item), for: .normal)
-        button.addTarget(self, action: #selector(dismissHandler), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     lazy var collView: UICollectionView = {
@@ -43,6 +69,7 @@ class RecipeViewController: UIViewController, UICollectionViewDataSource, UIColl
         //        view.dragDelegate = self
         view.dragInteractionEnabled = true
         view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -71,93 +98,83 @@ class RecipeViewController: UIViewController, UICollectionViewDataSource, UIColl
         vc.recipeViewControllerDelegate = self
         self.present(vc, animated: true, completion: nil)
     }
-    
-    //MARK: layout
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: screenSize.width, height: 50)
-    }
-    
-    //MARK: datasource
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return stepArr.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepCellId, for: indexPath) as! StepCell
-        cell.entity = stepArr[indexPath.item]
-        return cell
-    }
-    
+
     //MARK: - Controller Lifecycle Methods -
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
-        self.prepareSubviews()
-        self.startTimer()
+        prepareViewControllerView()
+        prepareSubviews()
+        prepareAutoLayout()
+        startTimer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.startTimer()
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        updateCellsWhenViewAppears()
+
     }
     
     override func updateViewConstraints() {
         super.updateViewConstraints()
+        
         let safeAreaInsets = self.view.safeAreaInsets
         if (safeAreaInsets.top > 0) {
             //safeAreaInsets = 44
-            nav!.topAnchor.constraint(equalTo: self.view.topAnchor, constant: safeAreaInsets.top).isActive = true
+            navView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: safeAreaInsets.top).isActive = true
         }
     }
     
+    func prepareViewControllerView() {
+        self.view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
+    }
+    
     func prepareSubviews() {
-        nav = UIView()
-        
-        guard let navView = nav else {
-            return
-        }
-        
-        navView.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
-        navView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(navView)
-
-        navView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        navView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        navView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.05).isActive = true
-        
-        dismissButton.translatesAutoresizingMaskIntoConstraints = false
         navView.addSubview(dismissButton)
-        dismissButton.centerYAnchor.constraint(equalTo: navView.centerYAnchor).isActive = true
-        dismissButton.leadingAnchor.constraint(equalTo: navView.leadingAnchor, constant: 10).isActive = true
-        
-        addStepButton = UIButton()
-        addStepButton?.setAttributedTitle(NSAttributedString(string: "Delete", attributes: Theme.Font.Nav.Item), for: .normal)
-        addStepButton?.addTarget(self, action: #selector(handleDeleteRecipe), for: .touchUpInside)
-        addStepButton?.translatesAutoresizingMaskIntoConstraints = false
-        navView.addSubview(addStepButton!)
-        addStepButton?.centerYAnchor.constraint(equalTo: navView.centerYAnchor).isActive = true
-        addStepButton?.trailingAnchor.constraint(equalTo: navView.trailingAnchor, constant: -10).isActive = true
-                
-        let recipeName = UILabel()
-        recipeName.attributedText = NSAttributedString(string: recipe.recipeName!, attributes: Theme.Font.Nav.RecipeTitle)
-        recipeName.translatesAutoresizingMaskIntoConstraints = false
+        navView.addSubview(addStepButton)
         navView.addSubview(recipeName)
-        recipeName.centerYAnchor.constraint(equalTo: navView.centerYAnchor).isActive = true
-        recipeName.centerXAnchor.constraint(equalTo: navView.centerXAnchor).isActive = true
-        
-        
-        self.view.addSubview(collView)        
-        //MARK: COLLECTIONVIEW CONSTRAINTS
-        collView.translatesAutoresizingMaskIntoConstraints = false
-        collView.topAnchor.constraint(equalTo: navView.bottomAnchor).isActive = true
-        collView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        collView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        collView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
-//        collView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 1).isActive = true
+        self.view.addSubview(collView)
         
         //MARK: CELL REGISTRATION
         collView.register(StepCell.self, forCellWithReuseIdentifier: stepCellId)
         
+    }
+    override func viewSafeAreaInsetsDidChange() {
+        super.viewSafeAreaInsetsDidChange()
+
+    }
+    override func beginAppearanceTransition(_ isAppearing: Bool, animated: Bool) {
+        super.beginAppearanceTransition(isAppearing, animated: animated)
+    }
+    
+    override func endAppearanceTransition() {
+        super.endAppearanceTransition()
+    }
+    
+    func prepareAutoLayout() {
+        dismissButton.centerYAnchor.constraint(equalTo: navView.centerYAnchor).isActive = true
+        dismissButton.leadingAnchor.constraint(equalTo: navView.leadingAnchor, constant: 10).isActive = true
+        
+        addStepButton.centerYAnchor.constraint(equalTo: navView.centerYAnchor).isActive = true
+        addStepButton.trailingAnchor.constraint(equalTo: navView.trailingAnchor, constant: -10).isActive = true
+        
+        recipeName.centerYAnchor.constraint(equalTo: navView.centerYAnchor).isActive = true
+        recipeName.centerXAnchor.constraint(equalTo: navView.centerXAnchor).isActive = true
+        
+        collView.topAnchor.constraint(equalTo: navView.bottomAnchor).isActive = true
+        collView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        collView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        collView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        
+        navView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        navView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        navView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.05).isActive = true
+        navView.bottomAnchor.constraint(equalTo: collView.topAnchor, constant: 0).isActive = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -165,7 +182,6 @@ class RecipeViewController: UIViewController, UICollectionViewDataSource, UIColl
             //TODO: Error
             return
         }
-        
         self.stopTimer()
         DispatchQueue.main.async {
             mvc.willReloadTableData()
@@ -173,13 +189,22 @@ class RecipeViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     //MARK: - UI Methods -
-    @objc func dismissHandler() {
+    @objc func handleDismiss() {
         guard let mvc = mainViewControllerDelegate else {
+            //TODO: Error
             return
         }
-        mvc.dismiss(animated: true) {
-            self.stopTimer()
-        }
+        
+        mvc.updateAllRecipes()
+        
+//        let step = recipe.searchLeadingStep()
+//
+//        guard let s = step else {
+//            return
+//        }
+//
+//        recipe.updateCurr(stepEntity: s)
+        dismissCurrentViewController()
     }
     
     @objc func handleDeleteRecipe() {
@@ -197,9 +222,16 @@ class RecipeViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         mvc.recipeCollection.remove(at: index.item)
         mvc.collView.deleteItems(at: [index])
-        mvc.dismiss(animated: true, completion: nil)
-
-        
+        dismissCurrentViewController()
+    }
+    
+    func dismissCurrentViewController() {
+        guard let mvc = mainViewControllerDelegate else {
+            return
+        }
+        mvc.dismiss(animated: true) {
+            mvc.startTimer()
+        }
     }
     
     @objc func handleAddStep() {
@@ -214,10 +246,67 @@ class RecipeViewController: UIViewController, UICollectionViewDataSource, UIColl
         self.present(vc, animated: true, completion: nil)
     }
     
+    func updateCurrentStep(step: StepEntity) {
+        step.isLeading = false
+        step.isComplete = true
+        step.timeRemaining = 0.0
+    }
+    
+    func updateNewLeadingTimer(indexPath: IndexPath) {
+        let maxItems = collView.numberOfItems(inSection: 0) - 1
+        let currIndex = indexPath.item
+
+        if (currIndex < maxItems) {
+            let nextEntity = stepArr[currIndex + 1]
+
+            guard let r = recipe else {
+                return
+            }
+            nextEntity.isLeading = true
+            nextEntity.isComplete = false
+            nextEntity.updateExpiry()
+            r.updateStepInRecipe(nextEntity)
+        }
+    }
+
+    //MARK: - RecipeVCDelegate Protocol Functions -
+    func didReturnValues(step: StepEntity) {
+        let priority = self.stepArr.count + 1
+        step.priority = Int16(priority)
+        self.recipe.addToStep(step)
+        self.stepArr.append(step)
+        CoreDataHandler.saveContext()
+        self.startTimer()
+    }
+    
+    func willReloadTableData() {
+        self.collView.reloadData()
+    }
+}
+
+extension RecipeViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    //MARK: layout
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: screenSize.width, height: screenSize.width / 2)
+    }
+    
+    //MARK: datasource
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return stepArr.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepCellId, for: indexPath) as! StepCell
+        cell.entity = stepArr[indexPath.item]
+        return cell
+    }
+}
+
+extension RecipeViewController: TimerProtocol {
     //MARK: Timer Protocol
     func startTimer() {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(update), userInfo: nil, repeats: true)
         RunLoop.current.add(timer!, forMode: .common)
     }
     
@@ -227,52 +316,74 @@ class RecipeViewController: UIViewController, UICollectionViewDataSource, UIColl
             timer = nil
         }
     }
-
+    
     @objc func update() {
-        //steps to update
-        let cells = self.collView.visibleCells as! [StepCell]
-        
-        for (_, cell) in cells.enumerated() {
-            guard let s = cell.entity else {
-                return
+        if (!recipe.isPaused) {
+            let visibleCellIndexPaths = self.collView.indexPathsForVisibleItems.sorted { (x, y) -> Bool in
+                return x < y
             }
-
-            if let index = collView.indexPath(for: cell) {
-                
-                if (s.isLeading) {
-                    if (!s.isStepComplete()) {
-                        s.updateTotalElapsedTime()
-                    } else {
-                        
-                        //set next leading timer
-                        let numItems = collView.numberOfItems(inSection: 0)
-                        if (numItems < index.item + 1) {
-                            let stepCell = collView.cellForItem(at: IndexPath(item: index.item + 1, section: index.section)) as! StepCell
-                            guard let nextEntity = stepCell.entity else {
-                                return
-                            }
-                            nextEntity.isLeading = true
-                            nextEntity.updateExpiry()
-                        }
-
-                    }
-                } else {
-                    //is running parallel
+            let stepPriorityToUpdate = Int(recipe.currStepPriority) //when parallel timers are enabled, we'll update multiple times
+            let currPriorityIndexPath = IndexPath(item: stepPriorityToUpdate, section: 0)
+            
+            //updating current leading step entity
+            //on screen
+            
+            let s = stepArr[stepPriorityToUpdate]
+            if (s.timeRemaining.isLessThanOrEqualTo(0.0) && s.isComplete == true) {
+                //to next step
+                updateCurrentStep(step: s)
+                updateNewLeadingTimer(indexPath: currPriorityIndexPath)
+                if (visibleCellIndexPaths.contains(IndexPath(item: stepPriorityToUpdate, section: 0))) {
+                    let stepCell = collView.cellForItem(at: currPriorityIndexPath) as! StepCell
+                    stepCell.updateDoneLabel()
                 }
                 
-                cell.updateTimeLabel(time:s.timeRemaining())
+            } else {
+                s.updateTotalTimeRemaining()
+                if (visibleCellIndexPaths.contains(IndexPath(item: stepPriorityToUpdate, section: 0))) {
+                    let stepCell = collView.cellForItem(at: currPriorityIndexPath) as! StepCell
+                    stepCell.updateTimeLabel(time:s.timeRemainingToString())
+                    stepCell.updateDoneLabel()
+                }
             }
         }
-    }
-
-    //MARK: - RecipeVCDelegate Protocol Functions -
-    func didReturnValues(step: StepEntity) {
-        self.recipe.addToStep(step)
-        self.stepArr.append(step)
-        CoreDataHandler.saveContext()
+        
+//        //update visible cells except for current leading entity - leaving this here for now as certain edge cells that are offscreen aren't updated.
+////        for indexPath in visibleCellIndexPaths {
+////            if (indexPath.item != currPriorityIndexPath.item) {
+////                let stepCell = collView.cellForItem(at: indexPath) as! StepCell
+////                guard let s = stepCell.entity else {
+////                    return
+////                }
+////                stepCell.updateTimeLabel(time:s.timeRemainingToString())
+////                stepCell.updateDoneLabel()
+////            }
+////        }
     }
     
-    func willReloadTableData() {
-        self.collView.reloadData()
+    func updateCellsWhenViewAppears() {
+        
+        let cellIndexPaths = self.collView.indexPathsForVisibleItems.sorted { (x, y) -> Bool in
+            return x < y
+        }
+        for indexPath in cellIndexPaths {
+            let stepCell = collView.cellForItem(at: indexPath) as! StepCell
+            guard let s = stepCell.entity else {
+                return
+            }
+            if (s.isLeading) {
+                if (s.timeRemaining.isLessThanOrEqualTo(0.0) && s.isComplete == true) {
+                    //to next step
+                    updateCurrentStep(step: s)
+                    updateNewLeadingTimer(indexPath: indexPath)
+                    stepCell.updateDoneLabel()
+                } else {
+                    s.updateTotalTimeRemaining()
+                }
+            } else {
+                //parallel timer next version
+            }
+            stepCell.updateTimeLabel(time:s.timeRemainingToString())
+        }
     }
 }

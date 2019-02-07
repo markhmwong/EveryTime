@@ -25,6 +25,7 @@ class AddRecipeBaseCell: UICollectionViewCell {
 }
 
 class AddRecipeNameCell: AddRecipeBaseCell {
+    var addRecipeViewControllerDelegate: AddRecipeViewController?
     fileprivate var recipeNameTextField: UITextField = {
         let textField = UITextField()
         textField.defaultTextAttributes = Theme.Font.Recipe.TextFieldAttribute
@@ -37,10 +38,7 @@ class AddRecipeNameCell: AddRecipeBaseCell {
         textField.textAlignment = .center
         return textField
     }()
-    
-    var addRecipeViewControllerDelegate: AddRecipeViewController?
-    
-    var nextButton: UIButton = {
+    fileprivate var nextButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = UIColor.clear
         button.setAttributedTitle(NSAttributedString(string: "Continue", attributes: Theme.Font.Nav.Item), for: .normal)
@@ -188,7 +186,9 @@ class AddRecipeStepCell: AddRecipeBaseCell {
         tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
     }
     
-
+    func prepareAutoLayout() {
+        //todo
+    }
     
     @objc func handleNextButton() {
         guard let n = nameTextfield, let h = hourTextfield, let m = minuteTextfield, let s = secondTextfield else {
@@ -246,7 +246,7 @@ class AddRecipeStepCell: AddRecipeBaseCell {
     func addStep(toCoreData: Bool = false, h: String? = nil, m: String? = nil, s: String? = nil, n: String? = nil) {
         guard let name = n, let hour = h, let minute = m, let second = s  else {
             if (toCoreData) {
-                loopOverTableViewData()
+                updateTableData()
             }
             return
         }
@@ -267,15 +267,14 @@ class AddRecipeStepCell: AddRecipeBaseCell {
         }
         step.priority = Int16(dataSource.count)
         dataSource.append(step)
-        print("datasource \(step.priority)")
         tableView.insertRows(at: [IndexPath(item: dataSource.count - 1, section: 0)], with: UITableView.RowAnimation.right)
         
         if (toCoreData) {
-            loopOverTableViewData()
+            updateTableData()
         }
     }
     
-    func loopOverTableViewData() {
+    func updateTableData() {
         let rEntity = RecipeEntity(name: recipeName)
         for (index, s) in dataSource.enumerated() {
             let sEntity = StepEntity(name: s.name, hours: s.hours, minutes: s.minutes, seconds: s.seconds, priority: s.priority)
@@ -285,8 +284,8 @@ class AddRecipeStepCell: AddRecipeBaseCell {
             rEntity.addToStep(sEntity)
         }
         
-        rEntity.updateElapsedTimeByPriority()
-        rEntity.updateExpiryTime()
+        rEntity.updateTimeRemainingForCurrentStep()
+//        rEntity.updateExpiryDateForCurrentStep()
         
         if let arv = addRecipeViewControllerDelegate {
             arv.createRecipe(rEntity: rEntity)

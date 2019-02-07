@@ -34,7 +34,7 @@ class StepsViewController: UIViewController, TimerProtocol {
         let button = UIButton()
         button.setTitleColor(Theme.Font.Color.TextColour, for: .normal)
         button.setTitle("Back", for: .normal)
-        button.addTarget(self, action: #selector(dismissHandler), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
         return button
     }()
     lazy var nameLabel: UILabel? = nil
@@ -65,7 +65,7 @@ class StepsViewController: UIViewController, TimerProtocol {
         self.stopTimer()
         if let s = step {
             if (!s.isPausedPrimary) {
-                s.updateTotalElapsedTime()
+                s.updateTotalTimeRemaining()
             }
         }
     }
@@ -104,7 +104,6 @@ class StepsViewController: UIViewController, TimerProtocol {
         nameLabel?.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -150).isActive = true
         nameLabel?.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10).isActive = true
         
-        
         timeLabel.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Step.NameAttribute)
         timeLabel.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(timeLabel)
@@ -116,22 +115,20 @@ class StepsViewController: UIViewController, TimerProtocol {
         pauseButton.backgroundColor = UIColor.yellow
         pauseButton.setTitleColor(UIColor.blue, for: .normal)
     
-        pauseButton.addTarget(self, action: #selector(pauseHandler), for: .touchUpInside)
+        pauseButton.addTarget(self, action: #selector(handlePause), for: .touchUpInside)
         pauseButton.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(pauseButton)
         pauseButton.topAnchor.constraint(equalTo: timeLabel.bottomAnchor).isActive = true
         pauseButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         pauseButton.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
-        
-
     }
     
     //MARK: Button Handlers
-    @objc func pauseHandler() {
+    @objc func handlePause() {
         if let s = step {
             if (!s.isPausedPrimary) {
                 self.stopTimer()
-                s.updateTotalElapsedTime()
+                s.updateTotalTimeRemaining()
                 pauseButton.setTitle("unpause", for: .normal)
             } else {
                 self.startTimer()
@@ -142,7 +139,7 @@ class StepsViewController: UIViewController, TimerProtocol {
         }
     }
     
-    @objc func dismissHandler() {
+    @objc func handleDismiss() {
         guard let rvc = recipeViewControllerDelegate else {
             return
         }
@@ -166,7 +163,7 @@ class StepsViewController: UIViewController, TimerProtocol {
     
     @objc func update() {
         if let s = step {
-            timeLabel.attributedText = NSAttributedString(string: s.timeRemaining(), attributes: Theme.Font.Step.TimeAttribute)
+            timeLabel.attributedText = NSAttributedString(string: s.timeRemainingToString(), attributes: Theme.Font.Step.TimeAttribute)
         }
     }
 }

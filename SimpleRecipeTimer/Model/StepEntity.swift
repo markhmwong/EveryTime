@@ -23,9 +23,9 @@ class StepEntity: NSManagedObject {
         self.isSequential = true
         self.isPausedPrimary = false
         self.createdDate = Date()
-        self.expiryDate = self.createdDate!.addingTimeInterval(self.timeToSeconds(hours: hours, minutes: minutes, seconds: seconds))
-        self.totalElapsedTime = self.expiryDate!.timeIntervalSince(Date())
-        self.storedTotalElapsedTime = self.totalElapsedTime //a stored time for reset purposes
+        self.expiryDate = self.createdDate!.addingTimeInterval(self.timeToSeconds(hours: hours, minutes: minutes, seconds: seconds)) //only needed for the leading step
+        self.timeRemaining = self.expiryDate!.timeIntervalSince(Date())
+        self.totalTime = self.timeRemaining //a stored time for reset purposes
     }
 }
 
@@ -33,40 +33,49 @@ extension StepEntity {
     func resetStep() {
         //todo
     }
+    func updateTimeRemainingWithStartDate() {
+        guard let start = startDate else {
+            print("StartDate is nil")
+            return
+        }
+        print(start.timeIntervalSince(Date()))
+    }
+    func updateTimeRemaining() {
+        guard let expiry = expiryDate else {
+            return
+        }
+        self.timeRemaining = expiry.timeIntervalSince(Date())
+    }
+    
     func updateExpiry() {
-        self.expiryDate = Date().addingTimeInterval(self.totalElapsedTime)
+        let now = Date()
+        self.expiryDate = now.addingTimeInterval(self.timeRemaining)
     }
     
     func timeToSeconds(hours: Int, minutes: Int, seconds: Int) -> TimeInterval {
         return TimeInterval((hours * 3600) + (minutes * 60) + seconds)
     }
     
-    func updateTotalElapsedTime() {
-        self.totalElapsedTime = expiryDate!.timeIntervalSince(Date())
-        if (self.totalElapsedTime <= 0) {
-            self.totalElapsedTime = 0
-        }        
-    }
-    
-    func isStepComplete() -> Bool {
-        if (self.totalElapsedTime.isLessThanOrEqualTo(0.0)) {
+    func updateTotalTimeRemaining() {
+        print(self.timeRemaining)
+        if (self.timeRemaining <= 0.0) {
+            self.timeRemaining = 0.0
             self.isComplete = true
-            self.isLeading = false
-            return true
         } else {
-            return false
+            updateTimeRemaining()
+//            updateTimeRemainingWithStartDate()
         }
     }
     
-    func timeRemaining() -> String {
+    func timeRemainingToString() -> String {
         var timeStr = "00h00m00s"
-        let (h,m,s) = self.totalElapsedTime.secondsToHoursMinutesSeconds()
+        let (h,m,s) = self.timeRemaining.secondsToHoursMinutesSeconds()
         timeStr = "\(h.prefixZeroToInteger())h\(m.prefixZeroToInteger())m\(s.prefixZeroToInteger())s"
         return timeStr
     }
     
     func timeRemainingPausedState() -> String {
-        let (h,m,s) = self.totalElapsedTime.secondsToHoursMinutesSeconds()
+        let (h,m,s) = self.timeRemaining.secondsToHoursMinutesSeconds()
         return self.hrsMinsSecsToString(h: h, m: m, s: s)
     }
     

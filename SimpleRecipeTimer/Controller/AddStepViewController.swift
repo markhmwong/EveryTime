@@ -34,63 +34,51 @@ class AddStepViewController: UIViewController {
         case sec = 4
     }
     
-    var countDownPicker: UIPickerView = {
+    fileprivate var countDownPicker: UIPickerView = {
         let picker = UIPickerView()
         picker.translatesAutoresizingMaskIntoConstraints = false
         return picker
     }()
-    private var labelTextField: UITextField = {
+    fileprivate var labelTextField: UITextField = {
         let input = UITextField()
         input.defaultTextAttributes = Theme.Font.Step.AddStep
-        input.attributedPlaceholder = NSAttributedString(string: "Name The Step", attributes: Theme.Font.Step.AddStep)
-        input.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Step.AddStep)
+        input.attributedPlaceholder = NSAttributedString(string: "Name the Step", attributes: Theme.Font.Recipe.TextFieldAttribute)
+        input.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Recipe.TextFieldAttribute)
         input.returnKeyType = UIReturnKeyType.done
-        input.clearButtonMode = .whileEditing
+        input.clearButtonMode = .never
         input.enablesReturnKeyAutomatically = true
-        input.backgroundColor = UIColor.lightGray
+        input.backgroundColor = UIColor.clear
         input.becomeFirstResponder()
+        input.textAlignment = .center
+        input.translatesAutoresizingMaskIntoConstraints = false
         return input
     }()
-    var rightNavItemButton: UIButton = {
+    fileprivate var invertedCaret: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString(string: "\u{2304}", attributes: Theme.Font.Recipe.CaretAttribute)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    fileprivate var rightNavItemButton: UIButton = {
         let button = UIButton()
-        button.setTitleColor(Theme.Font.Color.TextColour, for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Done", attributes: Theme.Font.Nav.Item), for: .normal)
         button.setTitle("Done", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    lazy var navView: UIView = {
+    fileprivate lazy var navView: UIView = {
         let view = UIView()
-        view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor.clear
         return view
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.white
-        let safeLayoutGuide = self.view.safeAreaLayoutGuide
-        navView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(navView)
-        navView.topAnchor.constraint(equalTo: safeLayoutGuide.topAnchor).isActive = true
-        navView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        navView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        navView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.05).isActive = true
-        
-        rightNavItemButton.addTarget(self, action: #selector(handleDoneButton), for: .touchUpInside)
-        rightNavItemButton.translatesAutoresizingMaskIntoConstraints = false
-        navView.addSubview(rightNavItemButton)
-        rightNavItemButton.centerYAnchor.constraint(equalTo: self.navView.centerYAnchor).isActive = true
-        rightNavItemButton.trailingAnchor.constraint(equalTo: self.navView.trailingAnchor, constant: -8).isActive = true
-        
+        self.prepareView()
         self.preparePicker()
-        
-
-        labelTextField.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(labelTextField)
-        
-        labelTextField.topAnchor.constraint(equalTo: countDownPicker.bottomAnchor, constant: 20).isActive = true
-        labelTextField.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        labelTextField.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(handleDone))
+        self.prepareAutoLayout()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -151,6 +139,16 @@ class AddStepViewController: UIViewController {
         }
     }
     
+    func prepareView() {
+        self.view.layer.cornerRadius = Theme.View.CornerRadius
+        self.view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
+        self.view.addSubview(navView)
+        rightNavItemButton.addTarget(self, action: #selector(handleDoneButton), for: .touchUpInside)
+        self.view.addSubview(rightNavItemButton)
+        self.view.addSubview(labelTextField)
+        self.view.addSubview(invertedCaret)
+    }
+    
     func preparePicker() {
         let hoursLabel: UILabel = UILabel()
         hoursLabel.text = "hours"
@@ -172,9 +170,27 @@ class AddStepViewController: UIViewController {
         countDownPicker.translatesAutoresizingMaskIntoConstraints = false
         countDownPicker.setPickerLabels(labels: labelDict, containedView: self.view)
         self.view.addSubview(countDownPicker)
+    }
+    
+    func prepareAutoLayout() {
+//        let safeLayoutGuide = self.view.safeAreaLayoutGuide
+//        navView.topAnchor.constraint(equalTo: safeLayoutGuide.topAnchor).isActive = true
+//        navView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+//        navView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+//        navView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.05).isActive = true
+
+        rightNavItemButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 20).isActive = true
+        rightNavItemButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -8).isActive = true
         
-        countDownPicker.topAnchor.constraint(equalTo: self.navView.bottomAnchor).isActive = true
+        labelTextField.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        labelTextField.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
+        labelTextField.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 80).isActive = true
+        
+        countDownPicker.topAnchor.constraint(equalTo: labelTextField.bottomAnchor).isActive = true
         countDownPicker.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         countDownPicker.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
+        
+        invertedCaret.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 10).isActive = true
+        invertedCaret.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
     }
 }

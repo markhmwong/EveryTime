@@ -11,7 +11,7 @@ import UIKit
 class ShowHorizontalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.5
+        return 0.45
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -22,8 +22,10 @@ class ShowHorizontalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let endFrame = toVC.view.frame
         let startFrame = CGRect(x: endFrame.size.width, y: 0, width: endFrame.size.width, height: endFrame.size.height)
         toVC.view.frame = startFrame
-        
+
         transitionContext.containerView.addSubview(toVC.view)
+        toVC.view.setNeedsLayout()
+        toVC.view.layoutIfNeeded()
         
         UIView.animate(
             withDuration: transitionDuration(using: transitionContext),

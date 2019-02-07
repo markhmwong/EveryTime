@@ -104,16 +104,14 @@ class AddRecipeViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        self.view.layer.cornerRadius = 14
-        self.view.layer.masksToBounds = true
-
-        
-        //prepare main view in view controller
-        self.prepareMainView()
+        self.prepareViewControllerView()
+        self.prepareAutoLayout()
     }
     
-    func prepareMainView() {
-
+    func prepareViewControllerView() {
+        self.view.layer.cornerRadius = Theme.View.CornerRadius
+        self.view.layer.masksToBounds = true
+        
         self.view.backgroundColor = UIColor.clear
         let blurView = UIVisualEffectView()
         blurView.effect = UIBlurEffect(style: .extraLight)
@@ -125,7 +123,7 @@ class AddRecipeViewController: UIViewController {
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(titleLabel)
-
+        
         collView.isScrollEnabled = false
         collView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(collView)
@@ -135,8 +133,6 @@ class AddRecipeViewController: UIViewController {
         editButton.addTarget(self, action: #selector(handleEditButton), for: .touchUpInside)
         editButton.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(editButton)
-        
-        self.prepareAutoLayout()
     }
     
     func prepareAutoLayout() {
@@ -155,7 +151,6 @@ class AddRecipeViewController: UIViewController {
         editButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
     }
     
-    
     func createRecipe(rEntity: RecipeEntity) {
         CoreDataHandler.saveContext()
         if let mvc = mainViewControllerDelegate {
@@ -163,7 +158,12 @@ class AddRecipeViewController: UIViewController {
             mvc.addToCollectionView()
         }
     }
-    
+}
+
+/*
+ Handle Buttons In UI
+*/ 
+extension AddRecipeViewController {
     @objc func handleNextButton() {
         self.scrollToIndex(index: 1)
     }

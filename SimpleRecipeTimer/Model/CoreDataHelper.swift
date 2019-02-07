@@ -24,6 +24,12 @@ class CoreDataHandler {
         return self.context!
     }
     
+    class func getPrivateContext() -> NSManagedObjectContext {
+        let privateContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        privateContext.parent = context
+        return privateContext
+    }
+    
     /*
         Save to settings entity
     */
