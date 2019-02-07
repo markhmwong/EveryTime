@@ -9,39 +9,74 @@
 import UIKit
 
 class StepsViewController: UIViewController, TimerProtocol {
-    
-    fileprivate var timer: Timer?
-    fileprivate var step: StepEntity?
-    fileprivate var timeLabel: UILabel = {
-        var label = UILabel()
-        label.textAlignment = .center
-        label.backgroundColor = UIColor.white
-        return label
-    }()
-    fileprivate var pauseButton = UIButton()
     var recipeViewControllerDelegate: RecipeViewController?
     var transitionDelegate = OverlayTransitionDelegate()
     var dismissInteractor: OverlayInteractor!
     var horizontalTransitionDelegate = HorizontalTransitionDelegate()
     var horizontalTransitionInteractor: HorizontalTransitionInteractor? = nil
     
-    lazy var navView: UIView = {
+    fileprivate var timer: Timer?
+    var step: StepEntity! {
+        didSet {
+            print("step enttiy did set")
+            guard let s = step else {
+                print("Step was not initialised")
+                return
+            }
+            
+            nameLabel.attributedText = NSAttributedString(string: s.stepName!, attributes: Theme.Font.Step.NameAttribute)
+        }
+    }
+
+    fileprivate var pauseButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("pause", for: .normal)
+        button.backgroundColor = UIColor.clear
+        button.setTitleColor(Theme.Font.Color.TextColour, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    fileprivate lazy var navView: UIView = {
         let view = UIView()
         view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    lazy var dismissButton: UIButton = {
+    fileprivate lazy var dismissButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(Theme.Font.Color.TextColour, for: .normal)
         button.setTitle("Back", for: .normal)
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    lazy var nameLabel: UILabel? = nil
+    fileprivate var timeLabel: UILabel = {
+        var label = UILabel()
+        label.textAlignment = .center
+        label.backgroundColor = UIColor.white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Step.NameAttribute)
+        
+        return label
+    }()
+    fileprivate lazy var nameLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString(string: "unknown", attributes: Theme.Font.Step.NameAttribute)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
-    init(stepModel: StepEntity) {
+    init(stepEntity: StepEntity, viewControllerDelegate: RecipeViewController) {
         super.init(nibName: nil, bundle: nil)
-        self.step = stepModel
+        
+        self.recipeViewControllerDelegate = viewControllerDelegate
+        /*
+         https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Properties.html
+            The willSet and didSet observers of superclass properties are called when a property is set in a subclass initializer, after the superclass initializer has been called. They are not called while a class is setting its own properties, before the superclass initializer has been called.
+         */
+        defer {
+            self.step = stepEntity
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -51,13 +86,13 @@ class StepsViewController: UIViewController, TimerProtocol {
     //MARK: - VC Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
-
+        prepareViewController()
+        prepareView()
+        prepareAutoLayout()
         guard let s = step else {
             return
         }
         
-        self.prepareLabels(s: s)
         self.updatePauseButton(s: s)
     }
     
@@ -68,6 +103,20 @@ class StepsViewController: UIViewController, TimerProtocol {
                 s.updateTotalTimeRemaining()
             }
         }
+    }
+    
+    func prepareViewController() {
+        self.view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
+    }
+    func prepareView() {
+        navView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(navView)
+        navView.addSubview(dismissButton)
+        self.view.addSubview(nameLabel)
+        self.view.addSubview(timeLabel)
+        self.view.addSubview(pauseButton)
+        pauseButton.addTarget(self, action: #selector(handlePause), for: .touchUpInside)
+
     }
     
     // update pause button text
@@ -83,41 +132,24 @@ class StepsViewController: UIViewController, TimerProtocol {
         }
     }
     
-    func prepareLabels(s: StepEntity) {
+    func prepareAutoLayout() {
         let safeLayoutGuide = self.view.safeAreaLayoutGuide
-        navView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(navView)
+        
         navView.topAnchor.constraint(equalTo: safeLayoutGuide.topAnchor).isActive = true
         navView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         navView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         navView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.05).isActive = true
         
-        dismissButton.translatesAutoresizingMaskIntoConstraints = false
-        navView.addSubview(dismissButton)
         dismissButton.centerYAnchor.constraint(equalTo: navView.centerYAnchor).isActive = true
         dismissButton.leadingAnchor.constraint(equalTo: navView.leadingAnchor, constant: 10).isActive = true
         
-        nameLabel = UILabel()
-        nameLabel?.attributedText = NSAttributedString(string: s.stepName!, attributes: Theme.Font.Step.NameAttribute)
-        self.view.addSubview(nameLabel!)
-        nameLabel?.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel?.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -150).isActive = true
-        nameLabel?.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10).isActive = true
+        nameLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -150).isActive = true
+        nameLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10).isActive = true
         
-        timeLabel.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Step.NameAttribute)
-        timeLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(timeLabel)
-        timeLabel.topAnchor.constraint(equalTo: nameLabel!.bottomAnchor).isActive = true
+        timeLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor).isActive = true
         timeLabel.leadingAnchor.constraint(equalTo: safeLayoutGuide.leadingAnchor).isActive = true
         timeLabel.widthAnchor.constraint(equalTo: safeLayoutGuide.widthAnchor).isActive = true
-    
-        pauseButton.setTitle("pause", for: .normal)
-        pauseButton.backgroundColor = UIColor.yellow
-        pauseButton.setTitleColor(UIColor.blue, for: .normal)
-    
-        pauseButton.addTarget(self, action: #selector(handlePause), for: .touchUpInside)
-        pauseButton.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(pauseButton)
+        
         pauseButton.topAnchor.constraint(equalTo: timeLabel.bottomAnchor).isActive = true
         pauseButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         pauseButton.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true

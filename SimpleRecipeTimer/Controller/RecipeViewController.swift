@@ -25,7 +25,7 @@ class RecipeViewController: UIViewController, RecipeVCDelegate {
     var horizontalTransitionInteractor: HorizontalTransitionInteractor? = nil
     var indexPath: IndexPath? = nil
     
-    var recipe: RecipeEntity! {
+    fileprivate var recipe: RecipeEntity! {
         didSet {
             recipeName.attributedText = NSAttributedString(string: recipe.recipeName!, attributes: Theme.Font.Nav.RecipeTitle)
         }
@@ -86,18 +86,7 @@ class RecipeViewController: UIViewController, RecipeVCDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: - Collection View methods -
-    
-    //MARK: delegate
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = StepsViewController(stepModel: stepArr[indexPath.item])
-        horizontalTransitionInteractor = HorizontalTransitionInteractor(viewController: vc)
-        horizontalDelegate.dismissInteractor  = horizontalTransitionInteractor
-        vc.transitioningDelegate = horizontalDelegate
-        vc.modalPresentationStyle = .custom
-        vc.recipeViewControllerDelegate = self
-        self.present(vc, animated: true, completion: nil)
-    }
+
 
     //MARK: - Controller Lifecycle Methods -
     
@@ -116,7 +105,6 @@ class RecipeViewController: UIViewController, RecipeVCDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         updateCellsWhenViewAppears()
-
     }
     
     override func updateViewConstraints() {
@@ -194,16 +182,6 @@ class RecipeViewController: UIViewController, RecipeVCDelegate {
             //TODO: Error
             return
         }
-        
-        mvc.updateAllRecipes()
-        
-//        let step = recipe.searchLeadingStep()
-//
-//        guard let s = step else {
-//            return
-//        }
-//
-//        recipe.updateCurr(stepEntity: s)
         dismissCurrentViewController()
     }
     
@@ -285,6 +263,17 @@ class RecipeViewController: UIViewController, RecipeVCDelegate {
 }
 
 extension RecipeViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    //MARK: delegate
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(stepArr.count)
+        let vc = StepsViewController(stepEntity: stepArr[indexPath.item], viewControllerDelegate: self)
+        horizontalTransitionInteractor = HorizontalTransitionInteractor(viewController: vc)
+        horizontalDelegate.dismissInteractor  = horizontalTransitionInteractor
+        vc.transitioningDelegate = horizontalDelegate
+        vc.modalPresentationStyle = .custom
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     //MARK: layout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: screenSize.width, height: screenSize.width / 2)
@@ -333,15 +322,13 @@ extension RecipeViewController: TimerProtocol {
                 //to next step
                 updateCurrentStep(step: s)
                 updateNewLeadingTimer(indexPath: currPriorityIndexPath)
-                if (visibleCellIndexPaths.contains(IndexPath(item: stepPriorityToUpdate, section: 0))) {
-                    let stepCell = collView.cellForItem(at: currPriorityIndexPath) as! StepCell
-                    stepCell.updateDoneLabel()
-                }
-                
             } else {
                 s.updateTotalTimeRemaining()
-                if (visibleCellIndexPaths.contains(IndexPath(item: stepPriorityToUpdate, section: 0))) {
-                    let stepCell = collView.cellForItem(at: currPriorityIndexPath) as! StepCell
+            }
+            
+            if (visibleCellIndexPaths.contains(IndexPath(item: stepPriorityToUpdate, section: 0))) {
+                let stepCell = collView.cellForItem(at: currPriorityIndexPath) as! StepCell
+                DispatchQueue.main.async {
                     stepCell.updateTimeLabel(time:s.timeRemainingToString())
                     stepCell.updateDoneLabel()
                 }

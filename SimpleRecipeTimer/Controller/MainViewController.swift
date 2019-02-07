@@ -171,8 +171,6 @@ class MainViewController: UIViewController {
             guard let s = recipe.searchLeadingStep() else {
                 return
             }
-            print(s.stepName)
-            print(s.timeRemaining)
             recipe.updateStepInRecipe(s)
         }
     }

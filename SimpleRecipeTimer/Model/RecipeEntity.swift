@@ -101,13 +101,7 @@ extension RecipeEntity {
         let expiryDate = Date().addingTimeInterval(step.timeRemaining)
         currStepExpiryDate = expiryDate
     }
-}
-
-
-/*
- Rewrite v3
-*/
-extension RecipeEntity {
+    
     func timeRemainingForCurrentStepToString() -> String {
         let (h,m,s) = currStepTimeRemaining.secondsToHoursMinutesSeconds()
         return "\(h.prefixZeroToInteger())h\(m.prefixZeroToInteger())m\(s.prefixZeroToInteger())s"
@@ -157,13 +151,6 @@ extension RecipeEntity {
     }
     
     /* Recipe View Controller */
-//    func updateCurrStepInRecipe(step: StepEntity) {
-//        currStepName = step.stepName
-//        currStepTimeRemaining = step.timeRemaining
-//        currStepPriority = step.priority
-////        currStepExpiryDate = step.expiryDate
-//    }
-    
     func updateCurrStepInRecipe() -> Void {
         updateTimeRemainingForCurrentStep()
 //        updateExpiryDateForCurrentStep()

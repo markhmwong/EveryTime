@@ -38,7 +38,6 @@ extension StepEntity {
             print("StartDate is nil")
             return
         }
-        print(start.timeIntervalSince(Date()))
     }
     func updateTimeRemaining() {
         guard let expiry = expiryDate else {
@@ -57,13 +56,11 @@ extension StepEntity {
     }
     
     func updateTotalTimeRemaining() {
-        print(self.timeRemaining)
         if (self.timeRemaining <= 0.0) {
             self.timeRemaining = 0.0
             self.isComplete = true
         } else {
             updateTimeRemaining()
-//            updateTimeRemainingWithStartDate()
         }
     }
     
