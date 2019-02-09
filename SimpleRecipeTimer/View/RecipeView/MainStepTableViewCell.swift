@@ -1,14 +1,15 @@
 //
-//  StepCell.swift
+//  StepTableViewCell.swift
 //  SimpleRecipeTimer
 //
-//  Created by Mark Wong on 2/12/18.
-//  Copyright © 2018 Mark Wong. All rights reserved.
+//  Created by Mark Wong on 8/2/19.
+//  Copyright © 2019 Mark Wong. All rights reserved.
 //
 
 import UIKit
 
-class StepCell: EntityBaseCell<StepEntity> {
+class MainStepTableViewCell: EntityBaseTableViewCell<StepEntity> {
+    
     override var entity: StepEntity? {
         didSet {
             guard let e = entity else {
@@ -28,11 +29,6 @@ class StepCell: EntityBaseCell<StepEntity> {
         label.textAlignment = .center
         return label
     }()
-//    var priorityLabel: UILabel = {
-//       let label = UILabel()
-//        return label
-//    }()
-//    var isComplete: Bool = false
     var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -57,11 +53,11 @@ class StepCell: EntityBaseCell<StepEntity> {
         print(e.timeRemainingToString())
         timeLabel.attributedText = NSAttributedString(string: "\(e.timeRemainingToString())", attributes: Theme.Font.Step.CellTimeAttribute)
         nameLabel.attributedText = NSAttributedString(string: e.stepName!, attributes: Theme.Font.Step.CellNameAttribute)
-//        priorityLabel.attributedText = NSAttributedString(string: "\(entity!.priority)", attributes: Theme.Font.Step.CellNameAttribute)
+        //        priorityLabel.attributedText = NSAttributedString(string: "\(entity!.priority)", attributes: Theme.Font.Step.CellNameAttribute)
         updateCompletionStatusLabel()
         completeLabel.textAlignment = .right
         
-//        stackView?.addArrangedSubview(priorityLabel)
+        //        stackView?.addArrangedSubview(priorityLabel)
         stackView.addArrangedSubview(nameLabel)
         stackView.addArrangedSubview(timeLabel)
         stackView.addArrangedSubview(completeLabel)
@@ -93,10 +89,10 @@ class StepCell: EntityBaseCell<StepEntity> {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.nameLabel.removeFromSuperview()
-//        self.nameLabel = nil
+        //        self.nameLabel = nil
         self.timeLabel.removeFromSuperview()
-//        self.timeLabel = nil
+        //        self.timeLabel = nil
         self.completeLabel.removeFromSuperview()
-//        self.completeLabel = nil
+        //        self.completeLabel = nil
     }
 }

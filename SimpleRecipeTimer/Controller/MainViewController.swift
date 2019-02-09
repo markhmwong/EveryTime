@@ -189,11 +189,15 @@ class MainViewController: UIViewController {
 
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = RecipeViewController(recipe: recipeCollection[indexPath.item], delegate: self)
+//        let vc = RecipeViewController(recipe: recipeCollection[indexPath.item], delegate: self, indexPath: indexPath)
+//        horizontalDelegate.dismissInteractor  = HorizontalTransitionInteractor(viewController: vc)
+//        vc.transitioningDelegate = horizontalDelegate
+//        vc.modalPresentationStyle = .custom
+
+        let vc = RecipeViewControllerWithTableView(recipe: recipeCollection[indexPath.item], delegate: self, indexPath: indexPath)
         horizontalDelegate.dismissInteractor  = HorizontalTransitionInteractor(viewController: vc)
         vc.transitioningDelegate = horizontalDelegate
         vc.modalPresentationStyle = .custom
-        vc.indexPath = indexPath
         stopTimer()
         self.present(vc, animated: true, completion: nil)
     }

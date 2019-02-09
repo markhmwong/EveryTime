@@ -46,6 +46,7 @@ class AddRecipeNameCell: AddRecipeBaseCell {
     }()
     
     override func setupView() {
+        super.setupView()
         recipeNameTextField.borderStyle = .none
         recipeNameTextField.layer.masksToBounds = false
         recipeNameTextField.layer.shadowColor = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1.0).cgColor
@@ -311,7 +312,7 @@ class AddRecipeStepCell: AddRecipeBaseCell {
 }
 
 extension AddRecipeStepCell: UITableViewDelegate {
-    
+
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return rowHeight
     }

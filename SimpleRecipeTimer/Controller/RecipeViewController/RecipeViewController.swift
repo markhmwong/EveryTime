@@ -8,16 +8,16 @@
 
 import UIKit
 
-class RecipeViewController: UIViewController, RecipeVCDelegate {
+class RecipeViewController: RecipeViewControllerBase, RecipeVCDelegate {
 
     //MARK: - Class Variables -
-    var timer: Timer?
-    let stepCellId = "stepCellId"
+//    var timer: Timer?
+//    let stepCellId = "stepCellId"
 
-    var stepSet: Set<StepEntity>!
-    var stepArr: [StepEntity] = []
-    var stepCompleteTracker: Int = 0
-    var mainViewControllerDelegate: MainViewController?
+//    var stepSet: Set<StepEntity>!
+//    var stepArr: [StepEntity] = []
+//    var stepCompleteTracker: Int = 0
+//    var mainViewControllerDelegate: MainViewController?
     var screenSize = UIScreen.main.bounds.size
     var transitionDelegate = OverlayTransitionDelegate()
     var horizontalDelegate = HorizontalTransitionDelegate()
@@ -25,11 +25,12 @@ class RecipeViewController: UIViewController, RecipeVCDelegate {
     var horizontalTransitionInteractor: HorizontalTransitionInteractor? = nil
     var indexPath: IndexPath? = nil
     
-    fileprivate var recipe: RecipeEntity! {
+    override var recipe: RecipeEntity! {
         didSet {
             recipeName.attributedText = NSAttributedString(string: recipe.recipeName!, attributes: Theme.Font.Nav.RecipeTitle)
         }
     }
+    
     fileprivate lazy var recipeName: UILabel = {
         let label = UILabel()
         label.attributedText = NSAttributedString(string: recipe.recipeName!, attributes: Theme.Font.Nav.RecipeTitle)
@@ -60,7 +61,7 @@ class RecipeViewController: UIViewController, RecipeVCDelegate {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    lazy var collView: UICollectionView = {
+    fileprivate lazy var collView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -74,12 +75,13 @@ class RecipeViewController: UIViewController, RecipeVCDelegate {
     }()
     
     //MARK: - Init -
-    init(recipe: RecipeEntity, delegate: MainViewController) {
+    init(recipe: RecipeEntity, delegate: MainViewController, indexPath: IndexPath) {
         super.init(nibName: nil, bundle: nil)
         self.mainViewControllerDelegate = delegate
         self.recipe = recipe
         self.stepSet = recipe.step as? Set<StepEntity>
         self.stepArr = recipe.sortStepsByPriority()
+        self.indexPath = indexPath
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -92,8 +94,8 @@ class RecipeViewController: UIViewController, RecipeVCDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        prepareViewControllerView()
-        prepareSubviews()
+        prepareViewController()
+        prepareView()
         prepareAutoLayout()
         startTimer()
     }
@@ -117,11 +119,13 @@ class RecipeViewController: UIViewController, RecipeVCDelegate {
         }
     }
     
-    func prepareViewControllerView() {
+    override func prepareViewController() {
+        super.prepareViewController()
         self.view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
     }
     
-    func prepareSubviews() {
+    override func prepareView() {
+        super.prepareView()
         self.view.addSubview(navView)
         navView.addSubview(dismissButton)
         navView.addSubview(addStepButton)
@@ -144,7 +148,7 @@ class RecipeViewController: UIViewController, RecipeVCDelegate {
         super.endAppearanceTransition()
     }
     
-    func prepareAutoLayout() {
+    override func prepareAutoLayout() {
         dismissButton.centerYAnchor.constraint(equalTo: navView.centerYAnchor).isActive = true
         dismissButton.leadingAnchor.constraint(equalTo: navView.leadingAnchor, constant: 10).isActive = true
         
@@ -272,7 +276,7 @@ extension RecipeViewController: UICollectionViewDataSource, UICollectionViewDele
         horizontalDelegate.dismissInteractor  = horizontalTransitionInteractor
         vc.transitioningDelegate = horizontalDelegate
         vc.modalPresentationStyle = .custom
-        stopTimer()
+//        stopTimer()
         self.present(vc, animated: true, completion: nil)
     }
     
@@ -321,9 +325,6 @@ extension RecipeViewController: TimerProtocol {
             //on screen
             
             let s = stepArr[stepPriorityToUpdate]
-            print(s.stepName!)
-            print(s.timeRemaining)
-
             if (s.timeRemaining.isLessThanOrEqualTo(0.0) && s.isComplete == true) {
                 //to next step
                 updateCurrentStep(step: s)
@@ -336,7 +337,7 @@ extension RecipeViewController: TimerProtocol {
                 let stepCell = collView.cellForItem(at: currPriorityIndexPath) as! StepCell
                 DispatchQueue.main.async {
                     stepCell.updateTimeLabel(time:s.timeRemainingToString())
-                    stepCell.updateDoneLabel()
+                    stepCell.updateCompletionStatusLabel()
                 }
             }
         }
@@ -369,7 +370,7 @@ extension RecipeViewController: TimerProtocol {
                     //to next step
                     updateCurrentStep(step: s)
                     updateNewLeadingTimer(indexPath: indexPath)
-                    stepCell.updateDoneLabel()
+                    stepCell.updateCompletionStatusLabel()
                 } else {
                     s.updateTotalTimeRemaining()
                 }
