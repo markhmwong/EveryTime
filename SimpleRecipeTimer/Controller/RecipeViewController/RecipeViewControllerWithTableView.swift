@@ -18,7 +18,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase {
     fileprivate lazy var tableView: UITableView = {
         let view: UITableView = UITableView()
         view.delegate = self
-//        view.isEditing = false
+        view.isEditing = true
         view.dataSource = self
         view.translatesAutoresizingMaskIntoConstraints = false
         view.separatorStyle = .none
@@ -117,11 +117,46 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase {
             mvc.startTimer()
         }
     }
+    
+    func updateCurrentStep(step: StepEntity) {
+        step.isLeading = false
+        step.isComplete = true
+        step.timeRemaining = 0.0
+    }
+    
+    func updateNewLeadingTimer(indexPath: IndexPath) {
+        let maxItems = tableView.numberOfRows(inSection: 0) - 1
+        let currIndex = indexPath.item
+
+        if (currIndex < maxItems) {
+            let nextEntity = stepArr[currIndex + 1]
+            
+            guard let r = recipe else {
+                return
+            }
+            nextEntity.isLeading = true
+            nextEntity.isComplete = false
+            nextEntity.updateExpiry()
+            r.updateStepInRecipe(nextEntity)
+        }
+    }
 }
 
 extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let sourceObj = self.stepArr[sourceIndexPath.row]
+        let destinationObj = self.stepArr[destinationIndexPath.row]
+        
+        //switch dates
+        let tempDestinationPriority = destinationObj.priority
+        destinationObj.priority = sourceObj.priority
+        sourceObj.priority = tempDestinationPriority
+        
+        stepArr.remove(at: sourceIndexPath.row)
+        stepArr.insert(sourceObj, at: destinationIndexPath.row)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(stepArr.count)
         return stepArr.count
     }
     
@@ -139,42 +174,22 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
         return rowHeight
     }
     
-    func updateCurrentStep(step: StepEntity) {
-        step.isLeading = false
-        step.isComplete = true
-        step.timeRemaining = 0.0
-    }
-    
-    func updateNewLeadingTimer(indexPath: IndexPath) {
-        let maxItems = tableView.numberOfRows(inSection: 0) - 1
-        let currIndex = indexPath.item
-        
-        if (currIndex < maxItems) {
-            let nextEntity = stepArr[currIndex + 1]
-            
-            guard let r = recipe else {
-                return
-            }
-            nextEntity.isLeading = true
-            nextEntity.isComplete = false
-            nextEntity.updateExpiry()
-            r.updateStepInRecipe(nextEntity)
-        }
-    }
-    
-    /*
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return true
     }
      
-     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-     if (editingStyle == .delete) {
-     dataSource.remove(at: indexPath.row)
-     tableView.deleteRows(at: [indexPath], with: .fade)
-     }
-     }
-    */
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+        
+            stepArr.remove(at: indexPath.row)
+            recipe.reoganiseStepsInArr(stepArr, fromIndex: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
     
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "Remove"
+    }
 }
 
 extension RecipeViewControllerWithTableView: TimerProtocol {
@@ -212,7 +227,7 @@ extension RecipeViewControllerWithTableView: TimerProtocol {
             let s = stepArr[stepPriorityToUpdate]
             if (s.timeRemaining.isLessThanOrEqualTo(0.0) && s.isComplete == true) {
                 //to next step
-                updateCurrentStep(step: s)
+                updateCurrentStep(step: s) //because the current active step is no longer valid
                 updateNewLeadingTimer(indexPath: currPriorityIndexPath)
             } else {
                 s.updateTotalTimeRemaining()

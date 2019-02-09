@@ -100,7 +100,7 @@ extension RecipeEntity {
         currStepPriority = step.priority
         currStepTimeRemaining = step.timeRemaining
         let expiryDate = Date().addingTimeInterval(step.timeRemaining)
-        currStepExpiryDate = expiryDate
+        currStepExpiryDate = expiryDate // this is pretty important and must be updated whenever a change is made to the organised steps
     }
     
     func timeRemainingForCurrentStepToString() -> String {
@@ -146,6 +146,14 @@ extension RecipeEntity {
             let nextStep = sortedSet[Int(currStepPriority)]
             currStepTimeRemaining = nextStep.timeRemaining
             nextStep.isLeading = true
+        }
+    }
+    
+    /* When a step is deleted */
+    func reoganiseStepsInArr(_ sArr: [StepEntity], fromIndex: Int) {
+        for i in stride(from: fromIndex, to: sArr.count, by: 1) {
+            let priority = sArr[i].priority
+            sArr[i].priority = priority - 1
         }
     }
     

@@ -53,7 +53,7 @@ class MainStepTableViewCell: EntityBaseTableViewCell<StepEntity> {
         print(e.timeRemainingToString())
         timeLabel.attributedText = NSAttributedString(string: "\(e.timeRemainingToString())", attributes: Theme.Font.Step.CellTimeAttribute)
         nameLabel.attributedText = NSAttributedString(string: e.stepName!, attributes: Theme.Font.Step.CellNameAttribute)
-        //        priorityLabel.attributedText = NSAttributedString(string: "\(entity!.priority)", attributes: Theme.Font.Step.CellNameAttribute)
+//       priorityLabel.attributedText = NSAttributedString(string: "\(entity!.priority)", attributes: Theme.Font.Step.CellNameAttribute)
         updateCompletionStatusLabel()
         completeLabel.textAlignment = .right
         
@@ -63,7 +63,7 @@ class MainStepTableViewCell: EntityBaseTableViewCell<StepEntity> {
         stackView.addArrangedSubview(completeLabel)
         self.addSubview(stackView)
         stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -60).isActive = true
         stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     }
     

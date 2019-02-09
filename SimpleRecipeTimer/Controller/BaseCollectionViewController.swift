@@ -8,9 +8,9 @@
 
 import UIKit
 
-class BaseCollectionViewController<T: EntityBaseCell<E>, E>: UICollectionViewController {
-    
-    var _cellId: String?
-    
-    
-}
+//class BaseCollectionViewController<T: EntityBaseCell<E>, E>: UICollectionViewController {
+//    
+//    var _cellId: String?
+//    
+//    
+//}
