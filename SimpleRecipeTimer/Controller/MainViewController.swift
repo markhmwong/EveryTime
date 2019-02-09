@@ -162,8 +162,14 @@ class MainViewController: UIViewController {
         //TODO: - load in background
         guard let rEntityArr = CoreDataHandler.fetchEntity(in: RecipeEntity.self) else {
             return
+        }        
+        recipeCollection = sortRecipeCollection(in: rEntityArr)
+    }
+    
+    func sortRecipeCollection(in rEntityArr: [RecipeEntity]) -> [RecipeEntity] {
+        return rEntityArr.sorted { (x, y) -> Bool in
+            return (x.createdDate?.compare(y.createdDate!) == .orderedAscending)
         }
-        self.recipeCollection = rEntityArr
     }
     
     func updateAllRecipes() {
