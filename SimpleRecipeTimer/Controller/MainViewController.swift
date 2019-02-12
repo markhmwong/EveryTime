@@ -128,7 +128,7 @@ class MainViewController: UIViewController {
     }
     
     private func prepareViewControllerView() {
-        self.view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
+        self.view.backgroundColor = Theme.Background.Color.NavBackgroundColor
         self.view.layer.cornerRadius = Theme.View.CornerRadius
         self.navigationController?.navigationBar.isHidden = true
     }

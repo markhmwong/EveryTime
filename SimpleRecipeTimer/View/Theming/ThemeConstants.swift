@@ -52,7 +52,7 @@ struct Theme {
             static var StepCellCompleteIndicator: UIColor { return UIColor(red:0.29, green:0.82, blue:0.50, alpha:1.0) }
             static var StepCellIncompleteIndicator: UIColor { return UIColor(red:0.88, green:0.77, blue:0.77, alpha:1.0) }
             
-            static var AddButtonColour: UIColor { return UIColor(red:0.00, green:0.76, blue:1.00, alpha:0.83) }
+            static var AddButtonColour: UIColor { return UIColor(red:0.00, green:0.76, blue:1.00, alpha:0.87) }
         }
         
         // At the Recipe list view (Main View COntroller)
@@ -97,8 +97,9 @@ struct Theme {
         
         struct Color {
             static var Clear: UIColor { return UIColor(red:1.0, green:1.0, blue:1.0, alpha:0.0) }
-            static var GeneralBackgroundColor: UIColor { return UIColor(red:0.83, green:0.85, blue:0.89, alpha:1.0) }
+            static var GeneralBackgroundColor: UIColor { return UIColor(red:0.94, green:0.94, blue:0.94, alpha:1.0) }
             static var CellBackgroundColor: UIColor { return UIColor(red: 1, green: 1, blue: 1, alpha: 1.0) }
+            static var NavBackgroundColor: UIColor { return UIColor(red:0.98, green:0.98, blue:0.98, alpha:1.0) }
         }
     }
 }

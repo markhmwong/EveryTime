@@ -19,7 +19,7 @@ class NavView: UIView {
     convenience init(frame: CGRect, leftNavItem: UIButton? = nil, rightNavItem: UIButton? = nil) {
         self.init(frame: frame)
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
+        self.backgroundColor = Theme.Background.Color.NavBackgroundColor
         self.leftNavItem = leftNavItem
         self.rightNavItem = rightNavItem
         self.setupView()
@@ -43,6 +43,12 @@ class NavView: UIView {
             right.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
             right.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         }
+        
+        var bottomLine = CALayer()
+        
+        bottomLine.frame = CGRect(x: 0.0, y: self.frame.height - 1, width: self.frame.width, height: 1.0)
+        bottomLine.backgroundColor = UIColor.white.cgColor
+        layer.addSublayer(bottomLine)
     }
     
     func setupAutoLayout() {

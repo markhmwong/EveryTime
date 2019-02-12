@@ -39,18 +39,31 @@ class MainStepTableViewCell: EntityBaseTableViewCell<StepEntity> {
         return stackView
     }()
     var completeLabel = UILabel()
-    
+    var gl = CAGradientLayer()
     override func setupView() {
         super.setupView()
-        self.backgroundColor = Theme.Background.Color.CellBackgroundColor
+        backgroundColor = Theme.Background.Color.CellBackgroundColor
+        let colorTop = UIColor(red: 255.0 / 255.0, green: 255.0 / 255.0, blue: 255.0 / 255.0, alpha: 0.0).cgColor
+        let colorBottom = UIColor(red: 200.0 / 255.0, green: 200.0 / 255.0, blue: 200.0 / 255.0, alpha: 0.3).cgColor
+        
+        gl.colors = [colorTop, colorBottom]
+        gl.locations = [0.7, 1.0]
+        gl.frame = bounds
+        gl.shouldRasterize = true // rasterise so we don't need to redraw
+        layer.insertSublayer(gl, at: 0)
+        
         if let s = entity {
             timeLabel.attributedText = NSAttributedString(string: "\(s.timeRemainingToString())", attributes: Theme.Font.Step.CellTimeAttribute)
             nameLabel.attributedText = NSAttributedString(string: s.stepName!, attributes: Theme.Font.Step.CellNameAttribute)
         }
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gl.frame = bounds
+    }
+    
     func prepareLabel(_ e: StepEntity) {
-        print(e.timeRemainingToString())
         timeLabel.attributedText = NSAttributedString(string: "\(e.timeRemainingToString())", attributes: Theme.Font.Step.CellTimeAttribute)
         nameLabel.attributedText = NSAttributedString(string: e.stepName!, attributes: Theme.Font.Step.CellNameAttribute)
 //       priorityLabel.attributedText = NSAttributedString(string: "\(entity!.priority)", attributes: Theme.Font.Step.CellNameAttribute)
