@@ -33,12 +33,6 @@ extension StepEntity {
     func resetStep() {
         //todo
     }
-    func updateTimeRemainingWithStartDate() {
-        guard let start = startDate else {
-            print("StartDate is nil")
-            return
-        }
-    }
     
     func updateTimeRemaining() {
         guard let expiry = expiryDate else {

@@ -13,7 +13,15 @@ class NavView: UIView {
     var rightNavItem: UIButton?
     
     override init(frame: CGRect) {
-        super.init(frame: .zero)
+        super.init(frame: frame)
+    }
+    
+    convenience init(frame: CGRect, leftNavItem: UIButton? = nil, rightNavItem: UIButton? = nil) {
+        self.init(frame: frame)
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
+        self.leftNavItem = leftNavItem
+        self.rightNavItem = rightNavItem
         self.setupView()
     }
     
@@ -22,6 +30,26 @@ class NavView: UIView {
     }
     
     fileprivate func setupView() {
+        
+        if let left = leftNavItem {
+            left.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(left)
+            left.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
+            left.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        }
+
+        if let right = rightNavItem {
+            right.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(right)
+            right.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
+            right.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        }
+    }
+    
+    func setupAutoLayout() {
+        guard let left = leftNavItem else {
+            return
+        }
         
     }
 }

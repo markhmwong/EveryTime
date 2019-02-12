@@ -9,9 +9,25 @@
 import UIKit
 import SwipeCellKit
 
+enum ScrollingState {
+    case Show
+    case Hide
+    case Idle
+}
+
 class MainViewController: UIViewController {
+
+    
     fileprivate let recipeCellId = "RecipeCellId"
     var recipeCollection: [RecipeEntity] = []
+    
+//    fileprivate var startingDistance: CGFloat = 0.0
+//    fileprivate var endingDistance: CGFloat = 0.0
+//    fileprivate let rowHeight: CGFloat = 80.0
+//    fileprivate var delta: CGFloat = 0.0
+//    fileprivate var lastContentOffsetY: CGFloat = 0.0
+    fileprivate var addButtonState: ScrollingState = .Idle
+    
     fileprivate var indexPathNumber = 0
     fileprivate var timer: Timer?
     fileprivate var transitionDelegate = OverlayTransitionDelegate()
@@ -32,6 +48,16 @@ class MainViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    fileprivate lazy var addRecipeButton: UIButton = {
+        let button = UIButton()
+        button.setAttributedTitle(NSAttributedString(string: "Add", attributes: Theme.Font.Nav.AddButton), for: .normal)
+        button.addTarget(self, action: #selector(handleAddRecipe), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = Theme.Font.Color.AddButtonColour
+        button.layer.cornerRadius = 25.0
+        button.contentEdgeInsets = UIEdgeInsets(top: 5.0, left: 10.0, bottom: 5.0, right: 10.0)
+        return button
+    }()
     lazy var collView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -44,15 +70,17 @@ class MainViewController: UIViewController {
         return view
     }()
 
-    fileprivate lazy var navView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.clear
-        view.layer.masksToBounds = true
-        view.clipsToBounds = true
-        view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
-        return view
-    }()
+    fileprivate lazy var navView: NavView? = nil
+
+//    fileprivate lazy var navView: UIView = {
+//        let view = UIView()
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.backgroundColor = UIColor.clear
+//        view.layer.masksToBounds = true
+//        view.clipsToBounds = true
+//        view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
+//        return view
+//    }()
     
     //MARK: - ViewController Lifecycle -
     override func viewDidLoad() {
@@ -63,6 +91,10 @@ class MainViewController: UIViewController {
         self.prepareAutoLayout()
         self.startTimer()
 //        self.testCoreData()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -91,7 +123,10 @@ class MainViewController: UIViewController {
         super.updateViewConstraints()
         let safeAreaInsets = self.view.safeAreaInsets
         if (safeAreaInsets.top > 0) {
-            navView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: safeAreaInsets.top).isActive = true //keeps the bar in position as the view performs the transition
+            guard let nav = navView else {
+                return
+            }
+            nav.topAnchor.constraint(equalTo: self.view.topAnchor, constant: safeAreaInsets.top).isActive = true //keeps the bar in position as the view performs the transition
         }
     }
     
@@ -102,31 +137,42 @@ class MainViewController: UIViewController {
     }
     
     private func prepareSubviews() {
-        self.view.addSubview(navView)
-        navView.addSubview(leftNavItemButton)
-        navView.addSubview(rightNavItemButton)
+        navView = NavView(frame: .zero, leftNavItem: leftNavItemButton, rightNavItem: rightNavItemButton)
+        guard let nav = navView else {
+            return
+        }
+        self.view.addSubview(nav)
+//        navView.addSubview(leftNavItemButton)
+//        navView.addSubview(rightNavItemButton)
         self.view.addSubview(collView)
-
+        self.view.addSubview(addRecipeButton)
         //register cells
         self.collView.register(RecipeCell.self, forCellWithReuseIdentifier: recipeCellId)
     }
     
     func prepareAutoLayout() {
-        leftNavItemButton.centerYAnchor.constraint(equalTo: self.navView.centerYAnchor).isActive = true
-        leftNavItemButton.leadingAnchor.constraint(equalTo: self.navView.leadingAnchor, constant: 10).isActive = true
+        guard let nav = navView else {
+            return
+        }
+        leftNavItemButton.centerYAnchor.constraint(equalTo: nav.centerYAnchor).isActive = true
+        leftNavItemButton.leadingAnchor.constraint(equalTo: nav.leadingAnchor, constant: 10).isActive = true
         
-        rightNavItemButton.centerYAnchor.constraint(equalTo: self.navView.centerYAnchor).isActive = true
-        rightNavItemButton.trailingAnchor.constraint(equalTo: self.navView.trailingAnchor, constant: -10).isActive = true
+        rightNavItemButton.centerYAnchor.constraint(equalTo: nav.centerYAnchor).isActive = true
+        rightNavItemButton.trailingAnchor.constraint(equalTo: nav.trailingAnchor, constant: -10).isActive = true
         
-        collView.topAnchor.constraint(equalTo: navView.bottomAnchor).isActive = true
-        collView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        collView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        collView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        collView.topAnchor.constraint(equalTo: nav.bottomAnchor).isActive = true
+        collView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        collView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        collView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
-        navView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        navView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        navView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.05).isActive = true
-        navView.bottomAnchor.constraint(equalTo: collView.topAnchor, constant: 0).isActive = true
+        nav.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        nav.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        nav.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05).isActive = true
+        nav.bottomAnchor.constraint(equalTo: collView.topAnchor, constant: 0).isActive = true
+        
+        addRecipeButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -25).isActive = true
+        addRecipeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        addRecipeButton.heightAnchor.constraint(equalTo: addRecipeButton.widthAnchor, multiplier: 1).isActive = true
     }
     
     func willReloadCellData(indexPath: IndexPath) {
@@ -162,7 +208,7 @@ class MainViewController: UIViewController {
         //TODO: - load in background
         guard let rEntityArr = CoreDataHandler.fetchEntity(in: RecipeEntity.self) else {
             return
-        }        
+        }
         recipeCollection = sortRecipeCollection(in: rEntityArr)
     }
     
@@ -213,8 +259,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        var numSections = 1
-        return numSections
+        return 1
     }
 
     //MARK: UICollectionViewDataSource
@@ -325,6 +370,32 @@ extension MainViewController: TimerProtocol {
                     cell.updateTimeLabel(timeRemaining: r.timeRemainingForCurrentStepToString())
                 }
             }
+        }
+    }
+}
+
+extension MainViewController: UIScrollViewDelegate {
+    
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        executeState(state: .Hide)
+        
+    }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        executeState(state: .Show)
+    }
+    
+    func executeState(state: ScrollingState) {
+        switch state {
+        case .Show:
+            UIView.animate(withDuration: 0.2, delay: 0.2, options: [.curveEaseInOut], animations: {
+                self.addRecipeButton.center.y = self.view.frame.maxY - 50.0
+            }, completion: nil)
+        case .Hide:
+            UIView.animate(withDuration: 0.15, delay: 0.0, options: [.curveEaseInOut], animations: {
+                self.addRecipeButton.center.y = self.view.frame.maxY + 50.0
+            }, completion: nil)
+        case .Idle:
+            break
         }
     }
 }

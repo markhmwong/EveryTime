@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol RecipeVCDelegate {
+protocol RecipeViewControllerDelegate {
     func didReturnValues(step: StepEntity)
     func willReloadTableData()
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RecipeViewController: RecipeViewControllerBase, RecipeVCDelegate {
+class RecipeViewController: RecipeViewControllerBase, RecipeViewControllerDelegate {
 
     //MARK: - Class Variables -
 //    var timer: Timer?
@@ -182,10 +182,10 @@ class RecipeViewController: RecipeViewControllerBase, RecipeVCDelegate {
     
     //MARK: - UI Methods -
     @objc func handleDismiss() {
-        guard let mvc = mainViewControllerDelegate else {
-            //TODO: Error
-            return
-        }
+//        guard let mvc = mainViewControllerDelegate else {
+//            //TODO: Error
+//            return
+//        }
         dismissCurrentViewController()
     }
     

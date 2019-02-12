@@ -119,7 +119,7 @@ extension RecipeEntity {
     
     //to be determined
     func loadEntity() {
-        let sortedStepArr = sortStepsByPriority()
+//        let sortedStepArr = sortStepsByPriority()
     }
     
     func updateTimeRemainingForCurrentStep() {

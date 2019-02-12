@@ -42,14 +42,7 @@ class StepsViewController: UIViewController, TimerProtocol {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    fileprivate lazy var dismissButton: UIButton = {
-        let button = UIButton()
-        button.setTitleColor(Theme.Font.Color.TextColour, for: .normal)
-        button.setTitle("Back", for: .normal)
-        button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
+
     fileprivate var timeLabel: UILabel = {
         var label = UILabel()
         label.textAlignment = .center
@@ -65,6 +58,15 @@ class StepsViewController: UIViewController, TimerProtocol {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    fileprivate lazy var dismissButton: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(Theme.Font.Color.TextColour, for: .normal)
+        button.setTitle("Back", for: .normal)
+        button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
     
     init(stepEntity: StepEntity, viewControllerDelegate: RecipeViewController) {
         super.init(nibName: nil, bundle: nil)
@@ -152,6 +154,8 @@ class StepsViewController: UIViewController, TimerProtocol {
         pauseButton.topAnchor.constraint(equalTo: timeLabel.bottomAnchor).isActive = true
         pauseButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         pauseButton.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
+        
+
     }
     
     //MARK: Button Handlers

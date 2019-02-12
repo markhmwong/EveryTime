@@ -8,13 +8,15 @@
 
 import UIKit
 
-class RecipeViewControllerWithTableView: RecipeViewControllerBase {
-    fileprivate let rowHeight: CGFloat = 80.0
+class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewControllerDelegate {
     var transitionDelegate = OverlayTransitionDelegate()
     var horizontalDelegate = HorizontalTransitionDelegate()
     var dismissInteractor: OverlayInteractor!
     var horizontalTransitionInteractor: HorizontalTransitionInteractor? = nil
-    
+    let screenSize = UIScreen.main.bounds.size
+    fileprivate let rowHeight: CGFloat = 80.0
+    fileprivate var addButtonState: ScrollingState = .Idle
+
     fileprivate lazy var tableView: UITableView = {
         let view: UITableView = UITableView()
         view.delegate = self
@@ -25,12 +27,15 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase {
         view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
         return view
     }()
-    fileprivate lazy var navView: UIView = {
-        let view = UIView()
-        view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+//    fileprivate lazy var navView: UIView = {
+//        let view = UIView()
+//        view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        return view
+//    }()
+
+    fileprivate lazy var navView: NavView? = nil
+    
     fileprivate lazy var dismissButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(Theme.Font.Color.TextColour, for: .normal)
@@ -38,6 +43,23 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase {
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
+    }()
+    fileprivate lazy var addRecipeButton: UIButton = {
+        let button = UIButton()
+        button.setAttributedTitle(NSAttributedString(string: "Add", attributes: Theme.Font.Nav.AddButton), for: .normal)
+        button.addTarget(self, action: #selector(handleAddStep), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = Theme.Font.Color.AddButtonColour
+        button.layer.cornerRadius = 25.0
+        button.contentEdgeInsets = UIEdgeInsets(top: 5.0, left: 10.0, bottom: 5.0, right: 10.0)
+        return button
+    }()
+    fileprivate lazy var recipeNameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Recipe Name"
+        label.backgroundColor = UIColor.red
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     init(recipe: RecipeEntity, delegate: MainViewController, indexPath: IndexPath) {
@@ -62,50 +84,105 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase {
     
     override func prepareViewController() {
         super.prepareViewController()
+        //set background color
     }
+    
+    let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 10))
+    let titleLabel = UILabel()
     
     override func prepareView() {
         super.prepareView()
-        self.view.addSubview(navView)
+        navView = NavView(frame: .zero, leftNavItem: dismissButton)
+        guard let nav = navView else {
+            return
+        }
+        self.view.addSubview(nav)
+        self.view.addSubview(recipeNameLabel)
         self.view.addSubview(tableView)
-        navView.addSubview(dismissButton)
+        self.view.addSubview(addRecipeButton)
+//        navView.addSubview(dismissButton)
         tableView.register(MainStepTableViewCell.self, forCellReuseIdentifier: stepCellId)
+        
+        //custom table view header
+        headerView.backgroundColor = UIColor.clear
+        titleLabel.attributedText = NSAttributedString(string: recipe.recipeName!, attributes: Theme.Font.Recipe.HeaderTableView)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        headerView.addSubview(titleLabel)
+        tableView.tableHeaderView = headerView
     }
     
     override func updateViewConstraints() {
         super.updateViewConstraints()
-        
+        guard let nav = navView else {
+            return
+        }
         let safeAreaInsets = self.view.safeAreaInsets
         if (safeAreaInsets.top > 0) {
             //safeAreaInsets = 44
-            navView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: safeAreaInsets.top).isActive = true
+            nav.topAnchor.constraint(equalTo: self.view.topAnchor, constant: safeAreaInsets.top).isActive = true
         }
     }
     
     override func prepareAutoLayout() {
         super.prepareAutoLayout()
+        guard let nav = navView else {
+            return
+        }
+
         
-        dismissButton.centerYAnchor.constraint(equalTo: navView.centerYAnchor).isActive = true
-        dismissButton.leadingAnchor.constraint(equalTo: navView.leadingAnchor, constant: 10).isActive = true
-        
-        tableView.topAnchor.constraint(equalTo: navView.bottomAnchor).isActive = true
+        recipeNameLabel.topAnchor.constraint(equalTo: nav.bottomAnchor).isActive = true
+        recipeNameLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        recipeNameLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+
+        tableView.topAnchor.constraint(equalTo: nav.bottomAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         
-        navView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        navView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        navView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.05).isActive = true
-        navView.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: 0).isActive = true
-        //top anchor within updateViewConstraints()
+        titleLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 10).isActive = true
+        titleLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor).isActive = true
+        
+//        headerView.leadingAnchor.constraint(equalTo: tableView.leadingAnchor).isActive = true
+//        headerView.trailingAnchor.constraint(equalTo: tableView.trailingAnchor).isActive = true
+//        headerView.topAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
+//        headerView.bottomAnchor.constraint(equalTo: tableView.bottomAnchor).isActive = true
+
+        nav.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        nav.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        nav.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.05).isActive = true
+        nav.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: 0).isActive = true
+        //nav view top anchor within updateViewConstraints()
+        
+//        dismissButton.centerYAnchor.constraint(equalTo: nav.centerYAnchor).isActive = true
+//        dismissButton.leadingAnchor.constraint(equalTo: nav.leadingAnchor, constant: 10).isActive = true
+        
+        addRecipeButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -25).isActive = true
+        addRecipeButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
+        addRecipeButton.heightAnchor.constraint(equalTo: addRecipeButton.widthAnchor, multiplier: 1).isActive = true
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
     }
     
     @objc func handleDismiss() {
-        guard let mvc = mainViewControllerDelegate else {
-            //TODO: Error
-            return
-        }
+//        guard let mvc = mainViewControllerDelegate else {
+//            //TODO: Error
+//            return
+//        }
         dismissCurrentViewController()
+    }
+    
+    @objc func handleAddStep() {
+        let vc = AddStepViewController()
+        vc.transitioningDelegate = transitionDelegate
+        vc.modalPresentationStyle = .custom
+        dismissInteractor = OverlayInteractor()
+        dismissInteractor.attachToViewController(viewController: vc, withView: vc.view, presentViewController: nil)
+        vc.interactor = dismissInteractor
+        transitionDelegate.dismissInteractor = dismissInteractor
+        vc.recipeViewControllerDelegate = self
+        self.present(vc, animated: true, completion: nil)
     }
     
     func dismissCurrentViewController() {
@@ -140,9 +217,25 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase {
             r.updateStepInRecipe(nextEntity)
         }
     }
+    
+    //MARK: - RecipeVCDelegate Protocol Functions -
+    func didReturnValues(step: StepEntity) {
+        let priority = self.stepArr.count + 1
+        step.priority = Int16(priority)
+        self.recipe.addToStep(step)
+        self.stepArr.append(step)
+        CoreDataHandler.saveContext()
+        self.startTimer()
+    }
+    
+    func willReloadTableData() {
+        self.tableView.reloadData()
+    }
 }
 
 extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDataSource {
+
+    
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let sourceObj = self.stepArr[sourceIndexPath.row]
         let destinationObj = self.stepArr[destinationIndexPath.row]
@@ -243,3 +336,31 @@ extension RecipeViewControllerWithTableView: TimerProtocol {
         }
     }
 }
+
+extension RecipeViewControllerWithTableView: UIScrollViewDelegate {
+    
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        executeState(state: .Hide)
+
+    }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        executeState(state: .Show)
+    }
+    
+    func executeState(state: ScrollingState) {
+        switch state {
+        case .Show:
+            UIView.animate(withDuration: 0.2, delay: 0.2, options: [.curveEaseInOut], animations: {
+                self.addRecipeButton.center.y = self.view.frame.maxY - 50.0
+            }, completion: nil)
+        case .Hide:
+            UIView.animate(withDuration: 0.15, delay: 0.0, options: [.curveEaseInOut], animations: {
+                self.addRecipeButton.center.y = self.view.frame.maxY + 50.0
+            }, completion: nil)
+        case .Idle:
+            break
+        }
+    }
+}
+
+

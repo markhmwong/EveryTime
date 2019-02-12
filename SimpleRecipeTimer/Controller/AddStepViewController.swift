@@ -13,7 +13,7 @@ class AddStepViewController: UIViewController {
     //MARK: VARIABLES
     fileprivate let maxCharacterLimitForNameLabel = 12
     fileprivate let minCharacterLimitForNameLabel = 1
-    var recipeViewControllerDelegate: RecipeVCDelegate?
+    var recipeViewControllerDelegate: RecipeViewControllerDelegate?
     var interactor: OverlayInteractor? = nil
 
     //UIPickerView
