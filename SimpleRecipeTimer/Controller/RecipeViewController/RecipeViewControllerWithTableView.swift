@@ -20,7 +20,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     fileprivate lazy var tableView: UITableView = {
         let view: UITableView = UITableView()
         view.delegate = self
-        view.isEditing = true
+        view.isEditing = false
         view.dataSource = self
         view.translatesAutoresizingMaskIntoConstraints = false
         view.separatorStyle = .none
@@ -44,14 +44,22 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    fileprivate lazy var addRecipeButton: UIButton = {
+    fileprivate lazy var editButton: UIButton = {
         let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "Add", attributes: Theme.Font.Nav.AddButton), for: .normal)
+        button.setTitleColor(Theme.Font.Color.TextColour, for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Edit", attributes: Theme.Font.Nav.Item), for: .normal)
+        button.addTarget(self, action: #selector(handleEdit), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    fileprivate lazy var addStepButton: UIButton = {
+        let button = UIButton()
+        button.setAttributedTitle(NSAttributedString(string: "Add A Timer", attributes: Theme.Font.Nav.AddButton), for: .normal)
         button.addTarget(self, action: #selector(handleAddStep), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = Theme.Font.Color.AddButtonColour
-        button.layer.cornerRadius = 25.0
-        button.contentEdgeInsets = UIEdgeInsets(top: 5.0, left: 10.0, bottom: 5.0, right: 10.0)
+        button.layer.cornerRadius = 3.0
+        button.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 10.0, bottom: 0.0, right: 10.0)
         return button
     }()
     fileprivate lazy var recipeNameLabel: UILabel = {
@@ -92,14 +100,14 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     
     override func prepareView() {
         super.prepareView()
-        navView = NavView(frame: .zero, leftNavItem: dismissButton)
+        navView = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: editButton)
         guard let nav = navView else {
             return
         }
         self.view.addSubview(nav)
         self.view.addSubview(recipeNameLabel)
         self.view.addSubview(tableView)
-        self.view.addSubview(addRecipeButton)
+        self.view.addSubview(addStepButton)
 //        navView.addSubview(dismissButton)
         tableView.register(MainStepTableViewCell.self, forCellReuseIdentifier: stepCellId)
         
@@ -128,37 +136,28 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         guard let nav = navView else {
             return
         }
-
         
         recipeNameLabel.topAnchor.constraint(equalTo: nav.bottomAnchor).isActive = true
-        recipeNameLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        recipeNameLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        recipeNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        recipeNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
 
         tableView.topAnchor.constraint(equalTo: nav.bottomAnchor).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
         titleLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 10).isActive = true
         titleLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor).isActive = true
-        
-//        headerView.leadingAnchor.constraint(equalTo: tableView.leadingAnchor).isActive = true
-//        headerView.trailingAnchor.constraint(equalTo: tableView.trailingAnchor).isActive = true
-//        headerView.topAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
-//        headerView.bottomAnchor.constraint(equalTo: tableView.bottomAnchor).isActive = true
 
-        nav.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        nav.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        nav.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.05).isActive = true
+        nav.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        nav.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        nav.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05).isActive = true
         nav.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: 0).isActive = true
         //nav view top anchor within updateViewConstraints()
         
-//        dismissButton.centerYAnchor.constraint(equalTo: nav.centerYAnchor).isActive = true
-//        dismissButton.leadingAnchor.constraint(equalTo: nav.leadingAnchor, constant: 10).isActive = true
-        
-        addRecipeButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -25).isActive = true
-        addRecipeButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
-        addRecipeButton.heightAnchor.constraint(equalTo: addRecipeButton.widthAnchor, multiplier: 1).isActive = true
+        addStepButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -45).isActive = true
+        addStepButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        addStepButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.33).isActive = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -171,6 +170,11 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
 //            return
 //        }
         dismissCurrentViewController()
+    }
+    
+    @objc func handleEdit() {
+        tableView.isEditing = !tableView.isEditing
+        
     }
     
     @objc func handleAddStep() {
@@ -234,8 +238,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
 }
 
 extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDataSource {
-
-    
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let sourceObj = self.stepArr[sourceIndexPath.row]
         let destinationObj = self.stepArr[destinationIndexPath.row]
@@ -351,11 +353,11 @@ extension RecipeViewControllerWithTableView: UIScrollViewDelegate {
         switch state {
         case .Show:
             UIView.animate(withDuration: 0.2, delay: 0.2, options: [.curveEaseInOut], animations: {
-                self.addRecipeButton.center.y = self.view.frame.maxY - 50.0
+                self.addStepButton.center.y = self.view.frame.maxY - 50.0
             }, completion: nil)
         case .Hide:
             UIView.animate(withDuration: 0.15, delay: 0.0, options: [.curveEaseInOut], animations: {
-                self.addRecipeButton.center.y = self.view.frame.maxY + 50.0
+                self.addStepButton.center.y = self.view.frame.maxY + 50.0
             }, completion: nil)
         case .Idle:
             break

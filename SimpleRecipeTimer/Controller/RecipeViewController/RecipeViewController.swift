@@ -41,9 +41,12 @@ class RecipeViewController: RecipeViewControllerBase, RecipeViewControllerDelega
     
     fileprivate lazy var addStepButton: UIButton = {
         let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "Add", attributes: Theme.Font.Nav.Item), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Add Step", attributes: Theme.Font.Nav.Item), for: .normal)
         button.addTarget(self, action: #selector(handleAddStep), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = Theme.Font.Color.AddButtonColour
+        button.layer.cornerRadius = 3.0
+        button.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 10.0, bottom: 0.0, right: 10.0)
         return button
     }()
     

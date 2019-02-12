@@ -52,7 +52,7 @@ struct Theme {
             static var StepCellCompleteIndicator: UIColor { return UIColor(red:0.29, green:0.82, blue:0.50, alpha:1.0) }
             static var StepCellIncompleteIndicator: UIColor { return UIColor(red:0.88, green:0.77, blue:0.77, alpha:1.0) }
             
-            static var AddButtonColour: UIColor { return UIColor(red:0.00, green:0.76, blue:1.00, alpha:1.0) }
+            static var AddButtonColour: UIColor { return UIColor(red:0.00, green:0.76, blue:1.00, alpha:0.83) }
         }
         
         // At the Recipe list view (Main View COntroller)

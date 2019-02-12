@@ -43,6 +43,13 @@ class MainViewController: UIViewController {
     }()
     fileprivate lazy var leftNavItemButton: UIButton = {
         let button = UIButton()
+        button.setAttributedTitle(NSAttributedString(string: "About", attributes: Theme.Font.Nav.Item), for: .normal)
+        button.addTarget(self, action: #selector(handleAbout), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    fileprivate lazy var testNavButton: UIButton = {
+        let button = UIButton()
         button.setAttributedTitle(NSAttributedString(string: "Test Random Data", attributes: Theme.Font.Nav.Item), for: .normal)
         button.addTarget(self, action: #selector(handleTest), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -50,12 +57,12 @@ class MainViewController: UIViewController {
     }()
     fileprivate lazy var addRecipeButton: UIButton = {
         let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "Add", attributes: Theme.Font.Nav.AddButton), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Add Recipe", attributes: Theme.Font.Nav.AddButton), for: .normal)
         button.addTarget(self, action: #selector(handleAddRecipe), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = Theme.Font.Color.AddButtonColour
-        button.layer.cornerRadius = 25.0
-        button.contentEdgeInsets = UIEdgeInsets(top: 5.0, left: 10.0, bottom: 5.0, right: 10.0)
+        button.layer.cornerRadius = 3.0
+        button.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 10.0, bottom: 0.0, right: 10.0)
         return button
     }()
     lazy var collView: UICollectionView = {
@@ -71,16 +78,6 @@ class MainViewController: UIViewController {
     }()
 
     fileprivate lazy var navView: NavView? = nil
-
-//    fileprivate lazy var navView: UIView = {
-//        let view = UIView()
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        view.backgroundColor = UIColor.clear
-//        view.layer.masksToBounds = true
-//        view.clipsToBounds = true
-//        view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
-//        return view
-//    }()
     
     //MARK: - ViewController Lifecycle -
     override func viewDidLoad() {
@@ -142,8 +139,6 @@ class MainViewController: UIViewController {
             return
         }
         self.view.addSubview(nav)
-//        navView.addSubview(leftNavItemButton)
-//        navView.addSubview(rightNavItemButton)
         self.view.addSubview(collView)
         self.view.addSubview(addRecipeButton)
         //register cells
@@ -170,9 +165,10 @@ class MainViewController: UIViewController {
         nav.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05).isActive = true
         nav.bottomAnchor.constraint(equalTo: collView.topAnchor, constant: 0).isActive = true
         
-        addRecipeButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -25).isActive = true
-        addRecipeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        addRecipeButton.heightAnchor.constraint(equalTo: addRecipeButton.widthAnchor, multiplier: 1).isActive = true
+        addRecipeButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -45).isActive = true
+        addRecipeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        addRecipeButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.33).isActive = true
+//        addRecipeButton.heightAnchor.constraint(equalTo: addRecipeButton.widthAnchor, multiplier: 1).isActive = true
     }
     
     func willReloadCellData(indexPath: IndexPath) {
@@ -226,26 +222,10 @@ class MainViewController: UIViewController {
             recipe.updateStepInRecipe(s)
         }
     }
-//        let step = recipe.searchLeadingStep()
-//
-//        guard let s = step else {
-//            return
-//        }
-//
-//        recipe.updateCurr(stepEntity: s)
-//    func testCoreData() {
-////        CoreDataHandler.deleteAllRecordsIn(entity: RecipeEntity.self)
-////        CoreDataHandler.printAllRecordsIn(entity: RecipeEntity.self)
-//    }
 }
 
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let vc = RecipeViewController(recipe: recipeCollection[indexPath.item], delegate: self, indexPath: indexPath)
-//        horizontalDelegate.dismissInteractor  = HorizontalTransitionInteractor(viewController: vc)
-//        vc.transitioningDelegate = horizontalDelegate
-//        vc.modalPresentationStyle = .custom
-
         let vc = RecipeViewControllerWithTableView(recipe: recipeCollection[indexPath.item], delegate: self, indexPath: indexPath)
         horizontalDelegate.dismissInteractor  = HorizontalTransitionInteractor(viewController: vc)
         vc.transitioningDelegate = horizontalDelegate
@@ -323,7 +303,12 @@ extension MainViewController {
         CoreDataHandler.saveContext()
     }
     
-    @objc func handleAddRecipe() throws {
+    @objc func handleAbout() {
+        let vc = AboutViewController(delegate:self)
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    @objc func handleAddRecipe() {
         let vc = AddRecipeViewController(delegate:self)
         vc.transitioningDelegate = transitionDelegate
         vc.modalPresentationStyle = .custom
