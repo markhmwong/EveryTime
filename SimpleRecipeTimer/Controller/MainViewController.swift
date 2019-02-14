@@ -36,7 +36,7 @@ class MainViewController: UIViewController {
     fileprivate var sections: Int = 0
     fileprivate lazy var rightNavItemButton: UIButton = {
         let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "Clear", attributes: Theme.Font.Nav.Item), for: .normal)//revert back to add recipe
+        button.setAttributedTitle(NSAttributedString(string: "Clear All", attributes: Theme.Font.Nav.Item), for: .normal)//revert back to add recipe
         button.addTarget(self, action: #selector(handleDeleteRecipe), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button

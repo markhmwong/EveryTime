@@ -20,6 +20,7 @@ class AboutViewController: UIViewController {
     }()
     let textView: UITextView = {
         let view = UITextView()
+        view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
         view.isSelectable = false
         view.isEditable = false
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -76,7 +77,7 @@ class AboutViewController: UIViewController {
     }
     
     func prepareViewController() {
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
     }
     
     @objc func handleDismiss() {
