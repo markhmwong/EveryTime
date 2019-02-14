@@ -44,17 +44,21 @@ class NavView: UIView {
             right.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         }
         
-        var bottomLine = CALayer()
+        let bottomBorder = UIView()
+        let gray: CGFloat = 100.0
+        let borderThickness: CGFloat = 2.0
+        bottomBorder.backgroundColor = UIColor(red: gray / 255.0, green: gray / 255.0, blue: gray / 255.0, alpha: 1.0)
+        bottomBorder.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(bottomBorder)
         
-        bottomLine.frame = CGRect(x: 0.0, y: self.frame.height - 1, width: self.frame.width, height: 1.0)
-        bottomLine.backgroundColor = UIColor.white.cgColor
-        layer.addSublayer(bottomLine)
+        bottomBorder.heightAnchor.constraint(equalToConstant: borderThickness).isActive = true
+        bottomBorder.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        bottomBorder.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        bottomBorder.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
     }
     
-    func setupAutoLayout() {
-        guard let left = leftNavItem else {
-            return
-        }
+    fileprivate func setupAutoLayout() {
+
         
     }
 }

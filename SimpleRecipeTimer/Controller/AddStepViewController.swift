@@ -132,7 +132,6 @@ class AddStepViewController: UIViewController {
         let min = countDownPicker.selectedRow(inComponent: pickerColumn.min.rawValue)
         let sec = countDownPicker.selectedRow(inComponent: pickerColumn.sec.rawValue)
         
-        print("todo - priority by count of array")
         let sEntity = StepEntity(name: name, hours: hrs, minutes: min, seconds: sec, priority: Int16(0))
         if let rvc = recipeViewControllerDelegate {
             rvc.didReturnValues(step: sEntity)

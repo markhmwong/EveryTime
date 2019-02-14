@@ -163,7 +163,7 @@ extension UITextField {
     }
     
     func addNextButtonToolbar(onNext: (target: Any, action: Selector)? = nil, onCancel: (target: Any, action: Selector)? = nil, onDone: (target: Any, action: Selector)? = nil) {
-        let onNext = onNext ?? (target: self, action: #selector(handleNextButton))
+        let onNext = onNext ?? (target: self, action: #selector(handleContinueButton))
         let onDone = onDone ?? (target: self, action: #selector(handleDoneButton))
 
         let toolbar: UIToolbar = UIToolbar()
@@ -180,7 +180,7 @@ extension UITextField {
     
     // Default actions:
     @objc func handleDoneButton() { self.resignFirstResponder() }
-    @objc func handleNextButton() { self.resignFirstResponder() }
+    @objc func handleContinueButton() { self.resignFirstResponder() }
     @objc func handleAddButton() { self.resignFirstResponder() }
     @objc func handleEditButton() { self.resignFirstResponder() }
 }

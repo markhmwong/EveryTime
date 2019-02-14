@@ -24,15 +24,10 @@ class RecipeEntity: NSManagedObject {
     }
 }
 
-
-/*
- Rewrite v4
-*/
 extension RecipeEntity {
     /* Called directly from MVC update function */
     func updateRecipeTime() {
         
-        //working
         calculateTimeToStepByTimePassed()
         if (currStepTimeRemaining <= 0.0) {
             prepareNextStep()
@@ -117,11 +112,6 @@ extension RecipeEntity {
         totalTimeRemaining = total
     }
     
-    //to be determined
-    func loadEntity() {
-//        let sortedStepArr = sortStepsByPriority()
-    }
-    
     func updateTimeRemainingForCurrentStep() {
         let entityArr = sortStepsByPriority()
         
@@ -136,6 +126,7 @@ extension RecipeEntity {
         let sortedSet = sortStepsByPriority()
         let maxItems = sortedSet.count - 1
         let index = Int(currStepPriority)
+        print("\(index), \(currStepName)")
         let currStep = sortedSet[index]
         
         currStep.isLeading = false
@@ -160,7 +151,6 @@ extension RecipeEntity {
     /* Recipe View Controller */
     func updateCurrStepInRecipe() -> Void {
         updateTimeRemainingForCurrentStep()
-//        updateExpiryDateForCurrentStep()
     }
   
     //for offscreen cells
@@ -195,9 +185,7 @@ extension RecipeEntity {
 extension RecipeEntity {
     func pauseStepArr() {
         CoreDataHandler.getPrivateContext().perform {
-//            if let singleEntity = CoreDataHandler.fetchByDate(in: RecipeEntity.self, date: r.createdDate!) {
-//                singleEntity.isPaused = pauseState
-//            }
+
             self.isPaused = true
             let stepSet = self.step as! Set<StepEntity>
             for s in stepSet {
@@ -210,16 +198,12 @@ extension RecipeEntity {
             self.pauseStartDate = Date()
 
         }
-        
-
-//        updateTimeRemainingForCurrentStep()
-            }
+}
     
     func unpauseStepArr() {
         let stepSet = self.step as! Set<StepEntity>
         for s in stepSet {
             if(self.isPaused) {
-//                s.updateExpiry()
                 s.isPausedPrimary = false
             }
         }

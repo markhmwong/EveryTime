@@ -11,6 +11,21 @@ import UIKit
 class AboutViewController: UIViewController {
     
     fileprivate var delegate: MainViewController?
+    fileprivate var dismissButton: UIButton = {
+        let button = UIButton()
+        button.setAttributedTitle(NSAttributedString(string: "Back", attributes: Theme.Font.Nav.Item), for: .normal)
+        button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    let textView: UITextView = {
+        let view = UITextView()
+        view.isSelectable = false
+        view.isEditable = false
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
     
     init(delegate: MainViewController) {
         super.init(nibName: nil, bundle: nil)
@@ -25,34 +40,46 @@ class AboutViewController: UIViewController {
         super.viewDidLoad()
         prepareViewController()
         prepareView()
+        prepareAutoLayout()
     }
     
     func prepareView() {
-        let textView = UITextView()
-        textView.text = """
+        let details = """
         Thank you for using Timeable.\n
         I'm not the best cook but I love a good a steak. The first bite always gets me when you've cooked it to your liking, and thats the problem it wasn't always to my liking; I made this app to keep track of the amount of times I had flipped my steak for it to cook evenly knowing Gordan Ramsey would kick my arse for overcooking it.\n
         I do really hope you enjoy using it and get the most of out it, whether you need to track your own cooking, an execise routine or a series of steps that you simply can never get down perfectly. This was made for that in mind.\n
         
         Privacy.\n
-        A big issue in recent times. This application does not contain any code that takes data from your phone. It will not ask for your permission to use your camera, contacts, photo albums. If it does, then you are not using an official build.
+        This application does not contain any code that extracts sensitive data from your phone to an external server. It will not ask for your permission to use your camera, contacts, photo albums. If it does, then you are not using an official build. Though currently I do not track any user interaction I may in the future to see how a user interacts with my application.
         
         Bugs.\n
         Please report any bugs to hello@whizbangapps.com.
         
         Contact.\n
-        Twitter: @markhmwong Github: @markhmwong Website: https://www.whizbangapps.com
+        Twitter: @markhmwong\nGithub: @markhmwong\nWebsite: https://www.whizbangapps.com
         """
-        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.attributedText = NSAttributedString(string: details, attributes: Theme.Font.About.Text)
         view.addSubview(textView)
         
+        view.addSubview(dismissButton)
+    }
+    
+    func prepareAutoLayout() {
+        let safeAreaGuideLayout = view.safeAreaLayoutGuide
+        dismissButton.topAnchor.constraint(equalTo: safeAreaGuideLayout.topAnchor).isActive = true
+        dismissButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
+        
         textView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        textView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        textView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        textView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4).isActive = true
+        textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
+        textView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
+        textView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.8).isActive = true
     }
     
     func prepareViewController() {
         view.backgroundColor = UIColor.white
+    }
+    
+    @objc func handleDismiss() {
+        self.dismiss(animated: true, completion: nil)
     }
 }

@@ -40,6 +40,7 @@ class MainStepTableViewCell: EntityBaseTableViewCell<StepEntity> {
     }()
     var completeLabel = UILabel()
     var gl = CAGradientLayer()
+    
     override func setupView() {
         super.setupView()
         backgroundColor = Theme.Background.Color.CellBackgroundColor

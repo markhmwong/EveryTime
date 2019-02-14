@@ -36,7 +36,7 @@ class MainViewController: UIViewController {
     fileprivate var sections: Int = 0
     fileprivate lazy var rightNavItemButton: UIButton = {
         let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "Delete", attributes: Theme.Font.Nav.Item), for: .normal)//revert back to add recipe
+        button.setAttributedTitle(NSAttributedString(string: "Clear", attributes: Theme.Font.Nav.Item), for: .normal)//revert back to add recipe
         button.addTarget(self, action: #selector(handleDeleteRecipe), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -82,12 +82,17 @@ class MainViewController: UIViewController {
     //MARK: - ViewController Lifecycle -
     override func viewDidLoad() {
         super.viewDidLoad()
+//        self.testCoreData()
+
         self.prepareViewControllerView()
-        self.loadDataFromCoreData()//TODO: - load from background thread
+        self.loadDataFromCoreData()
         self.prepareSubviews()
         self.prepareAutoLayout()
         self.startTimer()
-//        self.testCoreData()
+    }
+    
+    func testCoreData() {
+        CoreDataHandler.deleteAllRecordsIn(entity: RecipeEntity.self)
     }
     
     override func viewDidLayoutSubviews() {
@@ -253,19 +258,20 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     //MARK: UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        let itemSpacing: CGFloat = 10
-        return UIEdgeInsets(top: 5, left: itemSpacing, bottom: 5, right: itemSpacing)
+        let itemSpacing: CGFloat = 0.0
+        let verticalSpacing: CGFloat = 10.0
+        return UIEdgeInsets(top: verticalSpacing, left: itemSpacing, bottom: verticalSpacing, right: itemSpacing)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemSpacing: CGFloat = 20 //20 for left and right side
-        let itemsPerRow: CGFloat = 1
+        let itemSpacing: CGFloat = 8.0 //20 for left and right side
+        let itemsPerRow: CGFloat = 5.0
         let width = UIScreen.main.bounds.size.width - itemSpacing * CGFloat(itemsPerRow)
-        return CGSize(width: width, height: width / 4)
+        return CGSize(width: width, height: width / 3.0)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 3;
+        return 10.0;
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

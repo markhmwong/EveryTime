@@ -20,12 +20,12 @@ extension AddRecipeViewController: UICollectionViewDataSource {
         
         switch indexPath.item {
         case 0:
-            addRecipeNameCell = collectionView.dequeueReusableCell(withReuseIdentifier: addRecipeNameCellId, for: indexPath) as? AddRecipeNameCell
+            addRecipeNameCell = collectionView.dequeueReusableCell(withReuseIdentifier: addRecipeNameCellId, for: indexPath) as? AddRecipeStepOne
             addRecipeNameCell?.backgroundColor = UIColor.clear
             addRecipeNameCell?.addRecipeViewControllerDelegate = self
             return addRecipeNameCell!
         case 1:
-            addRecipeStepCell = collectionView.dequeueReusableCell(withReuseIdentifier: addRecipeStepCellId, for: indexPath) as? AddRecipeStepCell
+            addRecipeStepCell = collectionView.dequeueReusableCell(withReuseIdentifier: addRecipeStepCellId, for: indexPath) as? AddRecipeStepTwo
             addRecipeStepCell?.backgroundColor = UIColor.clear
             addRecipeStepCell?.addRecipeViewControllerDelegate = self
             addRecipeStepCell?.recipeName = recipeNameStr
@@ -38,13 +38,19 @@ extension AddRecipeViewController: UICollectionViewDataSource {
 }
 
 extension AddRecipeViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-    }
     
     func scrollToIndex(index: Int) {
         let indexPath = IndexPath(item: index, section:0)
         collView.scrollToItem(at: indexPath, at: UICollectionView.ScrollPosition(), animated: true)
+    }
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        let indexPaths = collView.indexPathsForVisibleItems
+        
+        if (indexPaths[0].item == 1) {
+            showEditButton()
+        } else {
+            hideEditButton()
+        }
     }
 }
 
@@ -55,8 +61,8 @@ extension AddRecipeViewController: UICollectionViewDelegateFlowLayout {
 }
 
 class AddRecipeViewController: UIViewController {
-    var addRecipeNameCell: AddRecipeNameCell?
-    var addRecipeStepCell: AddRecipeStepCell?
+    var addRecipeNameCell: AddRecipeStepOne?
+    var addRecipeStepCell: AddRecipeStepTwo?
     var interactor: OverlayInteractor? = nil
     let addRecipeNameCellId: String = "AddRecipeNameCellId", addRecipeStepCellId: String = "AddRecipeStepCellId"
     var mainViewControllerDelegate: MainViewController?
@@ -72,9 +78,11 @@ class AddRecipeViewController: UIViewController {
         return label
     }()
     var editButton: UIButton = {
-        let label = UIButton()
-        label.setAttributedTitle(NSAttributedString(string: "edit", attributes: Theme.Font.Recipe.TitleAttribute), for: .normal)
-        return label
+        let button = UIButton()
+        button.alpha = 0.0
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setAttributedTitle(NSAttributedString(string: "edit", attributes: Theme.Font.Recipe.TitleAttribute), for: .normal)
+        return button
     }()
     lazy var collView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
@@ -127,11 +135,10 @@ class AddRecipeViewController: UIViewController {
         collView.isScrollEnabled = false
         collView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(collView)
-        collView.register(AddRecipeNameCell.self, forCellWithReuseIdentifier: addRecipeNameCellId)
-        collView.register(AddRecipeStepCell.self, forCellWithReuseIdentifier: addRecipeStepCellId)
+        collView.register(AddRecipeStepOne.self, forCellWithReuseIdentifier: addRecipeNameCellId)
+        collView.register(AddRecipeStepTwo.self, forCellWithReuseIdentifier: addRecipeStepCellId)
         
         editButton.addTarget(self, action: #selector(handleEditButton), for: .touchUpInside)
-        editButton.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(editButton)
     }
     
@@ -158,6 +165,16 @@ class AddRecipeViewController: UIViewController {
             mvc.addToCollectionView()
         }
     }
+    
+    func showEditButton() {
+        editButton.alpha = 1.0
+        editButton.isEnabled = true
+    }
+    
+    func hideEditButton() {
+        editButton.alpha = 0.0
+        editButton.isEnabled = false
+    }
 }
 
 /*
@@ -183,7 +200,7 @@ extension AddRecipeViewController {
     }
     
     @objc func handleEditButton() {
-        let cell = collView.cellForItem(at: IndexPath(item: 1, section: 0)) as! AddRecipeStepCell //the add step cell
+        let cell = collView.cellForItem(at: IndexPath(item: 1, section: 0)) as! AddRecipeStepTwo //the add step cell
         let tableView = cell.tableView
         guard let i = interactor else {
             return

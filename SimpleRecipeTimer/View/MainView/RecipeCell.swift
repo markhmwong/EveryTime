@@ -12,20 +12,16 @@ import CoreData
 class RecipeCell: EntityBaseCell<RecipeEntity> {
     override var entity: RecipeEntity? {
         didSet {
-            guard let name = entity?.recipeName else {
+            guard let e = entity else {
                 return
             }
-            
-            guard let time = entity?.timeRemainingForCurrentStepToString() else {
+            guard let name = e.recipeName else {
                 return
             }
-            self.prepareLabels(name, time)
+
+            self.prepareLabels(name, e.timeRemainingForCurrentStepToString())
             
-            guard let pauseState = entity?.isPaused else {
-                return
-            }
-            
-            if (pauseState) {
+            if (e.isPaused) {
                 pauseButton.setAttributedTitle(NSAttributedString(string: "unpause", attributes: Theme.Font.Recipe.PauseAttribute), for: .normal)
                 totalTimeLabel?.textColor = Theme.Font.Color.TextColourDisabled
             } else {
@@ -38,66 +34,86 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    fileprivate var nameLabel: UILabel? = nil
+    fileprivate var nameLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = UIColor.clear
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     fileprivate var totalTimeLabel: UILabel? = nil
     fileprivate var nextShortestTimeLabel: UILabel? = nil
     fileprivate var pauseButton: UIButton = {
         let button = UIButton()
+        button.backgroundColor = UIColor.clear
+        button.titleEdgeInsets = UIEdgeInsets(top: -10,left: 0,bottom: -10,right: 0)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    lazy var nameLabelAnimationYMovement: CGFloat = 0.0
+    fileprivate lazy var nameLabelAnimationYMovement: CGFloat = 0.0
     var mainViewController: MainViewController? = nil
     var cellForIndexPath: IndexPath?
-    var stepName: String? = nil
-    
+    fileprivate var stepName: String? = nil
+    var gl: CAGradientLayer = {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [Theme.Background.Gradient.CellColorTop, Theme.Background.Gradient.CellColorBottom]
+        gradientLayer.locations = [0.3, 1.0]
+        gradientLayer.shouldRasterize = true // rasterise so we don't need to redraw
+        return gradientLayer
+    }()
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gl.frame = bounds
+    }
     
     func prepareLabels(_ name: String,_ time: String) {
-        nameLabel = UILabel()
-        nameLabel?.attributedText = NSAttributedString(string: name, attributes: Theme.Font.Recipe.NameAttribute)
-        nameLabel?.backgroundColor = UIColor.clear
-        
-        nameLabel?.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.addSubview(nameLabel!)
-        
-        stepNameLabel.attributedText = NSAttributedString(string: "unknown", attributes: Theme.Font.Recipe.NameAttribute)
+        self.contentView.addSubview(nameLabel)
+        nameLabel.attributedText = NSAttributedString(string: name, attributes: Theme.Font.Recipe.NameAttribute)
+
+        stepNameLabel.attributedText = NSAttributedString(string: "unknown", attributes: Theme.Font.Recipe.StepSubTitle)
         self.contentView.addSubview(stepNameLabel)
         
         totalTimeLabel = UILabel()
         totalTimeLabel?.attributedText = NSAttributedString(string: time, attributes: Theme.Font.Recipe.TimeAttribute)
         totalTimeLabel?.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(totalTimeLabel!)
-
         
-        nameLabel?.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant:10).isActive = true
-        nameLabel?.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor, constant: 0).isActive = true
+        nameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant:0).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10).isActive = true
         
-        totalTimeLabel?.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor).isActive = true
-        totalTimeLabel?.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
+        totalTimeLabel?.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15).isActive = true
+        totalTimeLabel?.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 0).isActive = true
+        
+        stepNameLabel.topAnchor.constraint(equalTo: (totalTimeLabel?.bottomAnchor)!).isActive = true
+        stepNameLabel.leadingAnchor.constraint(equalTo: totalTimeLabel!.leadingAnchor, constant: 0).isActive = true
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.nameLabel?.removeFromSuperview()
-        self.nameLabel = nil
+        self.nameLabel.removeFromSuperview()
         self.totalTimeLabel?.removeFromSuperview()
         self.totalTimeLabel = nil
     }
     
     override func setupView() {
-        layer.cornerRadius = 4
-        layer.borderWidth = 1.0
-        layer.borderColor = UIColor.clear.cgColor
-        layer.masksToBounds = true
         self.backgroundColor = Theme.Background.Color.CellBackgroundColor
-        
         pauseButton.addTarget(self, action: #selector(recipePauseHandler), for: .touchUpInside)
-        pauseButton.backgroundColor = UIColor.clear
-        pauseButton.titleEdgeInsets = UIEdgeInsets(top: -10,left: 0,bottom: -10,right: 0)
-        pauseButton.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(pauseButton)
-        
-        pauseButton.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -10).isActive = true
+
+        layer.insertSublayer(gl, at: 0)
+        pauseButton.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -15).isActive = true
         pauseButton.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor, constant: 0).isActive = true
+        
+        layer.cornerRadius = 15.0
+        clipsToBounds = false
+
+        layer.backgroundColor = UIColor.white.cgColor
+        layer.shadowColor = UIColor(red:0.65, green:0.65, blue:0.65, alpha:1.0).cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 5.0)
+        layer.shadowRadius = 6.0
+        layer.shadowOpacity = 0.8
+        layer.masksToBounds = false
+        layer.shadowPath = UIBezierPath(roundedRect:bounds, cornerRadius:layer.cornerRadius).cgPath
     }
     
     @objc func recipePauseHandler() {
@@ -132,7 +148,6 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
                             singleEntity.isPaused = pauseState
                         }
                         r.isPaused = pauseState
-//                        CoreDataHandler.saveContext()
                     }
                     
                     DispatchQueue.main.async {
@@ -148,7 +163,7 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
         guard let e = entity else {
             return
         }
-        stepNameLabel.text = e.currStepName
+        stepNameLabel.attributedText = NSAttributedString(string: e.currStepName!, attributes: Theme.Font.Recipe.StepSubTitle)
         if entity != nil {
             totalTimeLabel?.attributedText = NSAttributedString(string: timeRemaining, attributes: Theme.Font.Recipe.TimeAttribute)
         } else {

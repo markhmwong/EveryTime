@@ -27,12 +27,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
         return view
     }()
-//    fileprivate lazy var navView: UIView = {
-//        let view = UIView()
-//        view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        return view
-//    }()
 
     fileprivate lazy var navView: NavView? = nil
     
@@ -224,8 +218,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     
     //MARK: - RecipeVCDelegate Protocol Functions -
     func didReturnValues(step: StepEntity) {
-        let priority = self.stepArr.count + 1
-        step.priority = Int16(priority)
+        step.priority = Int16(stepArr.count)
         self.recipe.addToStep(step)
         self.stepArr.append(step)
         CoreDataHandler.saveContext()
@@ -318,7 +311,7 @@ extension RecipeViewControllerWithTableView: TimerProtocol {
             
             //updating current leading step entity
             //on screen
-            
+            print(stepPriorityToUpdate)
             let s = stepArr[stepPriorityToUpdate]
             if (s.timeRemaining.isLessThanOrEqualTo(0.0) && s.isComplete == true) {
                 //to next step

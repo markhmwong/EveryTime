@@ -53,8 +53,4 @@ class ViewControllerOverlayAnimator: NSObject, UIViewControllerAnimatedTransitio
         }
  
     }
-    
-//    func interruptibleAnimator(using transitionContext: UIViewControllerContextTransitioning) -> UIViewImplicitlyAnimating {
-//        return
-//    }
 }
