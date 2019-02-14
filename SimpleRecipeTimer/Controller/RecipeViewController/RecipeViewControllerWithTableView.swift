@@ -311,7 +311,6 @@ extension RecipeViewControllerWithTableView: TimerProtocol {
             
             //updating current leading step entity
             //on screen
-            print(stepPriorityToUpdate)
             let s = stepArr[stepPriorityToUpdate]
             if (s.timeRemaining.isLessThanOrEqualTo(0.0) && s.isComplete == true) {
                 //to next step

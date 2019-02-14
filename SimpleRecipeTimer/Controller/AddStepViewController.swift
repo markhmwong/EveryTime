@@ -14,6 +14,7 @@ class AddStepViewController: UIViewController {
     fileprivate let maxCharacterLimitForNameLabel = 12
     fileprivate let minCharacterLimitForNameLabel = 1
     var recipeViewControllerDelegate: RecipeViewControllerDelegate?
+    var recipeViewControllerWithTableViewDelegate: RecipeViewControllerWithTableView?
     var interactor: OverlayInteractor? = nil
 
     //UIPickerView
@@ -87,19 +88,27 @@ class AddStepViewController: UIViewController {
         }
     }
     
+    func showAlertBox(_ message: String) {
+        let alert = UIAlertController(title: "Alert", message: "\(message)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        guard let delegate = recipeViewControllerWithTableViewDelegate else {
+            return
+        }
+        delegate.present(alert, animated: true, completion: nil)
+    }
+    
     //MARK: HANDLE DONE BUTTON
     @objc func handleDoneButton() {
         do {
             try self.grabValuesFromInput()
         } catch ErrorsToThrow.labelNotFilled {
-            //TODO: BUILD ALERT BOX
-            print("Alert Box: Please fill in the label")
+            showAlertBox("Please fill in the label")
         } catch ErrorsToThrow.labelLengthTooLong {
-            print("Alert Box: Length too long keep it to \(maxCharacterLimitForNameLabel)")
+            showAlertBox("Length too long, keep it under \(maxCharacterLimitForNameLabel)")
         } catch ErrorsToThrow.labelInvalidLength {
-            print("Alert Box: Invalid Length")
+            showAlertBox("Please Invalid Length")
         } catch ErrorsToThrow.labelLengthTooShort {
-            print("Alert Box: Too Short")
+            showAlertBox("Too short")
         } catch {
             //
         }

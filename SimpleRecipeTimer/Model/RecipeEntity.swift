@@ -126,9 +126,8 @@ extension RecipeEntity {
         let sortedSet = sortStepsByPriority()
         let maxItems = sortedSet.count - 1
         let index = Int(currStepPriority)
-        print("\(index), \(currStepName)")
         let currStep = sortedSet[index]
-        
+        // TODO: Error
         currStep.isLeading = false
         currStep.isComplete = true
         currStep.timeRemaining = 0.0

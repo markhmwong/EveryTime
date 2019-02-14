@@ -273,7 +273,6 @@ class RecipeViewController: RecipeViewControllerBase, RecipeViewControllerDelega
 extension RecipeViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     //MARK: delegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(stepArr.count)
         let vc = StepsViewController(stepEntity: stepArr[indexPath.item], viewControllerDelegate: self)
         horizontalTransitionInteractor = HorizontalTransitionInteractor(viewController: vc)
         horizontalDelegate.dismissInteractor  = horizontalTransitionInteractor

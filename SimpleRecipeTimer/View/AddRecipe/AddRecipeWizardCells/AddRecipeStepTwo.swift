@@ -75,7 +75,7 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         self.addSubview(n)
         
         let padding: CGFloat = 2.0
-        
+
         textFieldStackView.alignment = .fill
         textFieldStackView.axis = .horizontal
         textFieldStackView.distribution = .fillEqually
@@ -93,6 +93,16 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         s.addAddDoneButonToolbar(onDone: (target: self, action: #selector(handleDoneButton)), onAdd: (target: self, action: #selector(handleAddButton)))
         
         //autolayout
+
+    }
+    
+    func prepareAutoLayout() {
+        //todo
+        guard let n = nameTextfield, let h = hourTextfield, let m = minuteTextfield, let s = secondTextfield else {
+            return
+        }
+        let padding: CGFloat = 2.0
+
         n.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         n.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         n.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
@@ -109,8 +119,13 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
     }
     
-    func prepareAutoLayout() {
-        //todo
+    func showAlertBox(_ message: String) {
+        let alert = UIAlertController(title: "Alert", message: "\(message)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        guard let delegate = addRecipeViewControllerDelegate else {
+            return
+        }
+        delegate.present(alert, animated: true, completion: nil)
     }
     
     @objc func handleContinueButton() {
@@ -135,10 +150,19 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         guard let n = nameTextfield, let h = hourTextfield, let m = minuteTextfield, let s = secondTextfield else {
             return
         }
-        if (checkTextFields([n, h, m, s])) {
+        
+        do {
+            try checkTextFields([n, h, m, s])
             addStep(toCoreData: false, h: h.text, m: m.text, s: s.text, n: n.text)
-            clearTextFields([n, h, m, s])
             n.becomeFirstResponder()
+        } catch AddRecipeWizardError.empty(let message) {
+            showAlertBox(message)
+        } catch AddRecipeWizardError.invalidCharacters(let message) {
+            showAlertBox(message)
+        } catch AddRecipeWizardError.invalidTextField(let message){
+            showAlertBox(message)
+        } catch {
+            print("\(error.localizedDescription)")
         }
     }
     
@@ -154,16 +178,30 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
             return
         }
         
-        if (checkTextFields([n, h, m, s])) {
-            s.resignFirstResponder()
-            addStep(toCoreData: true, h: h.text, m: m.text, s: s.text, n: n.text)
-        } else {
-            addStep(toCoreData: true)
-            arvc.dismiss(animated: true, completion: nil)
+        do {
+            try checkTextFields([n, h, m, s])
+            addStep(toCoreData: false, h: h.text, m: m.text, s: s.text, n: n.text)
+            n.becomeFirstResponder()
+        } catch AddRecipeWizardError.empty(let message) {
+            showAlertBox(message)
+        } catch AddRecipeWizardError.invalidCharacters(let message) {
+            showAlertBox(message)
+        } catch AddRecipeWizardError.invalidTextField(let message){
+            showAlertBox(message)
+        } catch {
+            print("\(error.localizedDescription)")
         }
         
-        clearTextFields([n, h, m, s])
-        arvc.dismiss(animated: true, completion: nil)
+//        if (checkTextFields([n, h, m, s])) {
+//            s.resignFirstResponder()
+//            addStep(toCoreData: true, h: h.text, m: m.text, s: s.text, n: n.text)
+//        } else {
+//            addStep(toCoreData: true)
+//            arvc.dismiss(animated: true, completion: nil)
+//        }
+//
+//        clearTextFields([n, h, m, s])
+//        arvc.dismiss(animated: true, completion: nil)
     }
     
     func addStep(toCoreData: Bool = false, h: String? = nil, m: String? = nil, s: String? = nil, n: String? = nil) {
@@ -215,11 +253,13 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         }
     }
     
-    func checkTextFields(_ textFields: [UITextField]) -> Bool {
+    func checkTextFields(_ textFields: [UITextField]) throws -> Bool {
         for textField in textFields {
             if (textField.text?.isEmpty ?? true) {
                 //error empty
+                
                 textField.becomeFirstResponder()
+                throw AddRecipeWizardError.empty(message: "Empty")
                 return false
             }
         }
