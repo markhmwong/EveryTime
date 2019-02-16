@@ -11,13 +11,6 @@ import UIKit
 class RecipeViewController: RecipeViewControllerBase, RecipeViewControllerDelegate {
 
     //MARK: - Class Variables -
-//    var timer: Timer?
-//    let stepCellId = "stepCellId"
-
-//    var stepSet: Set<StepEntity>!
-//    var stepArr: [StepEntity] = []
-//    var stepCompleteTracker: Int = 0
-//    var mainViewControllerDelegate: MainViewController?
     var screenSize = UIScreen.main.bounds.size
     var transitionDelegate = OverlayTransitionDelegate()
     var horizontalDelegate = HorizontalTransitionDelegate()
@@ -70,7 +63,6 @@ class RecipeViewController: RecipeViewControllerBase, RecipeViewControllerDelega
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.dataSource = self
         view.delegate = self
-        //        view.dragDelegate = self
         view.dragInteractionEnabled = true
         view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -97,9 +89,7 @@ class RecipeViewController: RecipeViewControllerBase, RecipeViewControllerDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        prepareViewController()
-        prepareView()
-        prepareAutoLayout()
+        //The super class will call prepare_ functions
         startTimer()
     }
     
@@ -117,7 +107,6 @@ class RecipeViewController: RecipeViewControllerBase, RecipeViewControllerDelega
         
         let safeAreaInsets = self.view.safeAreaInsets
         if (safeAreaInsets.top > 0) {
-            //safeAreaInsets = 44
             navView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: safeAreaInsets.top).isActive = true
         }
     }
@@ -185,10 +174,6 @@ class RecipeViewController: RecipeViewControllerBase, RecipeViewControllerDelega
     
     //MARK: - UI Methods -
     @objc func handleDismiss() {
-//        guard let mvc = mainViewControllerDelegate else {
-//            //TODO: Error
-//            return
-//        }
         dismissCurrentViewController()
     }
     

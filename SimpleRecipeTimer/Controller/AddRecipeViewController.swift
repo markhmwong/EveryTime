@@ -60,7 +60,7 @@ extension AddRecipeViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-class AddRecipeViewController: UIViewController {
+class AddRecipeViewController: ViewControllerBase {
     var addRecipeNameCell: AddRecipeStepOne?
     var addRecipeStepCell: AddRecipeStepTwo?
     var interactor: OverlayInteractor? = nil
@@ -69,11 +69,13 @@ class AddRecipeViewController: UIViewController {
     var recipeNameStr = ""
     var invertedCaret: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = NSAttributedString(string: "\u{2304}", attributes: Theme.Font.Recipe.CaretAttribute)
         return label
     }()
     var titleLabel: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = NSAttributedString(string: "Add Recipe".uppercased(), attributes: Theme.Font.Recipe.TitleAttribute)
         return label
     }()
@@ -84,6 +86,13 @@ class AddRecipeViewController: UIViewController {
         button.setAttributedTitle(NSAttributedString(string: "edit", attributes: Theme.Font.Recipe.TitleAttribute), for: .normal)
         return button
     }()
+    var backButton: UIButton = {
+        let button = UIButton()
+        button.alpha = 0.0
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setAttributedTitle(NSAttributedString(string: "back", attributes: Theme.Font.Recipe.TitleAttribute), for: .normal)
+        return button
+    }()
     lazy var collView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
@@ -91,6 +100,8 @@ class AddRecipeViewController: UIViewController {
         cv.delegate = self
         cv.dataSource = self
         cv.backgroundColor = UIColor.clear
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.isScrollEnabled = false
         return cv
     }()
 
@@ -112,50 +123,49 @@ class AddRecipeViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        self.prepareViewControllerView()
-        self.prepareAutoLayout()
+        super.viewDidLoad()
     }
     
-    func prepareViewControllerView() {
-        self.view.layer.cornerRadius = Theme.View.CornerRadius
-        self.view.layer.masksToBounds = true
-        
-        self.view.backgroundColor = UIColor.clear
+    override func prepareView() {
         let blurView = UIVisualEffectView()
         blurView.effect = UIBlurEffect(style: .extraLight)
-        blurView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
-        self.view.addSubview(blurView)
+        blurView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
+        view.addSubview(blurView)
         
-        invertedCaret.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(invertedCaret)
+        view.addSubview(invertedCaret)
         
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(titleLabel)
+        view.addSubview(titleLabel)
         
-        collView.isScrollEnabled = false
-        collView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(collView)
+        view.addSubview(collView)
+        
         collView.register(AddRecipeStepOne.self, forCellWithReuseIdentifier: addRecipeNameCellId)
         collView.register(AddRecipeStepTwo.self, forCellWithReuseIdentifier: addRecipeStepCellId)
         
         editButton.addTarget(self, action: #selector(handleEditButton), for: .touchUpInside)
-        self.view.addSubview(editButton)
+        view.addSubview(editButton)
     }
     
-    func prepareAutoLayout() {
-        invertedCaret.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 10).isActive = true
-        invertedCaret.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+    override func prepareViewController() {
+        view.layer.cornerRadius = Theme.View.CornerRadius
+        view.layer.masksToBounds = true
+        view.backgroundColor = UIColor.clear
+    }
+    
+    override func prepareAutoLayout() {
+        invertedCaret.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
+        invertedCaret.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
         titleLabel.topAnchor.constraint(equalTo: invertedCaret.bottomAnchor, constant: 40).isActive = true
-        titleLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
         collView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor).isActive = true
-        collView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
-        collView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        collView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        collView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        collView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        collView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         
-        editButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant:20).isActive = true
-        editButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
+        editButton.topAnchor.constraint(equalTo: view.topAnchor, constant:20).isActive = true
+        editButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+
     }
     
     func createRecipe(rEntity: RecipeEntity) {
@@ -169,11 +179,15 @@ class AddRecipeViewController: UIViewController {
     func showEditButton() {
         editButton.alpha = 1.0
         editButton.isEnabled = true
+        backButton.alpha = 1.0
+        backButton.isEnabled = true
     }
     
     func hideEditButton() {
         editButton.alpha = 0.0
         editButton.isEnabled = false
+        backButton.alpha = 0.0
+        backButton.isEnabled = false
     }
 }
 
@@ -184,6 +198,11 @@ extension AddRecipeViewController {
     @objc func handleNextButton() {
         self.scrollToIndex(index: 1)
     }
+    
+    @objc func handleBackButton() {
+        self.scrollToIndex(index: 0)
+    }
+    
     @objc func handleAddRecipe() {
         CoreDataHandler.saveContext()
         guard let mvc = mainViewControllerDelegate else {
@@ -200,7 +219,7 @@ extension AddRecipeViewController {
     }
     
     @objc func handleEditButton() {
-        let cell = collView.cellForItem(at: IndexPath(item: 1, section: 0)) as! AddRecipeStepTwo //the add step cell
+        let cell = collView.cellForItem(at: IndexPath(item: 1, section: 0)) as! AddRecipeStepTwo
         let tableView = cell.tableView
         guard let i = interactor else {
             return
@@ -215,4 +234,6 @@ extension AddRecipeViewController {
             editButton.setAttributedTitle(NSAttributedString(string: "edit", attributes: Theme.Font.Recipe.TitleAttribute), for: .normal)
         }
     }
+    
+
 }

@@ -15,19 +15,11 @@ enum ScrollingState {
     case Idle
 }
 
-class MainViewController: UIViewController {
-
+class MainViewController: ViewControllerBase {
     
     fileprivate let recipeCellId = "RecipeCellId"
     var recipeCollection: [RecipeEntity] = []
-    
-//    fileprivate var startingDistance: CGFloat = 0.0
-//    fileprivate var endingDistance: CGFloat = 0.0
-//    fileprivate let rowHeight: CGFloat = 80.0
-//    fileprivate var delta: CGFloat = 0.0
-//    fileprivate var lastContentOffsetY: CGFloat = 0.0
     fileprivate var addButtonState: ScrollingState = .Idle
-    
     fileprivate var indexPathNumber = 0
     fileprivate var timer: Timer?
     fileprivate var transitionDelegate = OverlayTransitionDelegate()
@@ -79,16 +71,19 @@ class MainViewController: UIViewController {
 
     fileprivate lazy var navView: NavView? = nil
     
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     //MARK: - ViewController Lifecycle -
     override func viewDidLoad() {
         super.viewDidLoad()
+        //The super class will call prepare_ functions
 //        self.testCoreData()
-
-        self.prepareViewControllerView()
-        self.loadDataFromCoreData()
-        self.prepareSubviews()
-        self.prepareAutoLayout()
-        self.startTimer()
     }
     
     func testCoreData() {
@@ -132,13 +127,15 @@ class MainViewController: UIViewController {
         }
     }
     
-    private func prepareViewControllerView() {
+    override func prepareViewController() {
         self.view.backgroundColor = Theme.Background.Color.NavBackgroundColor
         self.view.layer.cornerRadius = Theme.View.CornerRadius
         self.navigationController?.navigationBar.isHidden = true
+        self.loadDataFromCoreData()
+        self.startTimer()
     }
     
-    private func prepareSubviews() {
+     override func prepareView() {
         navView = NavView(frame: .zero, leftNavItem: leftNavItemButton, rightNavItem: rightNavItemButton)
         guard let nav = navView else {
             return
@@ -150,7 +147,7 @@ class MainViewController: UIViewController {
         self.collView.register(RecipeCell.self, forCellWithReuseIdentifier: recipeCellId)
     }
     
-    func prepareAutoLayout() {
+    override func prepareAutoLayout() {
         guard let nav = navView else {
             return
         }
@@ -173,7 +170,6 @@ class MainViewController: UIViewController {
         addRecipeButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -45).isActive = true
         addRecipeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         addRecipeButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.33).isActive = true
-//        addRecipeButton.heightAnchor.constraint(equalTo: addRecipeButton.widthAnchor, multiplier: 1).isActive = true
     }
     
     func willReloadCellData(indexPath: IndexPath) {

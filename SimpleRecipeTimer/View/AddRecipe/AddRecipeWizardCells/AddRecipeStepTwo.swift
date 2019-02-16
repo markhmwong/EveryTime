@@ -14,7 +14,15 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
     fileprivate var addStepButtonStackView: UIStackView?
     fileprivate var dataSource: [TableViewStep] = []
     fileprivate var keyboardTextField: UITextField = UITextField()
-    fileprivate var textFieldStackView = UIStackView()
+    fileprivate var textFieldStackView: UIStackView = {
+        let tf = UIStackView()
+        tf.alignment = .fill
+        tf.axis = .horizontal
+        tf.distribution = .fillEqually
+        tf.spacing = 2.0
+        tf.translatesAutoresizingMaskIntoConstraints = false
+        return tf
+    }()
     var recipeName = ""
     var addRecipeViewControllerDelegate: AddRecipeViewController?
     
@@ -23,6 +31,8 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         tv.delegate = self
         tv.isEditing = false
         tv.dataSource = self
+        tv.separatorStyle = .none
+        tv.translatesAutoresizingMaskIntoConstraints = false
         return tv
     }()
     
@@ -66,21 +76,13 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         }
         
         tableView.register(StepTableViewCell.self, forCellReuseIdentifier: stepCellId)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.separatorStyle = .none
+        
         self.addSubview(tableView)
         
         n.becomeFirstResponder()
         n.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(n)
         
-        let padding: CGFloat = 2.0
-
-        textFieldStackView.alignment = .fill
-        textFieldStackView.axis = .horizontal
-        textFieldStackView.distribution = .fillEqually
-        textFieldStackView.spacing = padding
-        textFieldStackView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(textFieldStackView)
         
         textFieldStackView.addArrangedSubview(h)
@@ -92,8 +94,7 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         n.addNextButtonToolbar(onNext: (target: self, action: #selector(handleContinueButton)), onCancel: nil, onDone: (target: self, action: #selector(handleDoneButton)))
         s.addAddDoneButonToolbar(onDone: (target: self, action: #selector(handleDoneButton)), onAdd: (target: self, action: #selector(handleAddButton)))
         
-        //autolayout
-
+        prepareAutoLayout()
     }
     
     func prepareAutoLayout() {

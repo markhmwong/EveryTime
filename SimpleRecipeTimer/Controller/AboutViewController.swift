@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AboutViewController: UIViewController {
+class AboutViewController: ViewControllerBase {
     
     fileprivate var delegate: MainViewController?
     fileprivate var dismissButton: UIButton = {
@@ -39,15 +39,13 @@ class AboutViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        prepareViewController()
-        prepareView()
-        prepareAutoLayout()
+        //The super class will call prepare_ functions
     }
     
-    func prepareView() {
+    override func prepareView() {
         let details = """
         Thank you for using Timeable.\n
-        I'm not the best cook but I love a good a steak. The first bite always gets me when you've cooked it to your liking, and thats the problem it wasn't always to my liking; I made this app to keep track of the amount of times I had flipped my steak for it to cook evenly knowing Gordan Ramsey would kick my arse for overcooking it.\n
+        I'm not the best cook but I love a good a steak. The first bite always gets me when you've cooked it to your liking, and thats the problem it wasn't always the way it was made previously; I made this app to keep track of the amount of times I had flipped my steak for it to cook evenly knowing Gordan Ramsey would kick my arse for overcooking it.\n
         I do really hope you enjoy using it and get the most of out it, whether you need to track your own cooking, an execise routine or a series of steps that you simply can never get down perfectly. This was made for that in mind.\n
         
         Privacy.\n
@@ -65,7 +63,7 @@ class AboutViewController: UIViewController {
         view.addSubview(dismissButton)
     }
     
-    func prepareAutoLayout() {
+    override func prepareAutoLayout() {
         let safeAreaGuideLayout = view.safeAreaLayoutGuide
         dismissButton.topAnchor.constraint(equalTo: safeAreaGuideLayout.topAnchor).isActive = true
         dismissButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
@@ -76,7 +74,7 @@ class AboutViewController: UIViewController {
         textView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.8).isActive = true
     }
     
-    func prepareViewController() {
+    override func prepareViewController() {
         view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
     }
     

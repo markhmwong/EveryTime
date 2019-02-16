@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddStepViewController: UIViewController {
+class AddStepViewController: ViewControllerBase {
 
     //MARK: VARIABLES
     fileprivate let maxCharacterLimitForNameLabel = 12
@@ -77,9 +77,6 @@ class AddStepViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.prepareView()
-        self.preparePicker()
-        self.prepareAutoLayout()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -147,15 +144,38 @@ class AddStepViewController: UIViewController {
         }
     }
     
-    func prepareView() {
-        self.view.layer.cornerRadius = Theme.View.CornerRadius
-        self.view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
-        self.view.addSubview(navView)
-        self.view.addSubview(rightNavItemButton)
-        self.view.addSubview(labelTextField)
-        self.view.addSubview(invertedCaret)
+    override func prepareViewController() {
+        //
+    }
+    
+    override func prepareView() {
+        
+        preparePicker()
+
+        view.layer.cornerRadius = Theme.View.CornerRadius
+        view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
+        view.addSubview(navView)
+        view.addSubview(rightNavItemButton)
+        view.addSubview(labelTextField)
+        view.addSubview(invertedCaret)
         
         rightNavItemButton.addTarget(self, action: #selector(handleDoneButton), for: .touchUpInside)
+    }
+    
+    override func prepareAutoLayout() {
+        rightNavItemButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
+        rightNavItemButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
+        
+        labelTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        labelTextField.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        labelTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 80).isActive = true
+        
+        countDownPicker.topAnchor.constraint(equalTo: labelTextField.bottomAnchor).isActive = true
+        countDownPicker.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        countDownPicker.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        
+        invertedCaret.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
+        invertedCaret.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
     func preparePicker() {
@@ -177,23 +197,7 @@ class AddStepViewController: UIViewController {
         countDownPicker.delegate = self
         countDownPicker.dataSource = self
         countDownPicker.translatesAutoresizingMaskIntoConstraints = false
-        countDownPicker.setPickerLabels(labels: labelDict, containedView: self.view)
-        self.view.addSubview(countDownPicker)
-    }
-    
-    func prepareAutoLayout() {
-        rightNavItemButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 20).isActive = true
-        rightNavItemButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -8).isActive = true
-        
-        labelTextField.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        labelTextField.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
-        labelTextField.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 80).isActive = true
-        
-        countDownPicker.topAnchor.constraint(equalTo: labelTextField.bottomAnchor).isActive = true
-        countDownPicker.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        countDownPicker.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
-        
-        invertedCaret.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 10).isActive = true
-        invertedCaret.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        countDownPicker.setPickerLabels(labels: labelDict, containedView: view)
+        view.addSubview(countDownPicker)
     }
 }

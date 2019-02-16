@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StepsViewController: UIViewController, TimerProtocol {
+class StepsViewController: ViewControllerBase, TimerProtocol {
     var recipeViewControllerDelegate: RecipeViewController?
     var transitionDelegate = OverlayTransitionDelegate()
     var dismissInteractor: OverlayInteractor!
@@ -107,10 +107,10 @@ class StepsViewController: UIViewController, TimerProtocol {
         }
     }
     
-    func prepareViewController() {
+    override func prepareViewController() {
         self.view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
     }
-    func prepareView() {
+    override func prepareView() {
         navView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(navView)
         navView.addSubview(dismissButton)
@@ -133,7 +133,7 @@ class StepsViewController: UIViewController, TimerProtocol {
         }
     }
     
-    func prepareAutoLayout() {
+    override func prepareAutoLayout() {
         let safeLayoutGuide = self.view.safeAreaLayoutGuide
         
         navView.topAnchor.constraint(equalTo: safeLayoutGuide.topAnchor).isActive = true

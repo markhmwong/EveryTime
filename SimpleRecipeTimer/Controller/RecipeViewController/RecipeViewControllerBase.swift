@@ -7,8 +7,8 @@
 //
 
 import UIKit
-
-class RecipeViewControllerBase: UIViewController {
+//implement protocol UIViewControllerBase
+class RecipeViewControllerBase: ViewControllerBase {
     var timer: Timer?
     
     //Collection Datasource
@@ -20,15 +20,19 @@ class RecipeViewControllerBase: UIViewController {
     
     var recipe: RecipeEntity!
     
-    func prepareViewController() {
+    override func prepareViewController() {
         
     }
     
-    func prepareView() {
+    override func prepareView() {
         
     }
     
-    func prepareAutoLayout() {
+    override func prepareAutoLayout() {
         
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
     }
 }

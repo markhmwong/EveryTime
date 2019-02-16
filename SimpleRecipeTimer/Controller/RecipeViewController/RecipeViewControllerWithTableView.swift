@@ -13,7 +13,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     var horizontalDelegate = HorizontalTransitionDelegate()
     var dismissInteractor: OverlayInteractor!
     var horizontalTransitionInteractor: HorizontalTransitionInteractor? = nil
-    let screenSize = UIScreen.main.bounds.size
+    fileprivate let screenSize = UIScreen.main.bounds.size
     fileprivate let rowHeight: CGFloat = 80.0
     fileprivate var addButtonState: ScrollingState = .Idle
 
@@ -102,7 +102,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         self.view.addSubview(recipeNameLabel)
         self.view.addSubview(tableView)
         self.view.addSubview(addStepButton)
-//        navView.addSubview(dismissButton)
         tableView.register(MainStepTableViewCell.self, forCellReuseIdentifier: stepCellId)
         
         //custom table view header
@@ -159,10 +158,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     }
     
     @objc func handleDismiss() {
-//        guard let mvc = mainViewControllerDelegate else {
-//            //TODO: Error
-//            return
-//        }
         dismissCurrentViewController()
     }
     
