@@ -198,6 +198,12 @@ class AddRecipeViewController: ViewControllerBase {
         backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
     }
     
+    override func beginAppearanceTransition(_ isAppearing: Bool, animated: Bool) {
+        if (!isAppearing) {
+            view.endEditing(true)
+        }
+    }
+    
     func createRecipe(rEntity: RecipeEntity) {
         CoreDataHandler.saveContext()
         if let mvc = mainViewControllerDelegate {

@@ -32,6 +32,7 @@ class OverlayPresentationController: UIPresentationController {
     }
     
     override func dismissalTransitionWillBegin() {
+//        presentedView?.endEditing(true)
         presentedViewController.transitionCoordinator?.animate(alongsideTransition: { _ in
             self.dimmingView.alpha = 0.0
         }) { _ in

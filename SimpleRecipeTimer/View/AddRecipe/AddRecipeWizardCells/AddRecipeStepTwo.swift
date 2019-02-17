@@ -195,17 +195,6 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
             print("\(error.localizedDescription)")
         }
         arvc.dismiss(animated: true, completion: nil)
-        
-//        if (checkTextFields([n, h, m, s])) {
-//            s.resignFirstResponder()
-//            addStep(toCoreData: true, h: h.text, m: m.text, s: s.text, n: n.text)
-//        } else {
-//            addStep(toCoreData: true)
-//            arvc.dismiss(animated: true, completion: nil)
-//        }
-//
-//        clearTextFields([n, h, m, s])
-//        arvc.dismiss(animated: true, completion: nil)
     }
     
     func addStep(toCoreData: Bool = false, h: String? = nil, m: String? = nil, s: String? = nil, n: String? = nil) {

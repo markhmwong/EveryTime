@@ -12,7 +12,7 @@ class AddRecipeStepOne: AddRecipeBaseCell {
     var addRecipeViewControllerDelegate: AddRecipeViewController?
     var keyboardHeight: CGFloat = 0.0 {
         didSet {
-            continueButton.topAnchor.constraint(equalTo: bottomAnchor, constant: -keyboardHeight - 70.0).isActive = true //TODO
+            continueButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -keyboardHeight - 50.0).isActive = true
             self.setNeedsLayout()
             self.layoutIfNeeded()
         }
@@ -77,7 +77,6 @@ class AddRecipeStepOne: AddRecipeBaseCell {
         
         continueButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         continueButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 3).isActive = true
-//        continueButton.topAnchor.constraint(equalTo: bottomAnchor, constant: -keyboardHeight).isActive = true
         errorMessageLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         errorMessageLabel.topAnchor.constraint(equalTo: recipeNameTextField.bottomAnchor, constant: 20.0).isActive = true
     }

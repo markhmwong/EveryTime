@@ -112,9 +112,9 @@ struct Theme {
         fileprivate typealias tb = Theme.Background
         struct Color {
             static var Clear: UIColor { return UIColor(red:1.0, green:1.0, blue:1.0, alpha:0.0) }
-            static var GeneralBackgroundColor: UIColor { return UIColor(red:0.85, green:0.85, blue:0.85, alpha:1.0) }
+            static var GeneralBackgroundColor: UIColor { return UIColor(red:0.88, green:0.88, blue:0.88, alpha:1.0) }
             static var CellBackgroundColor: UIColor { return UIColor(red: 1, green: 1, blue: 1, alpha: 1.0) }
-            static var NavBackgroundColor: UIColor { return UIColor(red:0.97, green:0.97, blue:0.94, alpha:1.0) }
+            static var NavBackgroundColor: UIColor { return UIColor(red:0.99, green:0.99, blue:0.99, alpha:1.0) }
         }
         struct Gradient {
             static var CellColorTop: CGColor { return UIColor(red: 255.0 / 255.0, green: 255.0 / 255.0, blue: 255.0 / 255.0, alpha: 0.0).cgColor }
