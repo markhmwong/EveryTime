@@ -155,16 +155,18 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         do {
             try checkTextFields([n, h, m, s])
             addStep(toCoreData: false, h: h.text, m: m.text, s: s.text, n: n.text)
+            clearTextFields([n, h, m, s])
             n.becomeFirstResponder()
         } catch AddRecipeWizardError.empty(let message) {
             showAlertBox(message)
         } catch AddRecipeWizardError.invalidCharacters(let message) {
             showAlertBox(message)
-        } catch AddRecipeWizardError.invalidTextField(let message){
+        } catch AddRecipeWizardError.invalidTextField(let message) {
             showAlertBox(message)
         } catch {
             print("\(error.localizedDescription)")
         }
+        
     }
     
     //  Done button confirms the steps and recipe and commits it to CoreData
@@ -181,7 +183,7 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         
         do {
             try checkTextFields([n, h, m, s])
-            addStep(toCoreData: false, h: h.text, m: m.text, s: s.text, n: n.text)
+            addStep(toCoreData: true, h: h.text, m: m.text, s: s.text, n: n.text)
             n.becomeFirstResponder()
         } catch AddRecipeWizardError.empty(let message) {
             showAlertBox(message)
@@ -192,6 +194,7 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         } catch {
             print("\(error.localizedDescription)")
         }
+        arvc.dismiss(animated: true, completion: nil)
         
 //        if (checkTextFields([n, h, m, s])) {
 //            s.resignFirstResponder()

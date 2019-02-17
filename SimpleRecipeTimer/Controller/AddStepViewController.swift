@@ -77,6 +77,7 @@ class AddStepViewController: ViewControllerBase {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //prepare_ functions will be called in the super class
     }
     
     override func viewWillDisappear(_ animated: Bool) {

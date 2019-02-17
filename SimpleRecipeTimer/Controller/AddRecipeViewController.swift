@@ -19,19 +19,21 @@ extension AddRecipeViewController: UICollectionViewDataSource {
         let cell: UICollectionViewCell? = nil
         
         switch indexPath.item {
-        case 0:
-            addRecipeNameCell = collectionView.dequeueReusableCell(withReuseIdentifier: addRecipeNameCellId, for: indexPath) as? AddRecipeStepOne
-            addRecipeNameCell?.backgroundColor = UIColor.clear
-            addRecipeNameCell?.addRecipeViewControllerDelegate = self
-            return addRecipeNameCell!
-        case 1:
-            addRecipeStepCell = collectionView.dequeueReusableCell(withReuseIdentifier: addRecipeStepCellId, for: indexPath) as? AddRecipeStepTwo
-            addRecipeStepCell?.backgroundColor = UIColor.clear
-            addRecipeStepCell?.addRecipeViewControllerDelegate = self
-            addRecipeStepCell?.recipeName = recipeNameStr
-            return addRecipeStepCell!
-        default:
-            break
+            case 0:
+                addRecipeStepOne = collectionView.dequeueReusableCell(withReuseIdentifier: addRecipeNameCellId, for: indexPath) as? AddRecipeStepOne
+                addRecipeStepOne?.backgroundColor = UIColor.clear
+                addRecipeStepOne?.keyboardHeight = keyboardHeight
+                print("keyboardHeight \(keyboardHeight)")
+                addRecipeStepOne?.addRecipeViewControllerDelegate = self
+                return addRecipeStepOne!
+            case 1:
+                addRecipeStepTwo = collectionView.dequeueReusableCell(withReuseIdentifier: addRecipeStepCellId, for: indexPath) as? AddRecipeStepTwo
+                addRecipeStepTwo?.backgroundColor = UIColor.clear
+                addRecipeStepTwo?.addRecipeViewControllerDelegate = self
+                addRecipeStepTwo?.recipeName = recipeNameStr
+                return addRecipeStepTwo!
+            default:
+                break
         }
         return cell!
     }
@@ -61,8 +63,9 @@ extension AddRecipeViewController: UICollectionViewDelegateFlowLayout {
 }
 
 class AddRecipeViewController: ViewControllerBase {
-    var addRecipeNameCell: AddRecipeStepOne?
-    var addRecipeStepCell: AddRecipeStepTwo?
+    var addRecipeStepOne: AddRecipeStepOne?
+    var addRecipeStepTwo: AddRecipeStepTwo?
+    var keyboardHeight: CGFloat?
     var interactor: OverlayInteractor? = nil
     let addRecipeNameCellId: String = "AddRecipeNameCellId", addRecipeStepCellId: String = "AddRecipeStepCellId"
     var mainViewControllerDelegate: MainViewController?
@@ -81,14 +84,14 @@ class AddRecipeViewController: ViewControllerBase {
     }()
     var editButton: UIButton = {
         let button = UIButton()
-        button.alpha = 0.0
+        button.alpha = 0.5
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setAttributedTitle(NSAttributedString(string: "edit", attributes: Theme.Font.Recipe.TitleAttribute), for: .normal)
         return button
     }()
     var backButton: UIButton = {
         let button = UIButton()
-        button.alpha = 0.0
+        button.alpha = 0.5
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setAttributedTitle(NSAttributedString(string: "back", attributes: Theme.Font.Recipe.TitleAttribute), for: .normal)
         return button
@@ -114,8 +117,17 @@ class AddRecipeViewController: ViewControllerBase {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
-
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -126,16 +138,19 @@ class AddRecipeViewController: ViewControllerBase {
         super.viewDidLoad()
     }
     
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            keyboardHeight = keyboardSize.height
+        }
+    }
+    
     override func prepareView() {
         let blurView = UIVisualEffectView()
         blurView.effect = UIBlurEffect(style: .extraLight)
         blurView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
         view.addSubview(blurView)
-        
         view.addSubview(invertedCaret)
-        
         view.addSubview(titleLabel)
-        
         view.addSubview(collView)
         
         collView.register(AddRecipeStepOne.self, forCellWithReuseIdentifier: addRecipeNameCellId)
@@ -143,6 +158,8 @@ class AddRecipeViewController: ViewControllerBase {
         
         editButton.addTarget(self, action: #selector(handleEditButton), for: .touchUpInside)
         view.addSubview(editButton)
+        editButton.addTarget(self, action: #selector(handleBackButton), for: .touchUpInside)
+        view.addSubview(backButton)
     }
     
     override func prepareViewController() {
@@ -165,7 +182,9 @@ class AddRecipeViewController: ViewControllerBase {
         
         editButton.topAnchor.constraint(equalTo: view.topAnchor, constant:20).isActive = true
         editButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-
+        
+        backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
+        backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
     }
     
     func createRecipe(rEntity: RecipeEntity) {
@@ -177,17 +196,23 @@ class AddRecipeViewController: ViewControllerBase {
     }
     
     func showEditButton() {
-        editButton.alpha = 1.0
-        editButton.isEnabled = true
-        backButton.alpha = 1.0
-        backButton.isEnabled = true
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: [.curveEaseInOut], animations: {
+            self.backButton.alpha = 1.0
+            self.editButton.alpha = 1.0
+        }) { (complete: Bool) in
+            self.editButton.isEnabled = true
+            self.backButton.isEnabled = true
+        }
     }
     
     func hideEditButton() {
-        editButton.alpha = 0.0
-        editButton.isEnabled = false
-        backButton.alpha = 0.0
-        backButton.isEnabled = false
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: [.curveEaseInOut], animations: {
+            self.backButton.alpha = 0.5
+            self.editButton.alpha = 0.5
+        }) { (complete: Bool) in
+            self.editButton.isEnabled = false
+            self.backButton.isEnabled = false
+        }
     }
 }
 

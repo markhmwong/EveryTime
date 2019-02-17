@@ -10,6 +10,7 @@ import UIKit
 
 class AddRecipeStepOne: AddRecipeBaseCell {
     var addRecipeViewControllerDelegate: AddRecipeViewController?
+    var keyboardHeight: CGFloat?
     fileprivate var recipeNameTextField: UITextField = {
         let textField = UITextField()
         textField.defaultTextAttributes = Theme.Font.Recipe.TextFieldAttribute
@@ -47,6 +48,7 @@ class AddRecipeStepOne: AddRecipeBaseCell {
     
     override func setupView() {
         super.setupView()
+        print(keyboardHeight)
         addSubview(recipeNameTextField)
         continueButton.addTarget(self, action: #selector(handleContinueButton), for: .touchUpInside)
         addSubview(continueButton)
@@ -61,8 +63,7 @@ class AddRecipeStepOne: AddRecipeBaseCell {
         recipeNameTextField.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         
         continueButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        continueButton.topAnchor.constraint(equalTo: recipeNameTextField.bottomAnchor, constant: 100).isActive = true
-        
+        continueButton.topAnchor.constraint(equalTo: bottomAnchor, constant: -400.0).isActive = true //TODO
         errorMessageLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         errorMessageLabel.topAnchor.constraint(equalTo: recipeNameTextField.bottomAnchor, constant: 20.0).isActive = true
     }
