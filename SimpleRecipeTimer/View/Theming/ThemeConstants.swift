@@ -28,9 +28,9 @@ struct Theme {
         
         private struct Size {
             static var SizeCell: CGFloat { return 14.0 }
-            static var RecipeCellName: CGFloat { return 10.0 }
+            static var RecipeCellName: CGFloat { return 11.0 }
             static var RecipeCellTime: CGFloat { return 18.0 }
-            static var RecipeCellStepName: CGFloat { return 18.0 }
+            static var RecipeCellStepName: CGFloat { return 11.0 }
             static var StepTitle: CGFloat { return 20.0 }
             static var StepTime: CGFloat { return 40.0 }
             static var StepCellTitle: CGFloat { return 14.0 }
@@ -56,9 +56,11 @@ struct Theme {
         struct Color {
             static var ErrorColor: UIColor { return UIColor(red:0.73, green:0.24, blue:0.13, alpha:1.0) }
             static var TextColour: UIColor { return UIColor(red:0.11, green:0.11, blue:0.12, alpha:1.0) }
+            
             static var TextColourDisabled: UIColor { return UIColor(red:0.71, green:0.71, blue:0.72, alpha:1.0) }
             static var RecipeLabelBackgroundColour : UIColor { return UIColor(red: 1, green: 1, blue: 1, alpha: 1.0) }
-            
+            static var RecipeCellStepTitle: UIColor { return UIColor(red:0.11, green:0.11, blue:0.12, alpha:0.7) }
+
             static var StepCellCompleteIndicator: UIColor { return UIColor(red:0.29, green:0.82, blue:0.50, alpha:1.0) }
             static var StepCellIncompleteIndicator: UIColor { return UIColor(red:0.88, green:0.77, blue:0.77, alpha:1.0) }
             
@@ -80,7 +82,7 @@ struct Theme {
             static let TimeAttribute: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.RecipeCellTime)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
             static let NameAttribute: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.RecipeCellName)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
             static let PauseAttribute: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.SizeCell)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
-            static let StepSubTitle: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.RecipeCellStepName)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
+            static let StepSubTitle: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.RecipeCellStepName)!, NSAttributedString.Key.foregroundColor: tf.Color.RecipeCellStepTitle, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
         }
         
         struct Step {
