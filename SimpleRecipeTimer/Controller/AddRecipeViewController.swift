@@ -158,7 +158,7 @@ class AddRecipeViewController: ViewControllerBase {
         
         editButton.addTarget(self, action: #selector(handleEditButton), for: .touchUpInside)
         view.addSubview(editButton)
-        editButton.addTarget(self, action: #selector(handleBackButton), for: .touchUpInside)
+        backButton.addTarget(self, action: #selector(handleBackButton), for: .touchUpInside)
         view.addSubview(backButton)
     }
     
@@ -225,6 +225,7 @@ extension AddRecipeViewController {
     }
     
     @objc func handleBackButton() {
+        print("back")
         self.scrollToIndex(index: 0)
     }
     
