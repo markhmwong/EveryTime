@@ -43,6 +43,7 @@ class AboutViewController: ViewControllerBase {
     }
     
     override func prepareView() {
+        super.prepareView()
         let details = """
         Thank you for using Timeable.\n
         I'm not the best cook but I love a good a steak. The first bite always gets me when you've cooked it to your liking, and thats the problem it wasn't always the way it was made previously; I made this app to keep track of the amount of times I had flipped my steak for it to cook evenly knowing Gordan Ramsey would kick my arse for overcooking it.\n
@@ -64,6 +65,7 @@ class AboutViewController: ViewControllerBase {
     }
     
     override func prepareAutoLayout() {
+        super.prepareAutoLayout()
         let safeAreaGuideLayout = view.safeAreaLayoutGuide
         dismissButton.topAnchor.constraint(equalTo: safeAreaGuideLayout.topAnchor).isActive = true
         dismissButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
@@ -75,6 +77,7 @@ class AboutViewController: ViewControllerBase {
     }
     
     override func prepareViewController() {
+        super.prepareViewController()
         view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
     }
     

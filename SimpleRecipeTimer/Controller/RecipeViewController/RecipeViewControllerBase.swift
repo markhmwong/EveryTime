@@ -20,18 +20,6 @@ class RecipeViewControllerBase: ViewControllerBase {
     
     var recipe: RecipeEntity!
     
-    override func prepareViewController() {
-        
-    }
-    
-    override func prepareView() {
-        
-    }
-    
-    override func prepareAutoLayout() {
-        
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }

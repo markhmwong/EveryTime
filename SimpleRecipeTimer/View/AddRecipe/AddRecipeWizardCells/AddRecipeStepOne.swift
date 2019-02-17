@@ -10,7 +10,13 @@ import UIKit
 
 class AddRecipeStepOne: AddRecipeBaseCell {
     var addRecipeViewControllerDelegate: AddRecipeViewController?
-    var keyboardHeight: CGFloat?
+    var keyboardHeight: CGFloat = 0.0 {
+        didSet {
+            continueButton.topAnchor.constraint(equalTo: bottomAnchor, constant: -keyboardHeight - 70.0).isActive = true //TODO
+            self.setNeedsLayout()
+            self.layoutIfNeeded()
+        }
+    }
     fileprivate var recipeNameTextField: UITextField = {
         let textField = UITextField()
         textField.defaultTextAttributes = Theme.Font.Recipe.TextFieldAttribute
@@ -42,30 +48,44 @@ class AddRecipeStepOne: AddRecipeBaseCell {
         let button = UIButton()
         button.backgroundColor = UIColor.clear
         button.setAttributedTitle(NSAttributedString(string: "Continue", attributes: Theme.Font.Recipe.TextFieldAttribute), for: .normal)
+        button.layer.cornerRadius = 8.0
+        button.backgroundColor = Theme.Font.Color.AddButtonColour
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     override func setupView() {
         super.setupView()
-        print(keyboardHeight)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        
         addSubview(recipeNameTextField)
         continueButton.addTarget(self, action: #selector(handleContinueButton), for: .touchUpInside)
         addSubview(continueButton)
         addSubview(errorMessageLabel)
         prepareAutoLayout()
-        
     }
     
     func prepareAutoLayout() {
-        recipeNameTextField.topAnchor.constraint(equalTo: topAnchor, constant:20).isActive = true
+        recipeNameTextField.topAnchor.constraint(equalTo: topAnchor, constant:100).isActive = true
         recipeNameTextField.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         recipeNameTextField.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         
         continueButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        continueButton.topAnchor.constraint(equalTo: bottomAnchor, constant: -400.0).isActive = true //TODO
+        continueButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 3).isActive = true
+//        continueButton.topAnchor.constraint(equalTo: bottomAnchor, constant: -keyboardHeight).isActive = true
         errorMessageLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         errorMessageLabel.topAnchor.constraint(equalTo: recipeNameTextField.bottomAnchor, constant: 20.0).isActive = true
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            keyboardHeight = keyboardSize.height
+        }
     }
     
     func checkTextField() throws {

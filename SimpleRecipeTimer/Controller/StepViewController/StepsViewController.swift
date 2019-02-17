@@ -108,9 +108,11 @@ class StepsViewController: ViewControllerBase, TimerProtocol {
     }
     
     override func prepareViewController() {
+        super.prepareViewController()
         self.view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
     }
     override func prepareView() {
+        super.prepareView()
         navView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(navView)
         navView.addSubview(dismissButton)
@@ -134,6 +136,7 @@ class StepsViewController: ViewControllerBase, TimerProtocol {
     }
     
     override func prepareAutoLayout() {
+        super.prepareAutoLayout()
         let safeLayoutGuide = self.view.safeAreaLayoutGuide
         
         navView.topAnchor.constraint(equalTo: safeLayoutGuide.topAnchor).isActive = true

@@ -141,6 +141,7 @@ class RecipeViewController: RecipeViewControllerBase, RecipeViewControllerDelega
     }
     
     override func prepareAutoLayout() {
+        super.prepareAutoLayout()
         dismissButton.centerYAnchor.constraint(equalTo: navView.centerYAnchor).isActive = true
         dismissButton.leadingAnchor.constraint(equalTo: navView.leadingAnchor, constant: 10).isActive = true
         
@@ -162,6 +163,7 @@ class RecipeViewController: RecipeViewControllerBase, RecipeViewControllerDelega
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         guard let mvc = mainViewControllerDelegate else {
             //TODO: Error
             return

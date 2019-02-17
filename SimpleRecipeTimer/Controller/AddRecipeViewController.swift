@@ -22,8 +22,6 @@ extension AddRecipeViewController: UICollectionViewDataSource {
             case 0:
                 addRecipeStepOne = collectionView.dequeueReusableCell(withReuseIdentifier: addRecipeNameCellId, for: indexPath) as? AddRecipeStepOne
                 addRecipeStepOne?.backgroundColor = UIColor.clear
-                addRecipeStepOne?.keyboardHeight = keyboardHeight
-                print("keyboardHeight \(keyboardHeight)")
                 addRecipeStepOne?.addRecipeViewControllerDelegate = self
                 return addRecipeStepOne!
             case 1:
@@ -65,7 +63,15 @@ extension AddRecipeViewController: UICollectionViewDelegateFlowLayout {
 class AddRecipeViewController: ViewControllerBase {
     var addRecipeStepOne: AddRecipeStepOne?
     var addRecipeStepTwo: AddRecipeStepTwo?
-    var keyboardHeight: CGFloat?
+    var keyboardHeight: CGFloat {
+        didSet {
+            guard let addRecipe = addRecipeStepOne else {
+                return
+            }
+            
+            addRecipe.keyboardHeight = keyboardHeight
+        }
+    }
     var interactor: OverlayInteractor? = nil
     let addRecipeNameCellId: String = "AddRecipeNameCellId", addRecipeStepCellId: String = "AddRecipeStepCellId"
     var mainViewControllerDelegate: MainViewController?
@@ -109,6 +115,7 @@ class AddRecipeViewController: ViewControllerBase {
     }()
 
     init(delegate: MainViewController) {
+        self.keyboardHeight = 0.0
         super.init(nibName: nil, bundle: nil)
         self.mainViewControllerDelegate = delegate
     }
@@ -118,6 +125,7 @@ class AddRecipeViewController: ViewControllerBase {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillShow),
@@ -127,7 +135,7 @@ class AddRecipeViewController: ViewControllerBase {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
+        super.viewDidAppear(animated)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -145,6 +153,7 @@ class AddRecipeViewController: ViewControllerBase {
     }
     
     override func prepareView() {
+        super.prepareView()
         let blurView = UIVisualEffectView()
         blurView.effect = UIBlurEffect(style: .extraLight)
         blurView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
@@ -153,22 +162,24 @@ class AddRecipeViewController: ViewControllerBase {
         view.addSubview(titleLabel)
         view.addSubview(collView)
         
-        collView.register(AddRecipeStepOne.self, forCellWithReuseIdentifier: addRecipeNameCellId)
-        collView.register(AddRecipeStepTwo.self, forCellWithReuseIdentifier: addRecipeStepCellId)
-        
         editButton.addTarget(self, action: #selector(handleEditButton), for: .touchUpInside)
         view.addSubview(editButton)
         backButton.addTarget(self, action: #selector(handleBackButton), for: .touchUpInside)
         view.addSubview(backButton)
+        
+        collView.register(AddRecipeStepOne.self, forCellWithReuseIdentifier: addRecipeNameCellId)
+        collView.register(AddRecipeStepTwo.self, forCellWithReuseIdentifier: addRecipeStepCellId)
     }
     
     override func prepareViewController() {
+        super.prepareViewController()
         view.layer.cornerRadius = Theme.View.CornerRadius
         view.layer.masksToBounds = true
         view.backgroundColor = UIColor.clear
     }
     
     override func prepareAutoLayout() {
+        super.prepareAutoLayout()
         invertedCaret.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
         invertedCaret.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
@@ -225,7 +236,6 @@ extension AddRecipeViewController {
     }
     
     @objc func handleBackButton() {
-        print("back")
         self.scrollToIndex(index: 0)
     }
     

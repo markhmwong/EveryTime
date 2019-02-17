@@ -9,17 +9,7 @@
 import UIKit
 
 class ViewControllerBase: UIViewController, ViewControllerBaseProtocol {
-    func prepareView() {
-        
-    }
-    
-    func prepareViewController() {
-        
-    }
-    
-    func prepareAutoLayout() {
-        
-    }
+
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -34,5 +24,17 @@ class ViewControllerBase: UIViewController, ViewControllerBaseProtocol {
         prepareViewController()
         prepareView()
         prepareAutoLayout()
+    }
+    
+    func prepareView() {
+        
+    }
+    
+    func prepareViewController() {
+        
+    }
+    
+    func prepareAutoLayout() {
+        
     }
 }
