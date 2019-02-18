@@ -34,11 +34,14 @@ class CoreDataHandler {
         Save to settings entity
     */
     class func saveContext() {
-        do {
-            try getContext().save()
-        } catch let error as NSError {
-            print("\(error)")
+        getContext().perform {
+            do {
+                try getContext().save()
+            } catch let error as NSError {
+                print("\(error)")
+            }
         }
+.
     }
     
     /*

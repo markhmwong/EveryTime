@@ -46,14 +46,18 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    fileprivate lazy var addStepButton: UIButton = {
-        let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "Add A Timer", attributes: Theme.Font.Nav.AddButton), for: .normal)
-        button.addTarget(self, action: #selector(handleAddStep), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = Theme.Font.Color.AddButtonColour
-        button.layer.cornerRadius = 3.0
-        button.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 10.0, bottom: 0.0, right: 10.0)
+//    fileprivate lazy var addStepButton: UIButton = {
+//        let button = UIButton()
+//        button.setAttributedTitle(NSAttributedString(string: "Add A Timer", attributes: Theme.Font.Nav.AddButton), for: .normal)
+//        button.addTarget(self, action: #selector(handleAddStep), for: .touchUpInside)
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        button.backgroundColor = Theme.Font.Color.AddButtonColour
+//        button.layer.cornerRadius = 3.0
+//        button.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 10.0, bottom: 0.0, right: 10.0)
+//        return button
+//    }()
+    fileprivate lazy var addStepButton: StandardButton = {
+        let button = StandardButton(title: "Add Step")
         return button
     }()
     fileprivate lazy var recipeNameLabel: UILabel = {
@@ -71,7 +75,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     fileprivate let resetButton: UIButton = {
        let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("reset", for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "reset", attributes: Theme.Font.Nav.Item), for: .normal)
         button.setTitleColor(UIColor.black, for: .normal)
         button.addTarget(self, action: #selector(handleReset), for: .touchUpInside)
         return button

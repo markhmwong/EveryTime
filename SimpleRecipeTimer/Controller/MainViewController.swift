@@ -26,6 +26,7 @@ class MainViewController: ViewControllerBase {
     fileprivate var horizontalDelegate = HorizontalTransitionDelegate()
     fileprivate var dismissInteractor: OverlayInteractor!
     fileprivate var sections: Int = 0
+    
     fileprivate lazy var rightNavItemButton: UIButton = {
         let button = UIButton()
         button.setAttributedTitle(NSAttributedString(string: "Clear All", attributes: Theme.Font.Nav.Item), for: .normal)//revert back to add recipe
@@ -33,6 +34,7 @@ class MainViewController: ViewControllerBase {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
     fileprivate lazy var leftNavItemButton: UIButton = {
         let button = UIButton()
         button.setAttributedTitle(NSAttributedString(string: "About", attributes: Theme.Font.Nav.Item), for: .normal)
@@ -40,6 +42,7 @@ class MainViewController: ViewControllerBase {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
     fileprivate lazy var testNavButton: UIButton = {
         let button = UIButton()
         button.setAttributedTitle(NSAttributedString(string: "Test Random Data", attributes: Theme.Font.Nav.Item), for: .normal)
@@ -47,16 +50,12 @@ class MainViewController: ViewControllerBase {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    fileprivate lazy var addRecipeButton: UIButton = {
-        let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "Add Recipe", attributes: Theme.Font.Nav.AddButton), for: .normal)
-        button.addTarget(self, action: #selector(handleAddRecipe), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = Theme.Font.Color.AddButtonColour
-        button.layer.cornerRadius = 3.0
-        button.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 10.0, bottom: 0.0, right: 10.0)
+    
+    fileprivate lazy var addRecipeButton: StandardButton = {
+        let button = StandardButton(title: "Add Recipe")
         return button
     }()
+    
     lazy var collView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
