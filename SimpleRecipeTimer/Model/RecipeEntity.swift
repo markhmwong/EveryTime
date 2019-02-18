@@ -27,13 +27,15 @@ class RecipeEntity: NSManagedObject {
 extension RecipeEntity {
     /* Called directly from MVC update function */
     func updateRecipeTime() {
-        
         calculateTimeToStepByTimePassed()
         if (currStepTimeRemaining <= 0.0) {
             prepareNextStep()
         }
     }
     
+    /*
+        Returns the step the recipe is currently running.
+    */
     func searchLeadingStep() -> StepEntity? {
         var leadingStep: StepEntity? = nil
         let sortedSet = sortStepsByPriority()
@@ -54,8 +56,10 @@ extension RecipeEntity {
         return leadingStep
     }
     
-    //the function below uses a condition to check what step we have completed. However, right now the clock stops at the end of its' expiry date
-    //before it begins the next step. This method allows us to not check for the isCompleted boolean but calculate the step number by time passed
+    /*
+        Uses a condition to check what step we have completed. However, right now the clock stops at the end of its' expiry date
+        before it begins the next step. This method allows us to not check for the isCompleted boolean but calculate the step number by time passed
+    */
     func calculateTimeToStepByTimePassed() {
         let sortedSet = sortStepsByPriority()
         let tp = timePassedSinceStart() + pauseTimeInterval
@@ -65,6 +69,7 @@ extension RecipeEntity {
             let time = elapsedTime - tp
             currStepName = step.stepName
             currStepPriority = step.priority
+            
             if (time >= 0.0 && step.isComplete == false) {
                 //step incomplete
                 currStepTimeRemaining = time
@@ -126,18 +131,36 @@ extension RecipeEntity {
         let sortedSet = sortStepsByPriority()
         let maxItems = sortedSet.count - 1
         let index = Int(currStepPriority)
-        let currStep = sortedSet[index]
-        // TODO: Error
-        currStep.isLeading = false
-        currStep.isComplete = true
-        currStep.timeRemaining = 0.0
-        if (index < maxItems) {
-            currStepPriority = Int16(index + 1)
+
+        if (index <= maxItems) {
+            let currStep = sortedSet[index]
+            // TODO: Error
+            currStep.isLeading = false
+            currStep.isComplete = true
+            currStep.timeRemaining = 0.0
+            
+//            currStepPriority = Int16(index + 1)
+            currStepPriority = Int16(index)
             let nextStep = sortedSet[Int(currStepPriority)]
             currStepTimeRemaining = nextStep.timeRemaining
             nextStep.isLeading = true
         }
     }
+    
+    /* Reset */
+    func resetRecipe() {
+        let sortedSet = sortStepsByPriority()
+        startDate = Date()
+        for step in sortedSet {
+            step.resetStep()
+            if (step.priority == 0) {
+                currStepPriority = step.priority
+                currStepTimeRemaining = step.timeRemaining
+                currStepExpiryDate = step.expiryDate
+            }
+        }
+    }
+    
     
     /* When a step is deleted */
     func reoganiseStepsInArr(_ sArr: [StepEntity], fromIndex: Int) {
@@ -193,9 +216,8 @@ extension RecipeEntity {
                     s.isPausedPrimary = true
                 }
             }
-            //                        CoreDataHandler.saveContext()
             self.pauseStartDate = Date()
-
+            CoreDataHandler.saveContext()
         }
 }
     

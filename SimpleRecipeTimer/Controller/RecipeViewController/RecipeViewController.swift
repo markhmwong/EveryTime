@@ -244,12 +244,12 @@ class RecipeViewController: RecipeViewControllerBase, RecipeViewControllerDelega
 
     //MARK: - RecipeVCDelegate Protocol Functions -
     func didReturnValues(step: StepEntity) {
-        let priority = self.stepArr.count + 1
+        let priority = stepArr.count + 1
         step.priority = Int16(priority)
-        self.recipe.addToStep(step)
-        self.stepArr.append(step)
+        recipe.addToStep(step)
+        stepArr.append(step)
         CoreDataHandler.saveContext()
-        self.startTimer()
+        startTimer()
     }
     
     func willReloadTableData() {

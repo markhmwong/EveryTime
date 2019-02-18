@@ -163,7 +163,8 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
         guard let e = entity else {
             return
         }
-        stepNameLabel.attributedText = NSAttributedString(string: e.currStepName!, attributes: Theme.Font.Recipe.StepSubTitle)
+        
+        stepNameLabel.attributedText = NSAttributedString(string: e.currStepName ?? "No Step Name", attributes: Theme.Font.Recipe.StepSubTitle)
         if entity != nil {
             totalTimeLabel?.attributedText = NSAttributedString(string: timeRemaining, attributes: Theme.Font.Recipe.TimeAttribute)
         } else {

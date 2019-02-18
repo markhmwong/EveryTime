@@ -20,7 +20,7 @@ class StepEntity: NSManagedObject {
         self.priority = priority
         self.isComplete = false
         self.isLeading = false
-        self.isSequential = true
+//        self.isSequential = true
         self.isPausedPrimary = false
         self.createdDate = Date()
         self.expiryDate = self.createdDate!.addingTimeInterval(self.timeToSeconds(hours: hours, minutes: minutes, seconds: seconds)) //only needed for the leading step
@@ -31,19 +31,28 @@ class StepEntity: NSManagedObject {
 
 extension StepEntity {
     func resetStep() {
-        //todo
+        timeRemaining = totalTime
+        updateExpiry()
+        isComplete = false
+        
+        if (priority == 0) {
+            isLeading = true
+        } else {
+            isLeading = false
+        }
+        
     }
     
     func updateTimeRemaining() {
         guard let expiry = expiryDate else {
             return
         }
-        self.timeRemaining = expiry.timeIntervalSince(Date())
+        timeRemaining = expiry.timeIntervalSince(Date())
     }
     
     func updateExpiry() {
         let now = Date()
-        self.expiryDate = now.addingTimeInterval(self.timeRemaining)
+        expiryDate = now.addingTimeInterval(timeRemaining)
     }
     
     func timeToSeconds(hours: Int, minutes: Int, seconds: Int) -> TimeInterval {
@@ -51,9 +60,9 @@ extension StepEntity {
     }
     
     func updateTotalTimeRemaining() {
-        if (self.timeRemaining <= 0.0) {
-            self.timeRemaining = 0.0
-            self.isComplete = true
+        if (timeRemaining <= 0.0) {
+            timeRemaining = 0.0
+            isComplete = true
         } else {
             updateTimeRemaining()
         }
@@ -67,7 +76,7 @@ extension StepEntity {
     }
     
     func timeRemainingPausedState() -> String {
-        let (h,m,s) = self.timeRemaining.secondsToHoursMinutesSeconds()
+        let (h,m,s) = timeRemaining.secondsToHoursMinutesSeconds()
         return self.hrsMinsSecsToString(h: h, m: m, s: s)
     }
     
@@ -76,10 +85,10 @@ extension StepEntity {
     }
     
     func updatePauseState() {
-        if (self.isPausedPrimary) {
-            self.isPausedPrimary = !self.isPausedPrimary
+        if (isPausedPrimary) {
+            isPausedPrimary = !isPausedPrimary
         } else {
-            self.isPausedPrimary = !self.isPausedPrimary
+            isPausedPrimary = !isPausedPrimary
         }
     }
 }

@@ -103,16 +103,16 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
             return
         }
         let padding: CGFloat = 2.0
-
+        let textFieldHeight: CGFloat = 40.0
         n.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         n.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         n.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        n.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
+        n.heightAnchor.constraint(equalToConstant: textFieldHeight).isActive = true
         
         textFieldStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         textFieldStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         textFieldStackView.topAnchor.constraint(equalTo: n.bottomAnchor, constant: padding).isActive = true
-        textFieldStackView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        textFieldStackView.heightAnchor.constraint(equalToConstant: textFieldHeight).isActive = true
         
         tableView.topAnchor.constraint(equalTo: textFieldStackView.bottomAnchor, constant: padding).isActive = true
         tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant:0).isActive = true
@@ -181,26 +181,33 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
             return
         }
         
-        do {
-            try checkTextFields([n, h, m, s])
-            addStep(toCoreData: true, h: h.text, m: m.text, s: s.text, n: n.text)
-            n.becomeFirstResponder()
-        } catch AddRecipeWizardError.empty(let message) {
-            showAlertBox(message)
-        } catch AddRecipeWizardError.invalidCharacters(let message) {
-            showAlertBox(message)
-        } catch AddRecipeWizardError.invalidTextField(let message){
-            showAlertBox(message)
-        } catch {
-            print("\(error.localizedDescription)")
+        if (dataSource.count > 0) {
+            dismissViewControllerAndUpdateCollectionView()
         }
+
+//        if (dataSource.count >= 0) {
+//        } else {
+////            do {
+////                try checkTextFields([n, h, m, s])
+////                addStep(toCoreData: true, h: h.text, m: m.text, s: s.text, n: n.text)
+////                n.becomeFirstResponder()
+////            } catch AddRecipeWizardError.empty(let message) {
+////                showAlertBox(message)
+////            } catch AddRecipeWizardError.invalidCharacters(let message) {
+////                showAlertBox(message)
+////            } catch AddRecipeWizardError.invalidTextField(let message){
+////                showAlertBox(message)
+////            } catch {
+////                print("\(error.localizedDescription)")
+////            }
+//        }
         arvc.dismiss(animated: true, completion: nil)
     }
     
     func addStep(toCoreData: Bool = false, h: String? = nil, m: String? = nil, s: String? = nil, n: String? = nil) {
         guard let name = n, let hour = h, let minute = m, let second = s  else {
             if (toCoreData) {
-                updateTableData()
+                dismissViewControllerAndUpdateCollectionView()
             }
             return
         }
@@ -224,11 +231,11 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         tableView.insertRows(at: [IndexPath(item: dataSource.count - 1, section: 0)], with: UITableView.RowAnimation.right)
         
         if (toCoreData) {
-            updateTableData()
+            dismissViewControllerAndUpdateCollectionView()
         }
     }
     
-    func updateTableData() {
+    func dismissViewControllerAndUpdateCollectionView() {
         let rEntity = RecipeEntity(name: recipeName)
         for (index, s) in dataSource.enumerated() {
             let sEntity = StepEntity(name: s.name, hours: s.hours, minutes: s.minutes, seconds: s.seconds, priority: s.priority)
@@ -238,9 +245,7 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
             rEntity.addToStep(sEntity)
         }
         
-        rEntity.updateTimeRemainingForCurrentStep()
-        //        rEntity.updateExpiryDateForCurrentStep()
-        
+        rEntity.updateTimeRemainingForCurrentStep()        
         if let arv = addRecipeViewControllerDelegate {
             arv.createRecipe(rEntity: rEntity)
         }
@@ -253,7 +258,6 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
                 
                 textField.becomeFirstResponder()
                 throw AddRecipeWizardError.empty(message: "Empty")
-                return false
             }
         }
         return true

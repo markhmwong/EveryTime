@@ -13,8 +13,6 @@ class AddRecipeStepOne: AddRecipeBaseCell {
     var keyboardHeight: CGFloat = 0.0 {
         didSet {
             continueButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -keyboardHeight - 50.0).isActive = true
-            self.setNeedsLayout()
-            self.layoutIfNeeded()
         }
     }
     fileprivate var recipeNameTextField: UITextField = {

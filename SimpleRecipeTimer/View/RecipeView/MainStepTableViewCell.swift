@@ -27,6 +27,7 @@ class MainStepTableViewCell: EntityBaseTableViewCell<StepEntity> {
     var timeLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     var stackView: UIStackView = {
@@ -72,8 +73,13 @@ class MainStepTableViewCell: EntityBaseTableViewCell<StepEntity> {
         completeLabel.textAlignment = .right
         
         //        stackView?.addArrangedSubview(priorityLabel)
+        addSubview(timeLabel)
+
+        timeLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        timeLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+
         stackView.addArrangedSubview(nameLabel)
-        stackView.addArrangedSubview(timeLabel)
+//        stackView.addArrangedSubview(timeLabel)
         stackView.addArrangedSubview(completeLabel)
         self.addSubview(stackView)
         stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true

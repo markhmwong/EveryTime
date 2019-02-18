@@ -87,7 +87,9 @@ class MainViewController: ViewControllerBase {
     }
     
     func testCoreData() {
-        CoreDataHandler.deleteAllRecordsIn(entity: RecipeEntity.self)
+        if (CoreDataHandler.deleteAllRecordsIn(entity: RecipeEntity.self)) {
+            print("Successfully deleted all records")
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -215,14 +217,14 @@ class MainViewController: ViewControllerBase {
         }
     }
     
-    func updateAllRecipes() {
-        for recipe in recipeCollection {
-            guard let s = recipe.searchLeadingStep() else {
-                return
-            }
-            recipe.updateStepInRecipe(s)
-        }
-    }
+//    func updateAllRecipes() {
+//        for recipe in recipeCollection {
+//            guard let s = recipe.searchLeadingStep() else {
+//                return
+//            }
+//            recipe.updateStepInRecipe(s)
+//        }
+//    }
 }
 
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -327,8 +329,9 @@ extension MainViewController {
         collView.performBatchUpdates({
             collView.deleteItems(at: deleteIndexPaths)
         }, completion: nil)
-        CoreDataHandler.deleteAllRecordsIn(entity: RecipeEntity.self)
-        CoreDataHandler.saveContext()
+        if (CoreDataHandler.deleteAllRecordsIn(entity: RecipeEntity.self)) {
+            CoreDataHandler.saveContext()
+        }
     }
 }
 

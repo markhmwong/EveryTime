@@ -11,7 +11,13 @@ import UIKit
 class NavView: UIView {
     var leftNavItem: UIButton?
     var rightNavItem: UIButton?
-    
+    let bottomBorder: UIView = {
+        let view = UIView()
+        view.backgroundColor = Theme.Background.Color.NavBottomBorderColor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -44,21 +50,14 @@ class NavView: UIView {
             right.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         }
         
-        let bottomBorder = UIView()
-        let gray: CGFloat = 100.0
-        let borderThickness: CGFloat = 2.0
-        bottomBorder.backgroundColor = UIColor(red: gray / 255.0, green: gray / 255.0, blue: gray / 255.0, alpha: 1.0)
-        bottomBorder.translatesAutoresizingMaskIntoConstraints = false
         addSubview(bottomBorder)
-        
+    }
+    
+    fileprivate func setupAutoLayout() {
+        let borderThickness: CGFloat = 1.0
         bottomBorder.heightAnchor.constraint(equalToConstant: borderThickness).isActive = true
         bottomBorder.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         bottomBorder.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         bottomBorder.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-    }
-    
-    fileprivate func setupAutoLayout() {
-
-        
     }
 }

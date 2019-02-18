@@ -15,10 +15,9 @@ class RecipeViewControllerBase: ViewControllerBase {
     let stepCellId = "stepCellId"
     var stepSet: Set<StepEntity>!
     var stepArr: [StepEntity] = []
-    
-    var mainViewControllerDelegate: MainViewController?
-    
     var recipe: RecipeEntity!
+
+    var mainViewControllerDelegate: MainViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()

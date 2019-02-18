@@ -14,7 +14,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     var dismissInteractor: OverlayInteractor!
     var horizontalTransitionInteractor: HorizontalTransitionInteractor? = nil
     fileprivate let screenSize = UIScreen.main.bounds.size
-    fileprivate let rowHeight: CGFloat = 80.0
+    fileprivate let rowHeight: CGFloat = 120.0
     fileprivate var addButtonState: ScrollingState = .Idle
 
     fileprivate lazy var tableView: UITableView = {
@@ -63,6 +63,22 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    fileprivate lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    fileprivate let resetButton: UIButton = {
+       let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("reset", for: .normal)
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.addTarget(self, action: #selector(handleReset), for: .touchUpInside)
+        return button
+    }()
+
+    fileprivate let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 10))
+
     
     init(recipe: RecipeEntity, delegate: MainViewController, indexPath: IndexPath) {
         super.init(nibName: nil, bundle: nil)
@@ -88,10 +104,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         super.prepareViewController()
         //set background color
     }
-    
-    let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 10))
-    let titleLabel = UILabel()
-    
+
     override func prepareView() {
         super.prepareView()
         navView = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: editButton)
@@ -102,14 +115,17 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         self.view.addSubview(recipeNameLabel)
         self.view.addSubview(tableView)
         self.view.addSubview(addStepButton)
-        tableView.register(MainStepTableViewCell.self, forCellReuseIdentifier: stepCellId)
         
         //custom table view header
         headerView.backgroundColor = UIColor.clear
-        titleLabel.attributedText = NSAttributedString(string: recipe.recipeName!, attributes: Theme.Font.Recipe.HeaderTableView)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.attributedText = NSAttributedString(string: recipe.recipeName ?? "No name", attributes: Theme.Font.Recipe.HeaderTableView)
         headerView.addSubview(titleLabel)
+        headerView.addSubview(resetButton)
         tableView.tableHeaderView = headerView
+        
+        tableView.register(MainStepTableViewCell.self, forCellReuseIdentifier: stepCellId)
+        
+        
     }
     
     override func updateViewConstraints() {
@@ -141,7 +157,10 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         
         titleLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 10).isActive = true
         titleLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor).isActive = true
-
+        
+        resetButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -10).isActive = true
+        resetButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor).isActive = true
+        
         nav.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         nav.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         nav.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05).isActive = true
@@ -155,6 +174,12 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+    }
+    
+    @objc func handleReset() {
+        recipe.resetRecipe()
+        CoreDataHandler.saveContext()
+        tableView.reloadData()
     }
     
     @objc func handleDismiss() {
@@ -226,11 +251,11 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
 }
 
 extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDataSource {
+    //switches the objects between cells. Allows the user to reorganise the order.
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let sourceObj = self.stepArr[sourceIndexPath.row]
         let destinationObj = self.stepArr[destinationIndexPath.row]
         
-        //switch dates
         let tempDestinationPriority = destinationObj.priority
         destinationObj.priority = sourceObj.priority
         sourceObj.priority = tempDestinationPriority
@@ -250,7 +275,7 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120.0
+        return view.bounds.height / 9
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -263,7 +288,6 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
      
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
-        
             stepArr.remove(at: indexPath.row)
             recipe.reoganiseStepsInArr(stepArr, fromIndex: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
@@ -301,7 +325,7 @@ extension RecipeViewControllerWithTableView: TimerProtocol {
                 return
             }
             
-            let stepPriorityToUpdate = Int(recipe.currStepPriority) //when parallel timers are enabled, we'll update multiple times
+            let stepPriorityToUpdate = Int(recipe.currStepPriority) //when parallel timers are enabled, we'll update multiple timers
             let currPriorityIndexPath = IndexPath(item: stepPriorityToUpdate, section: 0)
             
             //updating current leading step entity
