@@ -1,6 +1,0 @@
-framework module Pods_SimpleRecipeTimerTests {
-  umbrella header "Pods-SimpleRecipeTimerTests-umbrella.h"
-
-  export *
-  module * { export * }
-}

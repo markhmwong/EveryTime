@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import SwipeCellKit
+//import SwipeCellKit
 
 enum ScrollingState {
     case Show

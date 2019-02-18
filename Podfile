@@ -6,8 +6,8 @@ target 'SimpleRecipeTimer' do
   use_frameworks!
 
   # Pods for SimpleRecipeTimer
-  pod 'SwipeCellKit'
-  
+  # pod 'SwipeCellKit'
+
   target 'SimpleRecipeTimerTests' do
     inherit! :search_paths
     # Pods for testing
