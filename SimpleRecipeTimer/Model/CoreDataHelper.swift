@@ -41,7 +41,7 @@ class CoreDataHandler {
                 print("\(error)")
             }
         }
-.
+
     }
     
     /*

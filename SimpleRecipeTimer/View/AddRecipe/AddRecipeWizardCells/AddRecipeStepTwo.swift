@@ -8,6 +8,13 @@
 
 import UIKit
 
+enum textFieldTag: Int {
+    case nameTextField = 0
+    case hourTextField
+    case minuteTextField
+    case secondTextField
+}
+
 class AddRecipeStepTwo: AddRecipeBaseCell {
     fileprivate let rowHeight: CGFloat = 40.0
     fileprivate let stepCellId = "wizardCellId"
@@ -63,6 +70,7 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
     }()
     fileprivate var nameTextfield: UITextField? = {
         let textfield = UITextField()
+        textfield.tag = 0
         textfield.backgroundColor = UIColor.white
         textfield.keyboardType = .asciiCapable
         textfield.textAlignment = .center
@@ -99,7 +107,7 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
     
     func prepareAutoLayout() {
         //todo
-        guard let n = nameTextfield, let h = hourTextfield, let m = minuteTextfield, let s = secondTextfield else {
+        guard let n = nameTextfield else {
             return
         }
         let padding: CGFloat = 2.0
@@ -177,10 +185,6 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
             return
         }
         
-        guard let n = nameTextfield, let h = hourTextfield, let m = minuteTextfield, let s = secondTextfield else {
-            return
-        }
-        
         if (dataSource.count > 0) {
             dismissViewControllerAndUpdateCollectionView()
         }
@@ -245,7 +249,7 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
             rEntity.addToStep(sEntity)
         }
         
-        rEntity.updateTimeRemainingForCurrentStep()        
+        rEntity.updateTimeRemainingForCurrentStep()
         if let arv = addRecipeViewControllerDelegate {
             arv.createRecipe(rEntity: rEntity)
         }
@@ -253,12 +257,39 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
     
     func checkTextFields(_ textFields: [UITextField]) throws -> Bool {
         for textField in textFields {
+            
             if (textField.text?.isEmpty ?? true) {
                 //error empty
                 
                 textField.becomeFirstResponder()
                 throw AddRecipeWizardError.empty(message: "Empty")
             }
+            
+            guard let t = textField.text else {
+                return false
+            }
+            
+            switch textField.tag {
+                case textFieldTag.nameTextField.rawValue:
+                    if (t.count > 30) {
+                        throw AddRecipeWizardError.invalidLength(message: "name is too long")
+                    }
+                case textFieldTag.hourTextField.rawValue:
+                    if (Int(t)! > 23) {
+                        throw AddRecipeWizardError.invalidRange(message: "choose between 1 - 23")
+                    }
+                case textFieldTag.minuteTextField.rawValue:
+                    if (Int(t)! > 60) {
+                        throw AddRecipeWizardError.invalidRange(message: "choose between 1 - 60")
+                    }
+                case textFieldTag.secondTextField.rawValue:
+                    if (Int(t)! > 60) {
+                        throw AddRecipeWizardError.invalidRange(message: "choose between 1 - 60")
+                    }
+                default:
+                    print("something")
+            }
+            
         }
         return true
     }

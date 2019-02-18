@@ -63,10 +63,12 @@ extension RecipeEntity {
     func calculateTimeToStepByTimePassed() {
         let sortedSet = sortStepsByPriority()
         let tp = timePassedSinceStart() + pauseTimeInterval
+        
         var elapsedTime: Double = 0.0
         for step in sortedSet {
             elapsedTime = elapsedTime + step.totalTime
             let time = elapsedTime - tp
+            
             currStepName = step.stepName
             currStepPriority = step.priority
             
@@ -151,6 +153,7 @@ extension RecipeEntity {
     func resetRecipe() {
         let sortedSet = sortStepsByPriority()
         startDate = Date()
+        pauseTimeInterval = 0.0
         for step in sortedSet {
             step.resetStep()
             if (step.priority == 0) {

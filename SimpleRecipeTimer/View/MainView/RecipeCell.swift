@@ -19,7 +19,7 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
                 return
             }
 
-            self.prepareLabels(name, e.timeRemainingForCurrentStepToString())
+            prepareLabels(name, e.timeRemainingForCurrentStepToString())
             
             if (e.isPaused) {
                 pauseButton.setAttributedTitle(NSAttributedString(string: "unpause", attributes: Theme.Font.Recipe.PauseAttribute), for: .normal)
@@ -67,46 +67,38 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
     }
     
     func prepareLabels(_ name: String,_ time: String) {
-        self.contentView.addSubview(nameLabel)
         nameLabel.attributedText = NSAttributedString(string: name, attributes: Theme.Font.Recipe.NameAttribute)
 
         stepNameLabel.attributedText = NSAttributedString(string: "unknown", attributes: Theme.Font.Recipe.StepSubTitle)
-        self.contentView.addSubview(stepNameLabel)
         
         totalTimeLabel = UILabel()
         totalTimeLabel?.attributedText = NSAttributedString(string: time, attributes: Theme.Font.Recipe.TimeAttribute)
         totalTimeLabel?.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.addSubview(totalTimeLabel!)
         
+        nameLabel.backgroundColor = UIColor.blue
+        stepNameLabel.backgroundColor = UIColor.blue
+        totalTimeLabel?.backgroundColor = UIColor.blue
+        
+        addSubview(nameLabel)
+        addSubview(stepNameLabel)
+        addSubview(totalTimeLabel!)
+
         nameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant:0).isActive = true
         nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10).isActive = true
-        
+
         totalTimeLabel?.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15).isActive = true
         totalTimeLabel?.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 0).isActive = true
-        
+
         stepNameLabel.topAnchor.constraint(equalTo: (totalTimeLabel?.bottomAnchor)!).isActive = true
         stepNameLabel.leadingAnchor.constraint(equalTo: totalTimeLabel!.leadingAnchor, constant: 0).isActive = true
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        self.nameLabel.removeFromSuperview()
-        self.totalTimeLabel?.removeFromSuperview()
-        self.totalTimeLabel = nil
-    }
+
     
     override func setupView() {
-        self.backgroundColor = Theme.Background.Color.CellBackgroundColor
-        pauseButton.addTarget(self, action: #selector(recipePauseHandler), for: .touchUpInside)
-        self.contentView.addSubview(pauseButton)
-
         layer.insertSublayer(gl, at: 0)
-        pauseButton.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -15).isActive = true
-        pauseButton.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor, constant: 0).isActive = true
-        
         layer.cornerRadius = 15.0
         clipsToBounds = false
-
         layer.backgroundColor = UIColor.white.cgColor
         layer.shadowColor = UIColor(red:0.65, green:0.65, blue:0.65, alpha:1.0).cgColor
         layer.shadowOffset = CGSize(width: 0, height: 5.0)
@@ -114,10 +106,25 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
         layer.shadowOpacity = 0.8
         layer.masksToBounds = false
         layer.shadowPath = UIBezierPath(roundedRect:bounds, cornerRadius:layer.cornerRadius).cgPath
+        
+        backgroundColor = Theme.Background.Color.CellBackgroundColor
+        pauseButton.backgroundColor = UIColor.blue
+        pauseButton.addTarget(self, action: #selector(recipePauseHandler), for: .touchUpInside)
+        addSubview(pauseButton)
+
+        pauseButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15).isActive = true
+        pauseButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 0).isActive = true
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        nameLabel.removeFromSuperview()
+        totalTimeLabel?.removeFromSuperview()
+        totalTimeLabel = nil
     }
     
     @objc func recipePauseHandler() {
-        self.updatePauseButton()
+        updatePauseButton()
     }
     
     func updatePauseButton() {

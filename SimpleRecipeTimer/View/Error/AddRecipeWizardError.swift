@@ -12,4 +12,6 @@ enum AddRecipeWizardError: Error {
     case empty(message: String)
     case invalidCharacters(message: String)
     case invalidTextField(message: String)
+    case invalidLength(message: String)
+    case invalidRange(message: String)
 }

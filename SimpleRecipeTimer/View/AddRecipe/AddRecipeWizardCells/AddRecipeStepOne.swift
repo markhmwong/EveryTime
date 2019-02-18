@@ -94,9 +94,13 @@ class AddRecipeStepOne: AddRecipeBaseCell {
         guard let name = recipeNameTextField.text else {
             throw AddRecipeWizardError.invalidTextField(message: "empty recipe name")
         }
-        let invalidCharacterSet = CharacterSet(charactersIn: "!@#$%^&*(")
+        let invalidCharacterSet = CharacterSet(charactersIn: "!@#$%^&*(()-_=+][{}';/?.,~`")
         if (name.rangeOfCharacter(from: invalidCharacterSet) != nil) {
             throw AddRecipeWizardError.invalidCharacters(message: "invalid character(s)")
+        }
+        
+        if (name.count > 20) {
+            throw AddRecipeWizardError.invalidLength(message: "name is too long")
         }
         
         if (name.isEmpty) {
@@ -114,6 +118,8 @@ class AddRecipeStepOne: AddRecipeBaseCell {
         } catch AddRecipeWizardError.empty(let message) {
             showErrorMessage(message)
         } catch AddRecipeWizardError.invalidCharacters(let message) {
+            showErrorMessage(message)
+        } catch AddRecipeWizardError.invalidLength(let message) {
             showErrorMessage(message)
         } catch {
             showErrorMessage("unexpected error")

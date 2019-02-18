@@ -184,17 +184,19 @@ class RecipeViewController: RecipeViewControllerBase, RecipeViewControllerDelega
         guard let createdDate = recipe.createdDate else {
             return
         }
-        CoreDataHandler.deleteEntity(entity: RecipeEntity.self, createdDate: createdDate)
-        guard let mvc = mainViewControllerDelegate else {
-            return
+        if (CoreDataHandler.deleteEntity(entity: RecipeEntity.self, createdDate: createdDate)) {
+            guard let mvc = mainViewControllerDelegate else {
+                return
+            }
+            guard let index = indexPath else {
+                return
+            }
+            
+            mvc.recipeCollection.remove(at: index.item)
+            mvc.collView.deleteItems(at: [index])
+            dismissCurrentViewController()
         }
-        guard let index = indexPath else {
-            return
-        }
-        
-        mvc.recipeCollection.remove(at: index.item)
-        mvc.collView.deleteItems(at: [index])
-        dismissCurrentViewController()
+        //TODO: Error
     }
     
     func dismissCurrentViewController() {

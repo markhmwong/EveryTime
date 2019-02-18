@@ -16,6 +16,7 @@ class MainStepTableViewCell: EntityBaseTableViewCell<StepEntity> {
                 return
             }
             self.prepareLabel(e)
+            self.prepareAutoLayout()
         }
     }
     var nameLabel: UILabel = {
@@ -72,19 +73,19 @@ class MainStepTableViewCell: EntityBaseTableViewCell<StepEntity> {
         updateCompletionStatusLabel()
         completeLabel.textAlignment = .right
         
-        //        stackView?.addArrangedSubview(priorityLabel)
-        addSubview(timeLabel)
-
-        timeLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        timeLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-
         stackView.addArrangedSubview(nameLabel)
-//        stackView.addArrangedSubview(timeLabel)
         stackView.addArrangedSubview(completeLabel)
-        self.addSubview(stackView)
+        contentView.addSubview(stackView)
+        contentView.addSubview(timeLabel)
+    }
+    
+    func prepareAutoLayout() {
         stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
         stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -60).isActive = true
         stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        
+        timeLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        timeLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
     
     func updateNameLabel(name: String) {

@@ -53,6 +53,7 @@ class MainViewController: ViewControllerBase {
     
     fileprivate lazy var addRecipeButton: StandardButton = {
         let button = StandardButton(title: "Add Recipe")
+        button.addTarget(self, action: #selector(handleAddRecipe), for: .touchUpInside)
         return button
     }()
     
@@ -129,6 +130,7 @@ class MainViewController: ViewControllerBase {
     }
     
     override func prepareViewController() {
+        super.prepareViewController()
         self.view.backgroundColor = Theme.Background.Color.NavBackgroundColor
         self.view.layer.cornerRadius = Theme.View.CornerRadius
         self.navigationController?.navigationBar.isHidden = true
@@ -137,18 +139,20 @@ class MainViewController: ViewControllerBase {
     }
     
      override func prepareView() {
+        super.prepareView()
         navView = NavView(frame: .zero, leftNavItem: leftNavItemButton, rightNavItem: rightNavItemButton)
         guard let nav = navView else {
             return
         }
-        self.view.addSubview(nav)
-        self.view.addSubview(collView)
-        self.view.addSubview(addRecipeButton)
+        view.addSubview(nav)
+        view.addSubview(collView)
+        view.addSubview(addRecipeButton)
         //register cells
-        self.collView.register(RecipeCell.self, forCellWithReuseIdentifier: recipeCellId)
+        collView.register(RecipeCell.self, forCellWithReuseIdentifier: recipeCellId)
     }
     
     override func prepareAutoLayout() {
+        super.prepareAutoLayout()
         guard let nav = navView else {
             return
         }
@@ -297,7 +301,7 @@ extension MainViewController {
             }
             rEntity.sumStepsForExpectedElapsedTime()
             rEntity.updateCurrStepInRecipe()
-            self.addToRecipeCollection(r: rEntity)
+            addToRecipeCollection(r: rEntity)
         }
         collView.performBatchUpdates({
             let insertIndexPaths = Array(0..<recipeCollection.count).map { IndexPath(item: $0, section: 0) }
@@ -308,7 +312,7 @@ extension MainViewController {
     
     @objc func handleAbout() {
         let vc = AboutViewController(delegate:self)
-        self.present(vc, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
     
     @objc func handleAddRecipe() {
@@ -319,7 +323,7 @@ extension MainViewController {
         dismissInteractor.attachToViewController(viewController: vc, withView: vc.view, presentViewController: nil)
         vc.interactor = dismissInteractor
         transitionDelegate.dismissInteractor = dismissInteractor
-        self.present(vc, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
     
     @objc func handleDeleteRecipe() {
@@ -364,10 +368,8 @@ extension MainViewController: TimerProtocol {
 }
 
 extension MainViewController: UIScrollViewDelegate {
-    
     func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
         executeState(state: .Hide)
-        
     }
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         executeState(state: .Show)
@@ -376,15 +378,23 @@ extension MainViewController: UIScrollViewDelegate {
     func executeState(state: ScrollingState) {
         switch state {
         case .Show:
-            UIView.animate(withDuration: 0.2, delay: 0.2, options: [.curveEaseInOut], animations: {
-                self.addRecipeButton.center.y = self.view.frame.maxY - 50.0
-            }, completion: nil)
+            showStepButtonAnimation()
         case .Hide:
-            UIView.animate(withDuration: 0.15, delay: 0.0, options: [.curveEaseInOut], animations: {
-                self.addRecipeButton.center.y = self.view.frame.maxY + 50.0
-            }, completion: nil)
+            hideStepButtonAnimation()
         case .Idle:
             break
         }
+    }
+    
+    func hideStepButtonAnimation() {
+        UIView.animate(withDuration: 0.15, delay: 0.0, options: [.curveEaseInOut], animations: {
+            self.addRecipeButton.center.y = self.view.frame.maxY + 50.0
+        }, completion: nil)
+    }
+    
+    func showStepButtonAnimation() {
+        UIView.animate(withDuration: 0.2, delay: 0.2, options: [.curveEaseInOut], animations: {
+            self.addRecipeButton.center.y = self.view.frame.maxY - 50.0
+        }, completion: nil)
     }
 }

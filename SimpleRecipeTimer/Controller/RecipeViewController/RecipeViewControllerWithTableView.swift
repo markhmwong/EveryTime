@@ -80,6 +80,14 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         button.addTarget(self, action: #selector(handleReset), for: .touchUpInside)
         return button
     }()
+    
+    fileprivate let timerOptionsView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.white
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    let addAdditionalTime: UIButton = UIButton()
 
     fileprivate let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 10))
 
@@ -115,10 +123,17 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         guard let nav = navView else {
             return
         }
-        self.view.addSubview(nav)
-        self.view.addSubview(recipeNameLabel)
-        self.view.addSubview(tableView)
-        self.view.addSubview(addStepButton)
+        view.addSubview(nav)
+        view.addSubview(recipeNameLabel)
+        view.addSubview(tableView)
+        view.addSubview(addStepButton)
+        view.addSubview(timerOptionsView)
+        
+        addAdditionalTime.setTitle("+15s", for: .normal)
+        addAdditionalTime.setTitleColor(UIColor.black, for: .normal)
+        addAdditionalTime.addTarget(self, action: #selector(handleAdditionalTime), for: .touchUpInside)
+        addAdditionalTime.translatesAutoresizingMaskIntoConstraints = false
+        timerOptionsView.addSubview(addAdditionalTime)
         
         //custom table view header
         headerView.backgroundColor = UIColor.clear
@@ -128,8 +143,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         tableView.tableHeaderView = headerView
         
         tableView.register(MainStepTableViewCell.self, forCellReuseIdentifier: stepCellId)
-        
-        
     }
     
     override func updateViewConstraints() {
@@ -140,7 +153,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         let safeAreaInsets = self.view.safeAreaInsets
         if (safeAreaInsets.top > 0) {
             //safeAreaInsets = 44
-            nav.topAnchor.constraint(equalTo: self.view.topAnchor, constant: safeAreaInsets.top).isActive = true
+            nav.topAnchor.constraint(equalTo: view.topAnchor, constant: safeAreaInsets.top).isActive = true
         }
     }
     
@@ -174,10 +187,28 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         addStepButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -45).isActive = true
         addStepButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         addStepButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.33).isActive = true
+        
+        timerOptionsView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        timerOptionsView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        timerOptionsView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+
+        timerOptionsView.heightAnchor.constraint(equalToConstant: screenSize.height / 6).isActive = true
+        
+        addAdditionalTime.leadingAnchor.constraint(equalTo: timerOptionsView.leadingAnchor, constant: 10).isActive = true
+        addAdditionalTime.centerYAnchor.constraint(equalTo: timerOptionsView.centerYAnchor).isActive = true
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+    }
+    
+    @objc func handleAdditionalTime() {
+        let seconds = 15.0
+        let step = stepArr[Int(recipe.currStepPriority)]
+        step.expiryDate?.addTimeInterval(seconds)
+        step.totalTime = step.totalTime + seconds
+        step.timeRemaining = step.timeRemaining + seconds
+        //do for recipe currstep as well
     }
     
     @objc func handleReset() {
@@ -252,6 +283,10 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     func willReloadTableData() {
         self.tableView.reloadData()
     }
+    
+    func showTimerOptions() {
+        
+    }
 }
 
 extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDataSource {
@@ -279,7 +314,7 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return view.bounds.height / 9
+        return view.bounds.height / 10
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -300,6 +335,11 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
     
     func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
         return "Remove"
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        hideStepButtonAnimation()
+        showTimerOptions()
     }
 }
 
@@ -367,16 +407,24 @@ extension RecipeViewControllerWithTableView: UIScrollViewDelegate {
     func executeState(state: ScrollingState) {
         switch state {
         case .Show:
-            UIView.animate(withDuration: 0.2, delay: 0.2, options: [.curveEaseInOut], animations: {
-                self.addStepButton.center.y = self.view.frame.maxY - 50.0
-            }, completion: nil)
+            showStepButtonAnimation()
         case .Hide:
-            UIView.animate(withDuration: 0.15, delay: 0.0, options: [.curveEaseInOut], animations: {
-                self.addStepButton.center.y = self.view.frame.maxY + 50.0
-            }, completion: nil)
+            hideStepButtonAnimation()
         case .Idle:
             break
         }
+    }
+    
+    func hideStepButtonAnimation() {
+        UIView.animate(withDuration: 0.15, delay: 0.0, options: [.curveEaseInOut], animations: {
+            self.addStepButton.center.y = self.view.frame.maxY + 50.0
+        }, completion: nil)
+    }
+    
+    func showStepButtonAnimation() {
+        UIView.animate(withDuration: 0.2, delay: 0.2, options: [.curveEaseInOut], animations: {
+            self.addStepButton.center.y = self.view.frame.maxY - 50.0
+        }, completion: nil)
     }
 }
 
