@@ -230,9 +230,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         CoreDataHandler.saveContext()
         DispatchQueue.main.async {
             self.tableView.reloadData()
-
         }
-        
     }
     
     /*
