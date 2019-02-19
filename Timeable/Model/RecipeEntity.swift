@@ -152,21 +152,37 @@ extension RecipeEntity {
     /*
         Reset entire recipe
      */
-    func resetRecipe() {
-        let sortedSet = sortStepsByPriority()
-        startDate = Date()
-        pauseTimeInterval = 0.0
-        for step in sortedSet {
-            step.resetStep()
-            if (step.priority == 0) {
-                currStepPriority = step.priority
-                currStepTimeRemaining = step.timeRemaining
-                currStepExpiryDate = step.expiryDate
-            }
-        }
-    }
+//    func resetRecipe() {
+//        let sortedSet = sortStepsByPriority()
+//        startDate = Date()
+//        pauseTimeInterval = 0.0
+//        for step in sortedSet {
+//            step.resetStep()
+//            if (step.priority == 0) {
+//                currStepPriority = step.priority
+//                currStepTimeRemaining = step.timeRemaining
+//                currStepExpiryDate = step.expiryDate
+//            }
+//        }
+//    }
+//    
+//    func resetToStep(_ toStep: Int) {
+//        let sortedSet = sortStepsByPriority()
+//        startDate = Date()
+//        pauseTimeInterval = 0.0
+//        for (index, step) in sortedSet.enumerated() {
+//            if (index >= toStep) {
+//                step.resetStep()
+//                if (step.priority == toStep) {
+//                    currStepPriority = step.priority
+//                    currStepTimeRemaining = step.timeRemaining
+//                    currStepExpiryDate = step.expiryDate
+//                }
+//            }
+//        }
+//    }
     
-    func resetToStep(_ toStep: Int) {
+    func resetEntireRecipeTo(toStep: Int = 0) {
         let sortedSet = sortStepsByPriority()
         startDate = Date()
         pauseTimeInterval = 0.0

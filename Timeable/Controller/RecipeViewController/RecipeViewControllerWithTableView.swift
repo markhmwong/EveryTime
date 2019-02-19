@@ -225,11 +225,12 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         Resets to a step
      */
     @objc func handleResetStepTime() {
-        recipe.resetToStep(stepSelected)
+        recipe.resetEntireRecipeTo(toStep: stepSelected)
+//        recipe.resetToStep(stepSelected)
         CoreDataHandler.saveContext()
         DispatchQueue.main.async {
             self.tableView.reloadData()
-            
+
         }
         
     }
@@ -238,7 +239,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         Resets entire recipe
     */
     @objc func handleReset() {
-        recipe.resetRecipe()
+        recipe.resetEntireRecipeTo()
         CoreDataHandler.saveContext()
         DispatchQueue.main.async {
             self.tableView.reloadData()
