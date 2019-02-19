@@ -102,7 +102,7 @@ extension RecipeEntity {
         currStepPriority = step.priority
         currStepTimeRemaining = step.timeRemaining
         let expiryDate = Date().addingTimeInterval(step.timeRemaining)
-        currStepExpiryDate = expiryDate // this is pretty important and must be updated whenever a change is made to the organised steps
+        currStepExpiryDate = expiryDate // currStepExpiryDate - this is pretty important and must be updated whenever a change is made to the organised steps
     }
     
     func timeRemainingForCurrentStepToString() -> String {
@@ -149,7 +149,9 @@ extension RecipeEntity {
         }
     }
     
-    /* Reset */
+    /*
+        Reset entire recipe
+     */
     func resetRecipe() {
         let sortedSet = sortStepsByPriority()
         startDate = Date()
@@ -160,6 +162,22 @@ extension RecipeEntity {
                 currStepPriority = step.priority
                 currStepTimeRemaining = step.timeRemaining
                 currStepExpiryDate = step.expiryDate
+            }
+        }
+    }
+    
+    func resetToStep(_ toStep: Int) {
+        let sortedSet = sortStepsByPriority()
+        startDate = Date()
+        pauseTimeInterval = 0.0
+        for (index, step) in sortedSet.enumerated() {
+            if (index >= toStep) {
+                step.resetStep()
+                if (step.priority == toStep) {
+                    currStepPriority = step.priority
+                    currStepTimeRemaining = step.timeRemaining
+                    currStepExpiryDate = step.expiryDate
+                }
             }
         }
     }

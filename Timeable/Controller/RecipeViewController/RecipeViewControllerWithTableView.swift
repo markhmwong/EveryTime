@@ -16,7 +16,8 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     fileprivate let screenSize = UIScreen.main.bounds.size
     fileprivate let rowHeight: CGFloat = 120.0
     fileprivate var addButtonState: ScrollingState = .Idle
-
+    fileprivate var stepSelected: Int = 0
+    
     fileprivate lazy var tableView: UITableView = {
         let view: UITableView = UITableView()
         view.delegate = self
@@ -46,16 +47,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-//    fileprivate lazy var addStepButton: UIButton = {
-//        let button = UIButton()
-//        button.setAttributedTitle(NSAttributedString(string: "Add A Timer", attributes: Theme.Font.Nav.AddButton), for: .normal)
-//        button.addTarget(self, action: #selector(handleAddStep), for: .touchUpInside)
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        button.backgroundColor = Theme.Font.Color.AddButtonColour
-//        button.layer.cornerRadius = 3.0
-//        button.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 10.0, bottom: 0.0, right: 10.0)
-//        return button
-//    }()
+
     fileprivate lazy var addStepButton: StandardButton = {
         let button = StandardButton(title: "Add Step")
         return button
@@ -87,8 +79,9 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    let addAdditionalTime: UIButton = UIButton()
-
+    let extraOptionsAddTime: UIButton = UIButton()
+    let extraOptionsResetTime: UIButton = UIButton()
+    
     fileprivate let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 10))
 
     
@@ -129,11 +122,17 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         view.addSubview(addStepButton)
         view.addSubview(timerOptionsView)
         
-        addAdditionalTime.setTitle("+15s", for: .normal)
-        addAdditionalTime.setTitleColor(UIColor.black, for: .normal)
-        addAdditionalTime.addTarget(self, action: #selector(handleAdditionalTime), for: .touchUpInside)
-        addAdditionalTime.translatesAutoresizingMaskIntoConstraints = false
-        timerOptionsView.addSubview(addAdditionalTime)
+        extraOptionsAddTime.setTitle("+15s", for: .normal)
+        extraOptionsAddTime.setTitleColor(UIColor.black, for: .normal)
+        extraOptionsAddTime.addTarget(self, action: #selector(handleAdditionalTime), for: .touchUpInside)
+        extraOptionsAddTime.translatesAutoresizingMaskIntoConstraints = false
+        timerOptionsView.addSubview(extraOptionsAddTime)
+        
+        extraOptionsResetTime.setTitle("reset", for: .normal)
+        extraOptionsResetTime.setTitleColor(UIColor.black, for: .normal)
+        extraOptionsResetTime.addTarget(self, action: #selector(handleResetStepTime), for: .touchUpInside)
+        extraOptionsResetTime.translatesAutoresizingMaskIntoConstraints = false
+        timerOptionsView.addSubview(extraOptionsResetTime)
         
         //custom table view header
         headerView.backgroundColor = UIColor.clear
@@ -194,8 +193,11 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
 
         timerOptionsView.heightAnchor.constraint(equalToConstant: screenSize.height / 6).isActive = true
         
-        addAdditionalTime.leadingAnchor.constraint(equalTo: timerOptionsView.leadingAnchor, constant: 10).isActive = true
-        addAdditionalTime.centerYAnchor.constraint(equalTo: timerOptionsView.centerYAnchor).isActive = true
+        extraOptionsAddTime.leadingAnchor.constraint(equalTo: timerOptionsView.leadingAnchor, constant: 10).isActive = true
+        extraOptionsAddTime.centerYAnchor.constraint(equalTo: timerOptionsView.centerYAnchor).isActive = true
+        
+        extraOptionsResetTime.centerXAnchor.constraint(equalTo: timerOptionsView.centerXAnchor, constant: 0).isActive = true
+        extraOptionsResetTime.centerYAnchor.constraint(equalTo: timerOptionsView.centerYAnchor).isActive = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -204,17 +206,43 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     
     @objc func handleAdditionalTime() {
         let seconds = 15.0
-        let step = stepArr[Int(recipe.currStepPriority)]
-        step.expiryDate?.addTimeInterval(seconds)
-        step.totalTime = step.totalTime + seconds
-        step.timeRemaining = step.timeRemaining + seconds
-        //do for recipe currstep as well
+        var step: StepEntity?
+        if (recipe.currStepPriority == stepSelected) {
+            let step = stepArr[Int(recipe.currStepPriority)]
+            step.expiryDate?.addTimeInterval(seconds)
+            step.totalTime = step.totalTime + seconds
+            step.timeRemaining = step.timeRemaining + seconds
+        } else {
+            let step = stepArr[stepSelected]
+            step.expiryDate?.addTimeInterval(seconds)
+            step.totalTime = step.totalTime + seconds
+            step.timeRemaining = step.timeRemaining + seconds
+            //refresh table
+            tableView.reloadRows(at: [IndexPath(item: stepSelected, section: 0)], with: .none)
+        }
+    }
+    /*
+        Resets to a step
+     */
+    @objc func handleResetStepTime() {
+        recipe.resetToStep(stepSelected)
+        CoreDataHandler.saveContext()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            
+        }
+        
     }
     
+    /*
+        Resets entire recipe
+    */
     @objc func handleReset() {
         recipe.resetRecipe()
         CoreDataHandler.saveContext()
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     @objc func handleDismiss() {
@@ -338,8 +366,10 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        stepSelected = indexPath.row
         hideStepButtonAnimation()
         showTimerOptions()
+        
     }
 }
 

@@ -68,16 +68,15 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
     
     func prepareLabels(_ name: String,_ time: String) {
         nameLabel.attributedText = NSAttributedString(string: name, attributes: Theme.Font.Recipe.NameAttribute)
-
         stepNameLabel.attributedText = NSAttributedString(string: "unknown", attributes: Theme.Font.Recipe.StepSubTitle)
         
         totalTimeLabel = UILabel()
         totalTimeLabel?.attributedText = NSAttributedString(string: time, attributes: Theme.Font.Recipe.TimeAttribute)
         totalTimeLabel?.translatesAutoresizingMaskIntoConstraints = false
         
-        nameLabel.backgroundColor = UIColor.blue
-        stepNameLabel.backgroundColor = UIColor.blue
-        totalTimeLabel?.backgroundColor = UIColor.blue
+        nameLabel.backgroundColor = Theme.Background.Color.Clear
+        stepNameLabel.backgroundColor = Theme.Background.Color.Clear
+        totalTimeLabel?.backgroundColor = Theme.Background.Color.Clear
         
         addSubview(nameLabel)
         addSubview(stepNameLabel)
@@ -108,7 +107,7 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
         layer.shadowPath = UIBezierPath(roundedRect:bounds, cornerRadius:layer.cornerRadius).cgPath
         
         backgroundColor = Theme.Background.Color.CellBackgroundColor
-        pauseButton.backgroundColor = UIColor.blue
+        pauseButton.backgroundColor = Theme.Background.Color.Clear
         pauseButton.addTarget(self, action: #selector(recipePauseHandler), for: .touchUpInside)
         addSubview(pauseButton)
 
@@ -175,7 +174,7 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
         if entity != nil {
             totalTimeLabel?.attributedText = NSAttributedString(string: timeRemaining, attributes: Theme.Font.Recipe.TimeAttribute)
         } else {
-            totalTimeLabel?.attributedText = NSAttributedString(string: "unknown", attributes: Theme.Font.Recipe.TimeAttribute)
+            totalTimeLabel?.attributedText = NSAttributedString(string: "No Time", attributes: Theme.Font.Recipe.TimeAttribute)
         }
     }
 }

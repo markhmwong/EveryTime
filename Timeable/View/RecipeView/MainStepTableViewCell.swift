@@ -19,28 +19,33 @@ class MainStepTableViewCell: EntityBaseTableViewCell<StepEntity> {
             self.prepareAutoLayout()
         }
     }
-    var nameLabel: UILabel = {
+    fileprivate lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    var timeLabel: UILabel = {
+    fileprivate lazy var timeLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    var stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.spacing = 10
-        stackView.distribution = .fillEqually
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
+//    fileprivate var stackView: UIStackView = {
+//        let stackView = UIStackView()
+//        stackView.axis = .horizontal
+//        stackView.alignment = .center
+//        stackView.spacing = 10
+//        stackView.distribution = .fillEqually
+//        stackView.translatesAutoresizingMaskIntoConstraints = false
+//        return stackView
+//    }()
+    fileprivate lazy var completeLabel: UILabel = {
+       let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
-    var completeLabel = UILabel()
     var gl = CAGradientLayer()
     
     override func setupView() {
@@ -68,24 +73,25 @@ class MainStepTableViewCell: EntityBaseTableViewCell<StepEntity> {
     
     func prepareLabel(_ e: StepEntity) {
         timeLabel.attributedText = NSAttributedString(string: "\(e.timeRemainingToString())", attributes: Theme.Font.Step.CellTimeAttribute)
-        nameLabel.attributedText = NSAttributedString(string: e.stepName!, attributes: Theme.Font.Step.CellNameAttribute)
-//       priorityLabel.attributedText = NSAttributedString(string: "\(entity!.priority)", attributes: Theme.Font.Step.CellNameAttribute)
+        nameLabel.attributedText = NSAttributedString(string: e.stepName ?? "No Name", attributes: Theme.Font.Step.CellNameAttribute)
         updateCompletionStatusLabel()
         completeLabel.textAlignment = .right
-        
-        stackView.addArrangedSubview(nameLabel)
-        stackView.addArrangedSubview(completeLabel)
-        contentView.addSubview(stackView)
+
+        contentView.addSubview(completeLabel)
         contentView.addSubview(timeLabel)
+        contentView.addSubview(nameLabel)
     }
     
     func prepareAutoLayout() {
-        stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -60).isActive = true
-        stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         
-        timeLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        timeLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        completeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15).isActive = true
+        completeLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        
+        timeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15).isActive = true
+        timeLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        
+        nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 13).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 0).isActive = true
     }
     
     func updateNameLabel(name: String) {
@@ -110,10 +116,7 @@ class MainStepTableViewCell: EntityBaseTableViewCell<StepEntity> {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.nameLabel.removeFromSuperview()
-        //        self.nameLabel = nil
         self.timeLabel.removeFromSuperview()
-        //        self.timeLabel = nil
         self.completeLabel.removeFromSuperview()
-        //        self.completeLabel = nil
     }
 }
