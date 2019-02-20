@@ -165,11 +165,11 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
             addStep(toCoreData: false, h: h.text, m: m.text, s: s.text, n: n.text)
             clearTextFields([n, h, m, s])
             n.becomeFirstResponder()
-        } catch AddRecipeWizardError.empty(let message) {
+        } catch AddRecipeWizardError.Empty(let message) {
             showAlertBox(message)
-        } catch AddRecipeWizardError.invalidCharacters(let message) {
+        } catch AddRecipeWizardError.InvalidCharacters(let message) {
             showAlertBox(message)
-        } catch AddRecipeWizardError.invalidTextField(let message) {
+        } catch AddRecipeWizardError.InvalidTextField(let message) {
             showAlertBox(message)
         } catch {
             print("\(error.localizedDescription)")
@@ -262,7 +262,7 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
                 //error empty
                 
                 textField.becomeFirstResponder()
-                throw AddRecipeWizardError.empty(message: "Empty")
+                throw AddRecipeWizardError.Empty(message: "Empty")
             }
             
             guard let t = textField.text else {
@@ -272,19 +272,19 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
             switch textField.tag {
                 case textFieldTag.nameTextField.rawValue:
                     if (t.count > 30) {
-                        throw AddRecipeWizardError.invalidLength(message: "name is too long")
+                        throw AddRecipeWizardError.InvalidLength(message: "name is too long")
                     }
                 case textFieldTag.hourTextField.rawValue:
                     if (Int(t)! > 23) {
-                        throw AddRecipeWizardError.invalidRange(message: "choose between 1 - 23")
+                        throw AddRecipeWizardError.InvalidRange(message: "choose between 1 - 23")
                     }
                 case textFieldTag.minuteTextField.rawValue:
                     if (Int(t)! > 60) {
-                        throw AddRecipeWizardError.invalidRange(message: "choose between 1 - 60")
+                        throw AddRecipeWizardError.InvalidRange(message: "choose between 1 - 60")
                     }
                 case textFieldTag.secondTextField.rawValue:
                     if (Int(t)! > 60) {
-                        throw AddRecipeWizardError.invalidRange(message: "choose between 1 - 60")
+                        throw AddRecipeWizardError.InvalidRange(message: "choose between 1 - 60")
                     }
                 default:
                     print("something")

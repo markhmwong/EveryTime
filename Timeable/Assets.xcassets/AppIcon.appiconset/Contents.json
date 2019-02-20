@@ -3,49 +3,49 @@
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "Logo_40.jpg",
+      "filename" : "LogoA_40.jpg",
       "scale" : "2x"
     },
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "Logo_60.jpg",
+      "filename" : "LogoA_60.jpg",
       "scale" : "3x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "Logo_58.jpg",
+      "filename" : "LogoA_58-1.jpg",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "Logo_87.jpg",
+      "filename" : "LogoA_87.jpg",
       "scale" : "3x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "Logo_80.jpg",
+      "filename" : "LogoA_80.jpg",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "Logo_120-1.jpg",
+      "filename" : "LogoA_120-1.jpg",
       "scale" : "3x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "Logo_120.jpg",
+      "filename" : "LogoA_120.jpg",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "Logo_180.jpg",
+      "filename" : "LogoA_180.jpg",
       "scale" : "3x"
     },
     {
@@ -96,7 +96,7 @@
     {
       "size" : "1024x1024",
       "idiom" : "ios-marketing",
-      "filename" : "Logo_1024.jpg",
+      "filename" : "LogoA_1024.jpg",
       "scale" : "1x"
     }
   ],

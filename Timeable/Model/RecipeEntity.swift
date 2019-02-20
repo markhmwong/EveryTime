@@ -151,7 +151,7 @@ extension RecipeEntity {
     
     /*
         Reset entire recipe
-     */    
+     */
     func resetEntireRecipeTo(toStep: Int = 0) {
         let sortedSet = sortStepsByPriority()
         startDate = Date()
@@ -168,6 +168,23 @@ extension RecipeEntity {
         }
     }
     
+    /*
+        Adjusts time by number of seconds
+    */
+    func adjustTime(by seconds: Double, selectedStep: Int) throws {
+        let sortedSet = sortStepsByPriority()
+        let step = sortedSet[selectedStep]
+        if (selectedStep >= currStepPriority) {
+            step.expiryDate?.addTimeInterval(seconds)
+            step.totalTime = step.totalTime + seconds
+            step.timeRemaining = step.timeRemaining + seconds
+        } else if (step.isComplete) {
+            throw StepOptionsError.StepAlreadyComplete(message: "")
+        } else {
+            throw StepOptionsError.StepAlreadyComplete(message: "adjustment can only be made for an incomplete step")
+        }
+        
+    }
     
     /* When a step is deleted */
     func reoganiseStepsInArr(_ sArr: [StepEntity], fromIndex: Int) {

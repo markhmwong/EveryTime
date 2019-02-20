@@ -9,9 +9,13 @@
 import Foundation
 
 enum AddRecipeWizardError: Error {
-    case empty(message: String)
-    case invalidCharacters(message: String)
-    case invalidTextField(message: String)
-    case invalidLength(message: String)
-    case invalidRange(message: String)
+    case Empty(message: String)
+    case InvalidCharacters(message: String)
+    case InvalidTextField(message: String)
+    case InvalidLength(message: String)
+    case InvalidRange(message: String)
+}
+
+enum StepOptionsError: Error {
+    case StepAlreadyComplete(message: String)
 }

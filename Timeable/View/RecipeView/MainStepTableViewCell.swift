@@ -32,15 +32,7 @@ class MainStepTableViewCell: EntityBaseTableViewCell<StepEntity> {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-//    fileprivate var stackView: UIStackView = {
-//        let stackView = UIStackView()
-//        stackView.axis = .horizontal
-//        stackView.alignment = .center
-//        stackView.spacing = 10
-//        stackView.distribution = .fillEqually
-//        stackView.translatesAutoresizingMaskIntoConstraints = false
-//        return stackView
-//    }()
+
     fileprivate lazy var completeLabel: UILabel = {
        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false

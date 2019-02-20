@@ -92,19 +92,19 @@ class AddRecipeStepOne: AddRecipeBaseCell {
         }
         
         guard let name = recipeNameTextField.text else {
-            throw AddRecipeWizardError.invalidTextField(message: "empty recipe name")
+            throw AddRecipeWizardError.InvalidTextField(message: "empty recipe name")
         }
         let invalidCharacterSet = CharacterSet(charactersIn: "!@#$%^&*(()-_=+][{}';/?.,~`")
         if (name.rangeOfCharacter(from: invalidCharacterSet) != nil) {
-            throw AddRecipeWizardError.invalidCharacters(message: "invalid character(s)")
+            throw AddRecipeWizardError.InvalidCharacters(message: "invalid character(s)")
         }
         
         if (name.count > 20) {
-            throw AddRecipeWizardError.invalidLength(message: "name is too long")
+            throw AddRecipeWizardError.InvalidLength(message: "name is too long")
         }
         
         if (name.isEmpty) {
-            throw AddRecipeWizardError.empty(message: "empty recipe name")
+            throw AddRecipeWizardError.Empty(message: "empty recipe name")
         }
         
         delegate.recipeNameStr = name
@@ -115,11 +115,11 @@ class AddRecipeStepOne: AddRecipeBaseCell {
     @objc func handleContinueButton() {
         do {
             try checkTextField()
-        } catch AddRecipeWizardError.empty(let message) {
+        } catch AddRecipeWizardError.Empty(let message) {
             showErrorMessage(message)
-        } catch AddRecipeWizardError.invalidCharacters(let message) {
+        } catch AddRecipeWizardError.InvalidCharacters(let message) {
             showErrorMessage(message)
-        } catch AddRecipeWizardError.invalidLength(let message) {
+        } catch AddRecipeWizardError.InvalidLength(let message) {
             showErrorMessage(message)
         } catch {
             showErrorMessage("unexpected error")
