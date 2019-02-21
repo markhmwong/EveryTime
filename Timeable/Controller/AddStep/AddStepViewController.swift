@@ -67,11 +67,28 @@ class AddStepViewController: ViewControllerBase {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
+    fileprivate var titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.attributedText = NSAttributedString(string: "Add A New Step", attributes: Theme.Font.Recipe.TitleAttribute)
+        return label
+    }()
     fileprivate lazy var navView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor.clear
+        return view
+    }()
+    fileprivate lazy var doneButton: UIButton = {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(handleDoneButton), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    fileprivate lazy var blurView: UIVisualEffectView = {
+        let view = UIVisualEffectView()
+        view.effect = UIBlurEffect(style: .extraLight)
+        view.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
         return view
     }()
     
@@ -83,6 +100,12 @@ class AddStepViewController: ViewControllerBase {
     override func viewWillDisappear(_ animated: Bool) {
         if let rvc = recipeViewControllerDelegate {
             rvc.willReloadTableData()
+        }
+    }
+    
+    override func beginAppearanceTransition(_ isAppearing: Bool, animated: Bool) {
+        if (!isAppearing) {
+            view.endEditing(true)
         }
     }
     
@@ -145,20 +168,27 @@ class AddStepViewController: ViewControllerBase {
         }
     }
     
+
+    
     override func prepareViewController() {
-        //
+        super.prepareViewController()
+        view.backgroundColor = UIColor.clear
+        
     }
     
     override func prepareView() {
-        
+        super.prepareView()
         preparePicker()
 
         view.layer.cornerRadius = Theme.View.CornerRadius
         view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
         view.addSubview(navView)
+        view.addSubview(blurView)
         view.addSubview(rightNavItemButton)
         view.addSubview(labelTextField)
         view.addSubview(invertedCaret)
+        view.addSubview(titleLabel)
+        view.addSubview(doneButton)
         
         rightNavItemButton.addTarget(self, action: #selector(handleDoneButton), for: .touchUpInside)
     }
@@ -169,7 +199,7 @@ class AddStepViewController: ViewControllerBase {
         
         labelTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         labelTextField.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        labelTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 80).isActive = true
+        labelTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 60).isActive = true
         
         countDownPicker.topAnchor.constraint(equalTo: labelTextField.bottomAnchor).isActive = true
         countDownPicker.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -177,6 +207,12 @@ class AddStepViewController: ViewControllerBase {
         
         invertedCaret.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
         invertedCaret.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        titleLabel.topAnchor.constraint(equalTo: invertedCaret.bottomAnchor, constant: 30).isActive = true
+        titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
+        
+        doneButton.topAnchor.constraint(equalTo: countDownPicker.bottomAnchor).isActive = true
+        doneButton.centerXAnchor.constraint(equalTo: countDownPicker.centerXAnchor).isActive = true
     }
     
     func preparePicker() {

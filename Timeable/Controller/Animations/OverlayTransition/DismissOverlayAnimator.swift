@@ -27,9 +27,7 @@ class DismissOverlayAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         guard let toView = transitionContext.viewController(forKey: .to)?.view else {
             return
         }
-        
-        
-        
+
         let screenSize = UIScreen.main.bounds.size
         var center = toView.center //use center for view translations in the x, y directions. As scaling and rotation factors won't affect the center point when they are applied to the view's transform.
         if isPresenting {

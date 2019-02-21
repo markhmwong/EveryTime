@@ -102,6 +102,14 @@ class AddRecipeViewController: ViewControllerBase {
         button.setAttributedTitle(NSAttributedString(string: "back", attributes: Theme.Font.Recipe.TitleAttribute), for: .normal)
         return button
     }()
+    fileprivate lazy var blurView: UIVisualEffectView = {
+        let view = UIVisualEffectView()
+        view.effect = UIBlurEffect(style: .extraLight)
+        view.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     lazy var collView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
@@ -144,6 +152,7 @@ class AddRecipeViewController: ViewControllerBase {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //prepare_ funcs called by superclass
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -152,11 +161,12 @@ class AddRecipeViewController: ViewControllerBase {
         }
     }
     
+
+    
     override func prepareView() {
         super.prepareView()
-        let blurView = UIVisualEffectView()
-        blurView.effect = UIBlurEffect(style: .extraLight)
-        blurView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
+
+        blurView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(blurView)
         view.addSubview(invertedCaret)
         view.addSubview(titleLabel)
@@ -169,6 +179,8 @@ class AddRecipeViewController: ViewControllerBase {
         
         collView.register(AddRecipeStepOne.self, forCellWithReuseIdentifier: addRecipeNameCellId)
         collView.register(AddRecipeStepTwo.self, forCellWithReuseIdentifier: addRecipeStepCellId)
+        
+        
     }
     
     override func prepareViewController() {
@@ -196,6 +208,12 @@ class AddRecipeViewController: ViewControllerBase {
         
         backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
         backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        
+        blurView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        blurView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        blurView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        blurView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+
     }
     
     override func beginAppearanceTransition(_ isAppearing: Bool, animated: Bool) {

@@ -174,7 +174,7 @@ extension RecipeEntity {
     func adjustTime(by seconds: Double, selectedStep: Int) throws {
         let sortedSet = sortStepsByPriority()
         let step = sortedSet[selectedStep]
-        if (selectedStep >= currStepPriority) {
+        if (selectedStep >= currStepPriority && !step.isComplete) {
             step.expiryDate?.addTimeInterval(seconds)
             step.totalTime = step.totalTime + seconds
             step.timeRemaining = step.timeRemaining + seconds

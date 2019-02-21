@@ -111,6 +111,7 @@ class MainViewController: ViewControllerBase {
     
     override func beginAppearanceTransition(_ isAppearing: Bool, animated: Bool) {
         super.beginAppearanceTransition(isAppearing, animated: animated)
+        print("appear")
     }
     
     override func endAppearanceTransition() {
@@ -156,6 +157,7 @@ class MainViewController: ViewControllerBase {
         guard let nav = navView else {
             return
         }
+        
         leftNavItemButton.centerYAnchor.constraint(equalTo: nav.centerYAnchor).isActive = true
         leftNavItemButton.leadingAnchor.constraint(equalTo: nav.leadingAnchor, constant: 10).isActive = true
         
@@ -219,15 +221,6 @@ class MainViewController: ViewControllerBase {
             return (x.createdDate?.compare(y.createdDate!) == .orderedAscending)
         }
     }
-    
-//    func updateAllRecipes() {
-//        for recipe in recipeCollection {
-//            guard let s = recipe.searchLeadingStep() else {
-//                return
-//            }
-//            recipe.updateStepInRecipe(s)
-//        }
-//    }
 }
 
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {

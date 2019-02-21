@@ -236,6 +236,14 @@
 			path = MainView;
 			sourceTree = "<group>";
 		};
+		4D3E24C4221E688600B0D621 /* AddStep */ = {
+			isa = PBXGroup;
+			children = (
+				4DA12F7921B606A20049CD75 /* AddStepViewController.swift */,
+			);
+			path = AddStep;
+			sourceTree = "<group>";
+		};
 		4D53C21822065FE300EED75C /* Theming */ = {
 			isa = PBXGroup;
 			children = (
@@ -326,9 +334,9 @@
 			isa = PBXGroup;
 			children = (
 				4D6DFCB72212508E009C3044 /* AboutViewController.swift */,
-				4DA12F7921B606A20049CD75 /* AddStepViewController.swift */,
 				4D0C4B4821AEC73A00153E76 /* MainViewController.swift */,
 				4DF13D5C2217EECF009BE812 /* ViewControllerBase.swift */,
+				4D3E24C4221E688600B0D621 /* AddStep */,
 				4DF13D5E221A153C009BE812 /* AddingRecipe */,
 				4D563C2A220D4A550039B07F /* RecipeViewController */,
 				4D563C31220E8A210039B07F /* StepViewController */,
