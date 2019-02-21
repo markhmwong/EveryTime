@@ -24,7 +24,9 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     fileprivate let rowHeight: CGFloat = 120.0
     fileprivate var addButtonState: ScrollingState = .Idle
     fileprivate var stepSelected: Int = 0
-    
+    fileprivate lazy var navView: NavView? = nil
+    fileprivate let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 10))
+
     fileprivate lazy var tableView: UITableView = {
         let view: UITableView = UITableView()
         view.delegate = self
@@ -36,7 +38,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         return view
     }()
 
-    fileprivate lazy var navView: NavView? = nil
     
     fileprivate lazy var dismissButton: UIButton = {
         let button = UIButton()
@@ -111,9 +112,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         label.attributedText = NSAttributedString(string: "Step Options", attributes: Theme.Font.Recipe.StepSubTitle)
         return label
     }()
-
-    fileprivate let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 10))
-
     
     init(recipe: RecipeEntity, delegate: MainViewController, indexPath: IndexPath) {
         super.init(nibName: nil, bundle: nil)
@@ -137,11 +135,10 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        print("appear")
-        guard let mvc = mainViewControllerDelegate else {
-            return
-        }
-        mvc.view.backgroundColor = UIColor.black
+//        guard let mvc = mainViewControllerDelegate else {
+//            return
+//        }
+//        mvc.view.backgroundColor = UIColor.black
     }
     
     override func prepareViewController() {
@@ -160,7 +157,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         view.addSubview(tableView)
         view.addSubview(addStepButton)
         view.addSubview(timerOptionsView)
-        
 
         timerOptionsView.addSubview(timerOptionsViewTitle)
         timerOptionsView.addSubview(extraOptionsAddTime)

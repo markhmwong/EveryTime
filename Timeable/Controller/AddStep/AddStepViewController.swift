@@ -79,8 +79,8 @@ class AddStepViewController: ViewControllerBase {
         view.backgroundColor = UIColor.clear
         return view
     }()
-    fileprivate lazy var doneButton: UIButton = {
-        let button = UIButton()
+    fileprivate lazy var doneButton: StandardButton = {
+        let button = StandardButton(title: "Add")
         button.addTarget(self, action: #selector(handleDoneButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -168,8 +168,6 @@ class AddStepViewController: ViewControllerBase {
         }
     }
     
-
-    
     override func prepareViewController() {
         super.prepareViewController()
         view.backgroundColor = UIColor.clear
@@ -213,6 +211,7 @@ class AddStepViewController: ViewControllerBase {
         
         doneButton.topAnchor.constraint(equalTo: countDownPicker.bottomAnchor).isActive = true
         doneButton.centerXAnchor.constraint(equalTo: countDownPicker.centerXAnchor).isActive = true
+        doneButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.33).isActive = true
     }
     
     func preparePicker() {

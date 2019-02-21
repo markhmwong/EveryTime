@@ -24,7 +24,6 @@ class OverlayInteractor: UIPercentDrivenInteractiveTransition {
         self.viewController = viewController
         self.presentViewController = presentViewController
         pan = UIPanGestureRecognizer(target: self, action: #selector(onPan))
-        
         view.addGestureRecognizer(pan)
     }
     

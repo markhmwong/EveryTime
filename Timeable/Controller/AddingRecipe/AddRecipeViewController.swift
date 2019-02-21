@@ -61,6 +61,8 @@ extension AddRecipeViewController: UICollectionViewDelegateFlowLayout {
 }
 
 class AddRecipeViewController: ViewControllerBase {
+    
+    
     var addRecipeStepOne: AddRecipeStepOne?
     var addRecipeStepTwo: AddRecipeStepTwo?
     var keyboardHeight: CGFloat {
@@ -144,9 +146,11 @@ class AddRecipeViewController: ViewControllerBase {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         self.resignFirstResponder()
     }
     
@@ -161,12 +165,9 @@ class AddRecipeViewController: ViewControllerBase {
         }
     }
     
-
-    
     override func prepareView() {
         super.prepareView()
 
-        blurView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(blurView)
         view.addSubview(invertedCaret)
         view.addSubview(titleLabel)
@@ -179,8 +180,6 @@ class AddRecipeViewController: ViewControllerBase {
         
         collView.register(AddRecipeStepOne.self, forCellWithReuseIdentifier: addRecipeNameCellId)
         collView.register(AddRecipeStepTwo.self, forCellWithReuseIdentifier: addRecipeStepCellId)
-        
-        
     }
     
     override func prepareViewController() {

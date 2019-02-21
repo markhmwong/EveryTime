@@ -45,6 +45,7 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
     
     fileprivate var hourTextfield: UITextField? = {
         let textfield = UITextField()
+        textfield.tag = textFieldTag.hourTextField.rawValue
         textfield.backgroundColor = UIColor.white
         textfield.keyboardType = .asciiCapableNumberPad
         textfield.textAlignment = .center
@@ -54,6 +55,8 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
     }()
     fileprivate var minuteTextfield: UITextField? = {
         let textfield = UITextField()
+        textfield.tag = textFieldTag.minuteTextField.rawValue
+
         textfield.backgroundColor = UIColor.white
         textfield.keyboardType = .asciiCapableNumberPad
         textfield.textAlignment = .center
@@ -62,6 +65,8 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
     }()
     fileprivate var secondTextfield: UITextField? = {
         let textfield = UITextField()
+        textfield.tag = textFieldTag.secondTextField.rawValue
+
         textfield.backgroundColor = UIColor.white
         textfield.keyboardType = .asciiCapableNumberPad
         textfield.textAlignment = .center
@@ -70,7 +75,7 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
     }()
     fileprivate var nameTextfield: UITextField? = {
         let textfield = UITextField()
-        textfield.tag = 0
+        textfield.tag = textFieldTag.nameTextField.rawValue
         textfield.backgroundColor = UIColor.white
         textfield.keyboardType = .asciiCapable
         textfield.textAlignment = .center
@@ -129,7 +134,7 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
     }
     
     func showAlertBox(_ message: String) {
-        let alert = UIAlertController(title: "Alert", message: "\(message)", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Hold Up!", message: "\(message)", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         guard let delegate = addRecipeViewControllerDelegate else {
             return
@@ -170,6 +175,8 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         } catch AddRecipeWizardError.InvalidCharacters(let message) {
             showAlertBox(message)
         } catch AddRecipeWizardError.InvalidTextField(let message) {
+            showAlertBox(message)
+        } catch AddRecipeWizardError.InvalidRange(let message) {
             showAlertBox(message)
         } catch {
             print("\(error.localizedDescription)")
@@ -260,7 +267,6 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
             
             if (textField.text?.isEmpty ?? true) {
                 //error empty
-                
                 textField.becomeFirstResponder()
                 throw AddRecipeWizardError.Empty(message: "Empty")
             }
@@ -268,6 +274,7 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
             guard let t = textField.text else {
                 return false
             }
+
             
             switch textField.tag {
                 case textFieldTag.nameTextField.rawValue:
@@ -276,18 +283,18 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
                     }
                 case textFieldTag.hourTextField.rawValue:
                     if (Int(t)! > 23) {
-                        throw AddRecipeWizardError.InvalidRange(message: "choose between 1 - 23")
+                        throw AddRecipeWizardError.InvalidRange(message: "choose between 1 - 23 for hours")
                     }
                 case textFieldTag.minuteTextField.rawValue:
                     if (Int(t)! > 60) {
-                        throw AddRecipeWizardError.InvalidRange(message: "choose between 1 - 60")
+                        throw AddRecipeWizardError.InvalidRange(message: "choose between 1 - 60 for minutes")
                     }
                 case textFieldTag.secondTextField.rawValue:
                     if (Int(t)! > 60) {
-                        throw AddRecipeWizardError.InvalidRange(message: "choose between 1 - 60")
+                        throw AddRecipeWizardError.InvalidRange(message: "choose between 1 - 60 for seconds")
                     }
                 default:
-                    print("something")
+                    throw AddRecipeWizardError.InvalidTextField(message: "Invalid Text")
             }
             
         }

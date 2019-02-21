@@ -109,9 +109,9 @@ class MainViewController: ViewControllerBase {
         stopTimer()
     }
     
+    
     override func beginAppearanceTransition(_ isAppearing: Bool, animated: Bool) {
         super.beginAppearanceTransition(isAppearing, animated: animated)
-        print("appear")
     }
     
     override func endAppearanceTransition() {
@@ -221,6 +221,7 @@ class MainViewController: ViewControllerBase {
             return (x.createdDate?.compare(y.createdDate!) == .orderedAscending)
         }
     }
+
 }
 
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {

@@ -14,6 +14,8 @@ class OverlayPresentationController: UIPresentationController {
         view.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
         return view
     }()
+    
+    
     override var frameOfPresentedViewInContainerView: CGRect {
         let offset: CGFloat = 60.0
         var size = containerView!.bounds.size
@@ -43,8 +45,6 @@ class OverlayPresentationController: UIPresentationController {
             self.dimmingView.removeFromSuperview()
         }
     }
-    
-
     
     override func containerViewWillLayoutSubviews() {
         dimmingView.frame = containerView!.bounds

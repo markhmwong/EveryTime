@@ -40,7 +40,7 @@ class DismissOverlayAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         UIView.animate(withDuration: self.transitionDuration(using: transitionContext), delay: 0, options: [.preferredFramesPerSecond60, .curveEaseIn], animations: {
             fromView.center = center
             toView.transform = CGAffineTransform(scaleX: 1, y: 1)
-        }) { (true) in
+        }) { (finished) in
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         }
         

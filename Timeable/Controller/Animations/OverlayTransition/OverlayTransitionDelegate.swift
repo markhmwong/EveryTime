@@ -33,7 +33,6 @@ class OverlayTransitionDelegate: NSObject, UIViewControllerTransitioningDelegate
     }
     
     func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        
         return dismissInteractor.hasStarted ? dismissInteractor : nil
     }
     

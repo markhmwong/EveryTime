@@ -42,7 +42,7 @@ class ShowOverlayAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         UIView.animate(withDuration: self.transitionDuration(using: transitionContext), delay: 0, options: [.preferredFramesPerSecond60, .curveEaseIn], animations: {
             toView.center = center
             fromView.transform = transformed
-        }) { (true) in
+        }) { (finished) in
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         }
     }

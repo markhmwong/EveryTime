@@ -27,10 +27,6 @@ class AddRecipeStepOne: AddRecipeBaseCell {
         textField.textAlignment = .center
         textField.borderStyle = .none
         textField.layer.masksToBounds = false
-        textField.layer.shadowColor = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1.0).cgColor
-        textField.layer.shadowOffset = CGSize(width: 2.0, height: 1.0)
-        textField.layer.shadowOpacity = 1.0
-        textField.layer.shadowRadius = 0.0
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.becomeFirstResponder()
         return textField
@@ -42,12 +38,8 @@ class AddRecipeStepOne: AddRecipeBaseCell {
         label.layer.opacity = 0.0
         return label
     }()
-    fileprivate var continueButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = UIColor.clear
-        button.setAttributedTitle(NSAttributedString(string: "Continue", attributes: Theme.Font.Recipe.TextFieldAttribute), for: .normal)
-        button.layer.cornerRadius = 8.0
-        button.backgroundColor = Theme.Font.Color.AddButtonColour
+    fileprivate var continueButton: StandardButton = {
+        let button = StandardButton(title: "Continue")
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()

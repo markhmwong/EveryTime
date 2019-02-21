@@ -37,7 +37,7 @@ class RecipeViewController: RecipeViewControllerBase, RecipeViewControllerDelega
         button.setAttributedTitle(NSAttributedString(string: "Add Step", attributes: Theme.Font.Nav.Item), for: .normal)
         button.addTarget(self, action: #selector(handleAddStep), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = Theme.Font.Color.AddButtonColour
+        button.backgroundColor = Theme.Font.Color.StandardButtonColor
         button.layer.cornerRadius = 3.0
         button.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 10.0, bottom: 0.0, right: 10.0)
         return button
@@ -125,7 +125,7 @@ class RecipeViewController: RecipeViewControllerBase, RecipeViewControllerDelega
         self.view.addSubview(collView)
         
         //MARK: CELL REGISTRATION
-        collView.register(StepCell.self, forCellWithReuseIdentifier: stepCellId)
+        collView.register(StepCellForAddRecipe.self, forCellWithReuseIdentifier: stepCellId)
         
     }
     override func viewSafeAreaInsetsDidChange() {
@@ -282,7 +282,7 @@ extension RecipeViewController: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepCellId, for: indexPath) as! StepCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: stepCellId, for: indexPath) as! StepCellForAddRecipe
         cell.entity = stepArr[indexPath.item]
         return cell
     }
@@ -325,7 +325,7 @@ extension RecipeViewController: TimerProtocol {
             }
             
             if (visibleCellIndexPaths.contains(IndexPath(item: stepPriorityToUpdate, section: 0))) {
-                let stepCell = collView.cellForItem(at: currPriorityIndexPath) as! StepCell
+                let stepCell = collView.cellForItem(at: currPriorityIndexPath) as! StepCellForAddRecipe
                 DispatchQueue.main.async {
                     stepCell.updateTimeLabel(time:s.timeRemainingToString())
                     stepCell.updateCompletionStatusLabel()
@@ -352,7 +352,7 @@ extension RecipeViewController: TimerProtocol {
             return x < y
         }
         for indexPath in cellIndexPaths {
-            let stepCell = collView.cellForItem(at: indexPath) as! StepCell
+            let stepCell = collView.cellForItem(at: indexPath) as! StepCellForAddRecipe
             guard let s = stepCell.entity else {
                 return
             }
