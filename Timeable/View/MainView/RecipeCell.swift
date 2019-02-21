@@ -142,7 +142,7 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
 
                     mvc.pauseEntireRecipe(recipe: r)
                     DispatchQueue.main.async {
-                        self.pauseButton.setAttributedTitle(NSAttributedString(string: "unpause", attributes: Theme.Font.Recipe.PauseAttribute), for: .normal)
+                        self.pauseButton.setAttributedTitle(NSAttributedString(string: "stop", attributes: Theme.Font.Recipe.PauseAttribute), for: .normal)
                         self.totalTimeLabel?.textColor = Theme.Font.Color.TextColourDisabled
                     }
                 } else {
@@ -157,7 +157,7 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
                     }
                     
                     DispatchQueue.main.async {
-                        self.pauseButton.setAttributedTitle(NSAttributedString(string: "pause", attributes: Theme.Font.Recipe.PauseAttribute), for: .normal)
+                        self.pauseButton.setAttributedTitle(NSAttributedString(string: "start", attributes: Theme.Font.Recipe.PauseAttribute), for: .normal)
                         self.totalTimeLabel?.textColor = Theme.Font.Color.TextColour
                     }
                 }

@@ -18,7 +18,7 @@ class RecipeEntity: NSManagedObject {
     convenience init(name: String) {
         self.init(entity: RecipeEntity.entity(), insertInto: CoreDataHandler.getContext())
         self.recipeName = name
-        self.isPaused = false
+        self.isPaused = true
         self.createdDate = Date()
         self.startDate = Date()
     }

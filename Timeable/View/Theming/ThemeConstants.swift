@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 struct Theme {
-
     struct View {
         static var CornerRadius: CGFloat { return 14.0 }
     }
@@ -64,7 +63,7 @@ struct Theme {
             static var StepCellCompleteIndicator: UIColor { return UIColor(red:0.29, green:0.82, blue:0.50, alpha:1.0) }
             static var StepCellIncompleteIndicator: UIColor { return UIColor(red:0.88, green:0.77, blue:0.77, alpha:1.0) }
             
-            static var StandardButtonColor: UIColor { return UIColor(red:0.89, green:0.29, blue:0.16, alpha:1.0) }
+            static var StandardButtonColor: UIColor { return UIColor(red:0.88, green:0.79, blue:0.63, alpha:1.0) }
         }
         
         // At the Recipe list view (Main View COntroller)

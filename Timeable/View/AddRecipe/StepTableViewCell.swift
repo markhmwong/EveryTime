@@ -11,12 +11,14 @@ import UIKit
 class StepTableViewCell: UITableViewCell {
     fileprivate var nameLabel: UILabel? = {
         let label = UILabel()
-        label.text = ""
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Step.NameAttribute)
         return label
     }()
     fileprivate var timeLabel: UILabel? = {
         let label = UILabel()
-        label.text = ""
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Step.NameAttribute)
         return label
     }()
     var step: TableViewStep? {
@@ -25,10 +27,11 @@ class StepTableViewCell: UITableViewCell {
                 return
             }
             
-            guard let n = nameLabel else {
+            guard let n = nameLabel, let t = timeLabel else {
                 return
             }
             n.text = s.name
+            t.text = "\(s.hours)h \(s.minutes)m \(s.seconds)"
         }
     }
     
@@ -43,23 +46,27 @@ class StepTableViewCell: UITableViewCell {
     }
     
     func setupView() {
-        guard let n = nameLabel else {
+        guard let n = nameLabel, let t = timeLabel else {
             return
         }
         
-        n.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(n)
-        n.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        n.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        contentView.addSubview(n)
+        n.leadingAnchor.constraint(equalTo: leadingAnchor, constant:55).isActive = true
+        n.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        
+        contentView.addSubview(t)
+        t.trailingAnchor.constraint(equalTo: trailingAnchor, constant:-55).isActive = true
+        t.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
     
     override func prepareForReuse() {
         //todo
         nameLabel = nil
-        
-        guard let n = nameLabel else {
+        timeLabel = nil
+        guard let n = nameLabel, let t = timeLabel else {
             return
         }
+        t.removeFromSuperview()
         n.removeFromSuperview()
     }
 }

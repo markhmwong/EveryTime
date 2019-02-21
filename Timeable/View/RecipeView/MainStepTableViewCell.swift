@@ -99,9 +99,9 @@ class MainStepTableViewCell: EntityBaseTableViewCell<StepEntity> {
             return
         }
         if (e.isComplete) {
-            completeLabel.attributedText = NSAttributedString(string: "done", attributes: Theme.Font.Step.CellIndicatorComplete)
+            completeLabel.attributedText = NSAttributedString(string: "•", attributes: Theme.Font.Step.CellIndicatorComplete)
         } else {
-            completeLabel.attributedText = NSAttributedString(string: "done", attributes: Theme.Font.Step.CellIndicatorIncomplete)
+            completeLabel.attributedText = NSAttributedString(string: "•", attributes: Theme.Font.Step.CellIndicatorIncomplete)
         }
     }
     

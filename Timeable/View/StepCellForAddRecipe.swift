@@ -46,7 +46,6 @@ class StepCellForAddRecipe: EntityBaseCell<StepEntity> {
             timeLabel.attributedText = NSAttributedString(string: "\(s.timeRemainingToString())", attributes: Theme.Font.Step.CellTimeAttribute)
             nameLabel.attributedText = NSAttributedString(string: s.stepName!, attributes: Theme.Font.Step.CellNameAttribute)
         }
-        print("test")
     }
     
     func prepareLabel(_ e: StepEntity) {
