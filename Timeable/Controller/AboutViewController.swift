@@ -56,7 +56,7 @@ class AboutViewController: ViewControllerBase {
         Please report any bugs to hello@whizbangapps.com.
         
         Contact.\n
-        Twitter: @markhmwong\nGithub: @markhmwong\nWebsite: https://www.whizbangapps.com
+        Twitter: @markhmwong\nGithub: @markhmwong\nWebsite: https://www.whizbangapps.com/timeable
         """
         textView.attributedText = NSAttributedString(string: details, attributes: Theme.Font.About.Text)
         view.addSubview(textView)

@@ -9,13 +9,13 @@
 import UIKit
 
 class StepTableViewCell: UITableViewCell {
-    fileprivate var nameLabel: UILabel? = {
+    fileprivate var nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Step.NameAttribute)
         return label
     }()
-    fileprivate var timeLabel: UILabel? = {
+    fileprivate var timeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Step.NameAttribute)
@@ -27,11 +27,21 @@ class StepTableViewCell: UITableViewCell {
                 return
             }
             
-            guard let n = nameLabel, let t = timeLabel else {
-                return
-            }
-            n.text = s.name
-            t.text = "\(s.hours)h \(s.minutes)m \(s.seconds)"
+//            guard let n = nameLabel, let t = timeLabel else {
+//                return
+//            }
+            
+            nameLabel.text = s.name
+            timeLabel.text = "\(s.hours)h \(s.minutes)m \(s.seconds)s"
+            
+            contentView.addSubview(nameLabel)
+            contentView.addSubview(timeLabel)
+
+            nameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant:55).isActive = true
+            nameLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+            
+            timeLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant:-55).isActive = true
+            timeLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         }
     }
     
@@ -46,27 +56,12 @@ class StepTableViewCell: UITableViewCell {
     }
     
     func setupView() {
-        guard let n = nameLabel, let t = timeLabel else {
-            return
-        }
         
-        contentView.addSubview(n)
-        n.leadingAnchor.constraint(equalTo: leadingAnchor, constant:55).isActive = true
-        n.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        
-        contentView.addSubview(t)
-        t.trailingAnchor.constraint(equalTo: trailingAnchor, constant:-55).isActive = true
-        t.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
     
     override func prepareForReuse() {
-        //todo
-        nameLabel = nil
-        timeLabel = nil
-        guard let n = nameLabel, let t = timeLabel else {
-            return
-        }
-        t.removeFromSuperview()
-        n.removeFromSuperview()
+        super.prepareForReuse()
+        timeLabel.removeFromSuperview()
+        nameLabel.removeFromSuperview()
     }
 }

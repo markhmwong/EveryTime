@@ -15,8 +15,8 @@ class MainStepTableViewCell: EntityBaseTableViewCell<StepEntity> {
             guard let e = entity else {
                 return
             }
-            self.prepareLabel(e)
-            self.prepareAutoLayout()
+            prepareLabel(e)
+            prepareAutoLayout()
         }
     }
     fileprivate lazy var nameLabel: UILabel = {
@@ -107,8 +107,8 @@ class MainStepTableViewCell: EntityBaseTableViewCell<StepEntity> {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.nameLabel.removeFromSuperview()
-        self.timeLabel.removeFromSuperview()
-        self.completeLabel.removeFromSuperview()
+        nameLabel.removeFromSuperview()
+        timeLabel.removeFromSuperview()
+        completeLabel.removeFromSuperview()
     }
 }

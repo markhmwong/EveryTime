@@ -60,8 +60,8 @@ struct Theme {
             static var RecipeLabelBackgroundColour : UIColor { return UIColor(red: 1, green: 1, blue: 1, alpha: 1.0) }
             static var RecipeCellStepTitle: UIColor { return UIColor(red:0.11, green:0.11, blue:0.12, alpha:0.7) }
 
-            static var StepCellCompleteIndicator: UIColor { return UIColor(red:0.29, green:0.82, blue:0.50, alpha:1.0) }
-            static var StepCellIncompleteIndicator: UIColor { return UIColor(red:0.88, green:0.77, blue:0.77, alpha:1.0) }
+            static var StepCellCompleteIndicator: UIColor { return UIColor(red:0.29, green:1.0, blue:0.50, alpha:1.0) }
+            static var StepCellIncompleteIndicator: UIColor { return UIColor(red:1.0, green:0.77, blue:0.77, alpha:1.0) }
             
             static var StandardButtonColor: UIColor { return UIColor(red:0.88, green:0.79, blue:0.63, alpha:1.0) }
         }

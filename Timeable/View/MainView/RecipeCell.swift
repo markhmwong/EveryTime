@@ -22,10 +22,10 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
             prepareLabels(name, e.timeRemainingForCurrentStepToString())
             
             if (e.isPaused) {
-                pauseButton.setAttributedTitle(NSAttributedString(string: "unpause", attributes: Theme.Font.Recipe.PauseAttribute), for: .normal)
+                pauseButton.setAttributedTitle(NSAttributedString(string: "start", attributes: Theme.Font.Recipe.PauseAttribute), for: .normal)
                 totalTimeLabel?.textColor = Theme.Font.Color.TextColourDisabled
             } else {
-                pauseButton.setAttributedTitle(NSAttributedString(string: "pause", attributes: Theme.Font.Recipe.PauseAttribute), for: .normal)
+                pauseButton.setAttributedTitle(NSAttributedString(string: "stop", attributes: Theme.Font.Recipe.PauseAttribute), for: .normal)
             }
         }
     }
@@ -68,7 +68,7 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
     
     func prepareLabels(_ name: String,_ time: String) {
         nameLabel.attributedText = NSAttributedString(string: name, attributes: Theme.Font.Recipe.NameAttribute)
-        stepNameLabel.attributedText = NSAttributedString(string: "unknown", attributes: Theme.Font.Recipe.StepSubTitle)
+        stepNameLabel.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Recipe.StepSubTitle)
         
         totalTimeLabel = UILabel()
         totalTimeLabel?.attributedText = NSAttributedString(string: time, attributes: Theme.Font.Recipe.TimeAttribute)

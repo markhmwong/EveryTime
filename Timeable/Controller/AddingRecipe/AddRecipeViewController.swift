@@ -62,18 +62,9 @@ extension AddRecipeViewController: UICollectionViewDelegateFlowLayout {
 
 class AddRecipeViewController: ViewControllerBase {
     
-    
     var addRecipeStepOne: AddRecipeStepOne?
     var addRecipeStepTwo: AddRecipeStepTwo?
-    var keyboardHeight: CGFloat {
-        didSet {
-            guard let addRecipe = addRecipeStepOne else {
-                return
-            }
-            
-            addRecipe.keyboardHeight = keyboardHeight
-        }
-    }
+
     var interactor: OverlayInteractor? = nil
     let addRecipeNameCellId: String = "AddRecipeNameCellId", addRecipeStepCellId: String = "AddRecipeStepCellId"
     var mainViewControllerDelegate: MainViewController?
@@ -125,7 +116,6 @@ class AddRecipeViewController: ViewControllerBase {
     }()
 
     init(delegate: MainViewController) {
-        self.keyboardHeight = 0.0
         super.init(nibName: nil, bundle: nil)
         self.mainViewControllerDelegate = delegate
     }
@@ -136,12 +126,6 @@ class AddRecipeViewController: ViewControllerBase {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillShow),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil
-        )
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -159,11 +143,6 @@ class AddRecipeViewController: ViewControllerBase {
         //prepare_ funcs called by superclass
     }
     
-    @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            keyboardHeight = keyboardSize.height
-        }
-    }
     
     override func prepareView() {
         super.prepareView()
@@ -194,10 +173,10 @@ class AddRecipeViewController: ViewControllerBase {
         invertedCaret.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
         invertedCaret.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-        titleLabel.topAnchor.constraint(equalTo: invertedCaret.bottomAnchor, constant: 40).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: invertedCaret.bottomAnchor, constant: 20).isActive = true
         titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-        collView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor).isActive = true
+        collView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20).isActive = true
         collView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         collView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         collView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true

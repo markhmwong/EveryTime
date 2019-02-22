@@ -12,9 +12,12 @@ class AddRecipeStepOne: AddRecipeBaseCell {
     var addRecipeViewControllerDelegate: AddRecipeViewController?
     var keyboardHeight: CGFloat = 0.0 {
         didSet {
-            continueButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -keyboardHeight - 50.0).isActive = true
+            continueButtonConstraint.constant = -keyboardHeight - 50.0
+            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         }
     }
+    fileprivate var continueButtonConstraint: NSLayoutConstraint!
+
     fileprivate var recipeNameTextField: UITextField = {
         let textField = UITextField()
         textField.defaultTextAttributes = Theme.Font.Recipe.TextFieldAttribute
@@ -67,6 +70,8 @@ class AddRecipeStepOne: AddRecipeBaseCell {
         
         continueButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         continueButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 3).isActive = true
+        continueButtonConstraint = continueButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -keyboardHeight - 50.0)
+        continueButtonConstraint.isActive = true
         errorMessageLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         errorMessageLabel.topAnchor.constraint(equalTo: recipeNameTextField.bottomAnchor, constant: 20.0).isActive = true
     }

@@ -85,6 +85,18 @@ extension UIPickerView {
 }
 
 extension UIView {
+    //https://stackoverflow.com/a/51359322/507170
+    var textFieldsInView: [UITextField] {
+        return subviews
+            .filter ({ !($0 is UITextField) })
+            .reduce (( subviews.compactMap { $0 as? UITextField }), { summ, current in
+                return summ + current.textFieldsInView
+            })
+    }
+    var selectedTextField: UITextField? {
+        return textFieldsInView.filter { $0.isFirstResponder }.first
+    }
+    
     //https://stackoverflow.com/questions/7666863/uiview-bottom-border
     func addBottomBorderWithColor(color: UIColor, width: CGFloat) {
         let border = CALayer()
@@ -146,13 +158,15 @@ extension Int {
 }
 
 extension UITextField {
-    func addAddDoneButonToolbar(onDone: (target: Any, action: Selector)? = nil, onAdd: (target: Any, action: Selector)? = nil, onEdit: (target: Any, action: Selector)? = nil) {
+    func addAddDoneButonToolbar(onDone: (target: Any, action: Selector)? = nil, onAdd: (target: Any, action: Selector)? = nil, onEdit: (target: Any, action: Selector)? = nil, onDismiss: (target: Any, action: Selector)? = nil) {
         let onDone = onDone ?? (target: self, action: #selector(handleDoneButton))
         let onAdd = onAdd ?? (target: self, action: #selector(handleDoneButton))
-        
+        let onDismiss = onDismiss ?? (target: self, action: #selector(handleDismissButton))
+
         let toolbar: UIToolbar = UIToolbar()
         toolbar.barStyle = .default
         toolbar.items = [
+            UIBarButtonItem(title: "Dismiss", style: .done, target: onDone.target, action: onDismiss.action),
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
             UIBarButtonItem(title: "Done", style: .done, target: onDone.target, action: onDone.action),
             UIBarButtonItem(title: "Add", style: .done, target: onAdd.target, action: onAdd.action),
@@ -162,13 +176,15 @@ extension UITextField {
         self.inputAccessoryView = toolbar
     }
     
-    func addNextButtonToolbar(onNext: (target: Any, action: Selector)? = nil, onCancel: (target: Any, action: Selector)? = nil, onDone: (target: Any, action: Selector)? = nil) {
+    func addNextButtonToolbar(onNext: (target: Any, action: Selector)? = nil, onCancel: (target: Any, action: Selector)? = nil, onDone: (target: Any, action: Selector)? = nil, onDismiss: (target: Any, action: Selector)? = nil) {
         let onNext = onNext ?? (target: self, action: #selector(handleContinueButton))
         let onDone = onDone ?? (target: self, action: #selector(handleDoneButton))
+        let onDismiss = onDismiss ?? (target: self, action: #selector(handleDismissButton))
 
         let toolbar: UIToolbar = UIToolbar()
         toolbar.barStyle = .default
         toolbar.items = [
+            UIBarButtonItem(title: "Dismiss", style: .done, target: onDone.target, action: onDismiss.action),
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
             UIBarButtonItem(title: "Done", style: .done, target: onDone.target, action: onDone.action),
             UIBarButtonItem(title: "Next", style: .done, target: onNext.target, action: onNext.action)
@@ -183,6 +199,8 @@ extension UITextField {
     @objc func handleContinueButton() { self.resignFirstResponder() }
     @objc func handleAddButton() { self.resignFirstResponder() }
     @objc func handleEditButton() { self.resignFirstResponder() }
+    @objc func handleDismissButton() { self.resignFirstResponder() }
+
 }
 
 extension String {

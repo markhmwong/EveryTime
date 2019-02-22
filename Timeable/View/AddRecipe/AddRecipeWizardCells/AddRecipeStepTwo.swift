@@ -16,7 +16,8 @@ enum textFieldTag: Int {
 }
 
 class AddRecipeStepTwo: AddRecipeBaseCell {
-    fileprivate let rowHeight: CGFloat = 40.0
+    
+    fileprivate let rowHeight: CGFloat = 120.0
     fileprivate let stepCellId = "wizardCellId"
     fileprivate var addStepButtonStackView: UIStackView?
     fileprivate var dataSource: [TableViewStep] = []
@@ -32,13 +33,19 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
     }()
     var recipeName = ""
     var addRecipeViewControllerDelegate: AddRecipeViewController?
-    
+    var keyboardHeight: CGFloat = 0.0 {
+        didSet {
+            tableViewBottomConstraint.constant = -keyboardHeight
+            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
+        }
+    }
     lazy var tableView: UITableView = {
         let tv = UITableView()
         tv.delegate = self
         tv.isEditing = false
         tv.dataSource = self
         tv.separatorStyle = .none
+        
         tv.translatesAutoresizingMaskIntoConstraints = false
         return tv
     }()
@@ -56,7 +63,6 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
     fileprivate var minuteTextfield: UITextField? = {
         let textfield = UITextField()
         textfield.tag = textFieldTag.minuteTextField.rawValue
-
         textfield.backgroundColor = UIColor.white
         textfield.keyboardType = .asciiCapableNumberPad
         textfield.textAlignment = .center
@@ -66,7 +72,6 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
     fileprivate var secondTextfield: UITextField? = {
         let textfield = UITextField()
         textfield.tag = textFieldTag.secondTextField.rawValue
-
         textfield.backgroundColor = UIColor.white
         textfield.keyboardType = .asciiCapableNumberPad
         textfield.textAlignment = .center
@@ -80,20 +85,35 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         textfield.keyboardType = .asciiCapable
         textfield.textAlignment = .center
         textfield.placeholder = "Name"
+        textfield.spellCheckingType = .no
+        textfield.autocorrectionType = .no
+        textfield.translatesAutoresizingMaskIntoConstraints = false
         return textfield
     }()
-    
+    var tableViewBottomConstraint: NSLayoutConstraint!
+
     override func setupView() {
+        super.setupView()
         guard let n = nameTextfield, let h = hourTextfield, let m = minuteTextfield, let s = secondTextfield else {
             return
         }
+        n.delegate = self
+        h.delegate = self
+        m.delegate = self
+        s.delegate = self
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardDidShow),
+            name: UIResponder.keyboardDidShowNotification,
+            object: nil
+        )
         
         tableView.register(StepTableViewCell.self, forCellReuseIdentifier: stepCellId)
         
         self.addSubview(tableView)
         
         n.becomeFirstResponder()
-        n.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(n)
         
         self.addSubview(textFieldStackView)
@@ -102,12 +122,17 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         textFieldStackView.addArrangedSubview(m)
         textFieldStackView.addArrangedSubview(s)
         
-        h.addNextButtonToolbar(onNext: (target: self, action: #selector(handleContinueButton)), onCancel: nil, onDone: (target: self, action: #selector(handleDoneButton)))
+        h.addNextButtonToolbar(onNext: (target: self, action: #selector(handleContinueButton)), onCancel: nil, onDone: (target: self, action: #selector(handleDoneButton)), onDismiss: (target: self, action: #selector(handleDismissButton)))
         m.addNextButtonToolbar(onNext: (target: self, action: #selector(handleContinueButton)), onCancel: nil, onDone: (target: self, action: #selector(handleDoneButton)))
         n.addNextButtonToolbar(onNext: (target: self, action: #selector(handleContinueButton)), onCancel: nil, onDone: (target: self, action: #selector(handleDoneButton)))
-        s.addAddDoneButonToolbar(onDone: (target: self, action: #selector(handleDoneButton)), onAdd: (target: self, action: #selector(handleAddButton)))
-        
+        s.addAddDoneButonToolbar(onDone: (target: self, action: #selector(handleDoneButton)), onAdd: (target: self, action: #selector(handleAddButton)), onDismiss: (target: self, action: #selector(handleDismissButton)))
         prepareAutoLayout()
+    }
+    
+    @objc func keyboardDidShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            keyboardHeight = keyboardSize.height
+        }
     }
     
     func prepareAutoLayout() {
@@ -128,7 +153,8 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         textFieldStackView.heightAnchor.constraint(equalToConstant: textFieldHeight).isActive = true
         
         tableView.topAnchor.constraint(equalTo: textFieldStackView.bottomAnchor, constant: padding).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant:0).isActive = true
+        tableViewBottomConstraint = tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant:0)
+        tableViewBottomConstraint.isActive = true
         tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
     }
@@ -159,6 +185,25 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         }
     }
     
+    @objc func handleDismissButton() {
+        guard let n = nameTextfield, let h = hourTextfield, let m = minuteTextfield, let s = secondTextfield else {
+            return
+        }
+        
+        if (n.isFirstResponder) {
+            n.resignFirstResponder()
+        } else if (h.isFirstResponder) {
+            h.resignFirstResponder()
+        } else if (m.isFirstResponder) {
+            m.resignFirstResponder()
+        } else {
+            s.resignFirstResponder()
+        }
+        
+        tableViewBottomConstraint.constant = 0
+        
+    }
+    
     //  Add button only confirms the steps and recipe to a temporary store. Does not include CoreData and the data can be cancelled anytime.
     @objc func handleAddButton() {
         guard let n = nameTextfield, let h = hourTextfield, let m = minuteTextfield, let s = secondTextfield else {
@@ -167,7 +212,7 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         
         do {
             try checkTextFields([n, h, m, s])
-            addStep(toCoreData: false, h: h.text, m: m.text, s: s.text, n: n.text)
+            addStep(saveToCoreData: false, h: h.text, m: m.text, s: s.text, n: n.text)
             clearTextFields([n, h, m, s])
             n.becomeFirstResponder()
         } catch AddRecipeWizardError.Empty(let message) {
@@ -181,7 +226,6 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         } catch {
             print("\(error.localizedDescription)")
         }
-        
     }
     
     //  Done button confirms the steps and recipe and commits it to CoreData
@@ -195,29 +239,12 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         if (dataSource.count > 0) {
             dismissViewControllerAndUpdateCollectionView()
         }
-
-//        if (dataSource.count >= 0) {
-//        } else {
-////            do {
-////                try checkTextFields([n, h, m, s])
-////                addStep(toCoreData: true, h: h.text, m: m.text, s: s.text, n: n.text)
-////                n.becomeFirstResponder()
-////            } catch AddRecipeWizardError.empty(let message) {
-////                showAlertBox(message)
-////            } catch AddRecipeWizardError.invalidCharacters(let message) {
-////                showAlertBox(message)
-////            } catch AddRecipeWizardError.invalidTextField(let message){
-////                showAlertBox(message)
-////            } catch {
-////                print("\(error.localizedDescription)")
-////            }
-//        }
         arvc.dismiss(animated: true, completion: nil)
     }
     
-    func addStep(toCoreData: Bool = false, h: String? = nil, m: String? = nil, s: String? = nil, n: String? = nil) {
+    func addStep(saveToCoreData: Bool = false, h: String? = nil, m: String? = nil, s: String? = nil, n: String? = nil) {
         guard let name = n, let hour = h, let minute = m, let second = s  else {
-            if (toCoreData) {
+            if (saveToCoreData) {
                 dismissViewControllerAndUpdateCollectionView()
             }
             return
@@ -239,9 +266,13 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         }
         step.priority = Int16(dataSource.count)
         dataSource.append(step)
-        tableView.insertRows(at: [IndexPath(item: dataSource.count - 1, section: 0)], with: UITableView.RowAnimation.right)
         
-        if (toCoreData) {
+        if (dataSource.count > 0) {
+            tableView.insertRows(at: [IndexPath(item: dataSource.count - 1, section: 0)], with: UITableView.RowAnimation.right)
+            tableView.scrollToRow(at: IndexPath(row: dataSource.count - 1, section: 0), at: UITableView.ScrollPosition.bottom, animated: true)
+        }
+        
+        if (saveToCoreData) {
             dismissViewControllerAndUpdateCollectionView()
         }
     }
@@ -308,6 +339,31 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
     }
 }
 
+extension AddRecipeStepTwo: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        tableViewBottomConstraint.constant = -keyboardHeight
+
+        if (tableViewBottomConstraint.constant != 0) {
+            UIView.animate(withDuration: 0.2, delay: 0.0, options: [.curveEaseInOut], animations: {
+                self.setNeedsLayout()
+                
+            }) { (finished) in
+                if (self.dataSource.count > 0) {
+                    self.tableView.scrollToRow(at: IndexPath(row: self.dataSource.count - 1, section: 0), at: UITableView.ScrollPosition.bottom, animated: true)
+                }
+            }
+        }
+        
+        
+        
+        
+        
+        
+
+        
+    }
+}
+
 extension AddRecipeStepTwo: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -346,7 +402,6 @@ extension AddRecipeStepTwo: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: stepCellId, for: indexPath) as! StepTableViewCell
-        cell.backgroundColor = UIColor.clear
         cell.step = dataSource[indexPath.item]
         return cell
     }
