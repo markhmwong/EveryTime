@@ -36,29 +36,40 @@ extension RecipeEntity {
     /*
         Returns the step the recipe is currently running.
     */
-    func searchLeadingStep() -> StepEntity? {
-        var leadingStep: StepEntity? = nil
-        let sortedSet = sortStepsByPriority()
-        let tp = timePassedSinceStart() + pauseTimeInterval
-        var elapsedTime: Double = 0.0
-        for step in sortedSet {
-            elapsedTime = elapsedTime + step.totalTime
-            let time = elapsedTime - tp
-            if (time >= 0.0 && step.isComplete == false) {
-                //step incomplete, most recent step
-                leadingStep = step
-                break
-            } else {
-                //final step
-                leadingStep = step
-            }
-        }
-        return leadingStep
-    }
+//    func searchLeadingStep() -> StepEntity? {
+//        var leadingStep: StepEntity? = nil
+//        let sortedSet = sortStepsByPriority()
+//        let tp = timePassedSinceStart() + pauseTimeInterval
+//
+//        var elapsedTime: Double = 0.0
+//
+//
+//
+//
+//        for step in sortedSet {
+//            elapsedTime = elapsedTime + step.totalTime
+//            let time = elapsedTime - tp
+//            if (time >= 0.0 && step.isComplete == false) {
+//                //step incomplete, most recent step
+//                leadingStep = step
+//                break
+//            } else {
+//                //final step
+//                leadingStep = step
+//            }
+//        }
+//        return leadingStep
+//    }
+    
     
     /*
-        Uses a condition to check what step we have completed. However, right now the clock stops at the end of its' expiry date
-        before it begins the next step. This method allows us to not check for the isCompleted boolean but calculate the step number by time passed
+        When the app is inactive or suspended, we aren't running the timer loop, leading to incorrect variables. This loop updates the variables to the correct time by adding the time passed up until the current step.
+        This function allows to cover all cases (as mentioned above) when the app switches between states. Despite the average running time of this function O(n) - n being number of steps - we only ever loop over the visible cells, which in this case is quite minimal but we also have the possibility of having n reach a large value
+     
+     The entire recipe loop would come to O(r + s)
+     r - number of recipes
+     s - number of steps
+     because the leading step alters and we do not run over completed recipes.
     */
     func calculateTimeToStepByTimePassed() {
         let sortedSet = sortStepsByPriority()
@@ -90,11 +101,11 @@ extension RecipeEntity {
         guard let start = pauseStartDate else {
             return 0.0
         }
-        guard let end = pauseEndDate else {
-            return 0.0
-        }
-        
-        return start.timeIntervalSince(end)
+//        guard let end = pauseEndDate else {
+//            return 0.0
+//        }
+        let pausedEnd = Date()
+        return start.timeIntervalSince(pausedEnd)
     }
     
     func updateStepInRecipe(_ step: StepEntity) -> Void {
@@ -141,7 +152,6 @@ extension RecipeEntity {
             currStep.isComplete = true
             currStep.timeRemaining = 0.0
             
-//            currStepPriority = Int16(index + 1)
             currStepPriority = Int16(index)
             let nextStep = sortedSet[Int(currStepPriority)]
             currStepTimeRemaining = nextStep.timeRemaining
@@ -169,7 +179,7 @@ extension RecipeEntity {
     }
     
     /*
-        Adjusts time by number of seconds
+        Adjusts time by number of seconds. We could add or minus to modify the time
     */
     func adjustTime(by seconds: Double, selectedStep: Int) throws {
         let sortedSet = sortStepsByPriority()
@@ -183,7 +193,6 @@ extension RecipeEntity {
         } else {
             throw StepOptionsError.StepAlreadyComplete(message: "adjustment can only be made for an incomplete step")
         }
-        
     }
     
     /* When a step is deleted */

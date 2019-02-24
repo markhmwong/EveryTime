@@ -191,7 +191,6 @@ class AddRecipeViewController: ViewControllerBase {
         blurView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         blurView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         blurView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-
     }
     
     override func beginAppearanceTransition(_ isAppearing: Bool, animated: Bool) {

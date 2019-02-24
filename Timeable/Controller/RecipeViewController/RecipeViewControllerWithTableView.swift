@@ -135,10 +135,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-//        guard let mvc = mainViewControllerDelegate else {
-//            return
-//        }
-//        mvc.view.backgroundColor = UIColor.black
     }
     
     override func prepareViewController() {

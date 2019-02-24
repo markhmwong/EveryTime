@@ -47,8 +47,8 @@ struct Theme {
         
         //spacing between characters
         private struct Kern {
-            static var TitleKernValue: NSNumber { return 5.0 }
-            static var TimerKernValue: NSNumber { return 5.0 }
+            static var TitleKernValue: NSNumber { return 4.0 }
+            static var TimerKernValue: NSNumber { return 4.0 }
             static var GeneralKernValue: NSNumber { return 0.5 }
         }
         
