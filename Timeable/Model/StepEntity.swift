@@ -20,12 +20,13 @@ class StepEntity: NSManagedObject {
         self.priority = priority
         self.isComplete = false
         self.isLeading = false
-//        self.isSequential = true
         self.isPausedPrimary = false
         self.createdDate = Date()
         self.expiryDate = self.createdDate!.addingTimeInterval(self.timeToSeconds(hours: hours, minutes: minutes, seconds: seconds)) //only needed for the leading step
         self.timeRemaining = self.expiryDate!.timeIntervalSince(Date())
         self.totalTime = self.timeRemaining //a stored time for reset purposes
+        
+        //        self.isSequential = true //todo
     }
 }
 

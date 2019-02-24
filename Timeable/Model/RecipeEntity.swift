@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import AVFoundation
 
 class RecipeEntity: NSManagedObject {
     convenience init(name: String, context: NSManagedObjectContext) {
@@ -20,7 +21,9 @@ class RecipeEntity: NSManagedObject {
         self.recipeName = name
         self.isPaused = true
         self.createdDate = Date()
-        self.startDate = Date()
+        self.startDate = self.createdDate
+        self.pauseStartDate = self.createdDate
+
     }
 }
 
@@ -28,43 +31,16 @@ extension RecipeEntity {
     /* Called directly from MVC update function */
     func updateRecipeTime() {
         calculateTimeToStepByTimePassed()
-        if (currStepTimeRemaining <= 0.0) {
-            prepareNextStep()
-        }
+        print("prepare")
+
+//        if (currStepTimeRemaining <= 0.0) {
+//            prepareNextStep()
+//        }
     }
     
     /*
-        Returns the step the recipe is currently running.
-    */
-//    func searchLeadingStep() -> StepEntity? {
-//        var leadingStep: StepEntity? = nil
-//        let sortedSet = sortStepsByPriority()
-//        let tp = timePassedSinceStart() + pauseTimeInterval
-//
-//        var elapsedTime: Double = 0.0
-//
-//
-//
-//
-//        for step in sortedSet {
-//            elapsedTime = elapsedTime + step.totalTime
-//            let time = elapsedTime - tp
-//            if (time >= 0.0 && step.isComplete == false) {
-//                //step incomplete, most recent step
-//                leadingStep = step
-//                break
-//            } else {
-//                //final step
-//                leadingStep = step
-//            }
-//        }
-//        return leadingStep
-//    }
-    
-    
-    /*
-        When the app is inactive or suspended, we aren't running the timer loop, leading to incorrect variables. This loop updates the variables to the correct time by adding the time passed up until the current step.
-        This function allows to cover all cases (as mentioned above) when the app switches between states. Despite the average running time of this function O(n) - n being number of steps - we only ever loop over the visible cells, which in this case is quite minimal but we also have the possibility of having n reach a large value
+    When the app is inactive or suspended, we aren't running the timer loop, leading to incorrect variables. This loop updates the variables to the correct time by adding the time passed up until the current step.
+    This function allows to cover all cases (as mentioned above) when the app switches between states. Despite the average running time of this function O(n) - n being number of steps - we only ever loop over the visible cells, which in this case is quite minimal but we also have the possibility of having n reach a large value
      
      The entire recipe loop would come to O(r + s)
      r - number of recipes
@@ -147,7 +123,7 @@ extension RecipeEntity {
 
         if (index <= maxItems) {
             let currStep = sortedSet[index]
-            // TODO: Error
+            // TODO: Error for index
             currStep.isLeading = false
             currStep.isComplete = true
             currStep.timeRemaining = 0.0
@@ -156,6 +132,8 @@ extension RecipeEntity {
             let nextStep = sortedSet[Int(currStepPriority)]
             currStepTimeRemaining = nextStep.timeRemaining
             nextStep.isLeading = true
+            AudioServicesPlaySystemSound (1309)
+            print("test")
         }
     }
     
@@ -252,7 +230,7 @@ extension RecipeEntity {
             self.pauseStartDate = Date()
             CoreDataHandler.saveContext()
         }
-}
+    }
     
     func unpauseStepArr() {
         let stepSet = self.step as! Set<StepEntity>
@@ -261,7 +239,7 @@ extension RecipeEntity {
                 s.isPausedPrimary = false
             }
         }
-        pauseEndDate = Date()
+//        pauseEndDate = Date()
         let interval = calculatePauseInterval()
         pauseTimeInterval = pauseTimeInterval + interval
     }

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AVFoundation
+
 //import SwipeCellKit
 
 enum ScrollingState {
@@ -16,9 +18,10 @@ enum ScrollingState {
 }
 
 class MainViewController: ViewControllerBase {
-    
-    fileprivate let recipeCellId = "RecipeCellId"
     var recipeCollection: [RecipeEntity] = []
+
+    fileprivate var player: AVAudioPlayer?
+    fileprivate let recipeCellId = "RecipeCellId"
     fileprivate var addButtonState: ScrollingState = .Idle
     fileprivate var indexPathNumber = 0
     fileprivate var timer: Timer?
@@ -35,7 +38,7 @@ class MainViewController: ViewControllerBase {
         return button
     }()
     
-    fileprivate lazy var leftNavItemButton: UIButton = {
+    fileprivate lazy var leftNavItemButtonA: UIButton = {
         let button = UIButton()
         button.setAttributedTitle(NSAttributedString(string: "About", attributes: Theme.Font.Nav.Item), for: .normal)
         button.addTarget(self, action: #selector(handleAbout), for: .touchUpInside)
@@ -43,7 +46,7 @@ class MainViewController: ViewControllerBase {
         return button
     }()
     
-    fileprivate lazy var testNavButton: UIButton = {
+    fileprivate lazy var leftNavItemButton: UIButton = {
         let button = UIButton()
         button.setAttributedTitle(NSAttributedString(string: "Test Random Data", attributes: Theme.Font.Nav.Item), for: .normal)
         button.addTarget(self, action: #selector(handleTest), for: .touchUpInside)
@@ -83,10 +86,13 @@ class MainViewController: ViewControllerBase {
     override func viewDidLoad() {
         super.viewDidLoad()
         //The super class will call prepare_ functions
-//        self.testCoreData()
+//        testData()
+        let systemSoundID: SystemSoundID = 1309
+        AudioServicesPlaySystemSound (systemSoundID)
+
     }
     
-    func testCoreData() {
+    func testData() {
         if (CoreDataHandler.deleteAllRecordsIn(entity: RecipeEntity.self)) {
             print("Successfully deleted all records")
         }
@@ -277,9 +283,9 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
 //MARK: - UI
 extension MainViewController {
     @objc func handleTest() {
-        let recipeNumber = 20
+        let recipeNumber = 10
         for i in 0..<recipeNumber {
-            let stepNumber = 15
+            let stepNumber = Int.random(in: 0..<8)
             
             let rEntity = RecipeEntity(name: "Recipe\(i)")
             for i in 0..<stepNumber {

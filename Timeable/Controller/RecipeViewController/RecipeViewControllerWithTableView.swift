@@ -142,6 +142,13 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         bottomViewState = .AddStep
         
     }
+    fileprivate lazy var border: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+
+    }()
 
     override func prepareView() {
         super.prepareView()
@@ -153,7 +160,8 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         view.addSubview(tableView)
         view.addSubview(addStepButton)
         view.addSubview(timerOptionsView)
-
+        
+        timerOptionsView.addSubview(border)
         timerOptionsView.addSubview(timerOptionsViewTitle)
         timerOptionsView.addSubview(extraOptionsAddTime)
         timerOptionsView.addSubview(extraOptionsResetTime)
@@ -224,6 +232,11 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         extraOptionsMinusTime.centerYAnchor.constraint(equalTo: timerOptionsView.centerYAnchor).isActive = true
         extraOptionsResetTime.centerXAnchor.constraint(equalTo: timerOptionsView.centerXAnchor, constant: 0).isActive = true
         extraOptionsResetTime.centerYAnchor.constraint(equalTo: timerOptionsView.centerYAnchor).isActive = true
+        
+        border.topAnchor.constraint(equalTo: timerOptionsView.topAnchor).isActive = true
+        border.leadingAnchor.constraint(equalTo: timerOptionsView.leadingAnchor).isActive = true
+        border.trailingAnchor.constraint(equalTo: timerOptionsView.trailingAnchor).isActive = true
+        border.heightAnchor.constraint(equalToConstant: 1.5).isActive = true
     }
     
     override func viewDidLayoutSubviews() {
