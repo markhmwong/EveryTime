@@ -142,13 +142,6 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
                 let pauseButtonText = r.isPaused ? "stop" : "start"
                 let textColor = r.isPaused ? Theme.Font.Color.TextColour : Theme.Font.Color.TextColourDisabled
                 if (r.isPaused) {
-/*
-                    mvc.pauseEntireRecipe(recipe: r)
-                    DispatchQueue.main.async {
-                        self.pauseButton.setAttributedTitle(NSAttributedString(string: pauseButtonText, attributes: Theme.Font.Recipe.PauseAttribute), for: .normal)
-                        self.totalTimeLabel?.textColor = Theme.Font.Color.TextColourDisabled
-                    }*/
-                    
                     let pauseState = false
                     mvc.unpauseEntireRecipe(recipe: r)
                     
@@ -158,35 +151,19 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
                         }
                         r.isPaused = pauseState
                     }
-                    
-                    DispatchQueue.main.async {
-                        self.pauseButton.setAttributedTitle(NSAttributedString(string: pauseButtonText, attributes: Theme.Font.Recipe.PauseAttribute), for: .normal)
-                        self.totalTimeLabel?.textColor = textColor
-                    }
-
+                    self.updatePauseButton(pauseButtonText, textColor)
                 } else {
                     mvc.pauseEntireRecipe(recipe: r)
-                    DispatchQueue.main.async {
-                        self.pauseButton.setAttributedTitle(NSAttributedString(string: pauseButtonText, attributes: Theme.Font.Recipe.PauseAttribute), for: .normal)
-                        self.totalTimeLabel?.textColor = textColor
-                    }
-                    /*
-                    let pauseState = false
-                    mvc.unpauseEntireRecipe(recipe: r)
-                    
-                    CoreDataHandler.getPrivateContext().perform {
-                        if let singleEntity = CoreDataHandler.fetchByDate(in: RecipeEntity.self, date: r.createdDate!) {
-                            singleEntity.isPaused = pauseState
-                        }
-                        r.isPaused = pauseState
-                    }
-                    
-                    DispatchQueue.main.async {
-                        self.pauseButton.setAttributedTitle(NSAttributedString(string: pauseButtonText, attributes: Theme.Font.Recipe.PauseAttribute), for: .normal)
-                        self.totalTimeLabel?.textColor = Theme.Font.Color.TextColour
-                    }*/
+                    self.updatePauseButton(pauseButtonText, textColor)
                 }
             }
+        }
+    }
+    
+    func updatePauseButton(_ text: String, _ color: UIColor) {
+        DispatchQueue.main.async {
+            self.pauseButton.setAttributedTitle(NSAttributedString(string: text, attributes: Theme.Font.Recipe.PauseAttribute), for: .normal)
+            self.totalTimeLabel?.textColor = color
         }
     }
     
