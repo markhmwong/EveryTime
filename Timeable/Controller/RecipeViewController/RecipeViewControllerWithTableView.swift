@@ -127,9 +127,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        prepareViewController()
-        prepareView()
-        prepareAutoLayout()
         startTimer()
     }
     
@@ -140,7 +137,9 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     override func prepareViewController() {
         super.prepareViewController()
         bottomViewState = .AddStep
-        
+        for step in stepArr {
+            print("\(step.stepName) : \(step.priority)")
+        }
     }
     fileprivate lazy var border: UIView = {
         let view = UIView()
@@ -349,8 +348,9 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
      
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
+            recipe.removeFromStep(stepArr[indexPath.row])
             stepArr.remove(at: indexPath.row)
-            recipe.reoganiseStepsInArr(stepArr, fromIndex: indexPath.row)
+            recipe.reoganiseStepsInArr(fromIndex: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
@@ -538,7 +538,6 @@ extension RecipeViewControllerWithTableView {
             showStepButtonAnimation()
         }
         bottomViewState = viewState
-
     }
 }
 
@@ -574,6 +573,7 @@ extension RecipeViewControllerWithTableView {
     @objc func handleEdit() {
         tableView.isEditing = !tableView.isEditing
         if (tableView.isEditing) {
+            CoreDataHandler.saveContext()
             DispatchQueue.main.async {
                 self.editButton.setAttributedTitle(NSAttributedString(string: "Save", attributes: Theme.Font.Nav.Item), for: .normal)
             }

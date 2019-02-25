@@ -193,11 +193,16 @@ extension RecipeEntity {
         }
     }
     
-    /* When a step is deleted */
-    func reoganiseStepsInArr(_ sArr: [StepEntity], fromIndex: Int) {
-        for i in stride(from: fromIndex, to: sArr.count, by: 1) {
-            let priority = sArr[i].priority
-            sArr[i].priority = priority - 1
+    /**
+        # Delete step in table view
+     
+        Reorganise step order from the step that was deleted
+     */
+    func reoganiseStepsInArr(fromIndex: Int) {
+        let sortedSet = sortStepsByPriority()
+        for i in stride(from: fromIndex, to: sortedSet.count, by: 1) {
+            let priority = sortedSet[i].priority
+            sortedSet[i].priority = priority - 1
         }
     }
     
