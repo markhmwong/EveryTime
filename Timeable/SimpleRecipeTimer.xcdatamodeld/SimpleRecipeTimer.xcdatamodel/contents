@@ -24,8 +24,6 @@
         <attribute name="isComplete" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isLeading" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isPausedPrimary" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="isRepeated" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="isSequential" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="priority" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="stepName" optional="YES" attributeType="String" syncable="YES"/>
@@ -35,6 +33,6 @@
     </entity>
     <elements>
         <element name="RecipeEntity" positionX="-264.8125" positionY="-4.69921875" width="128" height="285"/>
-        <element name="StepEntity" positionX="-54" positionY="-9" width="128" height="240"/>
+        <element name="StepEntity" positionX="-54" positionY="-9" width="128" height="210"/>
     </elements>
 </model>

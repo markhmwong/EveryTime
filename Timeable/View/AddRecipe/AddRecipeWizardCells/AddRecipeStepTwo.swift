@@ -204,7 +204,21 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         
     }
     
-    //  Add button only confirms the steps and recipe to a temporary store. Does not include CoreData and the data can be cancelled anytime.
+    /**
+        # Add Button
+     
+        Confirms the steps and recipe to a temporary store - self.datasource (array).
+        Does not include any save to CoreData. Dismissing the viewcontroller loses any data.
+        Catches Errors from checkTextFields method to catch various validition conditions.
+     
+     - Flow: Checks the validity of the text fields
+        2) Saves to temporary array - self.datasource
+        3) Clears textfields of any characters
+        4) Returns the focus to the name textfield
+     
+     
+     - Returns: void
+    */
     @objc func handleAddButton() {
         guard let n = nameTextfield, let h = hourTextfield, let m = minuteTextfield, let s = secondTextfield else {
             return
@@ -228,8 +242,14 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         }
     }
     
-    //  Done button confirms the steps and recipe and commits it to CoreData
-    @objc func handleDoneButton(_ sender: UITextField) {
+    /**
+        # Done button
+     
+        Confirms a filled datasource array containing recipes with steps and commits it to CoreData Model Object Context.
+        Proceeds to remove the current viewcontroller and return back to the mainviewcontroller.
+     
+    */
+    @objc func handleDoneButton() {
         self.resignFirstResponder()
         
         guard let arvc = addRecipeViewControllerDelegate else {
@@ -277,19 +297,22 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         }
     }
     
+    //ensure the perform block operates correctly
     func dismissViewControllerAndUpdateCollectionView() {
-        let rEntity = RecipeEntity(name: recipeName)
-        for (index, s) in dataSource.enumerated() {
-            let sEntity = StepEntity(name: s.name, hours: s.hours, minutes: s.minutes, seconds: s.seconds, priority: s.priority)
-            if (index == 0) {
-                sEntity.isLeading = true
+        CoreDataHandler.getPrivateContext().perform {
+            let rEntity = RecipeEntity(name: self.recipeName)
+            for (index, s) in self.dataSource.enumerated() {
+                let sEntity = StepEntity(name: s.name, hours: s.hours, minutes: s.minutes, seconds: s.seconds, priority: s.priority)
+                if (index == 0) {
+                    sEntity.isLeading = true
+                }
+                rEntity.addToStep(sEntity)
             }
-            rEntity.addToStep(sEntity)
-        }
-        
-        rEntity.updateTimeRemainingForCurrentStep()
-        if let arv = addRecipeViewControllerDelegate {
-            arv.createRecipe(rEntity: rEntity)
+            
+            rEntity.updateTimeRemainingForCurrentStep()
+            if let arv = self.addRecipeViewControllerDelegate {
+                arv.createRecipe(rEntity: rEntity)
+            }
         }
     }
     

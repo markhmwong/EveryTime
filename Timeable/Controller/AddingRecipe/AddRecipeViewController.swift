@@ -271,6 +271,4 @@ extension AddRecipeViewController {
             editButton.setAttributedTitle(NSAttributedString(string: "edit", attributes: Theme.Font.Recipe.TitleAttribute), for: .normal)
         }
     }
-    
-
 }

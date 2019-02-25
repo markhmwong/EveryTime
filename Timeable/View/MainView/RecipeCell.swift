@@ -124,6 +124,7 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
     
     @objc func recipePauseHandler() {
         updatePauseButton()
+        CoreDataHandler.saveContext()
     }
     
     func updatePauseButton() {
@@ -144,7 +145,7 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
                 if (r.isPaused) {
                     let pauseState = false
                     mvc.unpauseEntireRecipe(recipe: r)
-                    
+//                    r.isPaused = pauseState
                     CoreDataHandler.getPrivateContext().perform {
                         if let singleEntity = CoreDataHandler.fetchByDate(in: RecipeEntity.self, date: r.createdDate!) {
                             singleEntity.isPaused = pauseState

@@ -87,8 +87,8 @@ class MainViewController: ViewControllerBase {
         super.viewDidLoad()
         //The super class will call prepare_ functions
 //        testData()
-        let systemSoundID: SystemSoundID = 1309
-        AudioServicesPlaySystemSound (systemSoundID)
+//        let systemSoundID: SystemSoundID = 1309
+//        AudioServicesPlaySystemSound (systemSoundID)
 
     }
     
@@ -211,7 +211,9 @@ class MainViewController: ViewControllerBase {
     }
     
     func addToCollectionView() {
-        collView.insertItems(at: [IndexPath(item: recipeCollection.count - 1, section: 0)])
+        DispatchQueue.main.async {
+            self.collView.insertItems(at: [IndexPath(item: self.recipeCollection.count - 1, section: 0)])
+        }
     }
     
     func loadDataFromCoreData() {
@@ -282,32 +284,42 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
 
 //MARK: - UI
 extension MainViewController {
+    /**
+     # Adds Sample Data (not to be released during production)
+     
+     For testing purposes only. It creates a group of recipes with steps of random data. All variables are filled and used to sample the UI and flow.
+    */
     @objc func handleTest() {
         let recipeNumber = 10
-        for i in 0..<recipeNumber {
-            let stepNumber = Int.random(in: 0..<8)
-            
-            let rEntity = RecipeEntity(name: "Recipe\(i)")
-            for i in 0..<stepNumber {
-                let secondNumber = 5
-                let sEntity = StepEntity(name: "Step\(i)", hours: 0, minutes: 0, seconds: secondNumber, priority: Int16(i))
-                if (i == 0) {
-                    sEntity.isLeading = true
-                    sEntity.updateExpiry()
-                    rEntity.currStepName = sEntity.stepName
-                    rEntity.currStepPriority = Int16(0)
+        CoreDataHandler.getPrivateContext().perform {
+            for i in 0..<recipeNumber {
+                let stepNumber = Int.random(in: 0..<8)
+                
+                let rEntity = RecipeEntity(name: "Recipe\(i)")
+                for i in 0..<stepNumber {
+                    let secondNumber = 5
+                    let sEntity = StepEntity(name: "Step\(i)", hours: 0, minutes: 0, seconds: secondNumber, priority: Int16(i))
+                    if (i == 0) {
+                        sEntity.isLeading = true
+                        sEntity.updateExpiry()
+                        rEntity.currStepName = sEntity.stepName
+                        rEntity.currStepPriority = Int16(0)
+                    }
+                    rEntity.addToStep(sEntity)
                 }
-                rEntity.addToStep(sEntity)
+                rEntity.sumStepsForExpectedElapsedTime()
+                rEntity.updateCurrStepInRecipe()
+                self.addToRecipeCollection(r: rEntity)
             }
-            rEntity.sumStepsForExpectedElapsedTime()
-            rEntity.updateCurrStepInRecipe()
-            addToRecipeCollection(r: rEntity)
+            CoreDataHandler.saveContext()
+            DispatchQueue.main.async {
+                self.collView.performBatchUpdates({
+                    let insertIndexPaths = Array(0..<self.recipeCollection.count).map { IndexPath(item: $0, section: 0) }
+                    self.collView.insertItems(at: insertIndexPaths)
+                }, completion: nil)
+            }
         }
-        collView.performBatchUpdates({
-            let insertIndexPaths = Array(0..<recipeCollection.count).map { IndexPath(item: $0, section: 0) }
-            collView.insertItems(at: insertIndexPaths)
-        }, completion: nil)
-        CoreDataHandler.saveContext()
+
     }
     
     @objc func handleAbout() {
@@ -342,7 +354,8 @@ extension MainViewController: TimerProtocol {
     func startTimer() {
         if (timer == nil) {
             timer?.invalidate()
-            timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+            let timerInterval = 0.2
+            timer = Timer.scheduledTimer(timeInterval: timerInterval, target: self, selector: #selector(update), userInfo: nil, repeats: true)
             RunLoop.current.add(timer!, forMode: .common)
         }
     }

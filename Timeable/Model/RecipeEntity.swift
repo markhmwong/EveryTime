@@ -28,24 +28,34 @@ class RecipeEntity: NSManagedObject {
 }
 
 extension RecipeEntity {
-    /* Called directly from MVC update function */
+    /**
+     # Updates the recipe.
+     
+     Called directly from MVC. The entry point for the main loop
+     - Warning: Re-evaluate the condition in this function. The condition below runs but only when the timer is set to a interval of 0.1. The higher the timer resolution, the closer we can track the time to 0 leading to an accurate alarm. currStepTimeRemaining doesn't reach 0
+    */
     func updateRecipeTime() {
         calculateTimeToStepByTimePassed()
-        print("prepare")
-
-//        if (currStepTimeRemaining <= 0.0) {
-//            prepareNextStep()
-//        }
+        print(currStepTimeRemaining)
+        if (currStepTimeRemaining <= 0.1) {
+            prepareNextStep()
+        }
     }
     
-    /*
-    When the app is inactive or suspended, we aren't running the timer loop, leading to incorrect variables. This loop updates the variables to the correct time by adding the time passed up until the current step.
-    This function allows to cover all cases (as mentioned above) when the app switches between states. Despite the average running time of this function O(n) - n being number of steps - we only ever loop over the visible cells, which in this case is quite minimal but we also have the possibility of having n reach a large value
+    /**
+     # Calculates time to step (needs to be redone without loop)
+     
+    When the app is inactive or suspended, we aren't running the timer loop, leading to incorrect timers. This loop updates the variables to the correct time by adding the time passed up until the current step.
+    This function allows to cover all cases (as mentioned above) when the app switches between states.
+     
+     - Complexity: Despite the average running time of this function O(n) - n being number of steps - we only ever loop over the visible cells, which in this case is quite minimal but we also have the possibility of having n reach a large value
      
      The entire recipe loop would come to O(r + s)
      r - number of recipes
      s - number of steps
-     because the leading step alters and we do not run over completed recipes.
+     because the leading step alters and we do not evaluate completed recipes guarded by the if condition
+     
+     - Warning: StepEntity.isLeading may not be needed any longer
     */
     func calculateTimeToStepByTimePassed() {
         let sortedSet = sortStepsByPriority()
@@ -73,13 +83,37 @@ extension RecipeEntity {
         }
     }
     
+    func prepareNextStep() -> Void {
+        let sortedSet = sortStepsByPriority()
+        let maxItems = sortedSet.count - 1
+        let index = Int(currStepPriority)
+        
+        if (index <= maxItems) {
+            let currStep = sortedSet[index]
+            // TODO: Error for index
+            currStep.isLeading = false
+            currStep.isComplete = true
+            currStep.timeRemaining = 0.0
+            
+            currStepPriority = Int16(index)
+            let nextStep = sortedSet[Int(currStepPriority)]
+            currStepTimeRemaining = nextStep.timeRemaining
+            nextStep.isLeading = true
+            playSound()
+        }
+    }
+    /**
+        # Plays sound when a step completes
+    */
+    func playSound() {
+        //http://iphonedevwiki.net/index.php/AudioServices
+        AudioServicesPlaySystemSound (1309)
+    }
+
     func calculatePauseInterval() -> Double {
         guard let start = pauseStartDate else {
             return 0.0
         }
-//        guard let end = pauseEndDate else {
-//            return 0.0
-//        }
         let pausedEnd = Date()
         return start.timeIntervalSince(pausedEnd)
     }
@@ -116,26 +150,6 @@ extension RecipeEntity {
         currStepTimeRemaining = firstStep.timeRemaining
     }
 
-    func prepareNextStep() -> Void {
-        let sortedSet = sortStepsByPriority()
-        let maxItems = sortedSet.count - 1
-        let index = Int(currStepPriority)
-
-        if (index <= maxItems) {
-            let currStep = sortedSet[index]
-            // TODO: Error for index
-            currStep.isLeading = false
-            currStep.isComplete = true
-            currStep.timeRemaining = 0.0
-            
-            currStepPriority = Int16(index)
-            let nextStep = sortedSet[Int(currStepPriority)]
-            currStepTimeRemaining = nextStep.timeRemaining
-            nextStep.isLeading = true
-            AudioServicesPlaySystemSound (1309)
-            print("test")
-        }
-    }
     
     /*
         Reset entire recipe
