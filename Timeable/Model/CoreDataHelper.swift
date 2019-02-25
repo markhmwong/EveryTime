@@ -30,15 +30,15 @@ class CoreDataHandler {
         return privateContext
     }
     
-    /*
-        Save to settings entity
+    /**
+        Saves to settings entity
     */
     class func saveContext() {
         getContext().perform {
             do {
                 try getContext().save()
             } catch let error as NSError {
-                print("\(error)")
+                print("Error saving \(error)")
             }
         }
 

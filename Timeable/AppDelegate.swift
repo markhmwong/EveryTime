@@ -20,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow()
         window?.makeKeyAndVisible()
         window?.rootViewController = UINavigationController(rootViewController: MainViewController())
-        CoreDataHandler.loadContext()
         return true
     }
 

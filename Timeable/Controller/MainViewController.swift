@@ -87,8 +87,6 @@ class MainViewController: ViewControllerBase {
         super.viewDidLoad()
         //The super class will call prepare_ functions
 //        testData()
-//        let systemSoundID: SystemSoundID = 1309
-//        AudioServicesPlaySystemSound (systemSoundID)
 
     }
     
@@ -115,7 +113,6 @@ class MainViewController: ViewControllerBase {
         stopTimer()
     }
     
-    
     override func beginAppearanceTransition(_ isAppearing: Bool, animated: Bool) {
         super.beginAppearanceTransition(isAppearing, animated: animated)
     }
@@ -138,10 +135,15 @@ class MainViewController: ViewControllerBase {
     
     override func prepareViewController() {
         super.prepareViewController()
+        CoreDataHandler.loadContext()
+
         self.view.backgroundColor = Theme.Background.Color.NavBackgroundColor
         self.view.layer.cornerRadius = Theme.View.CornerRadius
         self.navigationController?.navigationBar.isHidden = true
-        self.loadDataFromCoreData()
+
+        CoreDataHandler.getPrivateContext().perform {
+            self.loadDataFromCoreData()
+        }
         self.startTimer()
     }
     
@@ -218,6 +220,7 @@ class MainViewController: ViewControllerBase {
     
     func loadDataFromCoreData() {
         //TODO: - load in background
+        
         guard let rEntityArr = CoreDataHandler.fetchEntity(in: RecipeEntity.self) else {
             return
         }
@@ -354,7 +357,7 @@ extension MainViewController: TimerProtocol {
     func startTimer() {
         if (timer == nil) {
             timer?.invalidate()
-            let timerInterval = 0.2
+            let timerInterval = 0.1
             timer = Timer.scheduledTimer(timeInterval: timerInterval, target: self, selector: #selector(update), userInfo: nil, repeats: true)
             RunLoop.current.add(timer!, forMode: .common)
         }

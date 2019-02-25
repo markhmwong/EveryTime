@@ -9,7 +9,6 @@
         <attribute name="currStepTimeRemaining" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="expiryDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="isPaused" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="pauseEndDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="pauseStartDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="pauseTimeInterval" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="recipeName" optional="YES" attributeType="String" syncable="YES"/>
@@ -32,7 +31,7 @@
         <relationship name="recipe" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecipeEntity" inverseName="step" inverseEntity="RecipeEntity" syncable="YES"/>
     </entity>
     <elements>
-        <element name="RecipeEntity" positionX="-264.8125" positionY="-4.69921875" width="128" height="285"/>
+        <element name="RecipeEntity" positionX="-264.8125" positionY="-4.69921875" width="128" height="270"/>
         <element name="StepEntity" positionX="-54" positionY="-9" width="128" height="210"/>
     </elements>
 </model>

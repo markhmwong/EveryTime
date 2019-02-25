@@ -91,6 +91,10 @@ extension RecipeEntity {
         if (index <= maxItems) {
             let currStep = sortedSet[index]
             // TODO: Error for index
+            
+            if (currStep.isComplete == false) {
+                playSound()
+            }
             currStep.isLeading = false
             currStep.isComplete = true
             currStep.timeRemaining = 0.0
@@ -99,15 +103,19 @@ extension RecipeEntity {
             let nextStep = sortedSet[Int(currStepPriority)]
             currStepTimeRemaining = nextStep.timeRemaining
             nextStep.isLeading = true
-            playSound()
         }
     }
     /**
         # Plays sound when a step completes
+     
+        AudioServicesPlayAlertSound handles the mute/silent switch on the iPhone. Sound will not play when the mute switch is ON, instead it will vibrate. This is expected behaviour.
+     
+        http://iphonedevwiki.net/index.php/AudioServices
+
+     
     */
     func playSound() {
-        //http://iphonedevwiki.net/index.php/AudioServices
-        AudioServicesPlaySystemSound (1309)
+        AudioServicesPlayAlertSound(1309)
     }
 
     func calculatePauseInterval() -> Double {
@@ -242,8 +250,10 @@ extension RecipeEntity {
                 }
             }
             self.pauseStartDate = Date()
-            CoreDataHandler.saveContext()
+            
         }
+        CoreDataHandler.saveContext()
+
     }
     
     func unpauseStepArr() {
@@ -253,7 +263,6 @@ extension RecipeEntity {
                 s.isPausedPrimary = false
             }
         }
-//        pauseEndDate = Date()
         let interval = calculatePauseInterval()
         pauseTimeInterval = pauseTimeInterval + interval
     }
