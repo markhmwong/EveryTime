@@ -11,7 +11,7 @@ import UIKit
 class AddStepViewController: ViewControllerBase {
 
     //MARK: VARIABLES
-    fileprivate let maxCharacterLimitForNameLabel = 12
+    fileprivate let maxCharacterLimitForNameLabel = 30
     fileprivate let minCharacterLimitForNameLabel = 1
     var recipeViewControllerDelegate: RecipeViewControllerDelegate?
     var recipeViewControllerWithTableViewDelegate: RecipeViewControllerWithTableView?

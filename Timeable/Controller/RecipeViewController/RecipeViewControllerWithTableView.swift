@@ -303,15 +303,12 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         self.recipe.addToStep(step)
         self.stepArr.append(step)
         CoreDataHandler.saveContext()
-        self.startTimer()
+        startTimer()
     }
     
     func willReloadTableData() {
         self.tableView.reloadData()
     }
-    
-    
-
 }
 
 extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDataSource {
@@ -363,12 +360,31 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (indexPath.row == stepSelected) {
-            tableView.deselectRow(at: indexPath, animated: false)
-        } else {
-            stepSelected = indexPath.row
+//        if (indexPath.row == stepSelected) {
+//            tableView.deselectRow(at: indexPath, animated: false)
+//        } else {
+//            stepSelected = indexPath.row
+//        }
+        
+        DispatchQueue.main.async {
+            tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
         }
+        stepSelected = indexPath.row
+        let step = stepArr[stepSelected]
+        if (step.isComplete) {
+            extraOptionsResetTime.alpha = 1.0
+            extraOptionsResetTime.isEnabled = true
+        } else {
+            // can't reset a step that has not begun yet. that's skipping steps.
+            extraOptionsResetTime.alpha = 0.5
+            extraOptionsResetTime.isEnabled = false
+        }
+        
         changeBottomViewState()
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        changeBottomViewStateWhileDragging()
     }
 }
 
@@ -477,6 +493,16 @@ extension RecipeViewControllerWithTableView {
             self.addStepButton.center.y = self.view.frame.maxY + 50.0
             self.timerOptionsView.center.y = self.view.frame.maxY + distance
         }, completion: nil)
+    }
+    
+    func changeBottomViewStateWhileDragging() {
+        guard let viewState = bottomViewState else {
+            return
+        }
+        
+        if (viewState == .StepOptions) {
+            executeBottomViewState(.AddStep)
+        }
     }
     
     func changeBottomViewState() {

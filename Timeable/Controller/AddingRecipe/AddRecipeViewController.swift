@@ -204,6 +204,7 @@ class AddRecipeViewController: ViewControllerBase {
         if let mvc = mainViewControllerDelegate {
             mvc.addToRecipeCollection(r: rEntity)
             mvc.addToCollectionView()
+            mvc.startTimer()
         }
     }
     

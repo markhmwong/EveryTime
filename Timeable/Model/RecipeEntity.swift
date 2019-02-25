@@ -36,7 +36,6 @@ extension RecipeEntity {
     */
     func updateRecipeTime() {
         calculateTimeToStepByTimePassed()
-        print(currStepTimeRemaining)
         if (currStepTimeRemaining <= 0.1) {
             prepareNextStep()
         }
@@ -112,7 +111,6 @@ extension RecipeEntity {
      
         http://iphonedevwiki.net/index.php/AudioServices
 
-     
     */
     func playSound() {
         AudioServicesPlayAlertSound(1309)

@@ -38,7 +38,7 @@ class MainViewController: ViewControllerBase {
         return button
     }()
     
-    fileprivate lazy var leftNavItemButtonA: UIButton = {
+    fileprivate lazy var leftNavItemButton: UIButton = {
         let button = UIButton()
         button.setAttributedTitle(NSAttributedString(string: "About", attributes: Theme.Font.Nav.Item), for: .normal)
         button.addTarget(self, action: #selector(handleAbout), for: .touchUpInside)
@@ -46,17 +46,17 @@ class MainViewController: ViewControllerBase {
         return button
     }()
     
-    fileprivate lazy var leftNavItemButton: UIButton = {
+    fileprivate lazy var addRecipeButton: StandardButton = {
+        let button = StandardButton(title: "Add Recipe")
+        button.addTarget(self, action: #selector(handleAddRecipe), for: .touchUpInside)
+        return button
+    }()
+    
+    fileprivate lazy var leftNavItemButtonA: UIButton = {
         let button = UIButton()
         button.setAttributedTitle(NSAttributedString(string: "Test Random Data", attributes: Theme.Font.Nav.Item), for: .normal)
         button.addTarget(self, action: #selector(handleTest), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    fileprivate lazy var addRecipeButton: StandardButton = {
-        let button = StandardButton(title: "Add Recipe")
-        button.addTarget(self, action: #selector(handleAddRecipe), for: .touchUpInside)
         return button
     }()
     
@@ -216,6 +216,7 @@ class MainViewController: ViewControllerBase {
         DispatchQueue.main.async {
             self.collView.insertItems(at: [IndexPath(item: self.recipeCollection.count - 1, section: 0)])
         }
+        
     }
     
     func loadDataFromCoreData() {
@@ -238,7 +239,7 @@ class MainViewController: ViewControllerBase {
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = RecipeViewControllerWithTableView(recipe: recipeCollection[indexPath.item], delegate: self, indexPath: indexPath)
-        horizontalDelegate.dismissInteractor  = HorizontalTransitionInteractor(viewController: vc)
+//        horizontalDelegate.dismissInteractor  = HorizontalTransitionInteractor(viewController: vc) // to be worked on. issue with timer when swiping to dismiss
         vc.transitioningDelegate = horizontalDelegate
         vc.modalPresentationStyle = .custom
         stopTimer()
