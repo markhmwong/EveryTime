@@ -360,24 +360,22 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if (indexPath.row == stepSelected) {
-//            tableView.deselectRow(at: indexPath, animated: false)
-//        } else {
-//            stepSelected = indexPath.row
-//        }
-        
         DispatchQueue.main.async {
             tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
         }
         stepSelected = indexPath.row
         let step = stepArr[stepSelected]
         if (step.isComplete) {
-            extraOptionsResetTime.alpha = 1.0
-            extraOptionsResetTime.isEnabled = true
+            DispatchQueue.main.async {
+                self.extraOptionsResetTime.alpha = 1.0
+                self.extraOptionsResetTime.isEnabled = true
+            }
         } else {
             // can't reset a step that has not begun yet. that's skipping steps.
-            extraOptionsResetTime.alpha = 0.5
-            extraOptionsResetTime.isEnabled = false
+            DispatchQueue.main.async {
+                self.extraOptionsResetTime.alpha = 0.4
+                self.extraOptionsResetTime.isEnabled = false
+            }
         }
         
         changeBottomViewState()
@@ -562,7 +560,15 @@ extension RecipeViewControllerWithTableView {
     
     @objc func handleEdit() {
         tableView.isEditing = !tableView.isEditing
-        
+        if (tableView.isEditing) {
+            DispatchQueue.main.async {
+                self.editButton.setAttributedTitle(NSAttributedString(string: "Save", attributes: Theme.Font.Nav.Item), for: .normal)
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.editButton.setAttributedTitle(NSAttributedString(string: "Edit", attributes: Theme.Font.Nav.Item), for: .normal)
+            }
+        }
     }
     
     @objc func handleAddStep() {

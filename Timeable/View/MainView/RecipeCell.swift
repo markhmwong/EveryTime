@@ -146,7 +146,7 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
                     let pauseState = false
                     mvc.unpauseEntireRecipe(recipe: r)
 //                    r.isPaused = pauseState
-                    CoreDataHandler.getPrivateContext().perform {
+                    CoreDataHandler.getContext().perform {
                         if let singleEntity = CoreDataHandler.fetchByDate(in: RecipeEntity.self, date: r.createdDate!) {
                             singleEntity.isPaused = pauseState
                         }
