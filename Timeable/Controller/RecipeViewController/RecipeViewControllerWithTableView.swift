@@ -378,7 +378,7 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
             }
         }
         
-        changeBottomViewState()
+        showBottomViewWhenCellSelected()
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -497,8 +497,8 @@ extension RecipeViewControllerWithTableView {
         guard let viewState = bottomViewState else {
             return
         }
-        
         if (viewState == .StepOptions) {
+            print("addstep")
             executeBottomViewState(.AddStep)
         }
     }
@@ -517,6 +517,17 @@ extension RecipeViewControllerWithTableView {
         }
     }
     
+    func showBottomViewWhenCellSelected() {
+        guard let viewState = bottomViewState else {
+            return
+        }
+        
+        if (viewState == .AddStep) {
+            executeBottomViewState(.StepOptions)
+        }
+    }
+
+    
     func executeBottomViewState(_ viewState: BottomViewState) {
         switch viewState {
         case .StepOptions:
@@ -526,6 +537,8 @@ extension RecipeViewControllerWithTableView {
             hideTimerOptions()
             showStepButtonAnimation()
         }
+        bottomViewState = viewState
+
     }
 }
 
