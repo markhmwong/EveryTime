@@ -146,6 +146,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     
     override func prepareViewController() {
         super.prepareViewController()
+        setNeedsStatusBarAppearanceUpdate()
         bottomViewState = .AddStep
     }
     fileprivate lazy var border: UIView = {
@@ -187,6 +188,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         titleLabel.attributedText = NSAttributedString(string: recipe.recipeName ?? "No name", attributes: Theme.Font.Recipe.HeaderTableView)
         headerView.addSubview(titleLabel)
         headerView.addSubview(resetButton)
+        headerView.addSubview(deleteButton)
         tableView.tableHeaderView = headerView
         
         tableView.register(MainStepTableViewCell.self, forCellReuseIdentifier: stepCellId)
@@ -221,6 +223,9 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         
         resetButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -10).isActive = true
         resetButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor).isActive = true
+        
+        deleteButton.trailingAnchor.constraint(equalTo: resetButton.leadingAnchor, constant: -10).isActive = true
+        deleteButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor).isActive = true
         
         nav.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         nav.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
@@ -586,17 +591,27 @@ extension RecipeViewControllerWithTableView {
             self.tableView.reloadRows(at: indexPathArr, with: .none)
         }
     }
-    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
     /**
      # Full Recipe reset
      */
     @objc func handleReset() {
-        recipe.resetEntireRecipeTo()
-        recipe.wasReset = true
-        CoreDataHandler.saveContext()
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+        
+        let alert = UIAlertController(title: "Are you sure?", message: "Reset cannot be undone", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
+            self.recipe.resetEntireRecipeTo()
+            self.recipe.wasReset = true
+            CoreDataHandler.saveContext()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }))
+        present(alert, animated: true, completion: nil)
+        
+        
     }
     
     @objc func handleDismiss() {
@@ -618,13 +633,22 @@ extension RecipeViewControllerWithTableView {
     }
     
     @objc func handleDelete() {
-        dismiss(animated: true) {
-            //
-            guard let mvc = mainViewControllerDelegate {
-                return
+        let alert = UIAlertController(title: "Are you sure?", message: "Deleting cannot be undone", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
+            self.dismiss(animated: true) {
+                //
+                guard let mvc = self.mainViewControllerDelegate else {
+                    return
+                }
+                guard let date = self.recipe.createdDate else {
+                    return
+                }
+                mvc.handleDeleteARecipe(date)
             }
-            mvc.handleDeleteRecipe()
-        }
+        }))
+        present(alert, animated: true, completion: nil)
+
         
     }
     

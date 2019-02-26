@@ -92,6 +92,8 @@ class MainViewController: ViewControllerBase {
     //MARK: - ViewController Lifecycle -
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIApplication.shared.isStatusBarHidden = true
+
         //The super class will call prepare_ functions
 //        testData()
 
@@ -400,17 +402,23 @@ extension MainViewController {
     }
     
     @objc func handleDeleteAllRecipe() {
-        let deleteIndexPaths = Array(0..<recipeCollection.count).map { IndexPath(item: $0, section: 0) }
-        recipeCollection.removeAll()
-        collView.performBatchUpdates({
-            collView.deleteItems(at: deleteIndexPaths)
-        }, completion: nil)
-        if (CoreDataHandler.deleteAllRecordsIn(entity: RecipeEntity.self)) {
-            CoreDataHandler.saveContext()
-        }
+        
+        let alert = UIAlertController(title: "Are you sure?", message: "This will delete every recipes", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
+            let deleteIndexPaths = Array(0..<self.recipeCollection.count).map { IndexPath(item: $0, section: 0) }
+            self.recipeCollection.removeAll()
+            self.collView.performBatchUpdates({
+                self.collView.deleteItems(at: deleteIndexPaths)
+            }, completion: nil)
+            if (CoreDataHandler.deleteAllRecordsIn(entity: RecipeEntity.self)) {
+                CoreDataHandler.saveContext()
+            }
+        }))
+        present(alert, animated: true, completion: nil)
     }
     
-    func handleDeleteOneRecipe(_ date: Date) {
+    func handleDeleteARecipe(_ date: Date) {
         let index = searchForIndex(date)
         
         if (index != -1) {

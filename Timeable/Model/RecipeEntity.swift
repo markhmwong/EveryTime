@@ -188,7 +188,6 @@ extension RecipeEntity {
         let step = sortedSet[selectedStep]
         if (selectedStep >= currStepPriority && !step.isComplete) {
             step.expiryDate?.addTimeInterval(seconds)
-            step.totalTime = step.totalTime + seconds
             step.timeRemaining = step.timeRemaining + seconds
         } else if (step.isComplete) {
             throw StepOptionsError.StepAlreadyComplete(message: "")
