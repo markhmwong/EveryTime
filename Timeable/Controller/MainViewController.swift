@@ -52,6 +52,13 @@ class MainViewController: ViewControllerBase {
         return button
     }()
     
+    fileprivate lazy var appNameLabel: UILabel = {
+       let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.attributedText = NSAttributedString(string: "Timeable", attributes: Theme.Font.Nav.AppName)
+        return label
+    }()
+    
     fileprivate lazy var leftNavItemButtonA: UIButton = {
         let button = UIButton()
         button.setAttributedTitle(NSAttributedString(string: "Test Random Data", attributes: Theme.Font.Nav.Item), for: .normal)
@@ -153,6 +160,7 @@ class MainViewController: ViewControllerBase {
         guard let nav = navView else {
             return
         }
+        nav.addSubview(appNameLabel)
         view.addSubview(nav)
         view.addSubview(collView)
         view.addSubview(addRecipeButton)
@@ -185,6 +193,9 @@ class MainViewController: ViewControllerBase {
         addRecipeButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -45).isActive = true
         addRecipeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         addRecipeButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.33).isActive = true
+        
+        appNameLabel.centerXAnchor.constraint(equalTo: nav.centerXAnchor).isActive = true
+        appNameLabel.centerYAnchor.constraint(equalTo: nav.centerYAnchor).isActive = true
     }
     
     func willReloadCellData(indexPath: IndexPath) {
@@ -216,7 +227,6 @@ class MainViewController: ViewControllerBase {
         DispatchQueue.main.async {
             self.collView.insertItems(at: [IndexPath(item: self.recipeCollection.count - 1, section: 0)])
         }
-        
     }
     
     func loadDataFromCoreData() {
@@ -234,6 +244,13 @@ class MainViewController: ViewControllerBase {
         }
     }
 
+    func refreshPausedRecipes() {
+        
+        let visibleCells = collView.visibleCells
+        
+        
+       
+    }
 }
 
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -377,6 +394,7 @@ extension MainViewController: TimerProtocol {
             if let r = cell.entity {
                 if (!r.isPaused) {
                     r.updateRecipeTime()
+                    print("time after updateRecipeTime \(r.currStepTimeRemaining)")
                     cell.updateTimeLabel(timeRemaining: r.timeRemainingForCurrentStepToString())
                 }
             }

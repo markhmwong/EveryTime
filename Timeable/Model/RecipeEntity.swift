@@ -23,7 +23,7 @@ class RecipeEntity: NSManagedObject {
         self.createdDate = Date()
         self.startDate = self.createdDate
         self.pauseStartDate = self.createdDate
-
+        self.wasReset = false
     }
 }
 
@@ -59,9 +59,11 @@ extension RecipeEntity {
     func calculateTimeToStepByTimePassed() {
         let sortedSet = sortStepsByPriority()
         let tp = timePassedSinceStart() + pauseTimeInterval
-        
+        print("timepassedsincestart \(timePassedSinceStart())")
+            print(currStepTimeRemaining)
         var elapsedTime: Double = 0.0
         for step in sortedSet {
+            print("step totalTime \(step.totalTime)")
             elapsedTime = elapsedTime + step.totalTime
             let time = elapsedTime - tp
             
@@ -72,6 +74,7 @@ extension RecipeEntity {
                 //step incomplete
                 currStepTimeRemaining = time
                 step.timeRemaining = currStepTimeRemaining
+                step.updateExpiry()
                 break
             } else {
                 //step complete
@@ -133,6 +136,7 @@ extension RecipeEntity {
     }
     
     func timeRemainingForCurrentStepToString() -> String {
+        print("timeRemainingForCurrentStepToString: \(currStepTimeRemaining)")
         let (h,m,s) = currStepTimeRemaining.secondsToHoursMinutesSeconds()
         return "\(h.prefixZeroToInteger())h \(m.prefixZeroToInteger())m \(s.prefixZeroToInteger())s"
     }
@@ -153,11 +157,11 @@ extension RecipeEntity {
         guard let firstStep = entityArr.first else {
             return
         }
+
         currStepTimeRemaining = firstStep.timeRemaining
     }
-
     
-    /*
+    /**
         Reset entire recipe
      */
     func resetEntireRecipeTo(toStep: Int = 0) {
@@ -170,6 +174,7 @@ extension RecipeEntity {
                 if (step.priority == toStep) {
                     currStepPriority = step.priority
                     currStepTimeRemaining = step.timeRemaining
+                    print("resetEntireRecipeTo \(currStepTimeRemaining)")
                     currStepExpiryDate = step.expiryDate
                 }
             }
@@ -243,9 +248,9 @@ extension RecipeEntity {
 extension RecipeEntity {
     func pauseStepArr() {
         CoreDataHandler.getPrivateContext().perform {
-
-            self.isPaused = true
             let stepSet = self.step as! Set<StepEntity>
+            self.isPaused = true
+            
             for s in stepSet {
                 if(!self.isPaused) {
                     s.updateTotalTimeRemaining()
@@ -253,20 +258,34 @@ extension RecipeEntity {
                 }
             }
             self.pauseStartDate = Date()
-            
         }
         CoreDataHandler.saveContext()
-
     }
     
     func unpauseStepArr() {
-        let stepSet = self.step as! Set<StepEntity>
-        for s in stepSet {
+        let sortedSteps = sortStepsByPriority()
+        isPaused = false
+        // step expiry date not including the pause interval
+        if (wasReset) {
+            pauseStartDate = Date()
+            startDate = Date()
+            //update expiry for first step
+            wasReset = false
+        }
+        
+        for s in sortedSteps {
             if(self.isPaused) {
                 s.isPausedPrimary = false
             }
+            if (s.priority == 0) {
+                s.updateExpiry()
+            }
         }
+        
         let interval = calculatePauseInterval()
         pauseTimeInterval = pauseTimeInterval + interval
+        
+//        currStepPriority
+        CoreDataHandler.saveContext()
     }
 }

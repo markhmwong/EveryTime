@@ -15,6 +15,7 @@
         <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="totalStepTimeComplete" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="totalTimeRemaining" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="wasReset" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="step" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StepEntity" inverseName="recipe" inverseEntity="StepEntity" syncable="YES"/>
     </entity>
     <entity name="StepEntity" representedClassName=".StepEntity" syncable="YES" codeGenerationType="category">
@@ -31,7 +32,7 @@
         <relationship name="recipe" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecipeEntity" inverseName="step" inverseEntity="RecipeEntity" syncable="YES"/>
     </entity>
     <elements>
-        <element name="RecipeEntity" positionX="-264.8125" positionY="-4.69921875" width="128" height="270"/>
+        <element name="RecipeEntity" positionX="-264.8125" positionY="-4.69921875" width="128" height="285"/>
         <element name="StepEntity" positionX="-54" positionY="-9" width="128" height="210"/>
     </elements>
 </model>

@@ -139,21 +139,13 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
                 guard let self = self else {
                     return
                 }
-               
                 let pauseButtonText = r.isPaused ? "stop" : "start"
                 let textColor = r.isPaused ? Theme.Font.Color.TextColour : Theme.Font.Color.TextColourDisabled
                 if (r.isPaused) {
-                    let pauseState = false
                     mvc.unpauseEntireRecipe(recipe: r)
-//                    r.isPaused = pauseState
-                    CoreDataHandler.getContext().perform {
-                        if let singleEntity = CoreDataHandler.fetchByDate(in: RecipeEntity.self, date: r.createdDate!) {
-                            singleEntity.isPaused = pauseState
-                        }
-                        r.isPaused = pauseState
-                    }
                     self.updatePauseButton(pauseButtonText, textColor)
                 } else {
+                    
                     mvc.pauseEntireRecipe(recipe: r)
                     self.updatePauseButton(pauseButtonText, textColor)
                 }

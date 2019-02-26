@@ -41,7 +41,6 @@ extension StepEntity {
         } else {
             isLeading = false
         }
-        
     }
     
     func updateTimeRemaining() {

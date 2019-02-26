@@ -270,6 +270,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         stopTimer()
         mvc.dismiss(animated: true) {
             mvc.startTimer()
+            mvc.refreshPausedRecipes()
         }
     }
     
@@ -289,6 +290,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
             guard let r = recipe else {
                 return
             }
+            r.playSound()
             nextEntity.isLeading = true
             nextEntity.isComplete = false
             nextEntity.updateExpiry()
@@ -558,8 +560,12 @@ extension RecipeViewControllerWithTableView {
         }
     }
     
+    /**
+     # Full Recipe reset
+     */
     @objc func handleReset() {
         recipe.resetEntireRecipeTo()
+        recipe.wasReset = true
         CoreDataHandler.saveContext()
         DispatchQueue.main.async {
             self.tableView.reloadData()

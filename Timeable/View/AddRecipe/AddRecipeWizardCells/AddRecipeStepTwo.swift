@@ -322,7 +322,7 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
             if (textField.text?.isEmpty ?? true) {
                 //error empty
                 textField.becomeFirstResponder()
-                throw AddRecipeWizardError.Empty(message: "Empty")
+                throw AddRecipeWizardError.Empty(message: "We have an empty field")
             }
             
             guard let t = textField.text else {
