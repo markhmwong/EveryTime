@@ -33,7 +33,7 @@ class MainViewController: ViewControllerBase {
     fileprivate lazy var rightNavItemButton: UIButton = {
         let button = UIButton()
         button.setAttributedTitle(NSAttributedString(string: "Clear All", attributes: Theme.Font.Nav.Item), for: .normal)//revert back to add recipe
-        button.addTarget(self, action: #selector(handleDeleteRecipe), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleDeleteAllRecipe), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -151,7 +151,7 @@ class MainViewController: ViewControllerBase {
         CoreDataHandler.getPrivateContext().perform {
             self.loadDataFromCoreData()
         }
-        self.startTimer()
+        startTimer()
     }
     
      override func prepareView() {
@@ -243,13 +243,53 @@ class MainViewController: ViewControllerBase {
             return (x.createdDate?.compare(y.createdDate!) == .orderedAscending)
         }
     }
-
-    func refreshPausedRecipes() {
+    
+    func stepComplete(_ date: Date) {
+        playSound()
+        let index = searchForIndex(date)
         
-        let visibleCells = collView.visibleCells
+        print(index)
+        
+        if (index != -1) {
+            let cell = collView.cellForItem(at: IndexPath(row: index, section: 0)) as! RecipeCell
+            //animate bg colour
+            cell.animateCellForCompleteStep()
+        }
+    }
+    
+    func searchForIndex(_ date: Date) -> Int {
+        var left = 0
+        var right = recipeCollection.count - 1
+        
+        while (left <= right) {
+            
+            let middle = left + (right - left) / 2
+            print(middle)
+            if (recipeCollection[middle].createdDate! == date)  {
+                return middle
+            }
+            
+            if (recipeCollection[middle].createdDate! < date) {
+                left = middle + 1
+            } else {
+                right = middle - 1
+            }
+        }
         
         
-       
+        return -1
+    }
+    
+    /**
+     # Plays sound when a step completes
+     
+     AudioServicesPlayAlertSound handles the mute/silent switch on the iPhone. Sound will not play when the mute switch is ON, instead it will vibrate. This is expected behaviour.
+     
+     http://iphonedevwiki.net/index.php/AudioServices
+     
+     */
+    func playSound() {
+        AudioServicesPlayAlertSound(1309)
     }
 }
 
@@ -359,7 +399,7 @@ extension MainViewController {
         present(vc, animated: true, completion: nil)
     }
     
-    @objc func handleDeleteRecipe() {
+    @objc func handleDeleteAllRecipe() {
         let deleteIndexPaths = Array(0..<recipeCollection.count).map { IndexPath(item: $0, section: 0) }
         recipeCollection.removeAll()
         collView.performBatchUpdates({
@@ -367,6 +407,18 @@ extension MainViewController {
         }, completion: nil)
         if (CoreDataHandler.deleteAllRecordsIn(entity: RecipeEntity.self)) {
             CoreDataHandler.saveContext()
+        }
+    }
+    
+    func handleDeleteOneRecipe(_ date: Date) {
+        let index = searchForIndex(date)
+        
+        if (index != -1) {
+            recipeCollection.remove(at: index)
+            DispatchQueue.main.async {
+                self.collView.deleteItems(at: [IndexPath(item: index, section: 0)])
+            }
+            CoreDataHandler.deleteEntity(entity: RecipeEntity.self, createdDate: date)
         }
     }
 }
@@ -393,8 +445,7 @@ extension MainViewController: TimerProtocol {
         for cell in cells {
             if let r = cell.entity {
                 if (!r.isPaused) {
-                    r.updateRecipeTime()
-                    print("time after updateRecipeTime \(r.currStepTimeRemaining)")
+                    r.updateRecipeTime(self)
                     cell.updateTimeLabel(timeRemaining: r.timeRemainingForCurrentStepToString())
                 }
             }

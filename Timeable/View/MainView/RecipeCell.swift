@@ -58,6 +58,7 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
         gradientLayer.colors = [Theme.Background.Gradient.CellColorTop, Theme.Background.Gradient.CellColorBottom]
         gradientLayer.locations = [0.3, 1.0]
         gradientLayer.shouldRasterize = true // rasterise so we don't need to redraw
+        gradientLayer.masksToBounds = true
         return gradientLayer
     }()
 
@@ -92,19 +93,18 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
         stepNameLabel.leadingAnchor.constraint(equalTo: totalTimeLabel!.leadingAnchor, constant: 0).isActive = true
     }
     
-
-    
     override func setupView() {
         layer.insertSublayer(gl, at: 0)
         layer.cornerRadius = 15.0
         clipsToBounds = false
         layer.backgroundColor = UIColor.white.cgColor
-        layer.shadowColor = UIColor(red:0.65, green:0.65, blue:0.65, alpha:1.0).cgColor
-        layer.shadowOffset = CGSize(width: 0, height: 5.0)
-        layer.shadowRadius = 6.0
-        layer.shadowOpacity = 0.8
-        layer.masksToBounds = false
-        layer.shadowPath = UIBezierPath(roundedRect:bounds, cornerRadius:layer.cornerRadius).cgPath
+//        layer.shadowColor = UIColor(red:0.65, green:0.65, blue:0.65, alpha:1.0).cgColor
+//        layer.shadowOffset = CGSize(width: 0, height: 5.0)
+//        layer.shadowRadius = 6.0
+//        layer.shadowOpacity = 0.8
+        layer.masksToBounds = true
+//        let newBounds = CGRect(x: 0, y: 0, width: bounds.width + 10, height: bounds.height + 10)
+//        layer.shadowPath = UIBezierPath(roundedRect:newBounds, cornerRadius:layer.cornerRadius).cgPath
         
         backgroundColor = Theme.Background.Color.CellBackgroundColor
         pauseButton.backgroundColor = Theme.Background.Color.Clear
@@ -171,5 +171,18 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
         } else {
             totalTimeLabel?.attributedText = NSAttributedString(string: "No Time", attributes: Theme.Font.Recipe.TimeAttribute)
         }
+    }
+    
+    func animateCellForCompleteStep() {
+        let gradientChangeAnimation = CABasicAnimation(keyPath: "colors")
+        gradientChangeAnimation.duration = 1.0
+        gradientChangeAnimation.autoreverses = true
+        gradientChangeAnimation.toValue = [
+            UIColor(red: 244/255, green: 88/255, blue: 53/255, alpha: 0.2).cgColor,
+            UIColor(red:1.00, green:0.00, blue:0.42, alpha:0.2).cgColor,
+        ]
+        gradientChangeAnimation.fillMode = CAMediaTimingFillMode.forwards
+        gradientChangeAnimation.isRemovedOnCompletion = true
+        gl.add(gradientChangeAnimation, forKey: "colorChange")
     }
 }

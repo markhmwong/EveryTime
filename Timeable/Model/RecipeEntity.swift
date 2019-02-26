@@ -20,7 +20,7 @@ class RecipeEntity: NSManagedObject {
         self.init(entity: RecipeEntity.entity(), insertInto: CoreDataHandler.getContext())
         self.recipeName = name
         self.isPaused = true
-        self.createdDate = Date()
+        self.createdDate = Date() //like an ID
         self.startDate = self.createdDate
         self.pauseStartDate = self.createdDate
         self.wasReset = false
@@ -34,10 +34,10 @@ extension RecipeEntity {
      Called directly from MVC. The entry point for the main loop
      - Warning: Re-evaluate the condition in this function. The condition below runs but only when the timer is set to a interval of 0.1. The higher the timer resolution, the closer we can track the time to 0 leading to an accurate alarm. currStepTimeRemaining doesn't reach 0
     */
-    func updateRecipeTime() {
+    func updateRecipeTime(_ mvc: MainViewController) {
         calculateTimeToStepByTimePassed()
         if (currStepTimeRemaining <= 0.1) {
-            prepareNextStep()
+            prepareNextStep(mvc)
         }
     }
     
@@ -59,11 +59,8 @@ extension RecipeEntity {
     func calculateTimeToStepByTimePassed() {
         let sortedSet = sortStepsByPriority()
         let tp = timePassedSinceStart() + pauseTimeInterval
-        print("timepassedsincestart \(timePassedSinceStart())")
-            print(currStepTimeRemaining)
         var elapsedTime: Double = 0.0
         for step in sortedSet {
-            print("step totalTime \(step.totalTime)")
             elapsedTime = elapsedTime + step.totalTime
             let time = elapsedTime - tp
             
@@ -85,7 +82,7 @@ extension RecipeEntity {
         }
     }
     
-    func prepareNextStep() -> Void {
+    func prepareNextStep(_ mvc: MainViewController) -> Void {
         let sortedSet = sortStepsByPriority()
         let maxItems = sortedSet.count - 1
         let index = Int(currStepPriority)
@@ -95,7 +92,10 @@ extension RecipeEntity {
             // TODO: Error for index
             
             if (currStep.isComplete == false) {
-                playSound()
+                guard let date = createdDate else {
+                    return
+                }
+                mvc.stepComplete(date)
             }
             currStep.isLeading = false
             currStep.isComplete = true
@@ -115,9 +115,9 @@ extension RecipeEntity {
         http://iphonedevwiki.net/index.php/AudioServices
 
     */
-    func playSound() {
-        AudioServicesPlayAlertSound(1309)
-    }
+//    func playSound() {
+//        AudioServicesPlayAlertSound(1309)
+//    }
 
     func calculatePauseInterval() -> Double {
         guard let start = pauseStartDate else {
@@ -136,7 +136,6 @@ extension RecipeEntity {
     }
     
     func timeRemainingForCurrentStepToString() -> String {
-        print("timeRemainingForCurrentStepToString: \(currStepTimeRemaining)")
         let (h,m,s) = currStepTimeRemaining.secondsToHoursMinutesSeconds()
         return "\(h.prefixZeroToInteger())h \(m.prefixZeroToInteger())m \(s.prefixZeroToInteger())s"
     }

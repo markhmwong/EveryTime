@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 enum BottomViewState: Int {
     case StepOptions
@@ -55,6 +56,15 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
+    fileprivate lazy var deleteButton: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(Theme.Font.Color.TextColour, for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Delete", attributes: Theme.Font.Nav.Item), for: .normal)
+        button.addTarget(self, action: #selector(handleDelete), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
 
     fileprivate lazy var addStepButton: StandardButton = {
         let button = StandardButton(title: "Add Step")
@@ -70,7 +80,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     fileprivate let resetButton: UIButton = {
        let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setAttributedTitle(NSAttributedString(string: "reset", attributes: Theme.Font.Nav.Item), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Reset", attributes: Theme.Font.Nav.Item), for: .normal)
         button.setTitleColor(UIColor.black, for: .normal)
         button.addTarget(self, action: #selector(handleReset), for: .touchUpInside)
         return button
@@ -137,9 +147,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     override func prepareViewController() {
         super.prepareViewController()
         bottomViewState = .AddStep
-        for step in stepArr {
-            print("\(step.stepName) : \(step.priority)")
-        }
     }
     fileprivate lazy var border: UIView = {
         let view = UIView()
@@ -151,6 +158,15 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
 
     override func prepareView() {
         super.prepareView()
+        
+        if (recipe.isPaused) {
+            editButton.isEnabled = true
+        } else {
+            editButton.isEnabled = false
+            editButton.alpha = 0.3
+            
+        }
+        
         navView = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: editButton)
         guard let nav = navView else {
             return
@@ -270,7 +286,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         stopTimer()
         mvc.dismiss(animated: true) {
             mvc.startTimer()
-            mvc.refreshPausedRecipes()
         }
     }
     
@@ -290,12 +305,24 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
             guard let r = recipe else {
                 return
             }
-            r.playSound()
+            playSound()
             nextEntity.isLeading = true
             nextEntity.isComplete = false
             nextEntity.updateExpiry()
             r.updateStepInRecipe(nextEntity)
         }
+    }
+    
+    /**
+     # Plays sound when a step completes
+     
+     AudioServicesPlayAlertSound handles the mute/silent switch on the iPhone. Sound will not play when the mute switch is ON, instead it will vibrate. This is expected behaviour.
+     
+     http://iphonedevwiki.net/index.php/AudioServices
+     
+     */
+    func playSound() {
+        AudioServicesPlayAlertSound(1309)
     }
     
     //MARK: - RecipeVCDelegate Protocol Functions -
@@ -588,6 +615,17 @@ extension RecipeViewControllerWithTableView {
                 self.editButton.setAttributedTitle(NSAttributedString(string: "Edit", attributes: Theme.Font.Nav.Item), for: .normal)
             }
         }
+    }
+    
+    @objc func handleDelete() {
+        dismiss(animated: true) {
+            //
+            guard let mvc = mainViewControllerDelegate {
+                return
+            }
+            mvc.handleDeleteRecipe()
+        }
+        
     }
     
     @objc func handleAddStep() {
