@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4D0C4B4221AEC73A00153E76"
-               BuildableName = "Timeable.app"
-               BlueprintName = "Timeable"
-               ReferencedContainer = "container:Timeable.xcodeproj">
+               BuildableName = "EveryTime.app"
+               BlueprintName = "EveryTime"
+               ReferencedContainer = "container:EveryTime.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4D0C4B5921AEC73D00153E76"
-               BuildableName = "TimeableTests.xctest"
-               BlueprintName = "TimeableTests"
-               ReferencedContainer = "container:Timeable.xcodeproj">
+               BuildableName = "EveryTimeTests.xctest"
+               BlueprintName = "EveryTimeTests"
+               ReferencedContainer = "container:EveryTime.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4D0C4B6421AEC73D00153E76"
-               BuildableName = "TimeableUITests.xctest"
-               BlueprintName = "TimeableUITests"
-               ReferencedContainer = "container:Timeable.xcodeproj">
+               BuildableName = "EveryTimeUITests.xctest"
+               BlueprintName = "EveryTimeUITests"
+               ReferencedContainer = "container:EveryTime.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -53,9 +53,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4D0C4B4221AEC73A00153E76"
-            BuildableName = "Timeable.app"
-            BlueprintName = "Timeable"
-            ReferencedContainer = "container:Timeable.xcodeproj">
+            BuildableName = "EveryTime.app"
+            BlueprintName = "EveryTime"
+            ReferencedContainer = "container:EveryTime.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4D0C4B4221AEC73A00153E76"
-            BuildableName = "Timeable.app"
-            BlueprintName = "Timeable"
-            ReferencedContainer = "container:Timeable.xcodeproj">
+            BuildableName = "EveryTime.app"
+            BlueprintName = "EveryTime"
+            ReferencedContainer = "container:EveryTime.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -95,9 +95,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4D0C4B4221AEC73A00153E76"
-            BuildableName = "Timeable.app"
-            BlueprintName = "Timeable"
-            ReferencedContainer = "container:Timeable.xcodeproj">
+            BuildableName = "EveryTime.app"
+            BlueprintName = "EveryTime"
+            ReferencedContainer = "container:EveryTime.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

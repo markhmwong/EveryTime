@@ -173,7 +173,6 @@ extension RecipeEntity {
                 if (step.priority == toStep) {
                     currStepPriority = step.priority
                     currStepTimeRemaining = step.timeRemaining
-                    print("resetEntireRecipeTo \(currStepTimeRemaining)")
                     currStepExpiryDate = step.expiryDate
                 }
             }

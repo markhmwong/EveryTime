@@ -84,6 +84,7 @@ class AddRecipeViewController: ViewControllerBase {
     var editButton: UIButton = {
         let button = UIButton()
         button.alpha = 0.5
+        button.isEnabled = false
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setAttributedTitle(NSAttributedString(string: "edit", attributes: Theme.Font.Recipe.TitleAttribute), for: .normal)
         return button
@@ -91,6 +92,7 @@ class AddRecipeViewController: ViewControllerBase {
     var backButton: UIButton = {
         let button = UIButton()
         button.alpha = 0.5
+        button.isEnabled = false
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setAttributedTitle(NSAttributedString(string: "back", attributes: Theme.Font.Recipe.TitleAttribute), for: .normal)
         return button

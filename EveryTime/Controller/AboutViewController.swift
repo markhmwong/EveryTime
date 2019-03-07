@@ -44,8 +44,9 @@ class AboutViewController: ViewControllerBase {
     
     override func prepareView() {
         super.prepareView()
+        let appName = Bundle.appName()
         let details = """
-        Thanks for using Timeable.\n
+        Thanks for using \(appName).\n
         I'm not the best cook but I love a good a steak. The first bite always gets me when you've cooked it to your liking, and thats the problem it wasn't always the way it was made previously; I made this app to keep track of the amount of times I had flipped my steak for it to cook evenly knowing Gordan Ramsey would kick my arse for overcooking it.\n
         I do really hope you enjoy using it and get the most of out it, whether you need to track your own cooking, an execise routine or a series of steps that you simply can never get down perfectly. This was made for that in mind.\n
         
@@ -56,7 +57,7 @@ class AboutViewController: ViewControllerBase {
         Please report any bugs to hello@whizbangapps.com.
         
         Contact.\n
-        Twitter: @markhmwong\nGithub: @markhmwong\nWebsite: https://www.whizbangapps.com/timeable
+        Twitter: @markhmwong\nGithub: @markhmwong\nWebsite: https://www.whizbangapps.com/\(appName)
         """
         textView.attributedText = NSAttributedString(string: details, attributes: Theme.Font.About.Text)
         view.addSubview(textView)

@@ -20,6 +20,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     var dismissInteractor: OverlayInteractor!
     var horizontalTransitionInteractor: HorizontalTransitionInteractor? = nil
     
+    fileprivate let appDelegate = UIApplication.shared.delegate as! AppDelegate
     fileprivate var bottomViewState: BottomViewState?
     fileprivate let screenSize = UIScreen.main.bounds.size
     fileprivate let rowHeight: CGFloat = 120.0
@@ -165,7 +166,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         } else {
             editButton.isEnabled = false
             editButton.alpha = 0.3
-            
         }
         
         navView = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: editButton)
@@ -196,13 +196,13 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     
     override func updateViewConstraints() {
         super.updateViewConstraints()
-        guard let nav = navView else {
-            return
-        }
-        let safeAreaInsets = self.view.safeAreaInsets
-        if (safeAreaInsets.top > 0) {
-            //safeAreaInsets = 44
-            nav.topAnchor.constraint(equalTo: view.topAnchor, constant: safeAreaInsets.top).isActive = true
+        if (appDelegate.hasTopNotch) {
+            let safeAreaInsets = self.view.safeAreaInsets
+            
+            guard let nav = navView else {
+                return
+            }
+            nav.topAnchor.constraint(equalTo: self.view.topAnchor, constant: safeAreaInsets.top).isActive = true //keeps the bar in position as the view performs the transition
         }
     }
 
@@ -227,6 +227,9 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         deleteButton.trailingAnchor.constraint(equalTo: resetButton.leadingAnchor, constant: -10).isActive = true
         deleteButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor).isActive = true
         
+        if (!appDelegate.hasTopNotch) {
+            nav.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        }
         nav.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         nav.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         nav.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05).isActive = true
@@ -411,7 +414,6 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
                 self.extraOptionsResetTime.isEnabled = false
             }
         }
-        
         showBottomViewWhenCellSelected()
     }
     

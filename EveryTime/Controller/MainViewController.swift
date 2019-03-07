@@ -55,7 +55,7 @@ class MainViewController: ViewControllerBase {
     fileprivate lazy var appNameLabel: UILabel = {
        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.attributedText = NSAttributedString(string: "Timeable", attributes: Theme.Font.Nav.AppName)
+        label.attributedText = NSAttributedString(string: Bundle.appName(), attributes: Theme.Font.Nav.AppName)
         return label
     }()
     
@@ -79,6 +79,7 @@ class MainViewController: ViewControllerBase {
         return view
     }()
 
+    fileprivate let appDelegate = UIApplication.shared.delegate as! AppDelegate
     fileprivate lazy var navView: NavView? = nil
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -91,12 +92,10 @@ class MainViewController: ViewControllerBase {
     
     //MARK: - ViewController Lifecycle -
     override func viewDidLoad() {
+        //The super class will call prepare_ functions. They don't need to be called
         super.viewDidLoad()
         UIApplication.shared.isStatusBarHidden = true
-
-        //The super class will call prepare_ functions
 //        testData()
-
     }
     
     func testData() {
@@ -133,13 +132,15 @@ class MainViewController: ViewControllerBase {
     
     override func updateViewConstraints() {
         super.updateViewConstraints()
-        let safeAreaInsets = self.view.safeAreaInsets
-        if (safeAreaInsets.top > 0) {
+        if (appDelegate.hasTopNotch) {
+            let safeAreaInsets = self.view.safeAreaInsets
+
             guard let nav = navView else {
                 return
             }
             nav.topAnchor.constraint(equalTo: self.view.topAnchor, constant: safeAreaInsets.top).isActive = true //keeps the bar in position as the view performs the transition
         }
+        
     }
     
     override func prepareViewController() {
@@ -176,6 +177,14 @@ class MainViewController: ViewControllerBase {
             return
         }
         
+        if (!appDelegate.hasTopNotch) {
+            nav.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        }
+        nav.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        nav.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        nav.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05).isActive = true
+        nav.bottomAnchor.constraint(equalTo: collView.topAnchor, constant: 0).isActive = true
+        
         leftNavItemButton.centerYAnchor.constraint(equalTo: nav.centerYAnchor).isActive = true
         leftNavItemButton.leadingAnchor.constraint(equalTo: nav.leadingAnchor, constant: 10).isActive = true
         
@@ -186,11 +195,6 @@ class MainViewController: ViewControllerBase {
         collView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         collView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         collView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        
-        nav.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        nav.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        nav.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05).isActive = true
-        nav.bottomAnchor.constraint(equalTo: collView.topAnchor, constant: 0).isActive = true
         
         addRecipeButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -45).isActive = true
         addRecipeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -259,6 +263,7 @@ class MainViewController: ViewControllerBase {
         }
     }
     
+    //binary search
     func searchForIndex(_ date: Date) -> Int {
         var left = 0
         var right = recipeCollection.count - 1

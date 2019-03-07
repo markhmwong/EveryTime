@@ -73,7 +73,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4D0C4B4321AEC73A00153E76 /* Timeable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Timeable.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D0C4B4321AEC73A00153E76 /* EveryTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EveryTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D0C4B4621AEC73A00153E76 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D0C4B4821AEC73A00153E76 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		4D0C4B4B21AEC73A00153E76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -81,10 +81,10 @@
 		4D0C4B5021AEC73C00153E76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4D0C4B5321AEC73C00153E76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4D0C4B5521AEC73C00153E76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4D0C4B5A21AEC73D00153E76 /* TimeableTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimeableTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D0C4B5A21AEC73D00153E76 /* EveryTimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EveryTimeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D0C4B5E21AEC73D00153E76 /* TimeableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeableTests.swift; sourceTree = "<group>"; };
 		4D0C4B6021AEC73D00153E76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4D0C4B6521AEC73D00153E76 /* TimeableUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimeableUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D0C4B6521AEC73D00153E76 /* EveryTimeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EveryTimeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D0C4B6921AEC73D00153E76 /* TimeableUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeableUITests.swift; sourceTree = "<group>"; };
 		4D0C4B6B21AEC73D00153E76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D205DB021FE8252008006BD /* StepTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTableViewCell.swift; sourceTree = "<group>"; };
@@ -155,7 +155,7 @@
 		4D0C4B3A21AEC73A00153E76 = {
 			isa = PBXGroup;
 			children = (
-				4D0C4B4521AEC73A00153E76 /* Timeable */,
+				4D0C4B4521AEC73A00153E76 /* EveryTime */,
 				4D0C4B5D21AEC73D00153E76 /* TimeableTests */,
 				4D0C4B6821AEC73D00153E76 /* TimeableUITests */,
 				4D0C4B4421AEC73A00153E76 /* Products */,
@@ -165,14 +165,14 @@
 		4D0C4B4421AEC73A00153E76 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4D0C4B4321AEC73A00153E76 /* Timeable.app */,
-				4D0C4B5A21AEC73D00153E76 /* TimeableTests.xctest */,
-				4D0C4B6521AEC73D00153E76 /* TimeableUITests.xctest */,
+				4D0C4B4321AEC73A00153E76 /* EveryTime.app */,
+				4D0C4B5A21AEC73D00153E76 /* EveryTimeTests.xctest */,
+				4D0C4B6521AEC73D00153E76 /* EveryTimeUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4D0C4B4521AEC73A00153E76 /* Timeable */ = {
+		4D0C4B4521AEC73A00153E76 /* EveryTime */ = {
 			isa = PBXGroup;
 			children = (
 				4D0C4B4621AEC73A00153E76 /* AppDelegate.swift */,
@@ -186,7 +186,7 @@
 				4D0C4B5521AEC73C00153E76 /* Info.plist */,
 				4D0C4B4D21AEC73A00153E76 /* SimpleRecipeTimer.xcdatamodeld */,
 			);
-			path = Timeable;
+			path = EveryTime;
 			sourceTree = "<group>";
 		};
 		4D0C4B5D21AEC73D00153E76 /* TimeableTests */ = {
@@ -397,9 +397,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4D0C4B4221AEC73A00153E76 /* Timeable */ = {
+		4D0C4B4221AEC73A00153E76 /* EveryTime */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4D0C4B6E21AEC73D00153E76 /* Build configuration list for PBXNativeTarget "Timeable" */;
+			buildConfigurationList = 4D0C4B6E21AEC73D00153E76 /* Build configuration list for PBXNativeTarget "EveryTime" */;
 			buildPhases = (
 				4D0C4B3F21AEC73A00153E76 /* Sources */,
 				4D0C4B4021AEC73A00153E76 /* Frameworks */,
@@ -409,14 +409,14 @@
 			);
 			dependencies = (
 			);
-			name = Timeable;
+			name = EveryTime;
 			productName = SimpleRecipeTimer;
-			productReference = 4D0C4B4321AEC73A00153E76 /* Timeable.app */;
+			productReference = 4D0C4B4321AEC73A00153E76 /* EveryTime.app */;
 			productType = "com.apple.product-type.application";
 		};
-		4D0C4B5921AEC73D00153E76 /* TimeableTests */ = {
+		4D0C4B5921AEC73D00153E76 /* EveryTimeTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4D0C4B7121AEC73D00153E76 /* Build configuration list for PBXNativeTarget "TimeableTests" */;
+			buildConfigurationList = 4D0C4B7121AEC73D00153E76 /* Build configuration list for PBXNativeTarget "EveryTimeTests" */;
 			buildPhases = (
 				4D0C4B5621AEC73D00153E76 /* Sources */,
 				4D0C4B5721AEC73D00153E76 /* Frameworks */,
@@ -427,14 +427,14 @@
 			dependencies = (
 				4D0C4B5C21AEC73D00153E76 /* PBXTargetDependency */,
 			);
-			name = TimeableTests;
+			name = EveryTimeTests;
 			productName = SimpleRecipeTimerTests;
-			productReference = 4D0C4B5A21AEC73D00153E76 /* TimeableTests.xctest */;
+			productReference = 4D0C4B5A21AEC73D00153E76 /* EveryTimeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		4D0C4B6421AEC73D00153E76 /* TimeableUITests */ = {
+		4D0C4B6421AEC73D00153E76 /* EveryTimeUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4D0C4B7421AEC73D00153E76 /* Build configuration list for PBXNativeTarget "TimeableUITests" */;
+			buildConfigurationList = 4D0C4B7421AEC73D00153E76 /* Build configuration list for PBXNativeTarget "EveryTimeUITests" */;
 			buildPhases = (
 				4D0C4B6121AEC73D00153E76 /* Sources */,
 				4D0C4B6221AEC73D00153E76 /* Frameworks */,
@@ -445,9 +445,9 @@
 			dependencies = (
 				4D0C4B6721AEC73D00153E76 /* PBXTargetDependency */,
 			);
-			name = TimeableUITests;
+			name = EveryTimeUITests;
 			productName = SimpleRecipeTimerUITests;
-			productReference = 4D0C4B6521AEC73D00153E76 /* TimeableUITests.xctest */;
+			productReference = 4D0C4B6521AEC73D00153E76 /* EveryTimeUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -473,7 +473,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 4D0C4B3E21AEC73A00153E76 /* Build configuration list for PBXProject "Timeable" */;
+			buildConfigurationList = 4D0C4B3E21AEC73A00153E76 /* Build configuration list for PBXProject "EveryTime" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -486,9 +486,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4D0C4B4221AEC73A00153E76 /* Timeable */,
-				4D0C4B5921AEC73D00153E76 /* TimeableTests */,
-				4D0C4B6421AEC73D00153E76 /* TimeableUITests */,
+				4D0C4B4221AEC73A00153E76 /* EveryTime */,
+				4D0C4B5921AEC73D00153E76 /* EveryTimeTests */,
+				4D0C4B6421AEC73D00153E76 /* EveryTimeUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -590,12 +590,12 @@
 /* Begin PBXTargetDependency section */
 		4D0C4B5C21AEC73D00153E76 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 4D0C4B4221AEC73A00153E76 /* Timeable */;
+			target = 4D0C4B4221AEC73A00153E76 /* EveryTime */;
 			targetProxy = 4D0C4B5B21AEC73D00153E76 /* PBXContainerItemProxy */;
 		};
 		4D0C4B6721AEC73D00153E76 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 4D0C4B4221AEC73A00153E76 /* Timeable */;
+			target = 4D0C4B4221AEC73A00153E76 /* EveryTime */;
 			targetProxy = 4D0C4B6621AEC73D00153E76 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -742,12 +742,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GEKZN86RYS;
-				INFOPLIST_FILE = Timeable/Info.plist;
+				INFOPLIST_FILE = EveryTime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.whizbang.timeable;
+				PRODUCT_BUNDLE_IDENTIFIER = com.whizbang.EveryTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -760,12 +760,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GEKZN86RYS;
-				INFOPLIST_FILE = Timeable/Info.plist;
+				INFOPLIST_FILE = EveryTime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.whizbang.timeable;
+				PRODUCT_BUNDLE_IDENTIFIER = com.whizbang.EveryTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -789,7 +789,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Timeable.app/Timeable";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EveryTime.app/EveryTime";
 			};
 			name = Debug;
 		};
@@ -810,7 +810,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Timeable.app/Timeable";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EveryTime.app/EveryTime";
 			};
 			name = Release;
 		};
@@ -857,7 +857,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4D0C4B3E21AEC73A00153E76 /* Build configuration list for PBXProject "Timeable" */ = {
+		4D0C4B3E21AEC73A00153E76 /* Build configuration list for PBXProject "EveryTime" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4D0C4B6C21AEC73D00153E76 /* Debug */,
@@ -866,7 +866,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4D0C4B6E21AEC73D00153E76 /* Build configuration list for PBXNativeTarget "Timeable" */ = {
+		4D0C4B6E21AEC73D00153E76 /* Build configuration list for PBXNativeTarget "EveryTime" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4D0C4B6F21AEC73D00153E76 /* Debug */,
@@ -875,7 +875,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4D0C4B7121AEC73D00153E76 /* Build configuration list for PBXNativeTarget "TimeableTests" */ = {
+		4D0C4B7121AEC73D00153E76 /* Build configuration list for PBXNativeTarget "EveryTimeTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4D0C4B7221AEC73D00153E76 /* Debug */,
@@ -884,7 +884,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4D0C4B7421AEC73D00153E76 /* Build configuration list for PBXNativeTarget "TimeableUITests" */ = {
+		4D0C4B7421AEC73D00153E76 /* Build configuration list for PBXNativeTarget "EveryTimeUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4D0C4B7521AEC73D00153E76 /* Debug */,
