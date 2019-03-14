@@ -9,7 +9,7 @@
 import UIKit
 
 class StepsViewController: ViewControllerBase, TimerProtocol {
-    var recipeViewControllerDelegate: RecipeViewController?
+//    var recipeViewControllerDelegate: RecipeViewController?
     var transitionDelegate = OverlayTransitionDelegate()
     var dismissInteractor: OverlayInteractor!
     var horizontalTransitionDelegate = HorizontalTransitionDelegate()
@@ -68,18 +68,18 @@ class StepsViewController: ViewControllerBase, TimerProtocol {
     }()
 
     
-    init(stepEntity: StepEntity, viewControllerDelegate: RecipeViewController) {
-        super.init(nibName: nil, bundle: nil)
-        
-        self.recipeViewControllerDelegate = viewControllerDelegate
-        /*
-         https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Properties.html
-            The willSet and didSet observers of superclass properties are called when a property is set in a subclass initializer, after the superclass initializer has been called. They are not called while a class is setting its own properties, before the superclass initializer has been called.
-         */
-        defer {
-            self.step = stepEntity
-        }
-    }
+//    init(stepEntity: StepEntity, viewControllerDelegate: RecipeViewController) {
+//        super.init(nibName: nil, bundle: nil)
+//
+//        self.recipeViewControllerDelegate = viewControllerDelegate
+//        /*
+//         https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Properties.html
+//            The willSet and didSet observers of superclass properties are called when a property is set in a subclass initializer, after the superclass initializer has been called. They are not called while a class is setting its own properties, before the superclass initializer has been called.
+//         */
+//        defer {
+//            self.step = stepEntity
+//        }
+//    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -178,15 +178,15 @@ class StepsViewController: ViewControllerBase, TimerProtocol {
     }
     
     @objc func handleDismiss() {
-        guard let rvc = recipeViewControllerDelegate else {
-            return
-        }
-        self.stopTimer()
-        rvc.dismiss(animated: true) {
-            rvc.startTimer()
-        }
+//        guard let rvc = recipeViewControllerDelegate else {
+//            return
+//        }
+//        self.stopTimer()
+//        rvc.dismiss(animated: true) {
+//            rvc.startTimer()
+//        }
     }
-    
+
     //MARK: - Timer Protocol
     func startTimer() {
         timer?.invalidate()

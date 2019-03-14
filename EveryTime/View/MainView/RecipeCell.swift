@@ -98,13 +98,8 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
         layer.cornerRadius = 15.0
         clipsToBounds = false
         layer.backgroundColor = UIColor.white.cgColor
-//        layer.shadowColor = UIColor(red:0.65, green:0.65, blue:0.65, alpha:1.0).cgColor
-//        layer.shadowOffset = CGSize(width: 0, height: 5.0)
-//        layer.shadowRadius = 6.0
-//        layer.shadowOpacity = 0.8
         layer.masksToBounds = true
-//        let newBounds = CGRect(x: 0, y: 0, width: bounds.width + 10, height: bounds.height + 10)
-//        layer.shadowPath = UIBezierPath(roundedRect:newBounds, cornerRadius:layer.cornerRadius).cgPath
+
         
         backgroundColor = Theme.Background.Color.CellBackgroundColor
         pauseButton.backgroundColor = Theme.Background.Color.Clear

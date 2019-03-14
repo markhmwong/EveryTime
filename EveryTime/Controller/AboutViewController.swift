@@ -11,7 +11,7 @@ import UIKit
 class AboutViewController: ViewControllerBase {
     
     fileprivate var delegate: MainViewController?
-    fileprivate var dismissButton: UIButton = {
+    fileprivate lazy var dismissButton: UIButton = {
         let button = UIButton()
         button.setAttributedTitle(NSAttributedString(string: "Back", attributes: Theme.Font.Nav.Item), for: .normal)
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
