@@ -42,7 +42,7 @@ class AddStepViewController: ViewControllerBase {
     }()
     fileprivate var labelTextField: UITextField = {
         let input = UITextField()
-        input.defaultTextAttributes = Theme.Font.Step.AddStep
+        input.defaultTextAttributes = Theme.Font.Recipe.TextFieldAttribute
         input.attributedPlaceholder = NSAttributedString(string: "Name the Step", attributes: Theme.Font.Recipe.TextFieldAttribute)
         input.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Recipe.TextFieldAttribute)
         input.returnKeyType = UIReturnKeyType.done
