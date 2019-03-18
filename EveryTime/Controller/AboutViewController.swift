@@ -83,6 +83,11 @@ class AboutViewController: ViewControllerBase {
     }
     
     @objc func handleDismiss() {
-        self.dismiss(animated: true, completion: nil)
+        guard let mvc = delegate else {
+            return
+        }
+        
+        mvc.startTimer()
+        dismiss(animated: true, completion: nil)
     }
 }

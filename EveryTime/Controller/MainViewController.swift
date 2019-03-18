@@ -125,7 +125,6 @@ class MainViewController: ViewControllerBase {
                         }
                     nav.topAnchor.constraint(equalTo: self.view.topAnchor, constant: safeAreaInsets.top).isActive = true //keeps the bar in position as the view performs the transition
                 }
-    
         }
     
         override func prepareViewController() {
@@ -224,7 +223,6 @@ class MainViewController: ViewControllerBase {
                     return
                 }
                 self.recipeCollection = self.sortRecipeCollection(in: rEntityArr)
-                print(self.recipeCollection.count)
             }
         }
     
@@ -383,7 +381,7 @@ extension MainViewController {
             let vc = AddRecipeViewController(delegate:self)
             vc.transitioningDelegate = transitionDelegate
             vc.modalPresentationStyle = .custom
-           dismissInteractor = OverlayInteractor()
+            dismissInteractor = OverlayInteractor()
             dismissInteractor.attachToViewController(viewController: vc, withView: vc.view, presentViewController: nil)
             vc.interactor = dismissInteractor
             transitionDelegate.dismissInteractor = dismissInteractor
@@ -438,16 +436,16 @@ extension MainViewController: TimerProtocol {
         }
 
     @objc func update() {
-            let cells = self.collView.visibleCells as! [RecipeCell]
-            for cell in cells {
-                    if let r = cell.entity {
-                            if (!r.isPaused) {
-                                    r.updateRecipeTime(self)
-                                        cell.updateTimeLabel(timeRemaining: r.timeRemainingForCurrentStepToString())
-                                }
-                        }
+        let cells = self.collView.visibleCells as! [RecipeCell]
+        for cell in cells {
+            if let r = cell.entity {
+                if (!r.isPaused) {
+                    r.updateRecipeTime(delegate: self)
+                    cell.updateTimeLabel(timeRemaining: r.timeRemainingForCurrentStepToString())
                 }
+            }
         }
+    }
 }
 
 extension MainViewController: UIScrollViewDelegate {

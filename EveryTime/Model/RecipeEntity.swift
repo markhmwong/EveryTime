@@ -34,10 +34,10 @@ extension RecipeEntity {
      Called directly from MVC. The entry point for the main loop
      - Warning: Re-evaluate the condition in this function. The condition below runs but only when the timer is set to a interval of 0.1. The higher the timer resolution, the closer we can track the time to 0 leading to an accurate alarm. currStepTimeRemaining doesn't reach 0
     */
-    func updateRecipeTime(_ mvc: MainViewController) {
+    func updateRecipeTime(delegate: MainViewController) {
         calculateTimeToStepByTimePassed()
         if (currStepTimeRemaining <= 0.1) {
-            prepareNextStep(mvc)
+            prepareNextStep(delegate)
         }
     }
     
@@ -63,20 +63,21 @@ extension RecipeEntity {
         for step in sortedSet {
             elapsedTime = elapsedTime + step.totalTime
             let time = elapsedTime - tp
-            
             currStepName = step.stepName
             currStepPriority = step.priority
             
             if (time >= 0.0 && step.isComplete == false) {
+                print("tp \(tp) elapsedTime \(elapsedTime) step.totalTime \(step.totalTime) time \(time) step \(step.timeRemaining) ")
+
                 //step incomplete
                 currStepTimeRemaining = time
-                step.timeRemaining = currStepTimeRemaining
+                step.timeRemaining = time
                 step.updateExpiry()
                 break
             } else {
                 //step complete
                 currStepTimeRemaining = 0.0
-                step.timeRemaining = currStepTimeRemaining
+                step.timeRemaining = 0.0
                 step.isComplete = true
             }
         }
@@ -165,12 +166,19 @@ extension RecipeEntity {
      
         Doubles as a full reset and a partial reset
      */
-    func resetEntireRecipeTo(toStep: Int = 0) {
+    func resetEntireRecipeTo(toStep: Int = 0) -> [IndexPath]{
         let sortedSet = sortStepsByPriority()
-        startDate = Date()
+        var indexPathsToReload: [IndexPath] = []
+        var timePassed: Double = 0.0
         pauseTimeInterval = 0.0
-//        totalTimeRemaining = 0.0
+        
+//        totalTimeRemaining = 0.0 // for localnotifications - will have to look at this again once we fix the "reset to step"
         for (index, step) in sortedSet.enumerated() {
+            //add the time from the steps that were not reset
+            if (index < toStep) {
+                timePassed += step.totalTime
+            }
+            
             if (index >= toStep) {
                 step.resetStep()
 //                totalTimeRemaining += step.timeRemaining// this is causing it have odd behavior with the recipe time
@@ -179,19 +187,30 @@ extension RecipeEntity {
                     currStepTimeRemaining = step.timeRemaining
                     currStepExpiryDate = step.expiryDate
                 }
+                indexPathsToReload.append(IndexPath(row: index, section: 0))
             }
         }
+        
+        //this is similar to the block that's in unpauseStepArr (RecipeEntity.swift)
+        //we are resetting the startdate in both cases
+        //however this block allows us to reset in real time
+        if (toStep != 0) {
+            startDate = Date().addingTimeInterval(-timePassed)
+
+        } else {
+            startDate = Date()
+        }
+        return indexPathsToReload
     }
     
-    /*
-        Adjusts time by number of seconds. We could add or minus to modify the time
-    */
+    /// Adjusts time by number of seconds. We could add or minus to modify the time
     func adjustTime(by seconds: Double, selectedStep: Int) throws {
         let sortedSet = sortStepsByPriority()
         let step = sortedSet[selectedStep]
         if (selectedStep >= currStepPriority && !step.isComplete) {
-            step.expiryDate?.addTimeInterval(seconds)
             step.timeRemaining = step.timeRemaining + seconds
+//            step.expiryDate?.addTimeInterval(seconds)
+            step.updateExpiry()
         } else if (step.isComplete) {
             throw StepOptionsError.StepAlreadyComplete(message: "")
         } else {
@@ -268,18 +287,21 @@ extension RecipeEntity {
         CoreDataHandler.saveContext()
     }
     
+    
+    /// This block is referenced in resetEntireRecipeTo(toStep:). We must reset the startDate here, as it's possible the user may
+    /// not immediately begin/unpause the recipe. We assume there is a delay in between resetting and unpausing. Resetting the startDate
+    /// here allows us to calculate the new startDate when the user unpauses, rather than from the point of reset.
+    
     func unpauseStepArr() {
+        var timePassed: Double = 0.0
         let sortedSteps = sortStepsByPriority()
         isPaused = false
         // step expiry date not including the pause interval
-        if (wasReset) {
-            pauseStartDate = Date()
-            startDate = Date()
-            //update expiry for first step
-            wasReset = false
-        }
-        
         for s in sortedSteps {
+            print("timeRemaining \(s.timeRemaining)")
+            if (s.timeRemaining <= 0.0) {
+                timePassed += s.totalTime
+            }
             if(self.isPaused) {
                 s.isPausedPrimary = false
             }
@@ -288,10 +310,17 @@ extension RecipeEntity {
             }
         }
         
-        let interval = calculatePauseInterval()
-        pauseTimeInterval = pauseTimeInterval + interval
-        
-//        currStepPriority
+        if (wasReset) {
+            pauseStartDate = Date()
+            
+            startDate = Date().addingTimeInterval(-timePassed)
+            //update expiry for first step
+            wasReset = false
+        }
+
+        let tempInterval = calculatePauseInterval()
+        pauseTimeInterval = pauseTimeInterval + tempInterval
+        print("pauseTimeInterval \(pauseTimeInterval) interval \(tempInterval)")
         CoreDataHandler.saveContext()
     }
 }

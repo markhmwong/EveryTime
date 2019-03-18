@@ -402,12 +402,24 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
         let step = stepArr[stepSelected]
         if (step.isComplete) {
             DispatchQueue.main.async {
+                self.extraOptionsMinusTime.isEnabled = false
+                self.extraOptionsMinusTime.alpha = 0.4
+                
+                self.extraOptionsAddTime.isEnabled = false
+                self.extraOptionsAddTime.alpha = 0.4
+                
                 self.extraOptionsResetTime.alpha = 1.0
                 self.extraOptionsResetTime.isEnabled = true
             }
         } else {
             // can't reset a step that has not begun yet. that's skipping steps.
             DispatchQueue.main.async {
+                self.extraOptionsMinusTime.isEnabled = true
+                self.extraOptionsMinusTime.alpha = 1.0
+                
+                self.extraOptionsAddTime.isEnabled = true
+                self.extraOptionsAddTime.alpha = 1.0
+                
                 self.extraOptionsResetTime.alpha = 0.4
                 self.extraOptionsResetTime.isEnabled = false
             }
@@ -585,12 +597,10 @@ extension RecipeViewControllerWithTableView {
 */
 extension RecipeViewControllerWithTableView {
     @objc func handleResetStepTime() {
-        recipe.resetEntireRecipeTo(toStep: stepSelected)
-        CoreDataHandler.saveContext()
         var indexPathsToReloadArr: [IndexPath] = []
-        for i in self.stepSelected..<self.stepArr.count {
-            indexPathsToReloadArr.append(IndexPath(row: i, section: 0))
-        }
+        self.recipe.wasReset = true
+        indexPathsToReloadArr = recipe.resetEntireRecipeTo(toStep: stepSelected)
+        CoreDataHandler.saveContext()
         DispatchQueue.main.async {
             self.tableView.reloadRows(at: indexPathsToReloadArr, with: .none)
             self.executeBottomViewState(.ShowAddStep)
@@ -608,8 +618,10 @@ extension RecipeViewControllerWithTableView {
         let alert = UIAlertController(title: "Are you sure?", message: "Reset cannot be undone", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
-            self.recipe.resetEntireRecipeTo()
+            var indexPathsToReloadArr: [IndexPath] = []
+            indexPathsToReloadArr = self.recipe.resetEntireRecipeTo()
             self.recipe.wasReset = true
+
             let id = "\(self.recipe.recipeName!).\(self.recipe.createdDate!)"
             if (self.recipe.isPaused) {
                 //remove the notification because the recipe is paused, we don't need the notification to be pending to be delivered.
@@ -618,10 +630,11 @@ extension RecipeViewControllerWithTableView {
                 //reset localnotification
                 LocalNotificationsService.shared.addRecipeWideNotification(identifier: id, notificationContent: [NotificationDictionaryKeys.Title.rawValue : self.recipe.recipeName!], timeRemaining: self.recipe.totalTimeRemaining)
             }
-
+            
             CoreDataHandler.saveContext()
             DispatchQueue.main.async {
-                self.tableView.reloadData()
+                self.tableView.reloadRows(at: indexPathsToReloadArr, with: .none)
+                self.executeBottomViewState(.ShowAddStep)
             }
         }))
         present(alert, animated: true, completion: nil)
