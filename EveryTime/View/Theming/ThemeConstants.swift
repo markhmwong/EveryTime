@@ -43,6 +43,7 @@ struct Theme {
             static var Header: CGFloat { return 20.0 }
             static var About: CGFloat { return 14.0 }
             static var Error: CGFloat { return 12.0 }
+            static var CompleteDot: CGFloat { return 30.0 }
         }
         
         //spacing between characters
@@ -90,9 +91,8 @@ struct Theme {
             static let AddStep: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.AddStepPlaceholder)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
             static let CellNameAttribute: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.StepCellTitle)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
             static let CellTimeAttribute: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.StepCellTime)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TimerKernValue]
-            static let CellIndicatorComplete: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.StepCellTitle)!, NSAttributedString.Key.foregroundColor: tf.Color.StepCellCompleteIndicator, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
-            static let CellIndicatorIncomplete: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.StepCellTitle)!, NSAttributedString.Key.foregroundColor: tf.Color.StepCellIncompleteIndicator, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
-
+            static let CellIndicatorComplete: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.CompleteDot)!, NSAttributedString.Key.foregroundColor: tf.Color.StepCellCompleteIndicator, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
+            static let CellIndicatorIncomplete: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.CompleteDot)!, NSAttributedString.Key.foregroundColor: tf.Color.StepCellIncompleteIndicator, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
         }
         
         struct Nav {

@@ -169,11 +169,11 @@ extension RecipeEntity {
         let sortedSet = sortStepsByPriority()
         startDate = Date()
         pauseTimeInterval = 0.0
-        totalTimeRemaining = 0.0
+//        totalTimeRemaining = 0.0
         for (index, step) in sortedSet.enumerated() {
             if (index >= toStep) {
                 step.resetStep()
-                totalTimeRemaining += step.timeRemaining
+//                totalTimeRemaining += step.timeRemaining// this is causing it have odd behavior with the recipe time
                 if (step.priority == toStep) {
                     currStepPriority = step.priority
                     currStepTimeRemaining = step.timeRemaining

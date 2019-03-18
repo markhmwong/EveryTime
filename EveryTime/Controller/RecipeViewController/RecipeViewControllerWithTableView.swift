@@ -10,8 +10,8 @@ import UIKit
 import AVFoundation
 
 enum BottomViewState: Int {
-    case StepOptions
-    case AddStep
+    case ShowStepOptions
+    case ShowAddStep
 }
 
 class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewControllerDelegate {
@@ -148,7 +148,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     override func prepareViewController() {
         super.prepareViewController()
         setNeedsStatusBarAppearanceUpdate()
-        bottomViewState = .AddStep
+        bottomViewState = .ShowAddStep
     }
     fileprivate lazy var border: UIView = {
         let view = UIView()
@@ -454,7 +454,6 @@ extension RecipeViewControllerWithTableView: TimerProtocol {
             let s = stepArr[stepPriorityToUpdate]
             if (s.timeRemaining.isLessThanOrEqualTo(0.0) && s.isComplete == true) {
                 //to next step
-//                updateCurrentStep(step: s)
                 updateNewLeadingTimer(indexPath: currPriorityIndexPath)
             } else {
                 // this next block of code is repeated in 3 places... but i nee dto expose the if statement so I can play the sound
@@ -465,8 +464,6 @@ extension RecipeViewControllerWithTableView: TimerProtocol {
                 } else {
                     s.updateTimeRemaining()
                 }
-                //
-//                s.updateTotalTimeRemaining()
             }
             
             if (visibleCell.contains(IndexPath(item: stepPriorityToUpdate, section: 0))) {
@@ -540,8 +537,8 @@ extension RecipeViewControllerWithTableView {
         guard let viewState = bottomViewState else {
             return
         }
-        if (viewState == .StepOptions) {
-            executeBottomViewState(.AddStep)
+        if (viewState == .ShowStepOptions) {
+            executeBottomViewState(.ShowAddStep)
         }
     }
     
@@ -550,11 +547,11 @@ extension RecipeViewControllerWithTableView {
             return
         }
         switch viewState {
-        case .StepOptions:
-            bottomViewState = .AddStep
+        case .ShowStepOptions:
+            bottomViewState = .ShowAddStep
             executeBottomViewState(bottomViewState!)
-        case .AddStep:
-            bottomViewState = .StepOptions
+        case .ShowAddStep:
+            bottomViewState = .ShowStepOptions
             executeBottomViewState(bottomViewState!)
         }
     }
@@ -564,18 +561,18 @@ extension RecipeViewControllerWithTableView {
             return
         }
         
-        if (viewState == .AddStep) {
-            executeBottomViewState(.StepOptions)
+        if (viewState == .ShowAddStep) {
+            executeBottomViewState(.ShowStepOptions)
         }
     }
 
     
     func executeBottomViewState(_ viewState: BottomViewState) {
         switch viewState {
-        case .StepOptions:
+        case .ShowStepOptions:
             hideStepButtonAnimation()
             showTimerOptions()
-        case .AddStep:
+        case .ShowAddStep:
             hideTimerOptions()
             showStepButtonAnimation()
         }
@@ -590,13 +587,13 @@ extension RecipeViewControllerWithTableView {
     @objc func handleResetStepTime() {
         recipe.resetEntireRecipeTo(toStep: stepSelected)
         CoreDataHandler.saveContext()
-        var indexPathArr: [IndexPath] = []
+        var indexPathsToReloadArr: [IndexPath] = []
+        for i in self.stepSelected..<self.stepArr.count {
+            indexPathsToReloadArr.append(IndexPath(row: i, section: 0))
+        }
         DispatchQueue.main.async {
-            
-            for i in self.stepSelected..<self.stepArr.count {
-                indexPathArr.append(IndexPath(row: i, section: 0))
-            }
-            self.tableView.reloadRows(at: indexPathArr, with: .none)
+            self.tableView.reloadRows(at: indexPathsToReloadArr, with: .none)
+            self.executeBottomViewState(.ShowAddStep)
         }
     }
     
@@ -616,7 +613,7 @@ extension RecipeViewControllerWithTableView {
             let id = "\(self.recipe.recipeName!).\(self.recipe.createdDate!)"
             if (self.recipe.isPaused) {
                 //remove the notification because the recipe is paused, we don't need the notification to be pending to be delivered.
-                LocalNotificationsService.shared.notificationCenterInstance().removePendingNotificationRequests(withIdentifiers: [id])
+            LocalNotificationsService.shared.notificationCenterInstance().removePendingNotificationRequests(withIdentifiers: [id])
             } else {
                 //reset localnotification
                 LocalNotificationsService.shared.addRecipeWideNotification(identifier: id, notificationContent: [NotificationDictionaryKeys.Title.rawValue : self.recipe.recipeName!], timeRemaining: self.recipe.totalTimeRemaining)

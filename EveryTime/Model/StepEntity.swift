@@ -59,15 +59,6 @@ extension StepEntity {
         return TimeInterval((hours * 3600) + (minutes * 60) + seconds)
     }
     
-//    func updateTotalTimeRemaining() {
-//        if (timeRemaining <= 0.0) {
-//
-//            print("complete step")
-//        } else {
-//            updateTimeRemaining()
-//        }
-//    }
-    
     func updateStep() {
         timeRemaining = 0.0
         isComplete = true
