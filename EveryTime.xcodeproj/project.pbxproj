@@ -40,6 +40,15 @@
 		4D6E35382215435900CBCC23 /* AddRecipeWizardError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6E35372215435900CBCC23 /* AddRecipeWizardError.swift */; };
 		4D6E353A22154C7C00CBCC23 /* AddRecipeStepOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6E353922154C7C00CBCC23 /* AddRecipeStepOne.swift */; };
 		4D6E353C22154CE000CBCC23 /* AddRecipeStepTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6E353B22154CE000CBCC23 /* AddRecipeStepTwo.swift */; };
+		4D94E5D5223E74DA0009F176 /* LocalNotificationsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D94E5D4223E74DA0009F176 /* LocalNotificationsService.swift */; };
+		4D9986C1223CA3080049D55C /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D9986BF223CA3080049D55C /* Interface.storyboard */; };
+		4D9986C3223CA3090049D55C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D9986C2223CA3090049D55C /* Assets.xcassets */; };
+		4D9986CA223CA3090049D55C /* EveryTimeW Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4D9986C9223CA3090049D55C /* EveryTimeW Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4D9986CF223CA3090049D55C /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9986CE223CA3090049D55C /* InterfaceController.swift */; };
+		4D9986D1223CA3090049D55C /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9986D0223CA3090049D55C /* ExtensionDelegate.swift */; };
+		4D9986D3223CA3090049D55C /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9986D2223CA3090049D55C /* NotificationController.swift */; };
+		4D9986D5223CA30A0049D55C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D9986D4223CA30A0049D55C /* Assets.xcassets */; };
+		4D9986DA223CA30A0049D55C /* EveryTimeW.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 4D9986BD223CA3080049D55C /* EveryTimeW.app */; };
 		4DA12F6F21B181460049CD75 /* StepsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA12F6E21B181460049CD75 /* StepsProtocol.swift */; };
 		4DA12F7121B2D3990049CD75 /* StepCellForAddRecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA12F7021B2D3990049CD75 /* StepCellForAddRecipe.swift */; };
 		4DA12F7321B2D3DD0049CD75 /* EntityBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA12F7221B2D3DD0049CD75 /* EntityBaseCell.swift */; };
@@ -69,7 +78,46 @@
 			remoteGlobalIDString = 4D0C4B4221AEC73A00153E76;
 			remoteInfo = SimpleRecipeTimer;
 		};
+		4D9986CB223CA3090049D55C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D0C4B3B21AEC73A00153E76 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D9986C8223CA3090049D55C;
+			remoteInfo = "EveryTimeW Extension";
+		};
+		4D9986D8223CA30A0049D55C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D0C4B3B21AEC73A00153E76 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D9986BC223CA3080049D55C;
+			remoteInfo = EveryTimeW;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4D9986E0223CA30A0049D55C /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				4D9986CA223CA3090049D55C /* EveryTimeW Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4D9986E2223CA30A0049D55C /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				4D9986DA223CA30A0049D55C /* EveryTimeW.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4D0C4B4321AEC73A00153E76 /* EveryTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EveryTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,6 +159,20 @@
 		4D6E35372215435900CBCC23 /* AddRecipeWizardError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeWizardError.swift; sourceTree = "<group>"; };
 		4D6E353922154C7C00CBCC23 /* AddRecipeStepOne.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeStepOne.swift; sourceTree = "<group>"; };
 		4D6E353B22154CE000CBCC23 /* AddRecipeStepTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeStepTwo.swift; sourceTree = "<group>"; };
+		4D94E5D1223CC6430009F176 /* EveryTime.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EveryTime.entitlements; sourceTree = "<group>"; };
+		4D94E5D2223CC6570009F176 /* EveryTimeW.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EveryTimeW.entitlements; sourceTree = "<group>"; };
+		4D94E5D4223E74DA0009F176 /* LocalNotificationsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsService.swift; sourceTree = "<group>"; };
+		4D9986BD223CA3080049D55C /* EveryTimeW.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EveryTimeW.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D9986C0223CA3080049D55C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		4D9986C2223CA3090049D55C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4D9986C4223CA3090049D55C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D9986C9223CA3090049D55C /* EveryTimeW Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "EveryTimeW Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D9986CE223CA3090049D55C /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		4D9986D0223CA3090049D55C /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		4D9986D2223CA3090049D55C /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		4D9986D4223CA30A0049D55C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4D9986D6223CA30A0049D55C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D9986D7223CA30A0049D55C /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		4DA12F6E21B181460049CD75 /* StepsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepsProtocol.swift; sourceTree = "<group>"; };
 		4DA12F7021B2D3990049CD75 /* StepCellForAddRecipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepCellForAddRecipe.swift; sourceTree = "<group>"; };
 		4DA12F7221B2D3DD0049CD75 /* EntityBaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityBaseCell.swift; sourceTree = "<group>"; };
@@ -147,6 +209,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4D9986C6223CA3090049D55C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -156,6 +225,8 @@
 				4D0C4B4521AEC73A00153E76 /* EveryTime */,
 				4D0C4B5D21AEC73D00153E76 /* TimeableTests */,
 				4D0C4B6821AEC73D00153E76 /* TimeableUITests */,
+				4D9986BE223CA3080049D55C /* EveryTimeW */,
+				4D9986CD223CA3090049D55C /* EveryTimeW Extension */,
 				4D0C4B4421AEC73A00153E76 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -166,6 +237,8 @@
 				4D0C4B4321AEC73A00153E76 /* EveryTime.app */,
 				4D0C4B5A21AEC73D00153E76 /* EveryTimeTests.xctest */,
 				4D0C4B6521AEC73D00153E76 /* EveryTimeUITests.xctest */,
+				4D9986BD223CA3080049D55C /* EveryTimeW.app */,
+				4D9986C9223CA3090049D55C /* EveryTimeW Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -173,6 +246,8 @@
 		4D0C4B4521AEC73A00153E76 /* EveryTime */ = {
 			isa = PBXGroup;
 			children = (
+				4D94E5D3223E74C10009F176 /* Notifications */,
+				4D94E5D1223CC6430009F176 /* EveryTime.entitlements */,
 				4D0C4B4621AEC73A00153E76 /* AppDelegate.swift */,
 				4DA12F7B21B611A10049CD75 /* Extensions */,
 				4DA12F6921B108690049CD75 /* Controller */,
@@ -326,6 +401,38 @@
 			path = Error;
 			sourceTree = "<group>";
 		};
+		4D94E5D3223E74C10009F176 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				4D94E5D4223E74DA0009F176 /* LocalNotificationsService.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
+		4D9986BE223CA3080049D55C /* EveryTimeW */ = {
+			isa = PBXGroup;
+			children = (
+				4D94E5D2223CC6570009F176 /* EveryTimeW.entitlements */,
+				4D9986BF223CA3080049D55C /* Interface.storyboard */,
+				4D9986C2223CA3090049D55C /* Assets.xcassets */,
+				4D9986C4223CA3090049D55C /* Info.plist */,
+			);
+			path = EveryTimeW;
+			sourceTree = "<group>";
+		};
+		4D9986CD223CA3090049D55C /* EveryTimeW Extension */ = {
+			isa = PBXGroup;
+			children = (
+				4D9986CE223CA3090049D55C /* InterfaceController.swift */,
+				4D9986D0223CA3090049D55C /* ExtensionDelegate.swift */,
+				4D9986D2223CA3090049D55C /* NotificationController.swift */,
+				4D9986D4223CA30A0049D55C /* Assets.xcassets */,
+				4D9986D6223CA30A0049D55C /* Info.plist */,
+				4D9986D7223CA30A0049D55C /* PushNotificationPayload.apns */,
+			);
+			path = "EveryTimeW Extension";
+			sourceTree = "<group>";
+		};
 		4DA12F6921B108690049CD75 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -401,10 +508,12 @@
 				4D0C4B3F21AEC73A00153E76 /* Sources */,
 				4D0C4B4021AEC73A00153E76 /* Frameworks */,
 				4D0C4B4121AEC73A00153E76 /* Resources */,
+				4D9986E2223CA30A0049D55C /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				4D9986D9223CA30A0049D55C /* PBXTargetDependency */,
 			);
 			name = EveryTime;
 			productName = SimpleRecipeTimer;
@@ -447,6 +556,40 @@
 			productReference = 4D0C4B6521AEC73D00153E76 /* EveryTimeUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		4D9986BC223CA3080049D55C /* EveryTimeW */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D9986E1223CA30A0049D55C /* Build configuration list for PBXNativeTarget "EveryTimeW" */;
+			buildPhases = (
+				4D9986BB223CA3080049D55C /* Resources */,
+				4D9986E0223CA30A0049D55C /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4D9986CC223CA3090049D55C /* PBXTargetDependency */,
+			);
+			name = EveryTimeW;
+			productName = EveryTimeW;
+			productReference = 4D9986BD223CA3080049D55C /* EveryTimeW.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		4D9986C8223CA3090049D55C /* EveryTimeW Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D9986DF223CA30A0049D55C /* Build configuration list for PBXNativeTarget "EveryTimeW Extension" */;
+			buildPhases = (
+				4D9986C5223CA3090049D55C /* Sources */,
+				4D9986C6223CA3090049D55C /* Frameworks */,
+				4D9986C7223CA3090049D55C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "EveryTimeW Extension";
+			productName = "EveryTimeW Extension";
+			productReference = 4D9986C9223CA3090049D55C /* EveryTimeW Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -459,6 +602,11 @@
 				TargetAttributes = {
 					4D0C4B4221AEC73A00153E76 = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					4D0C4B5921AEC73D00153E76 = {
 						CreatedOnToolsVersion = 10.1;
@@ -467,6 +615,17 @@
 					4D0C4B6421AEC73D00153E76 = {
 						CreatedOnToolsVersion = 10.1;
 						TestTargetID = 4D0C4B4221AEC73A00153E76;
+					};
+					4D9986BC223CA3080049D55C = {
+						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					4D9986C8223CA3090049D55C = {
+						CreatedOnToolsVersion = 10.1;
 					};
 				};
 			};
@@ -486,6 +645,8 @@
 				4D0C4B4221AEC73A00153E76 /* EveryTime */,
 				4D0C4B5921AEC73D00153E76 /* EveryTimeTests */,
 				4D0C4B6421AEC73D00153E76 /* EveryTimeUITests */,
+				4D9986BC223CA3080049D55C /* EveryTimeW */,
+				4D9986C8223CA3090049D55C /* EveryTimeW Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -515,6 +676,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4D9986BB223CA3080049D55C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D9986C3223CA3090049D55C /* Assets.xcassets in Resources */,
+				4D9986C1223CA3080049D55C /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4D9986C7223CA3090049D55C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D9986D5223CA30A0049D55C /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -541,6 +719,7 @@
 				4D53F7CE21ED6CB200C0AF31 /* NavView.swift in Sources */,
 				4D6E353C22154CE000CBCC23 /* AddRecipeStepTwo.swift in Sources */,
 				4D53F8AB21F36F5500C0AF31 /* HorizontalTransitionDelegate.swift in Sources */,
+				4D94E5D5223E74DA0009F176 /* LocalNotificationsService.swift in Sources */,
 				4D0C4B4F21AEC73A00153E76 /* SimpleRecipeTimer.xcdatamodeld in Sources */,
 				4DA12F7621B358AB0049CD75 /* RecipeCell.swift in Sources */,
 				4D53F89C21F1A42200C0AF31 /* OverlayInteractor.swift in Sources */,
@@ -581,6 +760,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4D9986C5223CA3090049D55C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D9986D3223CA3090049D55C /* NotificationController.swift in Sources */,
+				4D9986D1223CA3090049D55C /* ExtensionDelegate.swift in Sources */,
+				4D9986CF223CA3090049D55C /* InterfaceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -593,6 +782,16 @@
 			isa = PBXTargetDependency;
 			target = 4D0C4B4221AEC73A00153E76 /* EveryTime */;
 			targetProxy = 4D0C4B6621AEC73D00153E76 /* PBXContainerItemProxy */;
+		};
+		4D9986CC223CA3090049D55C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4D9986C8223CA3090049D55C /* EveryTimeW Extension */;
+			targetProxy = 4D9986CB223CA3090049D55C /* PBXContainerItemProxy */;
+		};
+		4D9986D9223CA30A0049D55C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4D9986BC223CA3080049D55C /* EveryTimeW */;
+			targetProxy = 4D9986D8223CA30A0049D55C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -611,6 +810,14 @@
 				4D0C4B5321AEC73C00153E76 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		4D9986BF223CA3080049D55C /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4D9986C0223CA3080049D55C /* Base */,
+			);
+			name = Interface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -736,6 +943,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = EveryTime/EveryTime.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GEKZN86RYS;
 				INFOPLIST_FILE = EveryTime/Info.plist;
@@ -754,6 +962,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = EveryTime/EveryTime.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GEKZN86RYS;
 				INFOPLIST_FILE = EveryTime/Info.plist;
@@ -850,6 +1059,90 @@
 			};
 			name = Release;
 		};
+		4D9986DB223CA30A0049D55C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = EveryTimeW/EveryTimeW.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GEKZN86RYS;
+				IBSC_MODULE = EveryTimeW_Extension;
+				INFOPLIST_FILE = EveryTimeW/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.whizbang.EveryTime.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 5.1;
+			};
+			name = Debug;
+		};
+		4D9986DC223CA30A0049D55C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = EveryTimeW/EveryTimeW.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GEKZN86RYS;
+				IBSC_MODULE = EveryTimeW_Extension;
+				INFOPLIST_FILE = EveryTimeW/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.whizbang.EveryTime.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 5.1;
+			};
+			name = Release;
+		};
+		4D9986DD223CA30A0049D55C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GEKZN86RYS;
+				INFOPLIST_FILE = "EveryTimeW Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.whizbang.EveryTime.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 5.1;
+			};
+			name = Debug;
+		};
+		4D9986DE223CA30A0049D55C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GEKZN86RYS;
+				INFOPLIST_FILE = "EveryTimeW Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.whizbang.EveryTime.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 5.1;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -885,6 +1178,24 @@
 			buildConfigurations = (
 				4D0C4B7521AEC73D00153E76 /* Debug */,
 				4D0C4B7621AEC73D00153E76 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4D9986DF223CA30A0049D55C /* Build configuration list for PBXNativeTarget "EveryTimeW Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D9986DD223CA30A0049D55C /* Debug */,
+				4D9986DE223CA30A0049D55C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4D9986E1223CA30A0049D55C /* Build configuration list for PBXNativeTarget "EveryTimeW" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D9986DB223CA30A0049D55C /* Debug */,
+				4D9986DC223CA30A0049D55C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

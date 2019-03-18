@@ -130,20 +130,29 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
         
         //should be done in the model. let the VC update the cell
         if let r = entity {
-            DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-                guard let self = self else {
+            let pauseButtonText = r.isPaused ? "stop" : "start"
+            let textColor = r.isPaused ? Theme.Font.Color.TextColour : Theme.Font.Color.TextColourDisabled
+            if (r.isPaused) {
+                mvc.unpauseEntireRecipe(recipe: r)
+                self.updatePauseButton(pauseButtonText, textColor)
+
+                guard let sName = r.currStepName else {
                     return
                 }
-                let pauseButtonText = r.isPaused ? "stop" : "start"
-                let textColor = r.isPaused ? Theme.Font.Color.TextColour : Theme.Font.Color.TextColourDisabled
-                if (r.isPaused) {
-                    mvc.unpauseEntireRecipe(recipe: r)
-                    self.updatePauseButton(pauseButtonText, textColor)
-                } else {
-                    
-                    mvc.pauseEntireRecipe(recipe: r)
-                    self.updatePauseButton(pauseButtonText, textColor)
+                guard let rName = r.recipeName else {
+                    return
                 }
+                guard let createdDate = r.createdDate else {
+                    return
+                }
+                
+                let identifier = "\(rName).\(createdDate)"
+                //recipe notification
+                LocalNotificationsService.shared.addRecipeWideNotification(identifier: identifier, notificationContent: [NotificationDictionaryKeys.Title.rawValue : rName], timeRemaining: r.totalTimeRemaining)
+            } else {
+                LocalNotificationsService.shared.notificationCenterInstance().removeAllPendingNotificationRequests()
+                mvc.pauseEntireRecipe(recipe: r)
+                self.updatePauseButton(pauseButtonText, textColor)
             }
         }
     }

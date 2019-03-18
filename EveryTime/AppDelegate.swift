@@ -31,7 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillResignActive(_ application: UIApplication) {
         CoreDataHandler.saveContext()
-
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -59,7 +58,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         })
         container.viewContext.mergePolicy = NSMergePolicy(merge: NSMergePolicyType.mergeByPropertyObjectTrumpMergePolicyType);
-        
         return container
     }()
 

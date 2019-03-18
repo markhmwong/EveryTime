@@ -306,20 +306,18 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     func updateNewLeadingTimer(indexPath: IndexPath) {
         let maxItems = tableView.numberOfRows(inSection: 0) - 1
         let currIndex = indexPath.item
-
+        guard let r = recipe else {
+            return
+        }
         if (currIndex < maxItems) {
             let nextEntity = stepArr[currIndex + 1]
-            
-            guard let r = recipe else {
-                return
-            }
-            playSound()
             nextEntity.isLeading = true
             nextEntity.isComplete = false
             nextEntity.updateExpiry()
             r.updateStepInRecipe(nextEntity)
         }
     }
+
     
     /**
      # Plays sound when a step completes
@@ -438,7 +436,7 @@ extension RecipeViewControllerWithTableView: TimerProtocol {
     }
     
     @objc func update() {
-        //updates specific cell only
+        //updates specific cell only - issue it won't continue to the next cell
         if (!recipe.isPaused) {
             let visibleCellIndexPaths = self.tableView.indexPathsForVisibleRows?.sorted { (x, y) -> Bool in
                 return x < y
@@ -456,10 +454,19 @@ extension RecipeViewControllerWithTableView: TimerProtocol {
             let s = stepArr[stepPriorityToUpdate]
             if (s.timeRemaining.isLessThanOrEqualTo(0.0) && s.isComplete == true) {
                 //to next step
-                updateCurrentStep(step: s) //because the current active step is no longer valid
+//                updateCurrentStep(step: s)
                 updateNewLeadingTimer(indexPath: currPriorityIndexPath)
             } else {
-                s.updateTotalTimeRemaining()
+                // this next block of code is repeated in 3 places... but i nee dto expose the if statement so I can play the sound
+                //Updates the current step
+                if (s.timeRemaining <= 0.0) {
+                    s.updateStep()
+                    playSound()
+                } else {
+                    s.updateTimeRemaining()
+                }
+                //
+//                s.updateTotalTimeRemaining()
             }
             
             if (visibleCell.contains(IndexPath(item: stepPriorityToUpdate, section: 0))) {
@@ -534,7 +541,6 @@ extension RecipeViewControllerWithTableView {
             return
         }
         if (viewState == .StepOptions) {
-            print("addstep")
             executeBottomViewState(.AddStep)
         }
     }
@@ -593,27 +599,35 @@ extension RecipeViewControllerWithTableView {
             self.tableView.reloadRows(at: indexPathArr, with: .none)
         }
     }
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }
+    
     /**
      # Full Recipe reset
      */
     @objc func handleReset() {
-        
         let alert = UIAlertController(title: "Are you sure?", message: "Reset cannot be undone", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
             self.recipe.resetEntireRecipeTo()
             self.recipe.wasReset = true
+            let id = "\(self.recipe.recipeName!).\(self.recipe.createdDate!)"
+            if (self.recipe.isPaused) {
+                //remove the notification because the recipe is paused, we don't need the notification to be pending to be delivered.
+                LocalNotificationsService.shared.notificationCenterInstance().removePendingNotificationRequests(withIdentifiers: [id])
+            } else {
+                //reset localnotification
+                LocalNotificationsService.shared.addRecipeWideNotification(identifier: id, notificationContent: [NotificationDictionaryKeys.Title.rawValue : self.recipe.recipeName!], timeRemaining: self.recipe.totalTimeRemaining)
+            }
+
             CoreDataHandler.saveContext()
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }))
         present(alert, animated: true, completion: nil)
-        
-        
     }
     
     @objc func handleDismiss() {

@@ -20,7 +20,7 @@ class RecipeEntity: NSManagedObject {
         self.init(entity: RecipeEntity.entity(), insertInto: CoreDataHandler.getContext())
         self.recipeName = name
         self.isPaused = true
-        self.createdDate = Date() //like an ID
+        self.createdDate = Date() //like an ID, don't change through the lifecycle of the recipe
         self.startDate = self.createdDate
         self.pauseStartDate = self.createdDate
         self.wasReset = false
@@ -162,14 +162,18 @@ extension RecipeEntity {
     
     /**
         Reset entire recipe
+     
+        Doubles as a full reset and a partial reset
      */
     func resetEntireRecipeTo(toStep: Int = 0) {
         let sortedSet = sortStepsByPriority()
         startDate = Date()
         pauseTimeInterval = 0.0
+        totalTimeRemaining = 0.0
         for (index, step) in sortedSet.enumerated() {
             if (index >= toStep) {
                 step.resetStep()
+                totalTimeRemaining += step.timeRemaining
                 if (step.priority == toStep) {
                     currStepPriority = step.priority
                     currStepTimeRemaining = step.timeRemaining
@@ -244,13 +248,18 @@ extension RecipeEntity {
 /* Pausing */
 extension RecipeEntity {
     func pauseStepArr() {
-        CoreDataHandler.getPrivateContext().perform {
+        //        CoreDataHandler.getPrivateContext().perform {
+        CoreDataHandler.getContext().perform {
             let stepSet = self.step as! Set<StepEntity>
             self.isPaused = true
             
             for s in stepSet {
                 if(!self.isPaused) {
-                    s.updateTotalTimeRemaining()
+                    if (s.timeRemaining <= 0.0) {
+                        s.updateStep()
+                    } else {
+                        s.updateTimeRemaining()
+                    }
                     s.isPausedPrimary = true
                 }
             }

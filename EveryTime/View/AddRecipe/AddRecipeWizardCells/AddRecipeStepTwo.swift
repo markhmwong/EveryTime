@@ -293,13 +293,14 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         }
         
         if (saveToCoreData) {
+            
             dismissViewControllerAndUpdateCollectionView()
         }
     }
     
     //ensure the perform block operates correctly
     func dismissViewControllerAndUpdateCollectionView() {
-        CoreDataHandler.getPrivateContext().perform {
+        CoreDataHandler.getContext().perform {
             let rEntity = RecipeEntity(name: self.recipeName)
             for (index, s) in self.dataSource.enumerated() {
                 let sEntity = StepEntity(name: s.name, hours: s.hours, minutes: s.minutes, seconds: s.seconds, priority: s.priority)

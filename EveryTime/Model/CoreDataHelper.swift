@@ -9,15 +9,53 @@
 //import Foundation
 import CoreData
 import UIKit
-import Foundation
+
 
 class CoreDataHandler {
     fileprivate static let debug: Bool = true
     fileprivate static var context: NSManagedObjectContext? = nil
     
+    class func sharedAppGroup() -> String {
+        return "group.com.whizbang.EveryTime"
+    }
+    
+    class func managedObjecModel() -> NSManagedObjectModel {
+        let proxyBundle = Bundle(identifier: "com.whizbang.EveryTime")
+        let modelURL = proxyBundle?.url(forResource: "SimpleRecipeTimer", withExtension: "momd")
+        return NSManagedObjectModel(contentsOf: modelURL!)!
+    }
+    
+    class func persistantStoreCoordinator() -> NSPersistentStoreCoordinator? {
+        var error:NSError? = nil
+        
+        let sharedContainerURL: URL? = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: CoreDataHandler.sharedAppGroup())
+        if let sharedContainerURL = sharedContainerURL {
+            let storeURL = sharedContainerURL.appendingPathComponent("everytimedb.sqlite")
+            let coordinator: NSPersistentStoreCoordinator? = NSPersistentStoreCoordinator(managedObjectModel: CoreDataHandler.managedObjecModel())
+            
+            do {
+                try coordinator?.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: nil)
+            } catch let error {
+                print("\(error.localizedDescription)")
+            }
+            
+            return coordinator
+        }
+        return nil
+    }
+    
+//    class func getContext() -> NSManagedObjectContext {
+//        let coordinator = CoreDataHandler.persistantStoreCoordinator()
+//        let moc = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)//check
+//        moc.persistentStoreCoordinator = coordinator
+//        return moc
+//    }
+    
+    
     class func loadContext() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         self.context = appDelegate.persistentContainer.viewContext
+//        self.context = CoreDataHandler.getContext()
     }
     
     class func getContext() -> NSManagedObjectContext {
@@ -26,7 +64,7 @@ class CoreDataHandler {
     
     class func getPrivateContext() -> NSManagedObjectContext {
         let privateContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        privateContext.parent = context
+        privateContext.parent = getContext()
         return privateContext
     }
     
@@ -41,13 +79,13 @@ class CoreDataHandler {
                 print("Error saving \(error)")
             }
         }
-
     }
     
-    /*
+    /**
         Fetch generic function
     */
     class func fetchEntity<E: NSManagedObject>(in: E.Type) -> [E]? {
+        
         do {
             let fEntity = E.fetchRequest()
             fEntity.returnsObjectsAsFaults = false
