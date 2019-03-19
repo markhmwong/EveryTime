@@ -70,15 +70,13 @@ class LocalNotificationsService: NSObject {
             }
         })
     }
-    
 
-    
     private func organiseNotification(_ timeRemaining: Double, _ notificationContent: [String: String]) {
         content = nil
         trigger = nil
 
         content = prepareContent(title: notificationContent[NotificationDictionaryKeys.Title.rawValue]!)
-        trigger = prepareTimeInterval(fireIn: 6.0)
+        trigger = prepareTimeInterval(fireIn: timeRemaining)
     }
     
     private func prepareTimeInterval(fireIn: Double) -> UNTimeIntervalNotificationTrigger {

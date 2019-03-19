@@ -160,8 +160,8 @@ class MainViewController: ViewControllerBase {
                 }
     
             if (!appDelegate.hasTopNotch) {
-                    nav.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-                }
+                nav.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+            }
             nav.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
             nav.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
             nav.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05).isActive = true
@@ -235,14 +235,11 @@ class MainViewController: ViewControllerBase {
         func stepComplete(_ date: Date) {
             playSound()
             let index = searchForIndex(date)
-    
-            print(index)
-    
             if (index != -1) {
-                    let cell = collView.cellForItem(at: IndexPath(row: index, section: 0)) as! RecipeCell
-                    //animate bg colour
-                    cell.animateCellForCompleteStep()
-                }
+                let cell = collView.cellForItem(at: IndexPath(row: index, section: 0)) as! RecipeCell
+                //animate bg colour
+                cell.animateCellForCompleteStep()
+            }
         }
     
         //binary search
@@ -253,7 +250,6 @@ class MainViewController: ViewControllerBase {
             while (left <= right) {
         
                     let middle = left + (right - left) / 2
-                    print(middle)
                     if (recipeCollection[middle].createdDate! == date)  {
                             return middle
                         }
@@ -436,7 +432,7 @@ extension MainViewController: TimerProtocol {
         }
 
     @objc func update() {
-        let cells = self.collView.visibleCells as! [RecipeCell]
+        let cells = self.collView.visibleCells as! [RecipeCell] //change this to all cells not just visible
         for cell in cells {
             if let r = cell.entity {
                 if (!r.isPaused) {

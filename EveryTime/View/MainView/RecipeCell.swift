@@ -148,9 +148,10 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
                 
                 let identifier = "\(rName).\(createdDate)"
                 //recipe notification
-                LocalNotificationsService.shared.addRecipeWideNotification(identifier: identifier, notificationContent: [NotificationDictionaryKeys.Title.rawValue : rName], timeRemaining: r.totalTimeRemaining)
+//                LocalNotificationsService.shared.addRecipeWideNotification(identifier: identifier, notificationContent: [NotificationDictionaryKeys.Title.rawValue : rName], timeRemaining: r.totalTimeRemaining)
             } else {
-                LocalNotificationsService.shared.notificationCenterInstance().removeAllPendingNotificationRequests()
+                let id = "\(r.recipeName!).\(r.createdDate!)"
+                LocalNotificationsService.shared.notificationCenterInstance().removePendingNotificationRequests(withIdentifiers: [id])
                 mvc.pauseEntireRecipe(recipe: r)
                 self.updatePauseButton(pauseButtonText, textColor)
             }

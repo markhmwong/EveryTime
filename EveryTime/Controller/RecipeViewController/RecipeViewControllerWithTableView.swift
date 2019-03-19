@@ -27,7 +27,8 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     fileprivate var addButtonState: ScrollingState = .Idle
     fileprivate var stepSelected: Int = 0
     fileprivate lazy var navView: NavView? = nil
-    fileprivate let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 10))
+    fileprivate let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 5))
+    fileprivate var step: StepEntity?
 
     fileprivate lazy var tableView: UITableView = {
         let view: UITableView = UITableView()
@@ -52,42 +53,48 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     fileprivate lazy var editButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(Theme.Font.Color.TextColour, for: .normal)
-        button.setAttributedTitle(NSAttributedString(string: "Edit", attributes: Theme.Font.Nav.Item), for: .normal)
-        button.addTarget(self, action: #selector(handleEdit), for: .touchUpInside)
+        button.setAttributedTitle(NSAttributedString(string: "Settings", attributes: Theme.Font.Nav.Item), for: .normal)
+        button.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    fileprivate lazy var deleteButton: UIButton = {
+    private lazy var saveButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(Theme.Font.Color.TextColour, for: .normal)
-        button.setAttributedTitle(NSAttributedString(string: "Delete", attributes: Theme.Font.Nav.Item), for: .normal)
-        button.addTarget(self, action: #selector(handleDelete), for: .touchUpInside)
+        button.setAttributedTitle(NSAttributedString(string: "Save", attributes: Theme.Font.Nav.Item), for: .normal)
+        button.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.alpha = 0.0
+        button.layer.cornerRadius = 5.0
+        button.layer.backgroundColor = UIColor.green.cgColor
+        button.contentEdgeInsets = UIEdgeInsets(top: 5.0, left: 15.0, bottom: 5.0, right: 15.0)
         return button
     }()
-
+    
     fileprivate lazy var addStepButton: StandardButton = {
         let button = StandardButton(title: "Add Step")
         button.addTarget(self, action: #selector(handleAddStep), for: .touchUpInside)
         return button
     }()
 
-    fileprivate lazy var titleLabel: UILabel = {
+    fileprivate lazy var headerTitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    fileprivate let resetButton: UIButton = {
-       let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setAttributedTitle(NSAttributedString(string: "Reset", attributes: Theme.Font.Nav.Item), for: .normal)
-        button.setTitleColor(UIColor.black, for: .normal)
-        button.addTarget(self, action: #selector(handleReset), for: .touchUpInside)
-        return button
+    fileprivate lazy var headerStepTitleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    fileprivate lazy var headerStepTimeLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
-    fileprivate let timerOptionsView: UIView = {
+    fileprivate let extraOptionsView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.white
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -117,12 +124,19 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    fileprivate let timerOptionsViewTitle: UILabel = {
+    fileprivate let extraOptionsViewTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = NSAttributedString(string: "Step Options", attributes: Theme.Font.Recipe.StepSubTitle)
         return label
     }()
+    fileprivate lazy var border: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     
     init(recipe: RecipeEntity, delegate: MainViewController, indexPath: IndexPath) {
         super.init(nibName: nil, bundle: nil)
@@ -150,13 +164,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         setNeedsStatusBarAppearanceUpdate()
         bottomViewState = .ShowAddStep
     }
-    fileprivate lazy var border: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
 
-    }()
 
     override func prepareView() {
         super.prepareView()
@@ -175,20 +183,25 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         view.addSubview(nav)
         view.addSubview(tableView)
         view.addSubview(addStepButton)
-        view.addSubview(timerOptionsView)
+        view.addSubview(extraOptionsView)
         
-        timerOptionsView.addSubview(border)
-        timerOptionsView.addSubview(timerOptionsViewTitle)
-        timerOptionsView.addSubview(extraOptionsAddTime)
-        timerOptionsView.addSubview(extraOptionsResetTime)
-        timerOptionsView.addSubview(extraOptionsMinusTime)
+        extraOptionsView.addSubview(border)
+        extraOptionsView.addSubview(extraOptionsViewTitle)
+        extraOptionsView.addSubview(extraOptionsAddTime)
+        extraOptionsView.addSubview(extraOptionsResetTime)
+        extraOptionsView.addSubview(extraOptionsMinusTime)
         
         //custom table view header
         headerView.backgroundColor = UIColor.clear
-        titleLabel.attributedText = NSAttributedString(string: recipe.recipeName ?? "No name", attributes: Theme.Font.Recipe.HeaderTableView)
-        headerView.addSubview(titleLabel)
-        headerView.addSubview(resetButton)
-        headerView.addSubview(deleteButton)
+        headerTitleLabel.attributedText = NSAttributedString(string: recipe.recipeName ?? "No name", attributes: Theme.Font.Recipe.HeaderTableView)
+        headerView.addSubview(headerTitleLabel)
+        headerStepTimeLabel.attributedText = NSAttributedString(string: "00h 00m 00s" , attributes: Theme.Font.Recipe.HeaderTableViewContent)
+        headerView.addSubview(headerStepTimeLabel)
+        headerStepTitleLabel.attributedText = NSAttributedString(string: "\(recipe.currStepName!)" , attributes: Theme.Font.Recipe.HeaderTableViewContent)
+        headerView.addSubview(headerStepTitleLabel)
+        //add save button
+
+        headerView.addSubview(saveButton)
         tableView.tableHeaderView = headerView
         
         tableView.register(MainStepTableViewCell.self, forCellReuseIdentifier: stepCellId)
@@ -218,14 +231,17 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).identifier = "tableview bottomanchor"
         
-        titleLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 10).isActive = true
-        titleLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor).isActive = true
+        headerTitleLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 10).isActive = true
+        headerTitleLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 10).isActive = true
         
-        resetButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -10).isActive = true
-        resetButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor).isActive = true
+        headerStepTimeLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 10).isActive = true
+        headerStepTimeLabel.topAnchor.constraint(equalTo: headerTitleLabel.bottomAnchor, constant: 20).isActive = true
         
-        deleteButton.trailingAnchor.constraint(equalTo: resetButton.leadingAnchor, constant: -10).isActive = true
-        deleteButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor).isActive = true
+        headerStepTitleLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 10).isActive = true
+        headerStepTitleLabel.topAnchor.constraint(equalTo: headerStepTimeLabel.bottomAnchor, constant: 5).isActive = true
+
+        saveButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -10).isActive = true
+        saveButton.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10).isActive = true
         
         if (!appDelegate.hasTopNotch) {
             nav.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
@@ -240,25 +256,25 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         addStepButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         addStepButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.33).isActive = true
 
-        timerOptionsView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        timerOptionsView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        timerOptionsView.heightAnchor.constraint(equalToConstant: screenSize.height / 7.5).isActive = true
-        timerOptionsView.topAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        extraOptionsView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        extraOptionsView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        extraOptionsView.heightAnchor.constraint(equalToConstant: screenSize.height / 7.5).isActive = true
+        extraOptionsView.topAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
-        timerOptionsViewTitle.centerXAnchor.constraint(equalTo: timerOptionsView.centerXAnchor).isActive = true
-        timerOptionsViewTitle.topAnchor.constraint(equalTo: timerOptionsView.topAnchor, constant: 10).isActive = true
+        extraOptionsViewTitle.centerXAnchor.constraint(equalTo: extraOptionsView.centerXAnchor).isActive = true
+        extraOptionsViewTitle.topAnchor.constraint(equalTo: extraOptionsView.topAnchor, constant: 10).isActive = true
         
-        extraOptionsAddTime.trailingAnchor.constraint(equalTo: timerOptionsView.leadingAnchor, constant: (screenSize.width / 8) * 2).isActive = true
-        extraOptionsAddTime.centerYAnchor.constraint(equalTo: timerOptionsView.centerYAnchor).isActive = true
+        extraOptionsAddTime.trailingAnchor.constraint(equalTo: extraOptionsView.leadingAnchor, constant: (screenSize.width / 8) * 2).isActive = true
+        extraOptionsAddTime.centerYAnchor.constraint(equalTo: extraOptionsView.centerYAnchor).isActive = true
         
-        extraOptionsMinusTime.leadingAnchor.constraint(equalTo: timerOptionsView.trailingAnchor, constant: -(screenSize.width / 8) * 2).isActive = true
-        extraOptionsMinusTime.centerYAnchor.constraint(equalTo: timerOptionsView.centerYAnchor).isActive = true
-        extraOptionsResetTime.centerXAnchor.constraint(equalTo: timerOptionsView.centerXAnchor, constant: 0).isActive = true
-        extraOptionsResetTime.centerYAnchor.constraint(equalTo: timerOptionsView.centerYAnchor).isActive = true
+        extraOptionsMinusTime.leadingAnchor.constraint(equalTo: extraOptionsView.trailingAnchor, constant: -(screenSize.width / 8) * 2).isActive = true
+        extraOptionsMinusTime.centerYAnchor.constraint(equalTo: extraOptionsView.centerYAnchor).isActive = true
+        extraOptionsResetTime.centerXAnchor.constraint(equalTo: extraOptionsView.centerXAnchor, constant: 0).isActive = true
+        extraOptionsResetTime.centerYAnchor.constraint(equalTo: extraOptionsView.centerYAnchor).isActive = true
         
-        border.topAnchor.constraint(equalTo: timerOptionsView.topAnchor).isActive = true
-        border.leadingAnchor.constraint(equalTo: timerOptionsView.leadingAnchor).isActive = true
-        border.trailingAnchor.constraint(equalTo: timerOptionsView.trailingAnchor).isActive = true
+        border.topAnchor.constraint(equalTo: extraOptionsView.topAnchor).isActive = true
+        border.leadingAnchor.constraint(equalTo: extraOptionsView.leadingAnchor).isActive = true
+        border.trailingAnchor.constraint(equalTo: extraOptionsView.trailingAnchor).isActive = true
         border.heightAnchor.constraint(equalToConstant: 1.5).isActive = true
     }
     
@@ -393,14 +409,15 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
         return "Remove"
     }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         DispatchQueue.main.async {
             tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
         }
         stepSelected = indexPath.row
-        let step = stepArr[stepSelected]
-        if (step.isComplete) {
+        
+        step = stepArr[stepSelected]
+
+        if (step!.isComplete) {
             DispatchQueue.main.async {
                 self.extraOptionsMinusTime.isEnabled = false
                 self.extraOptionsMinusTime.alpha = 0.4
@@ -448,41 +465,78 @@ extension RecipeViewControllerWithTableView: TimerProtocol {
     }
     
     @objc func update() {
-        //updates specific cell only - issue it won't continue to the next cell
+        //updates specific cell only - issue it won't continue to the next cell when the application is in the background
+
         if (!recipe.isPaused) {
+            
+            let sortedSet = recipe.sortStepsByPriority()
+            let tp = recipe.timePassedSinceStart() + recipe.pauseTimeInterval
+            var elapsedTime: Double = 0.0
+            
             let visibleCellIndexPaths = self.tableView.indexPathsForVisibleRows?.sorted { (x, y) -> Bool in
                 return x < y
             }
-            
             guard let visibleCell = visibleCellIndexPaths else {
                 return
             }
             
-            let stepPriorityToUpdate = Int(recipe.currStepPriority) //when parallel timers are enabled, we'll update multiple timers
-            let currPriorityIndexPath = IndexPath(item: stepPriorityToUpdate, section: 0)
-            
-            //updating current leading step entity
-            //on screen
-            let s = stepArr[stepPriorityToUpdate]
-            if (s.timeRemaining.isLessThanOrEqualTo(0.0) && s.isComplete == true) {
-                //to next step
-                updateNewLeadingTimer(indexPath: currPriorityIndexPath)
-            } else {
-                // this next block of code is repeated in 3 places... but i nee dto expose the if statement so I can play the sound
-                //Updates the current step
-                if (s.timeRemaining <= 0.0) {
-                    s.updateStep()
-                    playSound()
+            for step in sortedSet {
+                elapsedTime = elapsedTime + step.totalTime //+ step.timeAdjustment //might need to add on timer adjustment here. but we'll need a new attribute in the core data model
+                let time = elapsedTime - tp
+                recipe.currStepName = step.stepName
+                recipe.currStepPriority = step.priority
+                
+                if (time >= 0.0 && step.isComplete == false) {
+                    //step incomplete
+                    recipe.currStepTimeRemaining = time
+                    step.timeRemaining = time
+                    step.updateExpiry()
+                    step.updateTimeRemaining()
+                    
+                    DispatchQueue.main.async {
+                        self.headerStepTimeLabel.attributedText = NSAttributedString(string: step.timeRemainingToString(), attributes: Theme.Font.Recipe.HeaderTableViewContent)
+                        self.headerStepTitleLabel.attributedText = NSAttributedString(string: step.stepName!, attributes: Theme.Font.Recipe.HeaderTableViewContent)
+                    }
+                    
+                    let priorityIndexPath = IndexPath(item: Int(step.priority), section: 0)
+                    if (visibleCell.contains(priorityIndexPath)) {
+                        let stepCell = tableView.cellForRow(at: priorityIndexPath) as! MainStepTableViewCell
+                        DispatchQueue.main.async {
+
+                            stepCell.updateTimeLabel(time:step.timeRemainingToString())
+                            stepCell.updateCompletionStatusLabel()
+                        }
+                    }
+
+                    break
                 } else {
-                    s.updateTimeRemaining()
+                    //step complete
+                    recipe.currStepTimeRemaining = 0.0
+                    step.timeRemaining = 0.0
+                    step.isComplete = true
+
+                    let priorityIndexPath = IndexPath(item: Int(step.priority), section: 0)
+                    if (visibleCell.contains(priorityIndexPath)) {
+                        let stepCell = tableView.cellForRow(at: priorityIndexPath) as! MainStepTableViewCell
+                        DispatchQueue.main.async {
+                            
+                            stepCell.updateTimeLabel(time:step.timeRemainingToString())
+                            stepCell.updateCompletionStatusLabel()
+                        }
+                    }
+                    
+                    // a check to see if the entire recipe is complete
+                    if (sortedSet.count - 1 == Int(recipe.currStepPriority)) {
+                        stopTimer()
+                    }
                 }
             }
             
-            if (visibleCell.contains(IndexPath(item: stepPriorityToUpdate, section: 0))) {
-                let stepCell = tableView.cellForRow(at: currPriorityIndexPath) as! MainStepTableViewCell
-                DispatchQueue.main.async {
-                    stepCell.updateTimeLabel(time:s.timeRemainingToString())
-                    stepCell.updateCompletionStatusLabel()
+            if (recipe.currStepTimeRemaining <= 0.1) {
+                let s = sortedSet[Int(recipe.currStepPriority)]
+                
+                if (s.isComplete == false) {
+                    playSound()
                 }
             }
         }
@@ -510,6 +564,7 @@ extension RecipeViewControllerWithTableView: UIScrollViewDelegate {
         }
     }
     
+    //functions to hide the step button when scrolling
     func hideStepButtonAnimation() {
         UIView.animate(withDuration: 0.15, delay: 0.0, options: [.curveEaseInOut], animations: {
             self.addStepButton.center.y = self.view.frame.maxY + 50.0
@@ -517,9 +572,12 @@ extension RecipeViewControllerWithTableView: UIScrollViewDelegate {
     }
     
     func showStepButtonAnimation() {
+        
         UIView.animate(withDuration: 0.2, delay: 0.2, options: [.curveEaseInOut], animations: {
             self.addStepButton.center.y = self.view.frame.maxY - 50.0
         }, completion: nil)
+
+
     }
 }
 
@@ -529,10 +587,12 @@ extension RecipeViewControllerWithTableView {
         let height = screenSize.height / 7.5
         let distance = (height / 2  )
         
+
         UIView.animate(withDuration: 0.3, delay: 0.0, options: [.curveEaseInOut], animations: {
             self.addStepButton.center.y = self.view.frame.maxY + 50.0
-            self.timerOptionsView.center.y = self.view.frame.maxY - distance
+            self.extraOptionsView.center.y = self.view.frame.maxY - distance
         }, completion: nil)
+        
     }
     
     func hideTimerOptions() {
@@ -541,7 +601,7 @@ extension RecipeViewControllerWithTableView {
         
         UIView.animate(withDuration: 0.3, delay: 0.0, options: [.curveEaseInOut], animations: {
             self.addStepButton.center.y = self.view.frame.maxY + 50.0
-            self.timerOptionsView.center.y = self.view.frame.maxY + distance
+            self.extraOptionsView.center.y = self.view.frame.maxY + distance
         }, completion: nil)
     }
     
@@ -600,6 +660,11 @@ extension RecipeViewControllerWithTableView {
         var indexPathsToReloadArr: [IndexPath] = []
         self.recipe.wasReset = true
         indexPathsToReloadArr = recipe.resetEntireRecipeTo(toStep: stepSelected)
+        startTimer()
+        let id = "\(self.recipe.recipeName!).\(self.recipe.createdDate!)"
+        LocalNotificationsService.shared.notificationCenterInstance().removePendingNotificationRequests(withIdentifiers: [id])
+        print("recipe.totalTimeRemaining \(recipe.totalTimeRemaining)")
+        LocalNotificationsService.shared.addRecipeWideNotification(identifier: id, notificationContent: [NotificationDictionaryKeys.Title.rawValue : recipe.recipeName!], timeRemaining: recipe.totalTimeRemaining)
         CoreDataHandler.saveContext()
         DispatchQueue.main.async {
             self.tableView.reloadRows(at: indexPathsToReloadArr, with: .none)
@@ -614,7 +679,7 @@ extension RecipeViewControllerWithTableView {
     /**
      # Full Recipe reset
      */
-    @objc func handleReset() {
+    func handleReset() {
         let alert = UIAlertController(title: "Are you sure?", message: "Reset cannot be undone", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
@@ -625,12 +690,13 @@ extension RecipeViewControllerWithTableView {
             let id = "\(self.recipe.recipeName!).\(self.recipe.createdDate!)"
             if (self.recipe.isPaused) {
                 //remove the notification because the recipe is paused, we don't need the notification to be pending to be delivered.
-            LocalNotificationsService.shared.notificationCenterInstance().removePendingNotificationRequests(withIdentifiers: [id])
+                LocalNotificationsService.shared.notificationCenterInstance().removePendingNotificationRequests(withIdentifiers: [id])
             } else {
                 //reset localnotification
                 LocalNotificationsService.shared.addRecipeWideNotification(identifier: id, notificationContent: [NotificationDictionaryKeys.Title.rawValue : self.recipe.recipeName!], timeRemaining: self.recipe.totalTimeRemaining)
             }
             
+            self.startTimer()
             CoreDataHandler.saveContext()
             DispatchQueue.main.async {
                 self.tableView.reloadRows(at: indexPathsToReloadArr, with: .none)
@@ -644,18 +710,49 @@ extension RecipeViewControllerWithTableView {
         dismissCurrentViewController()
     }
     
-    @objc func handleEdit() {
-        tableView.isEditing = !tableView.isEditing
-        if (tableView.isEditing) {
-            CoreDataHandler.saveContext()
-            DispatchQueue.main.async {
-                self.editButton.setAttributedTitle(NSAttributedString(string: "Save", attributes: Theme.Font.Nav.Item), for: .normal)
-            }
-        } else {
-            DispatchQueue.main.async {
-                self.editButton.setAttributedTitle(NSAttributedString(string: "Edit", attributes: Theme.Font.Nav.Item), for: .normal)
-            }
+    @objc func handleSettings() {
+        
+        let optionMenu = UIAlertController(title: "Recipe Options", message: "These options affect the recipe as whole.", preferredStyle: .actionSheet)
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+            let alert = UIAlertController(title: "Are you sure?", message: "Deleting cannot be undone", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
+                self.dismiss(animated: true) {
+                    //
+                    guard let mvc = self.mainViewControllerDelegate else {
+                        return
+                    }
+                    guard let date = self.recipe.createdDate else {
+                        return
+                    }
+                    mvc.handleDeleteARecipe(date)
+                }
+            }))
+            self.present(alert, animated: true, completion: nil)
         }
+        let resetAction = UIAlertAction(title: "Reset", style: .default) { (action) in
+            self.handleReset()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let editAction = UIAlertAction(title: "Edit", style: .default) { (action) in
+            self.tableView.isEditing = !self.tableView.isEditing
+            self.saveButton.alpha = 1.0
+            self.saveButton.isEnabled = true
+        }
+        
+        optionMenu.addAction(editAction)
+        optionMenu.addAction(resetAction)
+        optionMenu.addAction(deleteAction)
+        optionMenu.addAction(cancelAction)
+        self.present(optionMenu, animated: true, completion: nil)
+    }
+    
+    @objc func handleSave() {
+        self.tableView.isEditing = !self.tableView.isEditing
+        saveButton.alpha = 0.0
+        saveButton.isEnabled = false
+        CoreDataHandler.saveContext()
     }
     
     @objc func handleDelete() {

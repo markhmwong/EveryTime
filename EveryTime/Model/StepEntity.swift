@@ -23,17 +23,21 @@ class StepEntity: NSManagedObject {
         self.isPausedPrimary = false
         self.createdDate = Date()
         self.expiryDate = self.createdDate!.addingTimeInterval(self.timeToSeconds(hours: hours, minutes: minutes, seconds: seconds)) //only needed for the leading step
-        self.timeRemaining = self.expiryDate!.timeIntervalSince(Date())
+        self.timeRemaining = self.expiryDate!.timeIntervalSince(Date()).rounded()
         self.totalTime = self.timeRemaining //total time - a reference to the time fo the step for reset purposes
         //        self.isSequential = true //todo
+        self.timeAdjustment = 0.0
     }
 }
 
 extension StepEntity {
     func resetStep() {
+        totalTime = totalTime - timeAdjustment
+        timeAdjustment = 0.0
         timeRemaining = totalTime
         updateExpiry()
         isComplete = false
+        
         if (priority == 0) {
             isLeading = true
         } else {
@@ -58,6 +62,9 @@ extension StepEntity {
     }
     
     func updateStep() {
+        print("update step")
+        totalTime = totalTime - timeAdjustment
+        timeAdjustment = 0.0
         timeRemaining = 0.0
         isComplete = true
         isLeading = false

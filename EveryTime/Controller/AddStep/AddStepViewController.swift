@@ -133,6 +133,7 @@ class AddStepViewController: ViewControllerBase {
         } catch {
             //
         }
+        recipeViewControllerWithTableViewDelegate?.startTimer()
         self.dismiss(animated: true) { }
     }
     

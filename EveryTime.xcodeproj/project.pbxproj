@@ -16,6 +16,7 @@
 		4D0C4B5F21AEC73D00153E76 /* TimeableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4B5E21AEC73D00153E76 /* TimeableTests.swift */; };
 		4D0C4B6A21AEC73D00153E76 /* TimeableUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4B6921AEC73D00153E76 /* TimeableUITests.swift */; };
 		4D205DB121FE8252008006BD /* StepTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D205DB021FE8252008006BD /* StepTableViewCell.swift */; };
+		4D53801E223FE1280051DD0F /* Readme.md in Resources */ = {isa = PBXBuildFile; fileRef = 4D53801D223FE1280051DD0F /* Readme.md */; };
 		4D53C2172203F8C900EED75C /* HorizontalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53C2162203F8C900EED75C /* HorizontalPresentationController.swift */; };
 		4D53F75B21E2E38100C0AF31 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F75A21E2E38100C0AF31 /* CoreDataHelper.swift */; };
 		4D53F7BC21E72B7E00C0AF31 /* RecipeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F7BB21E72B7E00C0AF31 /* RecipeEntity.swift */; };
@@ -135,6 +136,8 @@
 		4D0C4B6921AEC73D00153E76 /* TimeableUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeableUITests.swift; sourceTree = "<group>"; };
 		4D0C4B6B21AEC73D00153E76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D205DB021FE8252008006BD /* StepTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTableViewCell.swift; sourceTree = "<group>"; };
+		4D53801D223FE1280051DD0F /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
+		4D53801F2240B9FA0051DD0F /* SimpleRecipeTimer v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SimpleRecipeTimer v2.xcdatamodel"; sourceTree = "<group>"; };
 		4D53C2162203F8C900EED75C /* HorizontalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalPresentationController.swift; sourceTree = "<group>"; };
 		4D53F75A21E2E38100C0AF31 /* CoreDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
 		4D53F7BB21E72B7E00C0AF31 /* RecipeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeEntity.swift; sourceTree = "<group>"; };
@@ -222,6 +225,7 @@
 		4D0C4B3A21AEC73A00153E76 = {
 			isa = PBXGroup;
 			children = (
+				4D53801D223FE1280051DD0F /* Readme.md */,
 				4D0C4B4521AEC73A00153E76 /* EveryTime */,
 				4D0C4B5D21AEC73D00153E76 /* TimeableTests */,
 				4D0C4B6821AEC73D00153E76 /* TimeableUITests */,
@@ -658,6 +662,7 @@
 			files = (
 				4D0C4B5421AEC73C00153E76 /* LaunchScreen.storyboard in Resources */,
 				4D0C4B5121AEC73C00153E76 /* Assets.xcassets in Resources */,
+				4D53801E223FE1280051DD0F /* Readme.md in Resources */,
 				4D0C4B4C21AEC73A00153E76 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1206,9 +1211,10 @@
 		4D0C4B4D21AEC73A00153E76 /* SimpleRecipeTimer.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				4D53801F2240B9FA0051DD0F /* SimpleRecipeTimer v2.xcdatamodel */,
 				4D0C4B4E21AEC73A00153E76 /* SimpleRecipeTimer.xcdatamodel */,
 			);
-			currentVersion = 4D0C4B4E21AEC73A00153E76 /* SimpleRecipeTimer.xcdatamodel */;
+			currentVersion = 4D53801F2240B9FA0051DD0F /* SimpleRecipeTimer v2.xcdatamodel */;
 			path = SimpleRecipeTimer.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

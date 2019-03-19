@@ -41,6 +41,7 @@ struct Theme {
             static var Caret: CGFloat { return 30.0 }
             static var StandardButton: CGFloat { return 15.0 }
             static var Header: CGFloat { return 20.0 }
+            static var HeaderContent: CGFloat { return 16.0 }
             static var About: CGFloat { return 14.0 }
             static var Error: CGFloat { return 12.0 }
             static var CompleteDot: CGFloat { return 30.0 }
@@ -75,6 +76,7 @@ struct Theme {
                 return style
             }()
             static let HeaderTableView: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.Header)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
+            static let HeaderTableViewContent: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.HeaderContent)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
             static let CaretAttribute: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.Caret)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue, NSAttributedString.Key.paragraphStyle: TextFieldParagraphStyle]
             static let TitleAttribute: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.PageTitle)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
             static let TextFieldAttribute: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.TextField)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue, NSAttributedString.Key.paragraphStyle: TextFieldParagraphStyle]

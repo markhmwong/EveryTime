@@ -61,14 +61,12 @@ extension RecipeEntity {
         let tp = timePassedSinceStart() + pauseTimeInterval
         var elapsedTime: Double = 0.0
         for step in sortedSet {
-            elapsedTime = elapsedTime + step.totalTime
+            elapsedTime = elapsedTime + step.totalTime //+ step.timeAdjustment //might need to add on timer adjustment here. but we'll need a new attribute in the core data model
             let time = elapsedTime - tp
             currStepName = step.stepName
             currStepPriority = step.priority
             
             if (time >= 0.0 && step.isComplete == false) {
-                print("tp \(tp) elapsedTime \(elapsedTime) step.totalTime \(step.totalTime) time \(time) step \(step.timeRemaining) ")
-
                 //step incomplete
                 currStepTimeRemaining = time
                 step.timeRemaining = time
@@ -171,8 +169,7 @@ extension RecipeEntity {
         var indexPathsToReload: [IndexPath] = []
         var timePassed: Double = 0.0
         pauseTimeInterval = 0.0
-        
-//        totalTimeRemaining = 0.0 // for localnotifications - will have to look at this again once we fix the "reset to step"
+        totalTimeRemaining = 0.0 // for localnotifications - will have to look at this again once we fix the "reset to step"
         for (index, step) in sortedSet.enumerated() {
             //add the time from the steps that were not reset
             if (index < toStep) {
@@ -181,7 +178,9 @@ extension RecipeEntity {
             
             if (index >= toStep) {
                 step.resetStep()
-//                totalTimeRemaining += step.timeRemaining// this is causing it have odd behavior with the recipe time
+                print(step.timeRemaining)
+                totalTimeRemaining += step.timeRemaining// this is causing it have odd behavior with the recipe time
+                
                 if (step.priority == toStep) {
                     currStepPriority = step.priority
                     currStepTimeRemaining = step.timeRemaining
@@ -193,10 +192,9 @@ extension RecipeEntity {
         
         //this is similar to the block that's in unpauseStepArr (RecipeEntity.swift)
         //we are resetting the startdate in both cases
-        //however this block allows us to reset in real time
+        //however this block allows us to reset while the clock is running
         if (toStep != 0) {
             startDate = Date().addingTimeInterval(-timePassed)
-
         } else {
             startDate = Date()
         }
@@ -208,8 +206,9 @@ extension RecipeEntity {
         let sortedSet = sortStepsByPriority()
         let step = sortedSet[selectedStep]
         if (selectedStep >= currStepPriority && !step.isComplete) {
-            step.timeRemaining = step.timeRemaining + seconds
-//            step.expiryDate?.addTimeInterval(seconds)
+            step.timeAdjustment = step.timeAdjustment + seconds
+            step.timeRemaining = step.timeRemaining + step.timeAdjustment
+            step.totalTime = step.totalTime + step.timeAdjustment
             step.updateExpiry()
         } else if (step.isComplete) {
             throw StepOptionsError.StepAlreadyComplete(message: "")
