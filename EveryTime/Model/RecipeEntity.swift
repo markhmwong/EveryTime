@@ -178,7 +178,7 @@ extension RecipeEntity {
             
             if (index >= toStep) {
                 step.resetStep()
-                print(step.timeRemaining)
+
                 totalTimeRemaining += step.timeRemaining// this is causing it have odd behavior with the recipe time
                 
                 if (step.priority == toStep) {
@@ -297,7 +297,7 @@ extension RecipeEntity {
         isPaused = false
         // step expiry date not including the pause interval
         for s in sortedSteps {
-            print("timeRemaining \(s.timeRemaining)")
+
             if (s.timeRemaining <= 0.0) {
                 timePassed += s.totalTime
             }
@@ -319,7 +319,7 @@ extension RecipeEntity {
 
         let tempInterval = calculatePauseInterval()
         pauseTimeInterval = pauseTimeInterval + tempInterval
-        print("pauseTimeInterval \(pauseTimeInterval) interval \(tempInterval)")
+
         CoreDataHandler.saveContext()
     }
 }

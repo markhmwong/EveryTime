@@ -123,8 +123,8 @@ class CoreDataHandler {
             print("Nothing In Entity")
         } else {
             for record in e {
-                print(record)
-//                let rEntity = record as! RecipeEntity
+
+                //                let rEntity = record as! RecipeEntity
 //                for sEntity in rEntity.step as! Set<StepEntity> {
 ////                    print(sEntity.stepName!)
 //                }

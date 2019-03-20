@@ -20,8 +20,13 @@
 - Check local notifications
 
 ### To do
-
-- minor ui adjustments (colours to suit the logo)
+- when user deletes a step, update notification
+- be able to pause in the recipe detail view
+- UI adjustments
+    - colours on teh buttons
+    - redo the add step/add recipe UI
 - repeat (toggle) (auto reset)
-- pause in recipe view
-- redo the add step/add recipe UI
+- choose sound
+- choose notifications on/off
+App store todo
+up date screen shots

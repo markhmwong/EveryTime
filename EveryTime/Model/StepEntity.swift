@@ -62,7 +62,7 @@ extension StepEntity {
     }
     
     func updateStep() {
-        print("update step")
+
         totalTime = totalTime - timeAdjustment
         timeAdjustment = 0.0
         timeRemaining = 0.0

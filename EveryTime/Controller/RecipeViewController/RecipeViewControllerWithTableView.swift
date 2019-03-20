@@ -663,7 +663,7 @@ extension RecipeViewControllerWithTableView {
         startTimer()
         let id = "\(self.recipe.recipeName!).\(self.recipe.createdDate!)"
         LocalNotificationsService.shared.notificationCenterInstance().removePendingNotificationRequests(withIdentifiers: [id])
-        print("recipe.totalTimeRemaining \(recipe.totalTimeRemaining)")
+
         LocalNotificationsService.shared.addRecipeWideNotification(identifier: id, notificationContent: [NotificationDictionaryKeys.Title.rawValue : recipe.recipeName!], timeRemaining: recipe.totalTimeRemaining)
         CoreDataHandler.saveContext()
         DispatchQueue.main.async {
