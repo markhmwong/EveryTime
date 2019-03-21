@@ -27,7 +27,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     fileprivate var addButtonState: ScrollingState = .Idle
     fileprivate var stepSelected: Int = 0
     fileprivate lazy var navView: NavView? = nil
-    fileprivate let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3.5))
+    fileprivate var headerView: UIView?
     fileprivate var step: StepEntity?
 
     fileprivate lazy var tableView: UITableView = {
@@ -126,42 +126,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         return label
     }()
     
-//    fileprivate let extraOptionsView: UIView = {
-//        let view = UIView()
-//        view.backgroundColor = UIColor.white
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        return view
-//    }()
-//    fileprivate let extraOptionsAddTime: UIButton = {
-//        let button = UIButton()
-//        button.setTitleColor(UIColor.black, for: .normal)
-//        button.setAttributedTitle(NSAttributedString(string: "+15s", attributes: Theme.Font.Recipe.TextFieldAttribute), for: .normal)
-//        button.addTarget(self, action: #selector(handleAdditionalTime), for: .touchUpInside)
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        return button
-//    }()
-//    fileprivate let extraOptionsResetTime: UIButton = {
-//        let button = UIButton()
-//        button.setTitleColor(UIColor.black, for: .normal)
-//        button.setAttributedTitle(NSAttributedString(string: "Reset", attributes: Theme.Font.Recipe.TextFieldAttribute), for: .normal)
-//        button.addTarget(self, action: #selector(handleResetStepTime), for: .touchUpInside)
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        return button
-//    }()
-//    fileprivate let extraOptionsMinusTime: UIButton = {
-//        let button = UIButton()
-//        button.setTitleColor(UIColor.black, for: .normal)
-//        button.setAttributedTitle(NSAttributedString(string: "-15s", attributes: Theme.Font.Recipe.TextFieldAttribute), for: .normal)
-//        button.addTarget(self, action: #selector(handleMinusTime), for: .touchUpInside)
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        return button
-//    }()
-//    fileprivate let extraOptionsViewTitle: UILabel = {
-//        let label = UILabel()
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        label.attributedText = NSAttributedString(string: "Step Options", attributes: Theme.Font.Recipe.StepSubTitle)
-//        return label
-//    }()
     fileprivate lazy var border: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
@@ -201,6 +165,16 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     override func prepareView() {
         super.prepareView()
         
+        if (UIDevice.current.screenType.rawValue == UIDevice.ScreenType.iPhones_6Plus_6sPlus_7Plus_8Plus.rawValue || UIDevice.current.screenType.rawValue ==  UIDevice.ScreenType.iPhones_6_6s_7_8.rawValue) {
+            headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3.0))
+        } else {
+            headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3.5))
+        }
+        
+        
+        guard let headerView = headerView else {
+            return
+        }
         if (recipe.isPaused) {
             editButton.isEnabled = true
         } else {
@@ -270,7 +244,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
 
     override func prepareAutoLayout() {
         super.prepareAutoLayout()
-        guard let nav = navView else {
+        guard let nav = navView, let headerView = headerView else {
             return
         }
 
@@ -311,7 +285,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         subtractTimeButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.18).isActive = true
 
         saveButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -10).isActive = true
-        saveButton.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10).isActive = true
+        saveButton.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 10).isActive = true
         
         if (!appDelegate.hasTopNotch) {
             nav.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
@@ -643,7 +617,7 @@ extension RecipeViewControllerWithTableView: TimerProtocol {
                 }
             }
             
-            if (recipe.currStepTimeRemaining <= 0.1) {
+            if (recipe.currStepTimeRemaining <= 0.1 && sortedSet.count != 0) {
                 let s = sortedSet[Int(recipe.currStepPriority)]
                 if (s.isComplete == false) {
                     playSound()

@@ -47,6 +47,7 @@ class AddStepViewController: ViewControllerBase {
         input.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Recipe.TextFieldAttribute)
         input.returnKeyType = UIReturnKeyType.done
         input.clearButtonMode = .never
+        input.autocorrectionType = .no
         input.enablesReturnKeyAutomatically = true
         input.backgroundColor = UIColor.clear
         input.becomeFirstResponder()

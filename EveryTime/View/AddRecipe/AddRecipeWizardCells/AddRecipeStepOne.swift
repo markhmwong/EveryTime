@@ -25,6 +25,7 @@ class AddRecipeStepOne: AddRecipeBaseCell {
         textField.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Recipe.TextFieldAttribute)
         textField.returnKeyType = UIReturnKeyType.done
         textField.clearButtonMode = .never
+        textField.autocorrectionType = .no
         textField.enablesReturnKeyAutomatically = true
         textField.backgroundColor = UIColor.clear
         textField.textAlignment = .center

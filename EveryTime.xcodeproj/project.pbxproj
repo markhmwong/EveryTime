@@ -49,7 +49,6 @@
 		4D9986D1223CA3090049D55C /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9986D0223CA3090049D55C /* ExtensionDelegate.swift */; };
 		4D9986D3223CA3090049D55C /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9986D2223CA3090049D55C /* NotificationController.swift */; };
 		4D9986D5223CA30A0049D55C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D9986D4223CA30A0049D55C /* Assets.xcassets */; };
-		4D9986DA223CA30A0049D55C /* EveryTimeW.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 4D9986BD223CA3080049D55C /* EveryTimeW.app */; };
 		4DA12F6F21B181460049CD75 /* StepsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA12F6E21B181460049CD75 /* StepsProtocol.swift */; };
 		4DA12F7121B2D3990049CD75 /* StepCellForAddRecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA12F7021B2D3990049CD75 /* StepCellForAddRecipe.swift */; };
 		4DA12F7321B2D3DD0049CD75 /* EntityBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA12F7221B2D3DD0049CD75 /* EntityBaseCell.swift */; };
@@ -86,13 +85,6 @@
 			remoteGlobalIDString = 4D9986C8223CA3090049D55C;
 			remoteInfo = "EveryTimeW Extension";
 		};
-		4D9986D8223CA30A0049D55C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4D0C4B3B21AEC73A00153E76 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4D9986BC223CA3080049D55C;
-			remoteInfo = EveryTimeW;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -113,7 +105,6 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				4D9986DA223CA30A0049D55C /* EveryTimeW.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -525,7 +516,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				4D9986D9223CA30A0049D55C /* PBXTargetDependency */,
 			);
 			name = EveryTime;
 			productName = SimpleRecipeTimer;
@@ -800,11 +790,6 @@
 			isa = PBXTargetDependency;
 			target = 4D9986C8223CA3090049D55C /* EveryTimeW Extension */;
 			targetProxy = 4D9986CB223CA3090049D55C /* PBXContainerItemProxy */;
-		};
-		4D9986D9223CA30A0049D55C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4D9986BC223CA3080049D55C /* EveryTimeW */;
-			targetProxy = 4D9986D8223CA30A0049D55C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

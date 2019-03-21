@@ -227,8 +227,6 @@ extension RecipeEntity {
         for i in stride(from: fromIndex, to: sortedSet.count, by: 1) {
             let priority = sortedSet[i].priority
             sortedSet[i].priority = priority - 1
-            
-            
         }
     }
     
@@ -257,11 +255,14 @@ extension RecipeEntity {
     }
     
     func sortStepsByPriority() -> [StepEntity] {
-        let unsortedSet = step as! Set<StepEntity>
-        let sortedSet = unsortedSet.sorted { (x, y) -> Bool in
-            return (x.priority < y.priority)
+        if (step != nil) {
+            let unsortedSet = step as! Set<StepEntity>
+            let sortedSet = unsortedSet.sorted { (x, y) -> Bool in
+                return (x.priority < y.priority)
+            }
+            return sortedSet
         }
-        return sortedSet
+        return []
     }
 }
 

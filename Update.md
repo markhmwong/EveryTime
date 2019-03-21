@@ -7,11 +7,13 @@ local notifications
 
 Scheduled for 1.1
 
-## Version 1.1
+## Version Features
+- clean up code 1.1.5
+- redo the add step/add recipe UI 1.1.5
+
 - apple watch 1.2
 - be able to pause in the recipe detail view 1.2
-- redo the add step/add recipe UI 1.2
-- repeat (toggle) (auto reset) 1.2
+- repeat (toggle) (auto reset) 1.2 - be weary of local notifications, new ID system
 - allow user to choose sound 1.2
 - choose notifications on/off in the app 1.2
 - theming 1.3
@@ -19,10 +21,8 @@ Scheduled for 1.1
 - tags for easier step adding 1.3
 - dark mode 1.3
 
-simultaneous steps?
-
-App store todo
-up date screen shots
+Far future
+- simultaneous steps?
 
 ## Version 1.1 20/3/2019
 
@@ -44,7 +44,7 @@ up date screen shots
 
 ### App Store What's New
 Quick Update
-• Local notifications
+• Notifies when the recipe is complete
 • Calculation fixes regarding the timers when pausing and running in the background
 • Summary space on Recipe details page
 • UI adjustments, text spacing and sizes

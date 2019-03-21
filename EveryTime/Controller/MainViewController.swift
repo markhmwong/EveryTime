@@ -246,22 +246,17 @@ class MainViewController: ViewControllerBase {
         func searchForIndex(_ date: Date) -> Int {
             var left = 0
             var right = recipeCollection.count - 1
-    
             while (left <= right) {
-        
                     let middle = left + (right - left) / 2
                     if (recipeCollection[middle].createdDate! == date)  {
                             return middle
                         }
-        
                     if (recipeCollection[middle].createdDate! < date) {
                            left = middle + 1
                         } else {
                             right = middle - 1
                         }
                 }
-    
-    
             return -1
         }
     
@@ -409,13 +404,14 @@ extension MainViewController {
                 let recipeDate = recipeCollection[index].createdDate
                 let id = "\(recipeName!).\(recipeDate)"
                 LocalNotificationsService.shared.notificationCenterInstance().removePendingNotificationRequests(withIdentifiers: [id])
+                
                 recipeCollection.remove(at: index)
                 DispatchQueue.main.async {
                     self.collView.deleteItems(at: [IndexPath(item: index, section: 0)])
                 }
-                
                 CoreDataHandler.deleteEntity(entity: RecipeEntity.self, createdDate: date)
             }
+            startTimer()
         }
 }
 

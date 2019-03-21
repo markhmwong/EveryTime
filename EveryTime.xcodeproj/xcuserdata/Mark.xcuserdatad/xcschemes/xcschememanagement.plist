@@ -11,13 +11,30 @@
 		</dict>
 		<key>EveryTimeW (Notification).xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
 		<key>EveryTimeW.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
 			<integer>1</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>4D0C4B4221AEC73A00153E76</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4D9986BC223CA3080049D55C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
