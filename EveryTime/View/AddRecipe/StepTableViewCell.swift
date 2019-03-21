@@ -27,10 +27,6 @@ class StepTableViewCell: UITableViewCell {
                 return
             }
             
-//            guard let n = nameLabel, let t = timeLabel else {
-//                return
-//            }
-            
             nameLabel.text = s.name
             timeLabel.text = "\(s.hours)h \(s.minutes)m \(s.seconds)s"
             

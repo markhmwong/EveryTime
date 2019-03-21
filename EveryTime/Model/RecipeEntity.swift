@@ -179,7 +179,7 @@ extension RecipeEntity {
             if (index >= toStep) {
                 step.resetStep()
 
-                totalTimeRemaining += step.timeRemaining// this is causing it have odd behavior with the recipe time
+                totalTimeRemaining += step.timeRemaining
                 
                 if (step.priority == toStep) {
                     currStepPriority = step.priority
@@ -206,7 +206,7 @@ extension RecipeEntity {
         let sortedSet = sortStepsByPriority()
         let step = sortedSet[selectedStep]
         if (selectedStep >= currStepPriority && !step.isComplete) {
-            step.timeAdjustment = step.timeAdjustment + seconds
+            step.timeAdjustment = seconds
             step.timeRemaining = step.timeRemaining + step.timeAdjustment
             step.totalTime = step.totalTime + step.timeAdjustment
             step.updateExpiry()
@@ -227,6 +227,8 @@ extension RecipeEntity {
         for i in stride(from: fromIndex, to: sortedSet.count, by: 1) {
             let priority = sortedSet[i].priority
             sortedSet[i].priority = priority - 1
+            
+            
         }
     }
     

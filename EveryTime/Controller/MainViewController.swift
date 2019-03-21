@@ -405,12 +405,17 @@ extension MainViewController {
             let index = searchForIndex(date)
     
             if (index != -1) {
-                    recipeCollection.remove(at: index)
-                        DispatchQueue.main.async {
-                            self.collView.deleteItems(at: [IndexPath(item: index, section: 0)])
-                        }
-                        CoreDataHandler.deleteEntity(entity: RecipeEntity.self, createdDate: date)
+                let recipeName = recipeCollection[index].recipeName
+                let recipeDate = recipeCollection[index].createdDate
+                let id = "\(recipeName!).\(recipeDate)"
+                LocalNotificationsService.shared.notificationCenterInstance().removePendingNotificationRequests(withIdentifiers: [id])
+                recipeCollection.remove(at: index)
+                DispatchQueue.main.async {
+                    self.collView.deleteItems(at: [IndexPath(item: index, section: 0)])
                 }
+                
+                CoreDataHandler.deleteEntity(entity: RecipeEntity.self, createdDate: date)
+            }
         }
 }
 

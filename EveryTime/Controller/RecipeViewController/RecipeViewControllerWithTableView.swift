@@ -27,7 +27,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     fileprivate var addButtonState: ScrollingState = .Idle
     fileprivate var stepSelected: Int = 0
     fileprivate lazy var navView: NavView? = nil
-    fileprivate let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 5))
+    fileprivate let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3.5))
     fileprivate var step: StepEntity?
 
     fileprivate lazy var tableView: UITableView = {
@@ -77,6 +77,21 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         button.addTarget(self, action: #selector(handleAddStep), for: .touchUpInside)
         return button
     }()
+    fileprivate lazy var additionalTimeButton: StandardButton = {
+        let button = StandardButton(title: "+15")
+        button.addTarget(self, action: #selector(handleAdditionalTime), for: .touchUpInside)
+        return button
+    }()
+    fileprivate lazy var subtractTimeButton: StandardButton = {
+        let button = StandardButton(title: "-15")
+        button.addTarget(self, action: #selector(handleMinusTime), for: .touchUpInside)
+        return button
+    }()
+    fileprivate lazy var resetTimeButton: StandardButton = {
+        let button = StandardButton(title: "Reset")
+        button.addTarget(self, action: #selector(handleResetStepTime), for: .touchUpInside)
+        return button
+    }()
 
     fileprivate lazy var headerTitleLabel: UILabel = {
         let label = UILabel()
@@ -94,42 +109,59 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         return label
     }()
     
-    fileprivate let extraOptionsView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.white
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    fileprivate let extraOptionsAddTime: UIButton = {
-        let button = UIButton()
-        button.setTitleColor(UIColor.black, for: .normal)
-        button.setAttributedTitle(NSAttributedString(string: "+15s", attributes: Theme.Font.Recipe.TextFieldAttribute), for: .normal)
-        button.addTarget(self, action: #selector(handleAdditionalTime), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    fileprivate let extraOptionsResetTime: UIButton = {
-        let button = UIButton()
-        button.setTitleColor(UIColor.black, for: .normal)
-        button.setAttributedTitle(NSAttributedString(string: "Reset", attributes: Theme.Font.Recipe.TextFieldAttribute), for: .normal)
-        button.addTarget(self, action: #selector(handleResetStepTime), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    fileprivate let extraOptionsMinusTime: UIButton = {
-        let button = UIButton()
-        button.setTitleColor(UIColor.black, for: .normal)
-        button.setAttributedTitle(NSAttributedString(string: "-15s", attributes: Theme.Font.Recipe.TextFieldAttribute), for: .normal)
-        button.addTarget(self, action: #selector(handleMinusTime), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    fileprivate let extraOptionsViewTitle: UILabel = {
+    fileprivate lazy var headerNextStepLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.attributedText = NSAttributedString(string: "Step Options", attributes: Theme.Font.Recipe.StepSubTitle)
         return label
     }()
+    
+    fileprivate lazy var headerNextStepTitleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    fileprivate lazy var headerNextStepTimeLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+//    fileprivate let extraOptionsView: UIView = {
+//        let view = UIView()
+//        view.backgroundColor = UIColor.white
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        return view
+//    }()
+//    fileprivate let extraOptionsAddTime: UIButton = {
+//        let button = UIButton()
+//        button.setTitleColor(UIColor.black, for: .normal)
+//        button.setAttributedTitle(NSAttributedString(string: "+15s", attributes: Theme.Font.Recipe.TextFieldAttribute), for: .normal)
+//        button.addTarget(self, action: #selector(handleAdditionalTime), for: .touchUpInside)
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        return button
+//    }()
+//    fileprivate let extraOptionsResetTime: UIButton = {
+//        let button = UIButton()
+//        button.setTitleColor(UIColor.black, for: .normal)
+//        button.setAttributedTitle(NSAttributedString(string: "Reset", attributes: Theme.Font.Recipe.TextFieldAttribute), for: .normal)
+//        button.addTarget(self, action: #selector(handleResetStepTime), for: .touchUpInside)
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        return button
+//    }()
+//    fileprivate let extraOptionsMinusTime: UIButton = {
+//        let button = UIButton()
+//        button.setTitleColor(UIColor.black, for: .normal)
+//        button.setAttributedTitle(NSAttributedString(string: "-15s", attributes: Theme.Font.Recipe.TextFieldAttribute), for: .normal)
+//        button.addTarget(self, action: #selector(handleMinusTime), for: .touchUpInside)
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        return button
+//    }()
+//    fileprivate let extraOptionsViewTitle: UILabel = {
+//        let label = UILabel()
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        label.attributedText = NSAttributedString(string: "Step Options", attributes: Theme.Font.Recipe.StepSubTitle)
+//        return label
+//    }()
     fileprivate lazy var border: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
@@ -176,6 +208,14 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
             editButton.alpha = 0.3
         }
         
+        additionalTimeButton.isEnabled = false
+        additionalTimeButton.alpha = 0.4
+        resetTimeButton.isEnabled = false
+        resetTimeButton.alpha = 0.4
+        subtractTimeButton.isEnabled = false
+        subtractTimeButton.alpha = 0.4
+
+        
         navView = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: editButton)
         guard let nav = navView else {
             return
@@ -183,13 +223,13 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         view.addSubview(nav)
         view.addSubview(tableView)
         view.addSubview(addStepButton)
-        view.addSubview(extraOptionsView)
+//        view.addSubview(extraOptionsView)
         
-        extraOptionsView.addSubview(border)
-        extraOptionsView.addSubview(extraOptionsViewTitle)
-        extraOptionsView.addSubview(extraOptionsAddTime)
-        extraOptionsView.addSubview(extraOptionsResetTime)
-        extraOptionsView.addSubview(extraOptionsMinusTime)
+//        extraOptionsView.addSubview(border)
+//        extraOptionsView.addSubview(extraOptionsViewTitle)
+//        extraOptionsView.addSubview(extraOptionsAddTime)
+//        extraOptionsView.addSubview(extraOptionsResetTime)
+//        extraOptionsView.addSubview(extraOptionsMinusTime)
         
         //custom table view header
         headerView.backgroundColor = UIColor.clear
@@ -197,10 +237,19 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         headerView.addSubview(headerTitleLabel)
         headerStepTimeLabel.attributedText = NSAttributedString(string: "00h 00m 00s" , attributes: Theme.Font.Recipe.HeaderTableViewContent)
         headerView.addSubview(headerStepTimeLabel)
-        headerStepTitleLabel.attributedText = NSAttributedString(string: "\(recipe.currStepName!)" , attributes: Theme.Font.Recipe.HeaderTableViewContent)
+        headerStepTitleLabel.attributedText = NSAttributedString(string: recipe.currStepName ?? " ", attributes: Theme.Font.Recipe.HeaderTableViewContent)
         headerView.addSubview(headerStepTitleLabel)
-        //add save button
-
+        headerNextStepTitleLabel.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Recipe.HeaderTableViewContent)
+        headerView.addSubview(headerNextStepTitleLabel)
+        headerNextStepTimeLabel.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Recipe.HeaderTableViewContent)
+        headerView.addSubview(headerNextStepTimeLabel)
+        headerNextStepLabel.attributedText = NSAttributedString(string: "Next Step", attributes: Theme.Font.Recipe.HeaderTableViewContentSubTitle)
+        headerView.addSubview(headerNextStepLabel)
+        
+        headerView.addSubview(additionalTimeButton)
+        headerView.addSubview(subtractTimeButton)
+        headerView.addSubview(resetTimeButton)
+        //save button in header
         headerView.addSubview(saveButton)
         tableView.tableHeaderView = headerView
         
@@ -232,13 +281,34 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).identifier = "tableview bottomanchor"
         
         headerTitleLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 10).isActive = true
-        headerTitleLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 10).isActive = true
+        headerTitleLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 15).isActive = true
         
-        headerStepTimeLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 10).isActive = true
+        headerStepTimeLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 30).isActive = true
         headerStepTimeLabel.topAnchor.constraint(equalTo: headerTitleLabel.bottomAnchor, constant: 20).isActive = true
         
-        headerStepTitleLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 10).isActive = true
-        headerStepTitleLabel.topAnchor.constraint(equalTo: headerStepTimeLabel.bottomAnchor, constant: 5).isActive = true
+        headerStepTitleLabel.leadingAnchor.constraint(equalTo: headerStepTimeLabel.leadingAnchor).isActive = true
+        headerStepTitleLabel.topAnchor.constraint(equalTo: headerStepTimeLabel.bottomAnchor, constant: 0.0).isActive = true
+        
+        headerNextStepLabel.leadingAnchor.constraint(equalTo: headerStepTitleLabel.leadingAnchor).isActive = true
+        headerNextStepLabel.topAnchor.constraint(equalTo: headerStepTitleLabel.bottomAnchor, constant: 10.0).isActive = true
+        
+        headerNextStepTimeLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 30).isActive = true
+        headerNextStepTimeLabel.topAnchor.constraint(equalTo: headerNextStepLabel.bottomAnchor, constant: 10).isActive = true
+        
+        headerNextStepTitleLabel.leadingAnchor.constraint(equalTo: headerNextStepTimeLabel.leadingAnchor).isActive = true
+        headerNextStepTitleLabel.topAnchor.constraint(equalTo: headerNextStepTimeLabel.bottomAnchor, constant: 0.0).isActive = true
+        
+        additionalTimeButton.trailingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: (screenSize.width / 8) * 2).isActive = true
+        additionalTimeButton.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10).isActive = true
+        additionalTimeButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.18).isActive = true
+        
+        resetTimeButton.centerXAnchor.constraint(equalTo: headerView.centerXAnchor, constant: 0).isActive = true
+        resetTimeButton.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10).isActive = true
+        resetTimeButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.18).isActive = true
+
+        subtractTimeButton.leadingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -(screenSize.width / 8) * 2).isActive = true
+        subtractTimeButton.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10).isActive = true
+        subtractTimeButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.18).isActive = true
 
         saveButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -10).isActive = true
         saveButton.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10).isActive = true
@@ -256,35 +326,43 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         addStepButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         addStepButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.33).isActive = true
 
-        extraOptionsView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        extraOptionsView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        extraOptionsView.heightAnchor.constraint(equalToConstant: screenSize.height / 7.5).isActive = true
-        extraOptionsView.topAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+//        extraOptionsView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+//        extraOptionsView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+//        extraOptionsView.heightAnchor.constraint(equalToConstant: screenSize.height / 7.5).isActive = true
+//        extraOptionsView.topAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+//
+//        extraOptionsViewTitle.centerXAnchor.constraint(equalTo: extraOptionsView.centerXAnchor).isActive = true
+//        extraOptionsViewTitle.topAnchor.constraint(equalTo: extraOptionsView.topAnchor, constant: 10).isActive = true
+//
+//        extraOptionsAddTime.trailingAnchor.constraint(equalTo: extraOptionsView.leadingAnchor, constant: (screenSize.width / 8) * 2).isActive = true
+//        extraOptionsAddTime.centerYAnchor.constraint(equalTo: extraOptionsView.centerYAnchor).isActive = true
+//
+//        extraOptionsMinusTime.leadingAnchor.constraint(equalTo: extraOptionsView.trailingAnchor, constant: -(screenSize.width / 8) * 2).isActive = true
+//        extraOptionsMinusTime.centerYAnchor.constraint(equalTo: extraOptionsView.centerYAnchor).isActive = true
+//
+//        extraOptionsResetTime.centerXAnchor.constraint(equalTo: extraOptionsView.centerXAnchor, constant: 0).isActive = true
+//        extraOptionsResetTime.centerYAnchor.constraint(equalTo: extraOptionsView.centerYAnchor).isActive = true
         
-        extraOptionsViewTitle.centerXAnchor.constraint(equalTo: extraOptionsView.centerXAnchor).isActive = true
-        extraOptionsViewTitle.topAnchor.constraint(equalTo: extraOptionsView.topAnchor, constant: 10).isActive = true
-        
-        extraOptionsAddTime.trailingAnchor.constraint(equalTo: extraOptionsView.leadingAnchor, constant: (screenSize.width / 8) * 2).isActive = true
-        extraOptionsAddTime.centerYAnchor.constraint(equalTo: extraOptionsView.centerYAnchor).isActive = true
-        
-        extraOptionsMinusTime.leadingAnchor.constraint(equalTo: extraOptionsView.trailingAnchor, constant: -(screenSize.width / 8) * 2).isActive = true
-        extraOptionsMinusTime.centerYAnchor.constraint(equalTo: extraOptionsView.centerYAnchor).isActive = true
-        extraOptionsResetTime.centerXAnchor.constraint(equalTo: extraOptionsView.centerXAnchor, constant: 0).isActive = true
-        extraOptionsResetTime.centerYAnchor.constraint(equalTo: extraOptionsView.centerYAnchor).isActive = true
-        
-        border.topAnchor.constraint(equalTo: extraOptionsView.topAnchor).isActive = true
-        border.leadingAnchor.constraint(equalTo: extraOptionsView.leadingAnchor).isActive = true
-        border.trailingAnchor.constraint(equalTo: extraOptionsView.trailingAnchor).isActive = true
-        border.heightAnchor.constraint(equalToConstant: 1.5).isActive = true
+//        border.topAnchor.constraint(equalTo: extraOptionsView.topAnchor).isActive = true
+//        border.leadingAnchor.constraint(equalTo: extraOptionsView.leadingAnchor).isActive = true
+//        border.trailingAnchor.constraint(equalTo: extraOptionsView.trailingAnchor).isActive = true
+//        border.heightAnchor.constraint(equalToConstant: 1.5).isActive = true
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
     }
     
     func modifyTime(_ seconds: Double) {
+//        let id = "\(self.recipe.recipeName!).\(self.recipe.createdDate!)"
+//        LocalNotificationsService.shared.addRecipeWideNotification(identifier: id, notificationContent: [NotificationDictionaryKeys.Title.rawValue : self.recipe.recipeName!], timeRemaining: self.recipe.totalTimeRemaining)
         do {
             try recipe.adjustTime(by: seconds, selectedStep: stepSelected)
+            recipe.sumStepsForExpectedElapsedTime() //updates totalTimeRemaining to update the pending local notification
+            
+            let id = "\(recipe.recipeName!).\(recipe.createdDate!)"
+            LocalNotificationsService.shared.addRecipeWideNotification(identifier: id, notificationContent: [NotificationDictionaryKeys.Title.rawValue : self.recipe.recipeName!], timeRemaining: self.recipe.totalTimeRemaining)
+            
             DispatchQueue.main.async {
                 self.tableView.reloadRows(at: [IndexPath(item: self.stepSelected, section: 0)], with: .none)
             }
@@ -386,7 +464,7 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return view.bounds.height / 10
+        return view.bounds.height / 13
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -399,49 +477,68 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
      
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
+            //issue when deleting the running timer, the time passed persists to the next step
+            //we alter the startDate
+            if (indexPath.row == recipe.currStepPriority) {
+                let sortedSet = recipe.sortStepsByPriority()
+                let timeElapsedInStep = sortedSet[indexPath.row].totalTime - recipe.currStepTimeRemaining
+                recipe.startDate?.addTimeInterval(timeElapsedInStep)
+            }
+            
+            
+            let id = "\(recipe.recipeName!).\(recipe.createdDate!)"
             recipe.removeFromStep(stepArr[indexPath.row])
             stepArr.remove(at: indexPath.row)
             recipe.reoganiseStepsInArr(fromIndex: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            recipe.sumStepsForExpectedElapsedTime()
+            LocalNotificationsService.shared.addRecipeWideNotification(identifier: id, notificationContent: [NotificationDictionaryKeys.Title.rawValue : recipe.recipeName!], timeRemaining: recipe.totalTimeRemaining)
+            CoreDataHandler.saveContext()
         }
     }
     
     func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
         return "Remove"
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        additionalTimeButton.isEnabled = true
+        resetTimeButton.isEnabled = true
+        subtractTimeButton.isEnabled = true
         DispatchQueue.main.async {
             tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+            self.additionalTimeButton.alpha = 1.0
+            self.resetTimeButton.alpha = 1.0
+            self.subtractTimeButton.alpha = 1.0
         }
         stepSelected = indexPath.row
-        
         step = stepArr[stepSelected]
 
-        if (step!.isComplete) {
-            DispatchQueue.main.async {
-                self.extraOptionsMinusTime.isEnabled = false
-                self.extraOptionsMinusTime.alpha = 0.4
-                
-                self.extraOptionsAddTime.isEnabled = false
-                self.extraOptionsAddTime.alpha = 0.4
-                
-                self.extraOptionsResetTime.alpha = 1.0
-                self.extraOptionsResetTime.isEnabled = true
-            }
-        } else {
-            // can't reset a step that has not begun yet. that's skipping steps.
-            DispatchQueue.main.async {
-                self.extraOptionsMinusTime.isEnabled = true
-                self.extraOptionsMinusTime.alpha = 1.0
-                
-                self.extraOptionsAddTime.isEnabled = true
-                self.extraOptionsAddTime.alpha = 1.0
-                
-                self.extraOptionsResetTime.alpha = 0.4
-                self.extraOptionsResetTime.isEnabled = false
-            }
-        }
-        showBottomViewWhenCellSelected()
+//        if (step!.isComplete) {
+//            DispatchQueue.main.async {
+//                self.extraOptionsMinusTime.isEnabled = false
+//                self.extraOptionsMinusTime.alpha = 0.4
+//
+//                self.extraOptionsAddTime.isEnabled = false
+//                self.extraOptionsAddTime.alpha = 0.4
+//
+//                self.extraOptionsResetTime.alpha = 1.0
+//                self.extraOptionsResetTime.isEnabled = true
+//            }
+//        } else {
+//            // can't reset a step that has not begun yet. that's skipping steps.
+//            DispatchQueue.main.async {
+//                self.extraOptionsMinusTime.isEnabled = true
+//                self.extraOptionsMinusTime.alpha = 1.0
+//
+//                self.extraOptionsAddTime.isEnabled = true
+//                self.extraOptionsAddTime.alpha = 1.0
+//
+//                self.extraOptionsResetTime.alpha = 0.4
+//                self.extraOptionsResetTime.isEnabled = false
+//            }
+//        }
+//        showBottomViewWhenCellSelected()
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -481,7 +578,7 @@ extension RecipeViewControllerWithTableView: TimerProtocol {
             }
             
             for step in sortedSet {
-                elapsedTime = elapsedTime + step.totalTime //+ step.timeAdjustment //might need to add on timer adjustment here. but we'll need a new attribute in the core data model
+                elapsedTime = elapsedTime + step.totalTime
                 let time = elapsedTime - tp
                 recipe.currStepName = step.stepName
                 recipe.currStepPriority = step.priority
@@ -493,9 +590,23 @@ extension RecipeViewControllerWithTableView: TimerProtocol {
                     step.updateExpiry()
                     step.updateTimeRemaining()
                     
+                    if (sortedSet.count - 1 > recipe.currStepPriority) {
+                        let nextStep: StepEntity = sortedSet[Int(recipe.currStepPriority) + 1]
+                        DispatchQueue.main.async {
+                        self.headerNextStepTimeLabel.attributedText = NSAttributedString(string: nextStep.timeRemainingToString(), attributes: Theme.Font.Recipe.HeaderTableViewContent)
+                        self.headerNextStepTitleLabel.attributedText = NSAttributedString(string: nextStep.stepName ?? "unknown", attributes: Theme.Font.Recipe.HeaderTableViewContentTitle)
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            self.headerNextStepTimeLabel.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Recipe.HeaderTableViewContent)
+                            self.headerNextStepTitleLabel.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Recipe.HeaderTableViewContentTitle)
+                        }
+                    }
+                    
+                    
                     DispatchQueue.main.async {
                         self.headerStepTimeLabel.attributedText = NSAttributedString(string: step.timeRemainingToString(), attributes: Theme.Font.Recipe.HeaderTableViewContent)
-                        self.headerStepTitleLabel.attributedText = NSAttributedString(string: step.stepName!, attributes: Theme.Font.Recipe.HeaderTableViewContent)
+                        self.headerStepTitleLabel.attributedText = NSAttributedString(string: step.stepName ?? "unknown", attributes: Theme.Font.Recipe.HeaderTableViewContentTitle)
                     }
                     
                     let priorityIndexPath = IndexPath(item: Int(step.priority), section: 0)
@@ -534,7 +645,6 @@ extension RecipeViewControllerWithTableView: TimerProtocol {
             
             if (recipe.currStepTimeRemaining <= 0.1) {
                 let s = sortedSet[Int(recipe.currStepPriority)]
-                
                 if (s.isComplete == false) {
                     playSound()
                 }
@@ -590,7 +700,7 @@ extension RecipeViewControllerWithTableView {
 
         UIView.animate(withDuration: 0.3, delay: 0.0, options: [.curveEaseInOut], animations: {
             self.addStepButton.center.y = self.view.frame.maxY + 50.0
-            self.extraOptionsView.center.y = self.view.frame.maxY - distance
+//            self.extraOptionsView.center.y = self.view.frame.maxY - distance
         }, completion: nil)
         
     }
@@ -601,7 +711,7 @@ extension RecipeViewControllerWithTableView {
         
         UIView.animate(withDuration: 0.3, delay: 0.0, options: [.curveEaseInOut], animations: {
             self.addStepButton.center.y = self.view.frame.maxY + 50.0
-            self.extraOptionsView.center.y = self.view.frame.maxY + distance
+//            self.extraOptionsView.center.y = self.view.frame.maxY + distance
         }, completion: nil)
     }
     
@@ -614,19 +724,19 @@ extension RecipeViewControllerWithTableView {
         }
     }
     
-    func changeBottomViewState() {
-        guard let viewState = bottomViewState else {
-            return
-        }
-        switch viewState {
-        case .ShowStepOptions:
-            bottomViewState = .ShowAddStep
-            executeBottomViewState(bottomViewState!)
-        case .ShowAddStep:
-            bottomViewState = .ShowStepOptions
-            executeBottomViewState(bottomViewState!)
-        }
-    }
+//    func changeBottomViewState() {
+//        guard let viewState = bottomViewState else {
+//            return
+//        }
+//        switch viewState {
+//        case .ShowStepOptions:
+//            bottomViewState = .ShowAddStep
+//            executeBottomViewState(bottomViewState!)
+//        case .ShowAddStep:
+//            bottomViewState = .ShowStepOptions
+//            executeBottomViewState(bottomViewState!)
+//        }
+//    }
     
     func showBottomViewWhenCellSelected() {
         guard let viewState = bottomViewState else {
@@ -656,24 +766,25 @@ extension RecipeViewControllerWithTableView {
     Button Handlers
 */
 extension RecipeViewControllerWithTableView {
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
     @objc func handleResetStepTime() {
         var indexPathsToReloadArr: [IndexPath] = []
         self.recipe.wasReset = true
         indexPathsToReloadArr = recipe.resetEntireRecipeTo(toStep: stepSelected)
         startTimer()
+        
         let id = "\(self.recipe.recipeName!).\(self.recipe.createdDate!)"
         LocalNotificationsService.shared.notificationCenterInstance().removePendingNotificationRequests(withIdentifiers: [id])
-
         LocalNotificationsService.shared.addRecipeWideNotification(identifier: id, notificationContent: [NotificationDictionaryKeys.Title.rawValue : recipe.recipeName!], timeRemaining: recipe.totalTimeRemaining)
+        
         CoreDataHandler.saveContext()
         DispatchQueue.main.async {
             self.tableView.reloadRows(at: indexPathsToReloadArr, with: .none)
             self.executeBottomViewState(.ShowAddStep)
         }
-    }
-    
-    override var prefersStatusBarHidden: Bool {
-        return true
     }
     
     /**

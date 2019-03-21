@@ -39,9 +39,10 @@ struct Theme {
             static var TextField: CGFloat { return 20.0 }
             static var NavItem: CGFloat { return 14.0 }
             static var Caret: CGFloat { return 30.0 }
-            static var StandardButton: CGFloat { return 15.0 }
+            static var StandardButton: CGFloat { return 12.0 }
             static var Header: CGFloat { return 20.0 }
             static var HeaderContent: CGFloat { return 16.0 }
+            static var HeaderContentTitle: CGFloat { return 12.0 }
             static var About: CGFloat { return 14.0 }
             static var Error: CGFloat { return 12.0 }
             static var CompleteDot: CGFloat { return 30.0 }
@@ -49,8 +50,8 @@ struct Theme {
         
         //spacing between characters
         private struct Kern {
-            static var TitleKernValue: NSNumber { return 4.0 }
-            static var TimerKernValue: NSNumber { return 4.0 }
+            static var TitleKernValue: NSNumber { return 2.0 }
+            static var TimerKernValue: NSNumber { return 2.0 }
             static var GeneralKernValue: NSNumber { return 0.5 }
         }
         
@@ -65,7 +66,7 @@ struct Theme {
             static var StepCellCompleteIndicator: UIColor { return UIColor(red:0.29, green:1.0, blue:0.50, alpha:1.0) }
             static var StepCellIncompleteIndicator: UIColor { return UIColor(red:1.0, green:0.77, blue:0.77, alpha:1.0) }
             
-            static var StandardButtonColor: UIColor { return UIColor(red:0.88, green:0.79, blue:0.63, alpha:1.0) }
+            static var StandardButtonColor: UIColor { return UIColor(red:0.56, green:0.84, blue:0.79, alpha:1.0) }
         }
         
         // At the Recipe list view (Main View COntroller)
@@ -77,6 +78,8 @@ struct Theme {
             }()
             static let HeaderTableView: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.Header)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
             static let HeaderTableViewContent: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.HeaderContent)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
+            static let HeaderTableViewContentSubTitle: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.HeaderContentTitle)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
+            static let HeaderTableViewContentTitle: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.HeaderContentTitle)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
             static let CaretAttribute: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.Caret)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue, NSAttributedString.Key.paragraphStyle: TextFieldParagraphStyle]
             static let TitleAttribute: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.PageTitle)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
             static let TextFieldAttribute: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.TextField)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue, NSAttributedString.Key.paragraphStyle: TextFieldParagraphStyle]
