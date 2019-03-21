@@ -197,13 +197,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         view.addSubview(nav)
         view.addSubview(tableView)
         view.addSubview(addStepButton)
-//        view.addSubview(extraOptionsView)
-        
-//        extraOptionsView.addSubview(border)
-//        extraOptionsView.addSubview(extraOptionsViewTitle)
-//        extraOptionsView.addSubview(extraOptionsAddTime)
-//        extraOptionsView.addSubview(extraOptionsResetTime)
-//        extraOptionsView.addSubview(extraOptionsMinusTime)
         
         //custom table view header
         headerView.backgroundColor = UIColor.clear
@@ -299,28 +292,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         addStepButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -45).isActive = true
         addStepButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         addStepButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.33).isActive = true
-
-//        extraOptionsView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-//        extraOptionsView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-//        extraOptionsView.heightAnchor.constraint(equalToConstant: screenSize.height / 7.5).isActive = true
-//        extraOptionsView.topAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-//
-//        extraOptionsViewTitle.centerXAnchor.constraint(equalTo: extraOptionsView.centerXAnchor).isActive = true
-//        extraOptionsViewTitle.topAnchor.constraint(equalTo: extraOptionsView.topAnchor, constant: 10).isActive = true
-//
-//        extraOptionsAddTime.trailingAnchor.constraint(equalTo: extraOptionsView.leadingAnchor, constant: (screenSize.width / 8) * 2).isActive = true
-//        extraOptionsAddTime.centerYAnchor.constraint(equalTo: extraOptionsView.centerYAnchor).isActive = true
-//
-//        extraOptionsMinusTime.leadingAnchor.constraint(equalTo: extraOptionsView.trailingAnchor, constant: -(screenSize.width / 8) * 2).isActive = true
-//        extraOptionsMinusTime.centerYAnchor.constraint(equalTo: extraOptionsView.centerYAnchor).isActive = true
-//
-//        extraOptionsResetTime.centerXAnchor.constraint(equalTo: extraOptionsView.centerXAnchor, constant: 0).isActive = true
-//        extraOptionsResetTime.centerYAnchor.constraint(equalTo: extraOptionsView.centerYAnchor).isActive = true
-        
-//        border.topAnchor.constraint(equalTo: extraOptionsView.topAnchor).isActive = true
-//        border.leadingAnchor.constraint(equalTo: extraOptionsView.leadingAnchor).isActive = true
-//        border.trailingAnchor.constraint(equalTo: extraOptionsView.trailingAnchor).isActive = true
-//        border.heightAnchor.constraint(equalToConstant: 1.5).isActive = true
     }
 
     override func viewDidLayoutSubviews() {
@@ -487,32 +458,6 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
         }
         stepSelected = indexPath.row
         step = stepArr[stepSelected]
-
-//        if (step!.isComplete) {
-//            DispatchQueue.main.async {
-//                self.extraOptionsMinusTime.isEnabled = false
-//                self.extraOptionsMinusTime.alpha = 0.4
-//
-//                self.extraOptionsAddTime.isEnabled = false
-//                self.extraOptionsAddTime.alpha = 0.4
-//
-//                self.extraOptionsResetTime.alpha = 1.0
-//                self.extraOptionsResetTime.isEnabled = true
-//            }
-//        } else {
-//            // can't reset a step that has not begun yet. that's skipping steps.
-//            DispatchQueue.main.async {
-//                self.extraOptionsMinusTime.isEnabled = true
-//                self.extraOptionsMinusTime.alpha = 1.0
-//
-//                self.extraOptionsAddTime.isEnabled = true
-//                self.extraOptionsAddTime.alpha = 1.0
-//
-//                self.extraOptionsResetTime.alpha = 0.4
-//                self.extraOptionsResetTime.isEnabled = false
-//            }
-//        }
-//        showBottomViewWhenCellSelected()
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -697,20 +642,6 @@ extension RecipeViewControllerWithTableView {
             executeBottomViewState(.ShowAddStep)
         }
     }
-    
-//    func changeBottomViewState() {
-//        guard let viewState = bottomViewState else {
-//            return
-//        }
-//        switch viewState {
-//        case .ShowStepOptions:
-//            bottomViewState = .ShowAddStep
-//            executeBottomViewState(bottomViewState!)
-//        case .ShowAddStep:
-//            bottomViewState = .ShowStepOptions
-//            executeBottomViewState(bottomViewState!)
-//        }
-//    }
     
     func showBottomViewWhenCellSelected() {
         guard let viewState = bottomViewState else {

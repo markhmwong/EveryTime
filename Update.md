@@ -2,10 +2,7 @@
 # Update Log
 
 ### To do
-screenshots
-local notifications
 
-Scheduled for 1.1
 
 ## Version Features
 - clean up code 1.1.5

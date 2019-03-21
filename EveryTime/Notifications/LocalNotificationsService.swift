@@ -41,18 +41,9 @@ class LocalNotificationsService: NSObject {
     }
     
     func addRecipeWideNotification(identifier: String = "", notificationContent: [String: String]? = nil, timeRemaining: Double) {
-        //identifier
-        //title
-        //body
-        //dictionary for this data
         requestAuth()
         organiseNotification(timeRemaining, notificationContent!)
         addToNotificationCenter(identifier)
-    }
-    
-    func resetRecipeWideNotification() {
-        
-//        notificationCenterInstance
     }
     
     //Must call prepareNotification first or content and trigger will be empty
@@ -61,7 +52,6 @@ class LocalNotificationsService: NSObject {
             print("please call preparenotification first")
             return
         }
-
         let request = UNNotificationRequest(identifier: id,
                                             content: c, trigger: t)
         notificationCenterInstance().add(request, withCompletionHandler: { (error) in

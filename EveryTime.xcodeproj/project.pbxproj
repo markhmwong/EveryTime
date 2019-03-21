@@ -17,6 +17,7 @@
 		4D0C4B6A21AEC73D00153E76 /* TimeableUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4B6921AEC73D00153E76 /* TimeableUITests.swift */; };
 		4D205DB121FE8252008006BD /* StepTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D205DB021FE8252008006BD /* StepTableViewCell.swift */; };
 		4D53801E223FE1280051DD0F /* Update.md in Resources */ = {isa = PBXBuildFile; fileRef = 4D53801D223FE1280051DD0F /* Update.md */; };
+		4D538023224386D20051DD0F /* AboutMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D538022224386D20051DD0F /* AboutMainView.swift */; };
 		4D53C2172203F8C900EED75C /* HorizontalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53C2162203F8C900EED75C /* HorizontalPresentationController.swift */; };
 		4D53F75B21E2E38100C0AF31 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F75A21E2E38100C0AF31 /* CoreDataHelper.swift */; };
 		4D53F7BC21E72B7E00C0AF31 /* RecipeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F7BB21E72B7E00C0AF31 /* RecipeEntity.swift */; };
@@ -129,6 +130,7 @@
 		4D205DB021FE8252008006BD /* StepTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTableViewCell.swift; sourceTree = "<group>"; };
 		4D53801D223FE1280051DD0F /* Update.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Update.md; sourceTree = "<group>"; };
 		4D53801F2240B9FA0051DD0F /* SimpleRecipeTimer v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SimpleRecipeTimer v2.xcdatamodel"; sourceTree = "<group>"; };
+		4D538022224386D20051DD0F /* AboutMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutMainView.swift; sourceTree = "<group>"; };
 		4D53C2162203F8C900EED75C /* HorizontalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalPresentationController.swift; sourceTree = "<group>"; };
 		4D53F75A21E2E38100C0AF31 /* CoreDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
 		4D53F7BB21E72B7E00C0AF31 /* RecipeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeEntity.swift; sourceTree = "<group>"; };
@@ -319,6 +321,14 @@
 			path = "Add ";
 			sourceTree = "<group>";
 		};
+		4D538021224386BB0051DD0F /* About View */ = {
+			isa = PBXGroup;
+			children = (
+				4D538022224386D20051DD0F /* AboutMainView.swift */,
+			);
+			path = "About View";
+			sourceTree = "<group>";
+		};
 		4D53C21822065FE300EED75C /* Theming */ = {
 			isa = PBXGroup;
 			children = (
@@ -454,6 +464,7 @@
 		4DA12F7421B352440049CD75 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4D538021224386BB0051DD0F /* About View */,
 				4DA12F7021B2D3990049CD75 /* StepCellForAddRecipe.swift */,
 				4DA12F7221B2D3DD0049CD75 /* EntityBaseCell.swift */,
 				4D53F7CD21ED6CB200C0AF31 /* NavView.swift */,
@@ -734,6 +745,7 @@
 				4D53F75B21E2E38100C0AF31 /* CoreDataHelper.swift in Sources */,
 				4D53F8A721F36DDA00C0AF31 /* HideHorizontalAnimator.swift in Sources */,
 				4DA12F7321B2D3DD0049CD75 /* EntityBaseCell.swift in Sources */,
+				4D538023224386D20051DD0F /* AboutMainView.swift in Sources */,
 				4DA12F6F21B181460049CD75 /* StepsProtocol.swift in Sources */,
 				4D563C2C220D4ADC0039B07F /* RecipeViewControllerBase.swift in Sources */,
 				4D53F8A521F36D9100C0AF31 /* ShowHorizontalAnimator.swift in Sources */,
