@@ -13,11 +13,7 @@ class MainViewView: UIView {
     private lazy var navView: NavView? = nil
     private let appDelegate = UIApplication.shared.delegate as! AppDelegate
     private var player: AVAudioPlayer?
-    private var addButtonState: ScrollingState = .Idle
-    private var transitionDelegate = OverlayTransitionDelegate()
-    private var dismissInteractor: OverlayInteractor!
     private var delegate: MainViewController!
-    private let recipeCellId = "RecipeCellId"
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -87,7 +83,6 @@ class MainViewView: UIView {
     }()
     
     func setupView() {
-        print("setup view")
         navView = NavView(frame: .zero, leftNavItem: leftNavItemButton, rightNavItem: rightNavItemButton)
         guard let nav = navView else {
             return
@@ -97,7 +92,7 @@ class MainViewView: UIView {
         addSubview(nav)
         addSubview(addRecipeButton)
         
-        collView.register(MainViewCell.self, forCellWithReuseIdentifier: recipeCellId)
+        collView.register(MainViewCell.self, forCellWithReuseIdentifier: CollectionCellIds.RecipeCell.rawValue)
     }
     
     override func updateConstraints() {

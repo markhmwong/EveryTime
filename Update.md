@@ -6,9 +6,8 @@ Clean up each file
 Progress
     - AboutViewController (done)
     - Cells (maybe not as i'm redesigning the entire view into a modal sheet)
-    - MainViewController (completed view)
-        - compelted view
-        - SoC timer
+    - MainViewController (done)
+    - Separate timer
     - RecipeViewController
 
 ## Version Features

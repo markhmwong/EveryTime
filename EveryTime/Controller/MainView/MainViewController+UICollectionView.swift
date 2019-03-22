@@ -32,7 +32,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     //MARK: UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: recipeCellId, for: indexPath) as! MainViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionCellIds.RecipeCell.rawValue, for: indexPath) as! MainViewCell
         cell.mainViewController = self
         cell.entity = recipeCollection[indexPath.row]
         cell.cellForIndexPath = indexPath
