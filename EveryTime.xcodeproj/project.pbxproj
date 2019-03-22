@@ -22,6 +22,7 @@
 		4D5380282244BC750051DD0F /* MainViewController+UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5380272244BC750051DD0F /* MainViewController+UICollectionView.swift */; };
 		4D53802A2244C2D70051DD0F /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5380292244C2D70051DD0F /* Extension+UIView.swift */; };
 		4D53802C22458E410051DD0F /* MainViewController+Scroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53802B22458E410051DD0F /* MainViewController+Scroll.swift */; };
+		4D53802E2245909F0051DD0F /* MainViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53802D2245909F0051DD0F /* MainViewController+Timer.swift */; };
 		4D53C2172203F8C900EED75C /* HorizontalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53C2162203F8C900EED75C /* HorizontalPresentationController.swift */; };
 		4D53F75B21E2E38100C0AF31 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F75A21E2E38100C0AF31 /* CoreDataHelper.swift */; };
 		4D53F7BC21E72B7E00C0AF31 /* RecipeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F7BB21E72B7E00C0AF31 /* RecipeEntity.swift */; };
@@ -137,6 +138,7 @@
 		4D5380272244BC750051DD0F /* MainViewController+UICollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+UICollectionView.swift"; sourceTree = "<group>"; };
 		4D5380292244C2D70051DD0F /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
 		4D53802B22458E410051DD0F /* MainViewController+Scroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+Scroll.swift"; sourceTree = "<group>"; };
+		4D53802D2245909F0051DD0F /* MainViewController+Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+Timer.swift"; sourceTree = "<group>"; };
 		4D53C2162203F8C900EED75C /* HorizontalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalPresentationController.swift; sourceTree = "<group>"; };
 		4D53F75A21E2E38100C0AF31 /* CoreDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
 		4D53F7BB21E72B7E00C0AF31 /* RecipeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeEntity.swift; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 			isa = PBXGroup;
 			children = (
 				4D0C4B4821AEC73A00153E76 /* MainViewController.swift */,
+				4D53802D2245909F0051DD0F /* MainViewController+Timer.swift */,
 				4D5380272244BC750051DD0F /* MainViewController+UICollectionView.swift */,
 				4D53802B22458E410051DD0F /* MainViewController+Scroll.swift */,
 			);
@@ -735,6 +738,7 @@
 				4D0C4B4921AEC73A00153E76 /* MainViewController.swift in Sources */,
 				4D5380252243CACF0051DD0F /* MainViewView.swift in Sources */,
 				4D563C2E220D54280039B07F /* RecipeViewControllerWithTableView.swift in Sources */,
+				4D53802E2245909F0051DD0F /* MainViewController+Timer.swift in Sources */,
 				4DA12F7A21B606A20049CD75 /* AddStepViewController.swift in Sources */,
 				4D53802C22458E410051DD0F /* MainViewController+Scroll.swift in Sources */,
 				4D53F7CE21ED6CB200C0AF31 /* NavView.swift in Sources */,

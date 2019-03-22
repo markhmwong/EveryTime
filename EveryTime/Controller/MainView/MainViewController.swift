@@ -20,23 +20,23 @@ enum CollectionCellIds: String {
 }
 
 class MainViewController: ViewControllerBase {
-        public var recipeCollection: [RecipeEntity] = []
-        public var horizontalDelegate = HorizontalTransitionDelegate()
+    public var recipeCollection: [RecipeEntity] = []
+    public var horizontalDelegate = HorizontalTransitionDelegate()
+    public var timer: Timer?
 
-        private var addButtonState: ScrollingState = .Idle
-        private var indexPathNumber = 0
-        private var timer: Timer?
-        private var transitionDelegate = OverlayTransitionDelegate()
-        private var dismissInteractor: OverlayInteractor!
-        private var sections: Int = 0
-        private let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    
-        lazy var mainViewView: MainViewView = {
-           let view = MainViewView(delegate: self)
-            view.backgroundColor = UIColor.white
-            view.translatesAutoresizingMaskIntoConstraints = false
-            return view
-        }()
+    private var addButtonState: ScrollingState = .Idle
+    private var indexPathNumber = 0
+    private var transitionDelegate = OverlayTransitionDelegate()
+    private var dismissInteractor: OverlayInteractor!
+    private var sections: Int = 0
+    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+
+    lazy var mainViewView: MainViewView = {
+       let view = MainViewView(delegate: self)
+        view.backgroundColor = UIColor.white
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -203,34 +203,6 @@ extension MainViewController {
     }
 }
 
-extension MainViewController: TimerProtocol {
-    func startTimer() {
-        if (timer == nil) {
-            timer?.invalidate()
-            let timerInterval = 0.1
-            timer = Timer.scheduledTimer(timeInterval: timerInterval, target: self, selector: #selector(update), userInfo: nil, repeats: true)
-            RunLoop.current.add(timer!, forMode: .common)
-        }
-    }
 
-    func stopTimer() {
-        if (timer != nil) {
-                timer?.invalidate()
-                    timer = nil
-            }
-    }
-
-    @objc func update() {
-        let cells = self.mainViewView.collView.visibleCells as! [MainViewCell] //change this to all cells not just visible
-        for cell in cells {
-            if let r = cell.entity {
-                if (!r.isPaused) {
-                    r.updateRecipeTime(delegate: self)
-                    cell.updateTimeLabel(timeRemaining: r.timeRemainingForCurrentStepToString())
-                }
-            }
-        }
-    }
-}
 
 
