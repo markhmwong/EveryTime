@@ -152,15 +152,15 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
                 mvc.unpauseEntireRecipe(recipe: r)
                 self.updatePauseButton(pauseButtonText, textColor)
 
-                guard let sName = r.currStepName else {
-                    return
-                }
-                guard let rName = r.recipeName else {
-                    return
-                }
-                guard let createdDate = r.createdDate else {
-                    return
-                }
+//                guard let sName = r.currStepName else {
+//                    return
+//                }
+//                guard let rName = r.recipeName else {
+//                    return
+//                }
+//                guard let createdDate = r.createdDate else {
+//                    return
+//                }
                 
             } else {
                 let id = "\(r.recipeName!).\(r.createdDate!)"

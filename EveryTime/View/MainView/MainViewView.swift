@@ -14,22 +14,21 @@ class MainViewView: UIView {
     private let appDelegate = UIApplication.shared.delegate as! AppDelegate
     private var player: AVAudioPlayer?
     private var addButtonState: ScrollingState = .Idle
-    private var indexPathNumber = 0
-    private var timer: Timer?
     private var transitionDelegate = OverlayTransitionDelegate()
     private var dismissInteractor: OverlayInteractor!
-    private var sections: Int = 0
     private var delegate: MainViewController!
     private let recipeCellId = "RecipeCellId"
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupView()
-        self.setupAutoLayout()
+
     }
+    
     convenience init(delegate: MainViewController) {
         self.init(frame: .zero)
         self.delegate = delegate
+        self.setupView()
+        self.setupAutoLayout()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -41,6 +40,7 @@ class MainViewView: UIView {
         layout.scrollDirection = .vertical
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.dataSource = delegate
+        print(delegate)
         view.delegate = delegate
         view.dragInteractionEnabled = true
         view.backgroundColor = Theme.Background.Color.Clear
@@ -87,6 +87,7 @@ class MainViewView: UIView {
     }()
     
     func setupView() {
+        print("setup view")
         navView = NavView(frame: .zero, leftNavItem: leftNavItemButton, rightNavItem: rightNavItemButton)
         guard let nav = navView else {
             return
@@ -151,7 +152,6 @@ class MainViewView: UIView {
     }
     
     func willReloadTableData() {
-        print(delegate.recipeCollection.count)
         DispatchQueue.main.async {
             self.collView.reloadData()
         }

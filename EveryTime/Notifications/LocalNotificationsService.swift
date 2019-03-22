@@ -56,7 +56,7 @@ class LocalNotificationsService: NSObject {
                                             content: c, trigger: t)
         notificationCenterInstance().add(request, withCompletionHandler: { (error) in
             if let error = error {
-                print("something went wrong")
+                print("something went wrong \(error.localizedDescription)")
             }
         })
     }

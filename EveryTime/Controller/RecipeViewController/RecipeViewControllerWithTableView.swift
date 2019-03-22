@@ -627,24 +627,15 @@ extension RecipeViewControllerWithTableView: UIScrollViewDelegate {
 extension RecipeViewControllerWithTableView {
     
     func showTimerOptions() {
-        let height = screenSize.height / 7.5
-        let distance = (height / 2  )
-        
-
         UIView.animate(withDuration: 0.3, delay: 0.0, options: [.curveEaseInOut], animations: {
             self.addStepButton.center.y = self.view.frame.maxY + 50.0
-//            self.extraOptionsView.center.y = self.view.frame.maxY - distance
         }, completion: nil)
         
     }
     
     func hideTimerOptions() {
-        let height = screenSize.height / 7.5
-        let distance = (height / 2  )
-        
         UIView.animate(withDuration: 0.3, delay: 0.0, options: [.curveEaseInOut], animations: {
             self.addStepButton.center.y = self.view.frame.maxY + 50.0
-//            self.extraOptionsView.center.y = self.view.frame.maxY + distance
         }, completion: nil)
     }
     
