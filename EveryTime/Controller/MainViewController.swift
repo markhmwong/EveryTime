@@ -141,7 +141,7 @@ class MainViewController: ViewControllerBase {
     
          override func prepareView() {
             super.prepareView()
-                navView = NavView(frame: .zero, leftNavItem: leftNavItemButton, rightNavItem: rightNavItemButton)
+            navView = NavView(frame: .zero, leftNavItem: leftNavItemButton, rightNavItem: rightNavItemButton)
             guard let nav = navView else {
                     return
                 }
