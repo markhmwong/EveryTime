@@ -11,7 +11,11 @@ import UIKit
 
 struct Theme {
     struct View {
-        static var CornerRadius: CGFloat { return 14.0 }
+        static var CornerRadius: CGFloat { return 0.0 }
+        
+        struct Nav {
+            static var Height: CGFloat { return 0.08 }
+        }
     }
     struct Font {
         fileprivate typealias tf = Theme.Font
@@ -27,9 +31,9 @@ struct Theme {
         
         private struct Size {
             static var SizeCell: CGFloat { return 14.0 }
-            static var RecipeCellName: CGFloat { return 11.0 }
-            static var RecipeCellTime: CGFloat { return 18.0 }
-            static var RecipeCellStepName: CGFloat { return 11.0 }
+            static var MainViewCellName: CGFloat { return 12.0 }
+            static var MainViewCellTime: CGFloat { return 32.0 }
+            static var MainViewStepName: CGFloat { return 12.0 }
             static var StepTitle: CGFloat { return 20.0 }
             static var StepTime: CGFloat { return 40.0 }
             static var StepCellTitle: CGFloat { return 11.0 }
@@ -57,11 +61,11 @@ struct Theme {
         
         struct Color {
             static var ErrorColor: UIColor { return UIColor(red:0.73, green:0.24, blue:0.13, alpha:1.0) }
-            static var TextColour: UIColor { return UIColor(red:0.11, green:0.11, blue:0.12, alpha:1.0) }
+            static var TextColour: UIColor { return UIColor(red:0.01, green:0.09, blue:0.14, alpha:1.0) }
             
-            static var TextColourDisabled: UIColor { return UIColor(red:0.71, green:0.71, blue:0.72, alpha:1.0) }
+            static var TextColourDisabled: UIColor { return UIColor(red:0.9, green:0.9, blue:0.9, alpha:1.0) }
             static var RecipeLabelBackgroundColour : UIColor { return UIColor(red: 1, green: 1, blue: 1, alpha: 1.0) }
-            static var RecipeCellStepTitle: UIColor { return UIColor(red:0.11, green:0.11, blue:0.12, alpha:0.7) }
+            static var RecipeCellStepTitle: UIColor { return UIColor(red:0.01, green:0.09, blue:0.14, alpha:1.0) }
 
             static var StepCellCompleteIndicator: UIColor { return UIColor(red:0.29, green:1.0, blue:0.50, alpha:1.0) }
             static var StepCellIncompleteIndicator: UIColor { return UIColor(red:1.0, green:0.77, blue:0.77, alpha:1.0) }
@@ -83,11 +87,11 @@ struct Theme {
             static let CaretAttribute: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.Caret)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue, NSAttributedString.Key.paragraphStyle: TextFieldParagraphStyle]
             static let TitleAttribute: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.PageTitle)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
             static let TextFieldAttribute: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.TextField)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue, NSAttributedString.Key.paragraphStyle: TextFieldParagraphStyle]
-            static let TimeAttributeInactive: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.RecipeCellTime)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColourDisabled, NSAttributedString.Key.kern: tf.Kern.TimerKernValue]
-            static let TimeAttribute: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.RecipeCellTime)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TimerKernValue]
-            static let NameAttribute: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.RecipeCellName)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
+            static let TimeAttributeInactive: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.MainViewCellTime)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColourDisabled, NSAttributedString.Key.kern: tf.Kern.TimerKernValue]
+            static let TimeAttribute: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.MainViewCellTime)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TimerKernValue]
+            static let NameAttribute: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.MainViewCellName)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
             static let PauseAttribute: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.SizeCell)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
-            static let StepSubTitle: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.RecipeCellStepName)!, NSAttributedString.Key.foregroundColor: tf.Color.RecipeCellStepTitle, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
+            static let StepSubTitle: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.MainViewStepName)!, NSAttributedString.Key.foregroundColor: tf.Color.RecipeCellStepTitle, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
         }
         
         struct Step {
@@ -105,6 +109,7 @@ struct Theme {
             static let Item: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.NavItem)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
             static let RecipeTitle: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.NavItem)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
             static let AppName: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.NavItem)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
+            static let Height: CGFloat = 0.08
         }
         
         struct About {
@@ -116,14 +121,16 @@ struct Theme {
         fileprivate typealias tb = Theme.Background
         struct Color {
             static var Clear: UIColor { return UIColor(red:1.0, green:1.0, blue:1.0, alpha:0.0) }
-            static var GeneralBackgroundColor: UIColor { return UIColor(red:0.88, green:0.88, blue:0.88, alpha:1.0) }
-            static var CellBackgroundColor: UIColor { return UIColor(red: 1, green: 1, blue: 1, alpha: 1.0) }
-            static var NavBackgroundColor: UIColor { return UIColor(red:0.99, green:0.99, blue:0.99, alpha:1.0) }
-            static var NavBottomBorderColor: UIColor { return UIColor(red: 160.0 / 255.0, green: 160.0 / 255.0, blue: 160.0 / 255.0, alpha: 1.0) }
+            static var GeneralBackgroundColor: UIColor { return UIColor(red:0.92, green:0.92, blue:0.92, alpha:1.0) }
+            static var CellBackgroundColor: UIColor { return UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0) }
+            static var NavBackgroundColor: UIColor { return UIColor(red:1.0, green:1.0, blue:1.0, alpha:1.0) }
+            static var NavBottomBorderColor: UIColor { return UIColor(red: 220.0 / 255.0, green: 220.0 / 255.0, blue: 220.0 / 255.0, alpha: 1.0) }
         }
         struct Gradient {
             static var CellColorTop: CGColor { return UIColor(red: 255.0 / 255.0, green: 255.0 / 255.0, blue: 255.0 / 255.0, alpha: 0.0).cgColor }
             static var CellColorBottom: CGColor { return UIColor(red: 180.0 / 255.0, green: 180.0 / 255.0, blue: 180.0 / 255.0, alpha: 0.3).cgColor }
+            static var BackgroundTop: CGColor { return UIColor(red:0.40, green:0.70, blue:0.44, alpha:1.0).cgColor }
+            static var BackgroundBottom: CGColor { return UIColor(red:0.30, green:0.64, blue:0.80, alpha:1.0).cgColor }
         }
     }
     

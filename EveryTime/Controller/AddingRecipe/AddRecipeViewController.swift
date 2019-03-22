@@ -205,7 +205,7 @@ class AddRecipeViewController: ViewControllerBase {
         CoreDataHandler.saveContext()
         if let mvc = mainViewControllerDelegate {
             mvc.addToRecipeCollection(r: rEntity)
-            mvc.addToCollectionView()
+            mvc.mainViewView.addToCollectionView()
             mvc.startTimer()
         }
     }

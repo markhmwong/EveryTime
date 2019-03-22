@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class RecipeCell: EntityBaseCell<RecipeEntity> {
+class MainViewCell: EntityBaseCell<RecipeEntity> {
     override var entity: RecipeEntity? {
         didSet {
             guard let e = entity else {
@@ -61,6 +61,12 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
         gradientLayer.masksToBounds = true
         return gradientLayer
     }()
+    let bottomBorder: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 0.6)//Theme.Background.Color.NavBottomBorderColor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -83,30 +89,40 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
         addSubview(stepNameLabel)
         addSubview(totalTimeLabel!)
 
-        nameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant:0).isActive = true
+        let leftSidePadding: CGFloat = 25.0
+        nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant:leftSidePadding).isActive = true
         nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10).isActive = true
 
-        totalTimeLabel?.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15).isActive = true
+        totalTimeLabel?.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: leftSidePadding).isActive = true
         totalTimeLabel?.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 0).isActive = true
 
-        stepNameLabel.topAnchor.constraint(equalTo: (totalTimeLabel?.bottomAnchor)!).isActive = true
+        stepNameLabel.bottomAnchor.constraint(equalTo: totalTimeLabel!.topAnchor).isActive = true
         stepNameLabel.leadingAnchor.constraint(equalTo: totalTimeLabel!.leadingAnchor, constant: 0).isActive = true
     }
     
     override func setupView() {
-        layer.insertSublayer(gl, at: 0)
-        layer.cornerRadius = 15.0
+        layer.cornerRadius = 0.0
         clipsToBounds = false
-        layer.backgroundColor = UIColor.white.cgColor
+        layer.backgroundColor = UIColor.clear.cgColor
         layer.masksToBounds = true
 
         
-        backgroundColor = Theme.Background.Color.CellBackgroundColor
-        pauseButton.backgroundColor = Theme.Background.Color.Clear
+        let pauseButtonView = UIView()
+        pauseButtonView.backgroundColor = UIColor.clear
+        pauseButtonView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(pauseButtonView)
+        
+        backgroundColor = UIColor.clear//Theme.Background.Color.CellBackgroundColor
+        pauseButton.backgroundColor = UIColor.clear
         pauseButton.addTarget(self, action: #selector(recipePauseHandler), for: .touchUpInside)
-        addSubview(pauseButton)
+        pauseButtonView.addSubview(pauseButton)
 
-        pauseButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15).isActive = true
+        pauseButtonView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        pauseButtonView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        pauseButtonView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        pauseButtonView.widthAnchor.constraint(equalToConstant: 50.0).isActive = true
+        
+        pauseButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -25.0).isActive = true
         pauseButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 0).isActive = true
     }
     
@@ -146,9 +162,6 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
                     return
                 }
                 
-                let identifier = "\(rName).\(createdDate)"
-                //recipe notification
-//                LocalNotificationsService.shared.addRecipeWideNotification(identifier: identifier, notificationContent: [NotificationDictionaryKeys.Title.rawValue : rName], timeRemaining: r.totalTimeRemaining)
             } else {
                 let id = "\(r.recipeName!).\(r.createdDate!)"
                 LocalNotificationsService.shared.notificationCenterInstance().removePendingNotificationRequests(withIdentifiers: [id])
@@ -189,5 +202,19 @@ class RecipeCell: EntityBaseCell<RecipeEntity> {
         gradientChangeAnimation.fillMode = CAMediaTimingFillMode.forwards
         gradientChangeAnimation.isRemovedOnCompletion = true
         gl.add(gradientChangeAnimation, forKey: "colorChange")
+    }
+    
+    func animateCellForSelection() {
+        let selectionFadeAnimation = CABasicAnimation(keyPath: "backgroundColor")
+        selectionFadeAnimation.duration = 0.05
+        selectionFadeAnimation.autoreverses = true
+        selectionFadeAnimation.toValue = [
+            UIColor(red: 0.5, green: 0.55, blue: 0.5, alpha: 1.0).cgColor,
+            UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0).cgColor
+        ]
+        selectionFadeAnimation.fillMode = CAMediaTimingFillMode.forwards
+        selectionFadeAnimation.isRemovedOnCompletion = true
+        layer.add(selectionFadeAnimation, forKey: "selectCellFade")
+        
     }
 }

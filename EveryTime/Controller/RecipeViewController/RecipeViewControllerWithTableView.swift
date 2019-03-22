@@ -132,7 +132,8 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+    var paddedView: UIView!
+
     
     init(recipe: RecipeEntity, delegate: MainViewController, indexPath: IndexPath) {
         super.init(nibName: nil, bundle: nil)
@@ -189,7 +190,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         subtractTimeButton.isEnabled = false
         subtractTimeButton.alpha = 0.4
 
-        
+        paddedView = UIView()
         navView = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: editButton)
         guard let nav = navView else {
             return
@@ -198,6 +199,12 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         view.addSubview(tableView)
         view.addSubview(addStepButton)
         
+        paddedView.translatesAutoresizingMaskIntoConstraints = false
+        paddedView.backgroundColor = UIColor.white
+        paddedView.layer.cornerRadius = 8.0
+        headerView.addSubview(paddedView)
+
+
         //custom table view header
         headerView.backgroundColor = UIColor.clear
         headerTitleLabel.attributedText = NSAttributedString(string: recipe.recipeName ?? "No name", attributes: Theme.Font.Recipe.HeaderTableView)
@@ -213,14 +220,16 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         headerNextStepLabel.attributedText = NSAttributedString(string: "Next Step", attributes: Theme.Font.Recipe.HeaderTableViewContentSubTitle)
         headerView.addSubview(headerNextStepLabel)
         
-        headerView.addSubview(additionalTimeButton)
-        headerView.addSubview(subtractTimeButton)
-        headerView.addSubview(resetTimeButton)
+        paddedView.addSubview(additionalTimeButton)
+        paddedView.addSubview(subtractTimeButton)
+        paddedView.addSubview(resetTimeButton)
         //save button in header
         headerView.addSubview(saveButton)
         tableView.tableHeaderView = headerView
         
-        tableView.register(MainStepTableViewCell.self, forCellReuseIdentifier: stepCellId)
+        headerView.backgroundColor = UIColor.clear
+    
+        tableView.register(RecipeViewCell.self, forCellReuseIdentifier: stepCellId)
     }
     
     override func updateViewConstraints() {
@@ -265,16 +274,16 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         headerNextStepTitleLabel.leadingAnchor.constraint(equalTo: headerNextStepTimeLabel.leadingAnchor).isActive = true
         headerNextStepTitleLabel.topAnchor.constraint(equalTo: headerNextStepTimeLabel.bottomAnchor, constant: 0.0).isActive = true
         
-        additionalTimeButton.trailingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: (screenSize.width / 8) * 2).isActive = true
-        additionalTimeButton.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10).isActive = true
+        additionalTimeButton.trailingAnchor.constraint(equalTo: paddedView.leadingAnchor, constant: (screenSize.width / 8) * 2).isActive = true
+        additionalTimeButton.bottomAnchor.constraint(equalTo: paddedView.bottomAnchor, constant: -10).isActive = true
         additionalTimeButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.18).isActive = true
         
-        resetTimeButton.centerXAnchor.constraint(equalTo: headerView.centerXAnchor, constant: 0).isActive = true
-        resetTimeButton.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10).isActive = true
+        resetTimeButton.centerXAnchor.constraint(equalTo: paddedView.centerXAnchor, constant: 0).isActive = true
+        resetTimeButton.bottomAnchor.constraint(equalTo: paddedView.bottomAnchor, constant: -10).isActive = true
         resetTimeButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.18).isActive = true
 
-        subtractTimeButton.leadingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -(screenSize.width / 8) * 2).isActive = true
-        subtractTimeButton.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10).isActive = true
+        subtractTimeButton.leadingAnchor.constraint(equalTo: paddedView.trailingAnchor, constant: -(screenSize.width / 8) * 2).isActive = true
+        subtractTimeButton.bottomAnchor.constraint(equalTo: paddedView.bottomAnchor, constant: -10).isActive = true
         subtractTimeButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.18).isActive = true
 
         saveButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -10).isActive = true
@@ -285,13 +294,18 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         }
         nav.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         nav.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        nav.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05).isActive = true
+        nav.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: Theme.View.Nav.Height).isActive = true
         nav.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: 0).isActive = true
         //nav view top anchor within updateViewConstraints()
         
         addStepButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -45).isActive = true
         addStepButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         addStepButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.33).isActive = true
+        
+        paddedView.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 10.0).isActive = true
+        paddedView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10.0).isActive = true
+        paddedView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 10.0).isActive = true
+        paddedView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10.0).isActive = true //there's a warning if we use the headerView.trailingAnchor
     }
 
     override func viewDidLayoutSubviews() {
@@ -403,7 +417,7 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: stepCellId, for: indexPath) as! MainStepTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: stepCellId, for: indexPath) as! RecipeViewCell
         cell.entity = stepArr[indexPath.item]
         return cell
     }
@@ -530,7 +544,7 @@ extension RecipeViewControllerWithTableView: TimerProtocol {
                     
                     let priorityIndexPath = IndexPath(item: Int(step.priority), section: 0)
                     if (visibleCell.contains(priorityIndexPath)) {
-                        let stepCell = tableView.cellForRow(at: priorityIndexPath) as! MainStepTableViewCell
+                        let stepCell = tableView.cellForRow(at: priorityIndexPath) as! RecipeViewCell
                         DispatchQueue.main.async {
 
                             stepCell.updateTimeLabel(time:step.timeRemainingToString())
@@ -547,7 +561,7 @@ extension RecipeViewControllerWithTableView: TimerProtocol {
 
                     let priorityIndexPath = IndexPath(item: Int(step.priority), section: 0)
                     if (visibleCell.contains(priorityIndexPath)) {
-                        let stepCell = tableView.cellForRow(at: priorityIndexPath) as! MainStepTableViewCell
+                        let stepCell = tableView.cellForRow(at: priorityIndexPath) as! RecipeViewCell
                         DispatchQueue.main.async {
                             
                             stepCell.updateTimeLabel(time:step.timeRemainingToString())

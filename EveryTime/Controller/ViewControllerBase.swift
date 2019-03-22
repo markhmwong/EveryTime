@@ -26,11 +26,11 @@ class ViewControllerBase: UIViewController, ViewControllerBaseProtocol {
         prepareAutoLayout()
     }
     
-    func prepareView() {
+    func prepareViewController() {
         
     }
     
-    func prepareViewController() {
+    func prepareView() {
         
     }
     
