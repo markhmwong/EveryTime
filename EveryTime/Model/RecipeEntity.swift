@@ -94,7 +94,7 @@ extension RecipeEntity {
                 guard let date = createdDate else {
                     return
                 }
-                mvc.stepComplete(date)
+                mvc.mainViewView.stepComplete(date)
             }
             currStep.isLeading = false
             currStep.isComplete = true

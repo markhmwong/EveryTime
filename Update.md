@@ -2,14 +2,19 @@
 # Update Log
 
 ### To do
-screenshots
-local notifications
-
-Scheduled for 1.1
+Clean up each file
+Progress
+    - AboutViewController (done)
+    - Cells (maybe not as i'm redesigning the entire view into a modal sheet)
+    - MainViewController (done)
+    - Separate timer
+    - RecipeViewController
 
 ## Version Features
 - clean up code 1.1.5
 - redo the add step/add recipe UI 1.1.5
+- swipe to reset (mainview cell and recipeview cell)
+
 
 - apple watch 1.2
 - be able to pause in the recipe detail view 1.2
@@ -21,9 +26,21 @@ Scheduled for 1.1
 - tags for easier step adding 1.3
 - dark mode 1.3
 
-Far future
+### Far future
+- cross step notifications
 - simultaneous steps?
 
+## Version 1.1.1
+- House cleaning
+- Main View UI Adjustments
+    - larger font for clarity
+    - dark green tinted font
+    - Added highlight to time
+    - Start button now has border
+    - cell view highlighted when selected
+    - view cleaned up anchors
+AddStep
+    - 
 ## Version 1.1 20/3/2019
 
 ### Fixed

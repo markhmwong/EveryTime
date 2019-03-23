@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainStepTableViewCell: EntityBaseTableViewCell<StepEntity> {
+class RecipeViewCell: EntityBaseTableViewCell<StepEntity> {
     
     override var entity: StepEntity? {
         didSet {
@@ -50,14 +50,6 @@ class MainStepTableViewCell: EntityBaseTableViewCell<StepEntity> {
         super.setupView()
         selectedBackgroundView = selectedBg
         backgroundColor = Theme.Background.Color.CellBackgroundColor
-        let colorTop = UIColor(red: 255.0 / 255.0, green: 255.0 / 255.0, blue: 255.0 / 255.0, alpha: 0.0).cgColor
-        let colorBottom = UIColor(red: 200.0 / 255.0, green: 200.0 / 255.0, blue: 200.0 / 255.0, alpha: 0.3).cgColor
-        
-        gl.colors = [colorTop, colorBottom]
-        gl.locations = [0.7, 1.0]
-        gl.frame = bounds
-        gl.shouldRasterize = true // rasterise so we don't need to redraw
-        layer.insertSublayer(gl, at: 0)
         
         if let s = entity {
             timeLabel.attributedText = NSAttributedString(string: "\(s.timeRemainingToString())", attributes: Theme.Font.Step.CellTimeAttribute)
@@ -83,14 +75,14 @@ class MainStepTableViewCell: EntityBaseTableViewCell<StepEntity> {
     
     func prepareAutoLayout() {
         
-        completeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15).isActive = true
+        completeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15.0).isActive = true
         completeLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         
-        timeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15).isActive = true
-        timeLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        timeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15.0).isActive = true
+        timeLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor).isActive = true
         
-        nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 13).isActive = true
-        nameLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 0).isActive = true
+        nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 13.0).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10).isActive = true
     }
     
     func updateNameLabel(name: String) {

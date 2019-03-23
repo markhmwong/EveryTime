@@ -26,7 +26,6 @@ class CoreDataHandler {
     }
     
     class func persistantStoreCoordinator() -> NSPersistentStoreCoordinator? {
-        var error:NSError? = nil
         
         let sharedContainerURL: URL? = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: CoreDataHandler.sharedAppGroup())
         if let sharedContainerURL = sharedContainerURL {
@@ -122,13 +121,13 @@ class CoreDataHandler {
         if (e.isEmpty) {
             print("Nothing In Entity")
         } else {
-            for record in e {
+//            for record in e {
 
                 //                let rEntity = record as! RecipeEntity
 //                for sEntity in rEntity.step as! Set<StepEntity> {
 ////                    print(sEntity.stepName!)
 //                }
-            }
+//            }
         }
     }
     

@@ -29,6 +29,7 @@ class NavView: UIView {
         self.leftNavItem = leftNavItem
         self.rightNavItem = rightNavItem
         self.setupView()
+        self.setupAutoLayout()
     }
     
     required init?(coder aDecoder: NSCoder) {
