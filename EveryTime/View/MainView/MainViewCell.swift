@@ -84,7 +84,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
     
     private lazy var timerHighlight: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red:0.70, green:0.96, blue:0.87, alpha:0.6)
+        view.backgroundColor = Theme.Background.Color.MainViewTimerCellHighlight
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -115,7 +115,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         nameLabel.anchorView(top: contentView.topAnchor, bottom: nil, leading: contentView.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: leftSidePadding, bottom: 0.0, right: 0.0), size: .zero)
         totalTimeLabel?.anchorView(top: nil, bottom: nil, leading: contentView.leadingAnchor, trailing: nil, centerY: contentView.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: leftSidePadding, bottom: 0.0, right: 0.0), size: .zero)
         stepNameLabel.anchorView(top: nil, bottom: totalTimeLabel!.topAnchor, leading: totalTimeLabel!.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: .zero, size: .zero)
-        timerHighlight.anchorView(top: totalTimeLabel?.centerYAnchor, bottom: totalTimeLabel?.bottomAnchor, leading: totalTimeLabel?.leadingAnchor, trailing: totalTimeLabel?.trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 5.0, left: 0.0, bottom: 0.0, right: -15.0), size: .zero)
+        timerHighlight.anchorView(top: totalTimeLabel?.centerYAnchor, bottom: totalTimeLabel?.bottomAnchor, leading: totalTimeLabel?.leadingAnchor, trailing: totalTimeLabel?.trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 18.0, left: 0.0, bottom: 0.0, right: -15.0), size: .zero)
     }
     
     override func setupView() {
@@ -157,7 +157,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         if let r = entity {
             let pauseButtonText = r.isPaused ? "stop" : "start"
             let textColor = r.isPaused ? Theme.Font.Color.TextColour : Theme.Font.Color.TextColourDisabled
-            let highlightAlpha: CGFloat = r.isPaused ? 1.0 : 0.5
+            let highlightAlpha: CGFloat = r.isPaused ? 0.85 : 0.4
             
             if (r.isPaused) {
                 mvc.unpauseEntireRecipe(recipe: r)
