@@ -23,6 +23,7 @@
 		4D53802A2244C2D70051DD0F /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5380292244C2D70051DD0F /* Extension+UIView.swift */; };
 		4D53802C22458E410051DD0F /* MainViewController+Scroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53802B22458E410051DD0F /* MainViewController+Scroll.swift */; };
 		4D53802E2245909F0051DD0F /* MainViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53802D2245909F0051DD0F /* MainViewController+Timer.swift */; };
+		4D5380302245F5C40051DD0F /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53802F2245F5C40051DD0F /* HeaderView.swift */; };
 		4D53C2172203F8C900EED75C /* HorizontalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53C2162203F8C900EED75C /* HorizontalPresentationController.swift */; };
 		4D53F75B21E2E38100C0AF31 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F75A21E2E38100C0AF31 /* CoreDataHelper.swift */; };
 		4D53F7BC21E72B7E00C0AF31 /* RecipeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F7BB21E72B7E00C0AF31 /* RecipeEntity.swift */; };
@@ -139,6 +140,7 @@
 		4D5380292244C2D70051DD0F /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
 		4D53802B22458E410051DD0F /* MainViewController+Scroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+Scroll.swift"; sourceTree = "<group>"; };
 		4D53802D2245909F0051DD0F /* MainViewController+Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+Timer.swift"; sourceTree = "<group>"; };
+		4D53802F2245F5C40051DD0F /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		4D53C2162203F8C900EED75C /* HorizontalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalPresentationController.swift; sourceTree = "<group>"; };
 		4D53F75A21E2E38100C0AF31 /* CoreDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
 		4D53F7BB21E72B7E00C0AF31 /* RecipeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeEntity.swift; sourceTree = "<group>"; };
@@ -321,13 +323,6 @@
 			path = AddStep;
 			sourceTree = "<group>";
 		};
-		4D5380202241FB120051DD0F /* Add  */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Add ";
-			sourceTree = "<group>";
-		};
 		4D538021224386BB0051DD0F /* About View */ = {
 			isa = PBXGroup;
 			children = (
@@ -393,6 +388,7 @@
 			isa = PBXGroup;
 			children = (
 				4D563C2F220D7FB70039B07F /* RecipeViewCell.swift */,
+				4D53802F2245F5C40051DD0F /* HeaderView.swift */,
 			);
 			path = RecipeView;
 			sourceTree = "<group>";
@@ -476,7 +472,6 @@
 				4D538021224386BB0051DD0F /* About View */,
 				4DA12F7221B2D3DD0049CD75 /* EntityBaseCell.swift */,
 				4D53F7CD21ED6CB200C0AF31 /* NavView.swift */,
-				4D5380202241FB120051DD0F /* Add  */,
 				4DF13D60221A1B9B009BE812 /* Button */,
 				4D6E35362215434600CBCC23 /* Error */,
 				4D205DB221FE82B5008006BD /* AddRecipe */,
@@ -744,6 +739,7 @@
 				4D53F7CE21ED6CB200C0AF31 /* NavView.swift in Sources */,
 				4D6E353C22154CE000CBCC23 /* AddRecipeStepTwo.swift in Sources */,
 				4D53F8AB21F36F5500C0AF31 /* HorizontalTransitionDelegate.swift in Sources */,
+				4D5380302245F5C40051DD0F /* HeaderView.swift in Sources */,
 				4D94E5D5223E74DA0009F176 /* LocalNotificationsService.swift in Sources */,
 				4D0C4B4F21AEC73A00153E76 /* SimpleRecipeTimer.xcdatamodeld in Sources */,
 				4DA12F7621B358AB0049CD75 /* MainViewCell.swift in Sources */,

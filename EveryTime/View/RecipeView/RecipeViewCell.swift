@@ -75,14 +75,14 @@ class RecipeViewCell: EntityBaseTableViewCell<StepEntity> {
     
     func prepareAutoLayout() {
         
-        completeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15).isActive = true
+        completeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15.0).isActive = true
         completeLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         
-        timeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15).isActive = true
-        timeLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        timeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15.0).isActive = true
+        timeLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor).isActive = true
         
-        nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 13).isActive = true
-        nameLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 0).isActive = true
+        nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 13.0).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10).isActive = true
     }
     
     func updateNameLabel(name: String) {

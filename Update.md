@@ -38,8 +38,9 @@ Progress
     - Added highlight to time
     - Start button now has border
     - cell view highlighted when selected
-
-
+    - view cleaned up anchors
+AddStep
+    - 
 ## Version 1.1 20/3/2019
 
 ### Fixed
