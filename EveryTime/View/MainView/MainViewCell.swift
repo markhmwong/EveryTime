@@ -112,7 +112,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         addSubview(totalTimeLabel!)
         
         let leftSidePadding: CGFloat = 25.0
-        nameLabel.anchorView(top: contentView.topAnchor, bottom: nil, leading: contentView.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: leftSidePadding, bottom: 0.0, right: 0.0), size: .zero)
+        nameLabel.anchorView(top: contentView.topAnchor, bottom: nil, leading: contentView.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 10.0, left: leftSidePadding, bottom: 0.0, right: 0.0), size: .zero)
         totalTimeLabel?.anchorView(top: nil, bottom: nil, leading: contentView.leadingAnchor, trailing: nil, centerY: contentView.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: leftSidePadding, bottom: 0.0, right: 0.0), size: .zero)
         stepNameLabel.anchorView(top: nil, bottom: totalTimeLabel!.topAnchor, leading: totalTimeLabel!.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: .zero, size: .zero)
         timerHighlight.anchorView(top: totalTimeLabel?.centerYAnchor, bottom: totalTimeLabel?.bottomAnchor, leading: totalTimeLabel?.leadingAnchor, trailing: totalTimeLabel?.trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 18.0, left: 0.0, bottom: 0.0, right: -15.0), size: .zero)

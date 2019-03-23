@@ -10,8 +10,14 @@ import UIKit
 
 
 class AboutMainView: UIView {
-    
     private var delegate: AboutViewController?
+
+    private lazy var shareButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Share", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     private lazy var dismissButton: UIButton = {
         let button = UIButton()
         button.setAttributedTitle(NSAttributedString(string: "Back", attributes: Theme.Font.Nav.Item), for: .normal)
@@ -66,6 +72,8 @@ class AboutMainView: UIView {
         textView.attributedText = NSAttributedString(string: details, attributes: Theme.Font.About.Text)
         addSubview(textView)
         addSubview(dismissButton)
+        shareButton.addTarget(self, action: #selector(handleShareButton), for: .touchUpInside)
+        addSubview(shareButton)
     }
     
     func setupAutoLayout() {
@@ -77,9 +85,16 @@ class AboutMainView: UIView {
         textView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
         textView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
         textView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.8).isActive = true
+        
+        shareButton.topAnchor.constraint(equalTo: safeAreaGuideLayout.topAnchor).isActive = true
+        shareButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
     
     @objc func handleDismiss() {
         delegate?.handleDismiss()
+    }
+    
+    @objc func handleShareButton() {
+        delegate?.share()
     }
 }

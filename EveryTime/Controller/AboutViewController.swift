@@ -9,7 +9,7 @@
 import UIKit
 
 class AboutViewController: ViewControllerBase {
-    
+
     fileprivate var delegate: MainViewController?
     fileprivate lazy var mainView: AboutMainView = {
         let view = AboutMainView(delegate: self)
@@ -42,6 +42,8 @@ class AboutViewController: ViewControllerBase {
         mainView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         mainView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         mainView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        
+        
     }
     
     override func prepareViewController() {
@@ -56,5 +58,13 @@ class AboutViewController: ViewControllerBase {
         
         mvc.startTimer()
         dismiss(animated: true, completion: nil)
+    }
+    
+    func share() {
+        let text = "Get productive with a micromanagement timer!"
+        let url: URL = URL(string: "https://itunes.apple.com/us/app/everytime/id1454444680?ls=1&mt=8")!
+        let vc = UIActivityViewController(activityItems: [text, url], applicationActivities: [])
+        
+        self.present(vc, animated: true, completion: nil)
     }
 }
