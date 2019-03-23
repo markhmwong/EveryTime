@@ -30,10 +30,14 @@ Progress
 - cross step notifications
 - simultaneous steps?
 
-## Version 1.1.5
-
-- Main View UI Adjustments, clearer and larger text with a very subtle green tint to the font
-
+## Version 1.1.1
+- House cleaning
+- Main View UI Adjustments
+    - larger font for clarity
+    - dark green tinted font
+    - Added highlight to time
+    - Start button now has border
+    - cell view highlighted when selected
 
 
 ## Version 1.1 20/3/2019

@@ -9,8 +9,7 @@
 import UIKit
 
 extension UIView {
-    func anchorView(top: NSLayoutYAxisAnchor?, bottom: NSLayoutYAxisAnchor?, leading: NSLayoutXAxisAnchor?, trailing: NSLayoutXAxisAnchor?, padding: UIEdgeInsets = .zero, size: CGSize = .zero) {
-        
+    func anchorView(top: NSLayoutYAxisAnchor?, bottom: NSLayoutYAxisAnchor?, leading: NSLayoutXAxisAnchor?, trailing: NSLayoutXAxisAnchor?, centerY: NSLayoutYAxisAnchor?, centerX: NSLayoutXAxisAnchor?, padding: UIEdgeInsets = .zero, size: CGSize = .zero) {
         if let top = top {
             topAnchor.constraint(equalTo: top, constant: padding.top).isActive = true
         }
@@ -27,11 +26,19 @@ extension UIView {
             trailingAnchor.constraint(equalTo: trailing, constant: padding.right).isActive = true
         }
         
-        if (size.width != 0) {
+        if let centerY = centerY {
+            centerYAnchor.constraint(equalTo: centerY).isActive = true
+        }
+        
+        if let centerX = centerX {
+            centerXAnchor.constraint(equalTo: centerX).isActive = true
+        }
+        
+        if (size.width != 0.0) {
             widthAnchor.constraint(equalToConstant: size.width).isActive = true
         }
         
-        if (size.height != 0) {
+        if (size.height != 0.0) {
             heightAnchor.constraint(equalToConstant: size.width).isActive = true
         }
         

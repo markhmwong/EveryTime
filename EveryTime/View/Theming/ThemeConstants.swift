@@ -125,6 +125,7 @@ struct Theme {
             static var CellBackgroundColor: UIColor { return UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0) }
             static var NavBackgroundColor: UIColor { return UIColor(red:1.0, green:1.0, blue:1.0, alpha:1.0) }
             static var NavBottomBorderColor: UIColor { return UIColor(red: 220.0 / 255.0, green: 220.0 / 255.0, blue: 220.0 / 255.0, alpha: 1.0) }
+            static var CellButtonBackgroundColor: UIColor { return UIColor(red:0.01, green:0.09, blue:0.14, alpha:1.0) }
         }
         struct Gradient {
             static var CellColorTop: CGColor { return UIColor(red: 255.0 / 255.0, green: 255.0 / 255.0, blue: 255.0 / 255.0, alpha: 0.0).cgColor }

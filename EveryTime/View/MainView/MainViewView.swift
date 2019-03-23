@@ -112,32 +112,17 @@ class MainViewView: UIView {
         guard let nav = navView else {
             return
         }
-        
-        if (!appDelegate.hasTopNotch) {
-            nav.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        }
-        nav.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        nav.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        let navTopConstraint = !appDelegate.hasTopNotch ? topAnchor : nil
+        nav.anchorView(top: navTopConstraint, bottom: collView.topAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
         nav.heightAnchor.constraint(equalTo: heightAnchor, multiplier: Theme.View.Nav.Height).isActive = true
-        nav.bottomAnchor.constraint(equalTo: collView.topAnchor, constant: 0).isActive = true
         
-        leftNavItemButton.centerYAnchor.constraint(equalTo: nav.centerYAnchor).isActive = true
-        leftNavItemButton.leadingAnchor.constraint(equalTo: nav.leadingAnchor, constant: 10).isActive = true
+        leftNavItemButton.anchorView(top: nil, bottom: nil, leading: nav.leadingAnchor, trailing: nil, centerY: nav.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 10.0, bottom: 0.0, right: 0.0), size: .zero)
+        rightNavItemButton.anchorView(top: nil, bottom: nil, leading: nil, trailing: nav.trailingAnchor, centerY: nav.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: -10.0), size: .zero)
+        appNameLabel.anchorView(top: nil, bottom: nil, leading: nil, trailing: nil, centerY: nav.centerYAnchor, centerX: nav.centerXAnchor, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0), size: .zero)
         
-        rightNavItemButton.centerYAnchor.constraint(equalTo: nav.centerYAnchor).isActive = true
-        rightNavItemButton.trailingAnchor.constraint(equalTo: nav.trailingAnchor, constant: -10).isActive = true
-        
-        addRecipeButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -45).isActive = true
-        addRecipeButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        addRecipeButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.33).isActive = true
-        
-        appNameLabel.centerXAnchor.constraint(equalTo: nav.centerXAnchor).isActive = true
-        appNameLabel.centerYAnchor.constraint(equalTo: nav.centerYAnchor).isActive = true
-        
-        collView.topAnchor.constraint(equalTo: nav.bottomAnchor).isActive = true
-        collView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        collView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        collView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        addRecipeButton.anchorView(top: nil, bottom: bottomAnchor, leading: nil, trailing: nil, centerY: nil, centerX: centerXAnchor, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: -45.0, right: 0.0), size: CGSize(width: UIScreen.main.bounds.width / 3, height: 0.0))
+        collView.anchorView(top: nav.bottomAnchor, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0), size: .zero)
+
     }
     
     func willReloadCellData(indexPath: IndexPath) {
