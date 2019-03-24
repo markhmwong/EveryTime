@@ -17,7 +17,6 @@ class MainViewView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
     }
     
     convenience init(delegate: MainViewController) {
@@ -36,7 +35,6 @@ class MainViewView: UIView {
         layout.scrollDirection = .vertical
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.dataSource = delegate
-        print(delegate)
         view.delegate = delegate
         view.dragInteractionEnabled = true
         view.backgroundColor = Theme.Background.Color.Clear

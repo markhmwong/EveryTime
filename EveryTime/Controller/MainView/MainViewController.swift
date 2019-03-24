@@ -8,6 +8,7 @@
     
 import UIKit
 import AVFoundation
+import StoreKit
 
 enum ScrollingState {
     case Show
@@ -51,7 +52,8 @@ class MainViewController: ViewControllerBase {
     ///The super class will call prepare_ functions. They don't need to be called
     override func viewDidLoad() {
             super.viewDidLoad()
-            UIApplication.shared.isStatusBarHidden = true
+//        SKStoreReviewController.requestReview()
+        UIApplication.shared.isStatusBarHidden = true
     //        testData()
     }
 

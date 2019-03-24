@@ -16,6 +16,13 @@ struct Theme {
         struct Nav {
             static var Height: CGFloat { return 0.08 }
         }
+        
+        struct RecipeCell {
+            static var RecipeCellPauseButtonActive: UIColor { return UIColor(red:0.26, green:0.63, blue:0.52, alpha:1.0) }
+            static var RecipeCellPauseButtonInactive: UIColor { return UIColor(red:0.26, green:0.63, blue:0.52, alpha:0.4) }
+            static var MainViewTimerCellHighlight: UIColor { return UIColor(red:0.52, green:0.83, blue:0.73, alpha:1.0) }
+
+        }
     }
     struct Font {
         fileprivate typealias tf = Theme.Font
@@ -49,7 +56,7 @@ struct Theme {
             static var HeaderContentTitle: CGFloat { return 12.0 }
             static var HeaderContentTime: CGFloat { return 20.0 }
 
-            static var About: CGFloat { return 14.0 }
+            static var About: CGFloat { return 16.0 }
             static var Error: CGFloat { return 12.0 }
             static var CompleteDot: CGFloat { return 30.0 }
         }
@@ -65,7 +72,7 @@ struct Theme {
             static var ErrorColor: UIColor { return UIColor(red:0.73, green:0.24, blue:0.13, alpha:1.0) }
             static var TextColour: UIColor { return UIColor(red:0.01, green:0.09, blue:0.14, alpha:1.0) }
             
-            static var TextColourDisabled: UIColor { return UIColor(red:0.9, green:0.9, blue:0.9, alpha:1.0) }
+            static var TextColourDisabled: UIColor { return UIColor(red:0.7, green:0.7, blue:0.7, alpha:1.0) }
             static var RecipeLabelBackgroundColour : UIColor { return UIColor(red: 1, green: 1, blue: 1, alpha: 1.0) }
             static var RecipeCellStepTitle: UIColor { return UIColor(red:0.01, green:0.09, blue:0.14, alpha:1.0) }
 
@@ -131,7 +138,9 @@ struct Theme {
             static var NavBackgroundColor: UIColor { return UIColor(red:1.0, green:1.0, blue:1.0, alpha:1.0) }
             static var NavBottomBorderColor: UIColor { return UIColor(red: 220.0 / 255.0, green: 220.0 / 255.0, blue: 220.0 / 255.0, alpha: 1.0) }
             static var CellButtonBackgroundColor: UIColor { return UIColor(red:0.01, green:0.09, blue:0.14, alpha:1.0) }
-            static var MainViewTimerCellHighlight: UIColor { return UIColor(red:0.39, green:0.13, blue:0.38, alpha:0.85) }
+            
+
+
 
         }
         struct Gradient {

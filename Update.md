@@ -3,12 +3,18 @@
 
 ### To do
 Clean up each file
-Progress
-    - AboutViewController (done)
-    - Cells (maybe not as i'm redesigning the entire view into a modal sheet)
-    - MainViewController (done)
-    - Separate timer
-    - RecipeViewController
+    - Progress
+        - AboutViewController (done)
+        - Cells (maybe not as i'm redesigning the entire view into a modal sheet)
+        - MainViewController (done)
+        - Separate timer
+        - RecipeViewController (headerview done)
+- App review
+- sharing
+- taptic feedback
+- add recipe tableview white
+- about view controller add table view (need to push content for each cell)
+- pills for start stop. ( inprogress)
 
 ## Version Features
 - clean up code 1.1.5
@@ -26,9 +32,13 @@ Progress
 - tags for easier step adding 1.3
 - dark mode 1.3
 
-### Far future
+- siri shortcuts 1.4
+
+
+### Far future / Possible features
 - cross step notifications
 - simultaneous steps?
+- attach music to a certain step
 
 ## Version 1.1.1
 - House cleaning

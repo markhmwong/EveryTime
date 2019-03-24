@@ -17,11 +17,13 @@ enum textFieldTag: Int {
 
 class AddRecipeStepTwo: AddRecipeBaseCell {
     
-    fileprivate let rowHeight: CGFloat = 120.0
-    fileprivate let stepCellId = "wizardCellId"
-    fileprivate var addStepButtonStackView: UIStackView?
-    fileprivate var dataSource: [TableViewStep] = []
-    fileprivate var keyboardTextField: UITextField = UITextField()
+    private let rowHeight: CGFloat = 120.0
+    private let stepCellId = "wizardCellId"
+    private var addStepButtonStackView: UIStackView?
+    private var dataSource: [TableViewStep] = []
+    private var keyboardTextField: UITextField = UITextField()
+    var tableViewBottomConstraint: NSLayoutConstraint!
+
     fileprivate var textFieldStackView: UIStackView = {
         let tf = UIStackView()
         tf.alignment = .fill
@@ -45,7 +47,6 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         tv.isEditing = false
         tv.dataSource = self
         tv.separatorStyle = .none
-        
         tv.translatesAutoresizingMaskIntoConstraints = false
         return tv
     }()
@@ -90,7 +91,6 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         textfield.translatesAutoresizingMaskIntoConstraints = false
         return textfield
     }()
-    var tableViewBottomConstraint: NSLayoutConstraint!
 
     override func setupView() {
         super.setupView()

@@ -8,11 +8,27 @@
 
 import UIKit
 
-class AboutViewController: ViewControllerBase {
-
+class AboutViewController: ViewControllerBase, UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataSource.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! AboutViewCell
+        cell.updateLabel(text: dataSource[indexPath.row]!)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UIScreen.main.bounds.height / 17
+    }
+    
+    let cellId = "cellId"
+    var dataSource: [Int : String] = [0: "About", 1 : "Review In App Store", 2 : "Share with Friends"]
     fileprivate var delegate: MainViewController?
     fileprivate lazy var mainView: AboutMainView = {
         let view = AboutMainView(delegate: self)
+        view.backgroundColor = UIColor.red
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -38,10 +54,7 @@ class AboutViewController: ViewControllerBase {
     
     override func prepareAutoLayout() {
         super.prepareAutoLayout()
-        mainView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        mainView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        mainView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        mainView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        mainView.anchorView(top: view.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
     }
     
     override func prepareViewController() {
