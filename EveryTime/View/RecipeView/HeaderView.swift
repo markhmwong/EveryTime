@@ -112,9 +112,6 @@ class HeaderView: UIView {
         headerNextStepLabel.attributedText = NSAttributedString(string: "Next Step", attributes: Theme.Font.Recipe.HeaderTableViewContentSubTitle)
         innerPaddedView.addSubview(headerNextStepLabel)
         
-        
-        
-        
         additionalTimeButton.isEnabled = false
         additionalTimeButton.alpha = 0.4
         resetTimeButton.isEnabled = false

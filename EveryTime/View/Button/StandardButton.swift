@@ -26,4 +26,8 @@ class StandardButton: UIButton {
         layer.cornerRadius = 5.0
         titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 10.0, bottom: 0.0, right: 10.0)
     }
+    
+    func updateButtonTitle(with title: String) {
+        setAttributedTitle(NSAttributedString(string: title, attributes: Theme.Font.Nav.StandardButton), for: .normal)
+    }
 }

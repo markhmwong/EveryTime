@@ -161,7 +161,6 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
             return
         }
 
-        
         //should be done in the model. let the VC's VM update the cell data
         if let r = entity {
             let bg = r.isPaused ? Theme.View.RecipeCell.RecipeCellPauseButtonActive : Theme.View.RecipeCell.RecipeCellPauseButtonInactive

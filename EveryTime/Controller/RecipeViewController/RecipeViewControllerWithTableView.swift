@@ -63,9 +63,14 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         return button
     }()
     
-    fileprivate lazy var addStepButton: StandardButton = {
-        let button = StandardButton(title: "Add Step")
-        button.addTarget(self, action: #selector(handleAddStep), for: .touchUpInside)
+//    fileprivate lazy var addStepButton: StandardButton = {
+//        let button = StandardButton(title: "Add Step")
+//        button.addTarget(self, action: #selector(handleAddStep), for: .touchUpInside)
+//        return button
+//    }()
+    fileprivate lazy var pauseRecipeButton: StandardButton = {
+        let button = StandardButton(title: "Pause")
+        button.addTarget(self, action: #selector(handlePauseRecipe), for: .touchUpInside)
         return button
     }()
     
@@ -122,7 +127,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         }
         view.addSubview(nav)
         view.addSubview(tableView)
-        view.addSubview(addStepButton)
+        view.addSubview(pauseRecipeButton)
 
         headerView.delegate = self
         tableView.tableHeaderView = headerView
@@ -171,9 +176,9 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         nav.anchorView(top: navTopConstraint, bottom: tableView.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
         nav.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: heightByNotch).isActive = true
        
-        addStepButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -45).isActive = true
-        addStepButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        addStepButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.33).isActive = true
+        pauseRecipeButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -45).isActive = true
+        pauseRecipeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        pauseRecipeButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.33).isActive = true
     }
 
     override func viewDidLayoutSubviews() {
@@ -481,14 +486,14 @@ extension RecipeViewControllerWithTableView: UIScrollViewDelegate {
     //functions to hide the step button when scrolling
     func hideStepButtonAnimation() {
         UIView.animate(withDuration: 0.15, delay: 0.0, options: [.curveEaseInOut], animations: {
-            self.addStepButton.center.y = self.view.frame.maxY + 50.0
+            self.pauseRecipeButton.center.y = self.view.frame.maxY + 50.0
         }, completion: nil)
     }
     
     func showStepButtonAnimation() {
         
         UIView.animate(withDuration: 0.2, delay: 0.2, options: [.curveEaseInOut], animations: {
-            self.addStepButton.center.y = self.view.frame.maxY - 50.0
+            self.pauseRecipeButton.center.y = self.view.frame.maxY - 50.0
         }, completion: nil)
 
 
@@ -499,14 +504,13 @@ extension RecipeViewControllerWithTableView {
     
     func showTimerOptions() {
         UIView.animate(withDuration: 0.3, delay: 0.0, options: [.curveEaseInOut], animations: {
-            self.addStepButton.center.y = self.view.frame.maxY + 50.0
+            self.pauseRecipeButton.center.y = self.view.frame.maxY + 50.0
         }, completion: nil)
-        
     }
     
     func hideTimerOptions() {
         UIView.animate(withDuration: 0.3, delay: 0.0, options: [.curveEaseInOut], animations: {
-            self.addStepButton.center.y = self.view.frame.maxY + 50.0
+            self.pauseRecipeButton.center.y = self.view.frame.maxY + 50.0
         }, completion: nil)
     }
     
@@ -665,7 +669,7 @@ extension RecipeViewControllerWithTableView {
         }))
         present(alert, animated: true, completion: nil)
     }
-    
+
     @objc func handleAddStep() {
         let vc = AddStepViewController()
         vc.transitioningDelegate = transitionDelegate
@@ -677,6 +681,29 @@ extension RecipeViewControllerWithTableView {
         vc.recipeViewControllerDelegate = self
         self.present(vc, animated: true, completion: nil)
     }
+
+    @objc func handlePauseRecipe() {
+        if (recipe.isPaused) {
+            pauseRecipeButton.updateButtonTitle(with: "Pause")
+            recipe.unpauseStepArr()
+        } else {
+            pauseRecipeButton.updateButtonTitle(with: "Unpause")
+            recipe.pauseStepArr()
+        }
+        CoreDataHandler.saveContext()
+    }
+    
+//    @objc func handleAddStep() {
+//        let vc = AddStepViewController()
+//        vc.transitioningDelegate = transitionDelegate
+//        vc.modalPresentationStyle = .custom
+//        dismissInteractor = OverlayInteractor()
+//        dismissInteractor.attachToViewController(viewController: vc, withView: vc.view, presentViewController: nil)
+//        vc.interactor = dismissInteractor
+//        transitionDelegate.dismissInteractor = dismissInteractor
+//        vc.recipeViewControllerDelegate = self
+//        self.present(vc, animated: true, completion: nil)
+//    }
     
     func handleAdditionalTime() {
         let seconds = 15.0
