@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AboutViewCell: UITableViewCell {
+class SettingsViewCell: UITableViewCell {
     
     lazy var label: UILabel = {
        let label = UILabel()
@@ -29,8 +29,6 @@ class AboutViewCell: UITableViewCell {
     }
     
     func updateLabel(text: String) {
-        print(text)
         label.attributedText = NSAttributedString(string: text, attributes: Theme.Font.About.Text)
     }
-    
 }

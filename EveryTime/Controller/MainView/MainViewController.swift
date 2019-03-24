@@ -42,7 +42,7 @@ class MainViewController: ViewControllerBase {
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
             super.init(nibName: nil, bundle: nil)
-        }
+    }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -52,7 +52,6 @@ class MainViewController: ViewControllerBase {
     ///The super class will call prepare_ functions. They don't need to be called
     override func viewDidLoad() {
             super.viewDidLoad()
-//        SKStoreReviewController.requestReview()
         UIApplication.shared.isStatusBarHidden = true
     //        testData()
     }
@@ -122,7 +121,6 @@ class MainViewController: ViewControllerBase {
             }
             self.recipeCollection = self.sortRecipeCollection(in: rEntityArr)
             self.mainViewView.willReloadTableData()
-            print(self.recipeCollection.count)
         }
     }
     
@@ -154,7 +152,7 @@ class MainViewController: ViewControllerBase {
 //MARK: - UI
 extension MainViewController {
     func handleAbout() {
-        let vc = AboutViewController(delegate:self)
+        let vc = SettingsViewController(delegate:self)
         present(vc, animated: true, completion: nil)
     }
     

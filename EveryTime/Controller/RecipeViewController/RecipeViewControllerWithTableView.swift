@@ -45,7 +45,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-
     
     fileprivate lazy var dismissButton: UIButton = {
         let button = UIButton()
@@ -129,22 +128,35 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         tableView.tableHeaderView = headerView
         tableView.setNeedsLayout()
         tableView.layoutIfNeeded()
-        headerView.updateHeaderTitleLabel(title: recipe.recipeName ?? "No name")
+        headerView.updateHeaderTitleLabel(title: recipe.recipeName ?? "Unknown Name")
+        headerView.updateHeaderStepTimeLabel(time: "\(recipe.timeRemainingForCurrentStepToString())")
+        headerView.updateHeaderStepTitleLabel(title: recipe.currStepName ?? "Unknown Name")
+        
+        let sortedSet = recipe.sortStepsByPriority()
+        if (sortedSet.count - 1 > recipe.currStepPriority) {
+            let nextStep: StepEntity = sortedSet[Int(recipe.currStepPriority) + 1]
+            DispatchQueue.main.async {
+                self.headerView.updateHeaderNextStepTimeLabel(time: nextStep.timeRemainingToString())
+                self.headerView.updateHeaderNextStepTitleLabel(title: nextStep.stepName ?? "unknown")
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.headerView.updateHeaderNextStepTimeLabel(time: "")
+                self.headerView.updateHeaderNextStepTitleLabel(title: "")
+            }
+        }
+        
         tableView.register(RecipeViewCell.self, forCellReuseIdentifier: stepCellId)
     }
     
-    override func updateViewConstraints() {
-        super.updateViewConstraints()
-        if (appDelegate.hasTopNotch) {
-            let safeAreaInsets = self.view.safeAreaInsets
-            
-            guard let nav = navView else {
-                return
-            }
-            nav.topAnchor.constraint(equalTo: self.view.topAnchor, constant: safeAreaInsets.top).isActive = true //keeps the bar in position as the view performs the transition
+    override func viewSafeAreaInsetsDidChange() {
+        let safeAreaInsets = self.view.safeAreaInsets
+        guard let nav = navView else {
+            return
         }
+        nav.topAnchor.constraint(equalTo: view.topAnchor, constant: safeAreaInsets.top).isActive = true //keeps the bar in position as the view performs the transition
     }
-
+    
     override func prepareAutoLayout() {
         super.prepareAutoLayout()
         guard let nav = navView else {
@@ -153,19 +165,15 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         
         tableView.anchorView(top: nav.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
 
-        
-        if (!appDelegate.hasTopNotch) {
-            nav.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        }
-        nav.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        nav.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        nav.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: Theme.View.Nav.Height).isActive = true
-        nav.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: 0).isActive = true
+        let navTopConstraint = !appDelegate.hasTopNotch ? view.topAnchor : nil
+        let heightByNotch = !appDelegate.hasTopNotch ? Theme.View.Nav.HeightWithoutNotch : Theme.View.Nav.HeightWithNotch
+
+        nav.anchorView(top: navTopConstraint, bottom: tableView.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
+        nav.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: heightByNotch).isActive = true
        
         addStepButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -45).isActive = true
         addStepButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         addStepButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.33).isActive = true
-
     }
 
     override func viewDidLayoutSubviews() {
@@ -259,6 +267,10 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
 
 extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDataSource {
     //switches the objects between cells. Allows the user to reorganise the order.
+    
+
+    
+    
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let sourceObj = self.stepArr[sourceIndexPath.row]
         let destinationObj = self.stepArr[destinationIndexPath.row]
@@ -320,7 +332,6 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
         DispatchQueue.main.async {
             tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
             self.headerView.enableStepOptions()
@@ -619,7 +630,11 @@ extension RecipeViewControllerWithTableView {
             self.tableView.isEditing = !self.tableView.isEditing
             self.headerView.saveButtonEnable()
         }
-        
+        let addStepAction = UIAlertAction(title: "Add Step", style: .default) { (action) in
+            //add step
+            print("will add step")
+        }
+        optionMenu.addAction(addStepAction)
         optionMenu.addAction(editAction)
         optionMenu.addAction(resetAction)
         optionMenu.addAction(deleteAction)

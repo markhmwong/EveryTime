@@ -11,17 +11,28 @@ import UIKit
 
 struct Theme {
     struct View {
+        private struct Style {
+            static var Medium: String { return "Avenir-Medium" }
+            static var Bold: String { return "Avenir-Black" }
+        }
+        
         static var CornerRadius: CGFloat { return 0.0 }
         
         struct Nav {
-            static var Height: CGFloat { return 0.08 }
+            static var HeightWithNotch: CGFloat { return 0.06 }
+            static var HeightWithoutNotch: CGFloat { return 0.08 }
+
         }
         
         struct RecipeCell {
             static var RecipeCellPauseButtonActive: UIColor { return UIColor(red:0.26, green:0.63, blue:0.52, alpha:1.0) }
             static var RecipeCellPauseButtonInactive: UIColor { return UIColor(red:0.26, green:0.63, blue:0.52, alpha:0.4) }
             static var MainViewTimerCellHighlight: UIColor { return UIColor(red:0.52, green:0.83, blue:0.73, alpha:1.0) }
-
+        }
+        
+        struct StepCell {
+            static var CellIndicatorComplete: UIColor { return UIColor(red:0.52, green:0.83, blue:0.73, alpha:1.0) } //to do
+            static var CellIndicatorIncomplete: UIColor { return UIColor(red:0.92, green:0.83, blue:0.73, alpha:0.9) } //to do
         }
     }
     struct Font {
@@ -39,7 +50,7 @@ struct Theme {
         private struct Size {
             static var SizeCell: CGFloat { return 14.0 }
             static var MainViewCellName: CGFloat { return 12.0 }
-            static var MainViewCellTime: CGFloat { return 32.0 }
+            static var MainViewCellTime: CGFloat { return 26.0 }
             static var MainViewStepName: CGFloat { return 12.0 }
             static var StepTitle: CGFloat { return 20.0 }
             static var StepTime: CGFloat { return 40.0 }
@@ -112,8 +123,7 @@ struct Theme {
             static let AddStep: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.AddStepPlaceholder)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
             static let CellNameAttribute: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.StepCellTitle)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
             static let CellTimeAttribute: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.StepCellTime)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TimerKernValue]
-            static let CellIndicatorComplete: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.CompleteDot)!, NSAttributedString.Key.foregroundColor: tf.Color.StepCellCompleteIndicator, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
-            static let CellIndicatorIncomplete: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.CompleteDot)!, NSAttributedString.Key.foregroundColor: tf.Color.StepCellIncompleteIndicator, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
+
         }
         
         struct Nav {
@@ -138,11 +148,8 @@ struct Theme {
             static var NavBackgroundColor: UIColor { return UIColor(red:1.0, green:1.0, blue:1.0, alpha:1.0) }
             static var NavBottomBorderColor: UIColor { return UIColor(red: 220.0 / 255.0, green: 220.0 / 255.0, blue: 220.0 / 255.0, alpha: 1.0) }
             static var CellButtonBackgroundColor: UIColor { return UIColor(red:0.01, green:0.09, blue:0.14, alpha:1.0) }
-            
-
-
-
         }
+        
         struct Gradient {
             static var CellColorTop: CGColor { return UIColor(red: 255.0 / 255.0, green: 255.0 / 255.0, blue: 255.0 / 255.0, alpha: 0.0).cgColor }
             static var CellColorBottom: CGColor { return UIColor(red: 180.0 / 255.0, green: 180.0 / 255.0, blue: 180.0 / 255.0, alpha: 0.3).cgColor }

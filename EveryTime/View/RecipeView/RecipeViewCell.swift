@@ -9,6 +9,33 @@
 import UIKit
 
 class RecipeViewCell: EntityBaseTableViewCell<StepEntity> {
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        guard let e = entity else {
+            return
+        }
+        let color = e.isComplete ? Theme.View.StepCell.CellIndicatorComplete : Theme.View.StepCell.CellIndicatorIncomplete
+
+        super.setSelected(selected, animated: animated)
+        if selected {
+            DispatchQueue.main.async {
+                self.completeIndicatorView.backgroundColor = color
+            }
+        }
+    }
+    
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        guard let e = entity else {
+            return
+        }
+        let color = e.isComplete ? Theme.View.StepCell.CellIndicatorComplete : Theme.View.StepCell.CellIndicatorIncomplete
+        super.setHighlighted(highlighted, animated: animated)
+        
+        if highlighted {
+            DispatchQueue.main.async {
+                self.completeIndicatorView.backgroundColor = color
+            }
+        }
+    }
     
     override var entity: StepEntity? {
         didSet {
@@ -19,28 +46,29 @@ class RecipeViewCell: EntityBaseTableViewCell<StepEntity> {
             prepareAutoLayout()
         }
     }
-    fileprivate lazy var nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    fileprivate lazy var timeLabel: UILabel = {
+    private lazy var timeLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
-    fileprivate lazy var completeLabel: UILabel = {
-       let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    private lazy var completeIndicatorView: UIView = {
+       let view = UIView()
+        view.layer.cornerRadius = 8.0
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     var gl = CAGradientLayer()
     
-    fileprivate lazy var selectedBg: UIView = {
+    private lazy var selectedBg: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(red: 0.85, green: 0.85, blue: 0.85, alpha: 0.6)
         return view
@@ -66,19 +94,16 @@ class RecipeViewCell: EntityBaseTableViewCell<StepEntity> {
         timeLabel.attributedText = NSAttributedString(string: "\(e.timeRemainingToString())", attributes: Theme.Font.Step.CellTimeAttribute)
         nameLabel.attributedText = NSAttributedString(string: e.stepName ?? "No Name", attributes: Theme.Font.Step.CellNameAttribute)
         updateCompletionStatusLabel()
-        completeLabel.textAlignment = .right
 
-        contentView.addSubview(completeLabel)
+        contentView.addSubview(completeIndicatorView)
         contentView.addSubview(timeLabel)
         contentView.addSubview(nameLabel)
     }
     
     func prepareAutoLayout() {
+        completeIndicatorView.anchorView(top: nil, bottom: nil, leading: nil, trailing: contentView.trailingAnchor, centerY: contentView.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: -25.0), size: CGSize(width: 35.0, height: 18.0))
         
-        completeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15.0).isActive = true
-        completeLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        
-        timeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15.0).isActive = true
+        timeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 25.0).isActive = true
         timeLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor).isActive = true
         
         nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 13.0).isActive = true
@@ -98,9 +123,9 @@ class RecipeViewCell: EntityBaseTableViewCell<StepEntity> {
             return
         }
         if (e.isComplete) {
-            completeLabel.attributedText = NSAttributedString(string: "•", attributes: Theme.Font.Step.CellIndicatorComplete)
+            completeIndicatorView.backgroundColor = Theme.View.StepCell.CellIndicatorComplete
         } else {
-            completeLabel.attributedText = NSAttributedString(string: "•", attributes: Theme.Font.Step.CellIndicatorIncomplete)
+            completeIndicatorView.backgroundColor = Theme.View.StepCell.CellIndicatorIncomplete
         }
     }
     
@@ -108,6 +133,6 @@ class RecipeViewCell: EntityBaseTableViewCell<StepEntity> {
         super.prepareForReuse()
         nameLabel.removeFromSuperview()
         timeLabel.removeFromSuperview()
-        completeLabel.removeFromSuperview()
+        completeIndicatorView.removeFromSuperview()
     }
 }

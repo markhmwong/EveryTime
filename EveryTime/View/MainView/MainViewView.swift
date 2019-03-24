@@ -52,7 +52,7 @@ class MainViewView: UIView {
     
     private lazy var leftNavItemButton: UIButton = {
         let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "About", attributes: Theme.Font.Nav.Item), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Info", attributes: Theme.Font.Nav.Item), for: .normal)
         button.addTarget(self, action: #selector(handleAbout), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -97,7 +97,6 @@ class MainViewView: UIView {
         super.updateConstraints()
         if (appDelegate.hasTopNotch) {
             let safeAreaInsets = self.safeAreaInsets
-            
             guard let nav = navView else {
                 return
             }
@@ -111,8 +110,10 @@ class MainViewView: UIView {
             return
         }
         let navTopConstraint = !appDelegate.hasTopNotch ? topAnchor : nil
+        let heightByNotch = !appDelegate.hasTopNotch ? Theme.View.Nav.HeightWithoutNotch : Theme.View.Nav.HeightWithNotch
+        
         nav.anchorView(top: navTopConstraint, bottom: collView.topAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
-        nav.heightAnchor.constraint(equalTo: heightAnchor, multiplier: Theme.View.Nav.Height).isActive = true
+        nav.heightAnchor.constraint(equalTo: heightAnchor, multiplier: heightByNotch).isActive = true
         
         leftNavItemButton.anchorView(top: nil, bottom: nil, leading: nav.leadingAnchor, trailing: nil, centerY: nav.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 10.0, bottom: 0.0, right: 0.0), size: .zero)
         rightNavItemButton.anchorView(top: nil, bottom: nil, leading: nil, trailing: nav.trailingAnchor, centerY: nav.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: -10.0), size: .zero)

@@ -12,22 +12,38 @@ import CoreData
 class MainViewCell: EntityBaseCell<RecipeEntity> {
     public var mainViewController: MainViewController? = nil
     public var cellForIndexPath: IndexPath?
-    private var recipeTimeLabel: UILabel? = nil
+    private var recipeTimeLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString(string: "00h 00m 00s", attributes: Theme.Font.Recipe.TimeAttribute)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     private var nextShortestTimeLabel: UILabel? = nil
     private lazy var nameLabelAnimationYMovement: CGFloat = 0.0
     private var stepName: String? = nil
 
     override var entity: RecipeEntity? {
         didSet {
-            guard let e = entity else {
+            guard let r = entity else {
                 return
             }
-            guard let name = e.recipeName else {
+            guard let name = r.recipeName else {
                 return
             }
 
-            prepareLabels(name, e.timeRemainingForCurrentStepToString())
-            updatePauseState()
+            prepareLabels(name, r.timeRemainingForCurrentStepToString())
+            let bg = r.isPaused ? Theme.View.RecipeCell.RecipeCellPauseButtonInactive : Theme.View.RecipeCell.RecipeCellPauseButtonActive
+            let textColor = r.isPaused ? Theme.Font.Color.TextColourDisabled : Theme.Font.Color.TextColour
+            let highlightAlpha: CGFloat = r.isPaused ? 0.85 : 0.25
+            updatePauseButton(textColor, highlightAlpha, bg)
+            
+            if (r.isPaused) {
+                bringSubviewToFront(timerHighlight)
+            } else {
+                bringSubviewToFront(recipeTimeLabel)
+
+            }
+            
         }
     }
     private var stepNameLabel: UILabel = {
@@ -47,12 +63,9 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         let button = UIButton()
         button.backgroundColor = Theme.View.RecipeCell.RecipeCellPauseButtonActive
         button.titleEdgeInsets = UIEdgeInsets(top: -10,left: 0,bottom: -10,right: 0)
-        button.layer.borderColor = UIColor(red:0.02, green:0.08, blue:0.03, alpha:0.0).cgColor
-        button.layer.borderWidth = 1.0
         button.layer.cornerRadius = 8.0
         button.contentEdgeInsets = UIEdgeInsets(top: 5.0, left: 12.0, bottom: 5.0, right: 12.0)
         button.translatesAutoresizingMaskIntoConstraints = false
-        
         return button
     }()
 
@@ -92,29 +105,29 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
     func prepareLabels(_ name: String,_ time: String) {
         nameLabel.attributedText = NSAttributedString(string: name, attributes: Theme.Font.Recipe.NameAttribute)
         stepNameLabel.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Recipe.StepSubTitle)
-        
-        recipeTimeLabel = UILabel()
-        recipeTimeLabel?.attributedText = NSAttributedString(string: time, attributes: Theme.Font.Recipe.TimeAttribute)
-        recipeTimeLabel?.translatesAutoresizingMaskIntoConstraints = false
+        recipeTimeLabel.attributedText = NSAttributedString(string: time, attributes: Theme.Font.Recipe.TimeAttribute)
         
         nameLabel.backgroundColor = Theme.Background.Color.Clear
         stepNameLabel.backgroundColor = Theme.Background.Color.Clear
-        recipeTimeLabel?.backgroundColor = Theme.Background.Color.Clear
+        recipeTimeLabel.backgroundColor = Theme.Background.Color.Clear
         
         addSubview(nameLabel)
         addSubview(stepNameLabel)
         addSubview(timerHighlight)
-        addSubview(recipeTimeLabel!)
+        addSubview(recipeTimeLabel)
         
+        labelAutoLayout()
+    }
+    
+    func labelAutoLayout() {
         let leftSidePadding: CGFloat = 25.0
         nameLabel.anchorView(top: contentView.topAnchor, bottom: nil, leading: contentView.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 10.0, left: leftSidePadding, bottom: 0.0, right: 0.0), size: .zero)
-        recipeTimeLabel?.anchorView(top: nil, bottom: nil, leading: contentView.leadingAnchor, trailing: nil, centerY: contentView.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: leftSidePadding, bottom: 0.0, right: 0.0), size: .zero)
-        stepNameLabel.anchorView(top: nil, bottom: recipeTimeLabel!.topAnchor, leading: recipeTimeLabel!.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: .zero, size: .zero)
-        timerHighlight.anchorView(top: nil, bottom: nil, leading: recipeTimeLabel?.leadingAnchor, trailing: recipeTimeLabel?.trailingAnchor, centerY: recipeTimeLabel?.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0), size: CGSize(width: 0.0, height: 10.0))
+        recipeTimeLabel.anchorView(top: nil, bottom: nil, leading: contentView.leadingAnchor, trailing: nil, centerY: contentView.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: leftSidePadding, bottom: 0.0, right: 0.0), size: .zero)
+        stepNameLabel.anchorView(top: nil, bottom: recipeTimeLabel.topAnchor, leading: recipeTimeLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: .zero, size: .zero)
+        timerHighlight.anchorView(top: nil, bottom: nil, leading: recipeTimeLabel.leadingAnchor, trailing: recipeTimeLabel.trailingAnchor, centerY: recipeTimeLabel.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0), size: CGSize(width: 0.0, height: 10.0))
     }
     
     override func setupView() {
-        layer.cornerRadius = 0.0
         clipsToBounds = false
         layer.backgroundColor = UIColor.clear.cgColor
         layer.masksToBounds = true
@@ -133,8 +146,8 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
     override func prepareForReuse() {
         super.prepareForReuse()
         nameLabel.removeFromSuperview()
-        recipeTimeLabel?.removeFromSuperview()
-        recipeTimeLabel = nil
+        recipeTimeLabel.removeFromSuperview()
+//        recipeTimeLabel = nil
     }
     
     @objc func recipePauseHandler() {
@@ -156,9 +169,10 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
             let highlightAlpha: CGFloat = r.isPaused ? 0.25 : 0.85
 
             if (r.isPaused) {
+                //will unpause
                 mvc.unpauseEntireRecipe(recipe: r)
 
-                bringSubviewToFront(recipeTimeLabel!)
+                bringSubviewToFront(recipeTimeLabel)
                 self.updatePauseButton(textColor, highlightAlpha, bg)
             } else {
                 mvc.pauseEntireRecipe(recipe: r)
@@ -168,7 +182,6 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
                 self.updatePauseButton(textColor, highlightAlpha, bg)
                 
                 LocalNotificationsService.shared.notificationCenterInstance().removePendingNotificationRequests(withIdentifiers: [id])
-
             }
         }
     }
@@ -176,7 +189,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
     func updatePauseButton(_ color: UIColor, _ alpha: CGFloat, _ bg: UIColor) {
         DispatchQueue.main.async {
             self.pauseButton.backgroundColor = bg
-            self.recipeTimeLabel?.textColor = color
+            self.recipeTimeLabel.textColor = color
             self.timerHighlight.alpha = alpha
         }
     }
@@ -188,9 +201,9 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         DispatchQueue.main.async {
             self.stepNameLabel.attributedText = NSAttributedString(string: e.currStepName ?? "No Step Name", attributes: Theme.Font.Recipe.StepSubTitle)
             if self.entity != nil {
-                    self.recipeTimeLabel?.attributedText = NSAttributedString(string: timeRemaining, attributes: Theme.Font.Recipe.TimeAttribute)
+                    self.recipeTimeLabel.attributedText = NSAttributedString(string: timeRemaining, attributes: Theme.Font.Recipe.TimeAttribute)
             } else {
-                    self.recipeTimeLabel?.attributedText = NSAttributedString(string: "No Time", attributes: Theme.Font.Recipe.TimeAttribute)
+                    self.recipeTimeLabel.attributedText = NSAttributedString(string: "No Time", attributes: Theme.Font.Recipe.TimeAttribute)
             }
         }
         

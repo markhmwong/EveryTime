@@ -1,30 +1,30 @@
 //
-//  AboutMainView.swift
+//  AboutView.swift
 //  EveryTime
 //
-//  Created by Mark Wong on 21/3/19.
+//  Created by Mark Wong on 24/3/19.
 //  Copyright © 2019 Mark Wong. All rights reserved.
 //
 
 import UIKit
 
-
-class AboutMainView: UIView {
-    private var delegate: AboutViewController?
+class AboutView: UIView {
     private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    private let appName = Bundle.appName()
+    private let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String
+    private var delegate: AboutViewController?
 
-    private lazy var shareButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Share", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
     private lazy var dismissButton: UIButton = {
         let button = UIButton()
         button.setAttributedTitle(NSAttributedString(string: "Back", attributes: Theme.Font.Nav.Item), for: .normal)
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
+    }()
+    lazy var navView: NavView = {
+        let view = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: nil)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     private let textView: UITextView = {
@@ -35,24 +35,8 @@ class AboutMainView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    private lazy var tableView: UITableView = {
-       let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.dataSource = delegate
-        tableView.delegate = delegate
-        tableView.separatorStyle = .none
-        return tableView
-    }()
     
-    
-    lazy var navView: NavView = {
-       let view = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: nil)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private let appName = Bundle.appName()
-    private let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String
+
     private lazy var details = """
     Thanks for using \(appName) v\(appVersion ?? "").\n
     I'm not the best cook but I love a good a steak. The first bite always gets me when you've cooked it to your liking, and thats the problem it wasn't always the way it was made previously; I made this app to keep track of the amount of times I had flipped my steak for it to cook evenly knowing Gordan Ramsey would kick my arse for overcooking it.\n
@@ -70,43 +54,32 @@ class AboutMainView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.setupView()
+        self.setupAutoLayout()
     }
     
     convenience init(delegate: AboutViewController) {
         self.init(frame: .zero)
         self.delegate = delegate
-        self.setupView()
-        self.setupAutoLayout()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupView() {
+    private func setupView() {
         addSubview(navView)
         textView.attributedText = NSAttributedString(string: details, attributes: Theme.Font.About.Text)
         addSubview(textView)
-        shareButton.addTarget(self, action: #selector(handleShareButton), for: .touchUpInside)
-        addSubview(shareButton)
-        addSubview(tableView)
-        
-        tableView.register(AboutViewCell.self, forCellReuseIdentifier: "cellId")
     }
     
-    func setupAutoLayout() {
+    private func setupAutoLayout() {
         let safeAreaGuideLayout = safeAreaLayoutGuide
         let navTopConstraint = !appDelegate.hasTopNotch ? topAnchor : nil
-        navView.anchorView(top: navTopConstraint, bottom: tableView.topAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
-        navView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: Theme.View.Nav.Height).isActive = true
+        navView.anchorView(top: navTopConstraint, bottom: nil, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
+        navView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: Theme.View.Nav.HeightWithNotch).isActive = true
         
-        textView.anchorView(top: nil, bottom: nil, leading: leadingAnchor, trailing: trailingAnchor, centerY: centerYAnchor, centerX: nil, padding: .zero, size: .zero)
-        textView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.8).isActive = true
-        
-        shareButton.topAnchor.constraint(equalTo: safeAreaGuideLayout.topAnchor).isActive = true
-        shareButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        
-        tableView.anchorView(top: navView.bottomAnchor, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
+        textView.anchorView(top: navView.bottomAnchor, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
     }
     
     override func updateConstraints() {
@@ -120,9 +93,5 @@ class AboutMainView: UIView {
     
     @objc func handleDismiss() {
         delegate?.handleDismiss()
-    }
-    
-    @objc func handleShareButton() {
-        delegate?.share()
     }
 }
