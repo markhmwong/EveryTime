@@ -30,18 +30,6 @@ class MainViewView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    lazy var collView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.dataSource = delegate
-        view.delegate = delegate
-        view.dragInteractionEnabled = true
-        view.backgroundColor = Theme.Background.Color.Clear
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     private lazy var rightNavItemButton: UIButton = {
         let button = UIButton()
         button.setAttributedTitle(NSAttributedString(string: "Clear All", attributes: Theme.Font.Nav.Item), for: .normal)//revert back to add recipe
@@ -57,13 +45,7 @@ class MainViewView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
-    public lazy var addRecipeButton: StandardButton = {
-        let button = StandardButton(title: "Add Recipe")
-        button.addTarget(self, action: #selector(handleAddRecipe), for: .touchUpInside)
-        return button
-    }()
-    
+
     private lazy var appNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -78,6 +60,24 @@ class MainViewView: UIView {
         button.addTarget(self, action: #selector(handleTest), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
+    }()
+    
+    public lazy var addRecipeButton: StandardButton = {
+        let button = StandardButton(title: "Add Recipe")
+        button.addTarget(self, action: #selector(handleAddRecipe), for: .touchUpInside)
+        return button
+    }()
+    
+    public lazy var collView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        view.dataSource = delegate
+        view.delegate = delegate
+        view.dragInteractionEnabled = true
+        view.backgroundColor = Theme.Background.Color.Clear
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     func setupView() {
@@ -121,7 +121,6 @@ class MainViewView: UIView {
         
         addRecipeButton.anchorView(top: nil, bottom: bottomAnchor, leading: nil, trailing: nil, centerY: nil, centerX: centerXAnchor, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: -45.0, right: 0.0), size: CGSize(width: UIScreen.main.bounds.width / 3, height: 0.0))
         collView.anchorView(top: nav.bottomAnchor, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0), size: .zero)
-
     }
     
     func willReloadCellData(indexPath: IndexPath) {

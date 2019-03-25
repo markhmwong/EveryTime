@@ -92,6 +92,7 @@ class MainViewController: ViewControllerBase {
         super.prepareView()
         view.addSubview(mainViewView)
         loadDataFromCoreData()
+
     }
 
     override func prepareAutoLayout() {
@@ -127,6 +128,18 @@ class MainViewController: ViewControllerBase {
     func sortRecipeCollection(in rEntityArr: [RecipeEntity]) -> [RecipeEntity] {
         return rEntityArr.sorted { (x, y) -> Bool in
             return (x.createdDate?.compare(y.createdDate!) == .orderedAscending)
+        }
+    }
+    
+    func updateCellPauseState(indexPath: IndexPath, recipe: RecipeEntity) {
+        let bg = !recipe.isPaused ? Theme.View.RecipeCell.RecipeCellPauseButtonActive : Theme.View.RecipeCell.RecipeCellPauseButtonInactive
+        let textColor = !recipe.isPaused ? Theme.Font.Color.TextColour : Theme.Font.Color.TextColourDisabled
+        let highlightAlpha: CGFloat = !recipe.isPaused ? 0.25 : 0.85
+        
+        let cell = mainViewView.collView.cellForItem(at: indexPath) as! MainViewCell
+        DispatchQueue.main.async {
+            cell.updatePauseHighlight()
+            cell.updatePauseButtonView(textColor, highlightAlpha, bg)
         }
     }
     

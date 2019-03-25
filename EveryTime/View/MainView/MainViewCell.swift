@@ -30,20 +30,18 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
             guard let name = r.recipeName else {
                 return
             }
-
+            
             prepareLabels(name, r.timeRemainingForCurrentStepToString())
             let bg = r.isPaused ? Theme.View.RecipeCell.RecipeCellPauseButtonInactive : Theme.View.RecipeCell.RecipeCellPauseButtonActive
             let textColor = r.isPaused ? Theme.Font.Color.TextColourDisabled : Theme.Font.Color.TextColour
             let highlightAlpha: CGFloat = r.isPaused ? 0.85 : 0.25
-            updatePauseButton(textColor, highlightAlpha, bg)
+            updatePauseButtonView(textColor, highlightAlpha, bg)
             
             if (r.isPaused) {
                 bringSubviewToFront(timerHighlight)
             } else {
                 bringSubviewToFront(recipeTimeLabel)
-
             }
-            
         }
     }
     private var stepNameLabel: UILabel = {
@@ -131,9 +129,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         clipsToBounds = false
         layer.backgroundColor = UIColor.clear.cgColor
         layer.masksToBounds = true
-
         addSubview(pauseButtonView)
-        
         backgroundColor = UIColor.clear//Theme.Background.Color.CellBackgroundColor
 
         pauseButton.addTarget(self, action: #selector(recipePauseHandler), for: .touchUpInside)
@@ -147,7 +143,6 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         super.prepareForReuse()
         nameLabel.removeFromSuperview()
         recipeTimeLabel.removeFromSuperview()
-//        recipeTimeLabel = nil
     }
     
     @objc func recipePauseHandler() {
@@ -160,7 +155,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
             //TODO: - error
             return
         }
-
+        
         //should be done in the model. let the VC's VM update the cell data
         if let r = entity {
             let bg = r.isPaused ? Theme.View.RecipeCell.RecipeCellPauseButtonActive : Theme.View.RecipeCell.RecipeCellPauseButtonInactive
@@ -170,22 +165,30 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
             if (r.isPaused) {
                 //will unpause
                 mvc.unpauseEntireRecipe(recipe: r)
-
                 bringSubviewToFront(recipeTimeLabel)
-                self.updatePauseButton(textColor, highlightAlpha, bg)
+                self.updatePauseButtonView(textColor, highlightAlpha, bg)
             } else {
                 mvc.pauseEntireRecipe(recipe: r)
-
                 bringSubviewToFront(timerHighlight)
                 let id = "\(r.recipeName!).\(r.createdDate!)"
-                self.updatePauseButton(textColor, highlightAlpha, bg)
+                self.updatePauseButtonView(textColor, highlightAlpha, bg)
                 
                 LocalNotificationsService.shared.notificationCenterInstance().removePendingNotificationRequests(withIdentifiers: [id])
             }
         }
     }
     
-    func updatePauseButton(_ color: UIColor, _ alpha: CGFloat, _ bg: UIColor) {
+    func updatePauseHighlight() {
+        if let r = entity {
+            if (r.isPaused) {
+                bringSubviewToFront(timerHighlight)
+            } else {
+                bringSubviewToFront(recipeTimeLabel)
+            }
+        }
+    }
+    
+    func updatePauseButtonView(_ color: UIColor, _ alpha: CGFloat, _ bg: UIColor) {
         DispatchQueue.main.async {
             self.pauseButton.backgroundColor = bg
             self.recipeTimeLabel.textColor = color

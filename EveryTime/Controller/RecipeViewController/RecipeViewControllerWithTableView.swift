@@ -54,7 +54,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    fileprivate lazy var editButton: UIButton = {
+    fileprivate lazy var settingsButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(Theme.Font.Color.TextColour, for: .normal)
         button.setAttributedTitle(NSAttributedString(string: "Settings", attributes: Theme.Font.Nav.Item), for: .normal)
@@ -81,7 +81,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         return view
     }()
     var paddedView: UIView!
-
+    var indexPathSelectedFromMainView: IndexPath?
     
     init(recipe: RecipeEntity, delegate: MainViewController, indexPath: IndexPath) {
         super.init(nibName: nil, bundle: nil)
@@ -89,6 +89,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         self.recipe = recipe
         self.stepSet = recipe.step as? Set<StepEntity>
         self.stepArr = recipe.sortStepsByPriority()
+        self.indexPathSelectedFromMainView = indexPath
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -113,15 +114,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
 
     override func prepareView() {
         super.prepareView()
-        
-        if (recipe.isPaused) {
-            editButton.isEnabled = true
-        } else {
-            editButton.isEnabled = false
-            editButton.alpha = 0.3
-        }
-
-        navView = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: editButton)
+        navView = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: settingsButton)
         guard let nav = navView else {
             return
         }
@@ -151,6 +144,24 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
             }
         }
         
+        if (recipe.isPaused) {
+            //fix. it is not dimming
+
+            DispatchQueue.main.async {
+                self.navView?.rightNavItem?.alpha = 1.0
+                self.navView?.rightNavItem?.isEnabled = true
+                self.pauseRecipeButton.updateButtonTitle(with: "Unpause")
+            }
+            
+        } else {
+            DispatchQueue.main.async {
+                self.navView?.rightNavItem?.isEnabled = false
+                self.navView?.rightNavItem?.alpha = 0.3
+                
+
+                self.pauseRecipeButton.updateButtonTitle(with: "Pause")
+            }
+        }
         tableView.register(RecipeViewCell.self, forCellReuseIdentifier: stepCellId)
     }
     
@@ -186,7 +197,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     }
     
     func modifyTime(_ seconds: Double) {
-
         do {
             try recipe.adjustTime(by: seconds, selectedStep: stepSelected)
             recipe.sumStepsForExpectedElapsedTime() //updates totalTimeRemaining to update the pending local notification
@@ -218,7 +228,10 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         }
         stopTimer()
         mvc.dismiss(animated: true) {
-            mvc.startTimer()
+            if let indexPath = self.indexPathSelectedFromMainView {
+                mvc.updateCellPauseState(indexPath: indexPath, recipe: self.recipe)
+                mvc.startTimer()
+            }
         }
     }
     
@@ -636,7 +649,7 @@ extension RecipeViewControllerWithTableView {
         }
         let addStepAction = UIAlertAction(title: "Add Step", style: .default) { (action) in
             //add step
-            print("will add step")
+            self.handleAddStep()
         }
         optionMenu.addAction(addStepAction)
         optionMenu.addAction(editAction)
@@ -670,7 +683,7 @@ extension RecipeViewControllerWithTableView {
         present(alert, animated: true, completion: nil)
     }
 
-    @objc func handleAddStep() {
+    func handleAddStep() {
         let vc = AddStepViewController()
         vc.transitioningDelegate = transitionDelegate
         vc.modalPresentationStyle = .custom
@@ -684,10 +697,20 @@ extension RecipeViewControllerWithTableView {
 
     @objc func handlePauseRecipe() {
         if (recipe.isPaused) {
-            pauseRecipeButton.updateButtonTitle(with: "Pause")
+            DispatchQueue.main.async {
+                self.settingsButton.isEnabled = false
+                self.settingsButton.alpha = 0.3
+                self.pauseRecipeButton.updateButtonTitle(with: "Pause")
+            }
+
             recipe.unpauseStepArr()
         } else {
-            pauseRecipeButton.updateButtonTitle(with: "Unpause")
+            DispatchQueue.main.async {
+                self.settingsButton.isEnabled = true
+                self.settingsButton.alpha = 1.0
+                self.pauseRecipeButton.updateButtonTitle(with: "Unpause")
+            }
+
             recipe.pauseStepArr()
         }
         CoreDataHandler.saveContext()

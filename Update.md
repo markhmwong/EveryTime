@@ -1,26 +1,28 @@
 
 # Update Log
 
-### To do
-Clean up each file
-    - Progress
-        - AboutViewController (done)
-        - Cells (maybe not as i'm redesigning the entire view into a modal sheet)
-        - MainViewController (done)
-        - Separate timer
-        - RecipeViewController (headerview done)
-- App review
-- sharing
+## To do (Priority list) 
 - taptic feedback
+    - start/stop
+    - cell selection
+    - buttons
 - add recipe tableview white
-- about view controller add table view (need to push content for each cell)
-- pills for start stop. ( inprogress)
+- email feedback (in info)
+- the entire adding process
+- pause button now in recipe view
+- moved add recipe into settings
+- swipe to reset step
 
-## Version Features
+## To do in near future (not a priority)
+- settings button on main view
+- section headers for info page
+- notifications for recipes toggle
+- themes
+
+## Planned Version Features
+
 - clean up code 1.1.5
-- redo the add step/add recipe UI 1.1.5
-- swipe to reset (mainview cell and recipeview cell)
-
+- redo the add step/add recipe UI 1.2
 
 - apple watch 1.2
 - be able to pause in the recipe detail view 1.2
@@ -34,13 +36,30 @@ Clean up each file
 
 - siri shortcuts 1.4
 
-
-### Far future / Possible features
+### Far future / conceptual features
 - cross step notifications
 - simultaneous steps?
 - attach music to a certain step
 
-## Version 1.1.1
+### Requested Main Features
+- siri shortucts
+- apple watch
+- redo adding process (priority!)
+- tags
+- save recipes to add into other recipes
+- save steps to add into other steps
+
+
+# Version History Log
+
+## Version 1.1.2
+
+
+
+## Version 1.1.1 (Submitted 24/3/2019)
+
+- sharing
+- App review
 - House cleaning
 - Main View UI Adjustments
     - larger font for clarity
@@ -49,8 +68,16 @@ Clean up each file
     - Start button now has border
     - cell view highlighted when selected
     - view cleaned up anchors
+    - pills for start stop and complete/incomplete steps
 AddStep
     - 
+Clean up each file
+    - Progress
+    - AboutViewController (done)
+    - Cells (maybe not as i'm redesigning the entire view into a modal sheet)
+    - MainViewController (done)
+    - Separate timer
+    - RecipeViewController (headerview done)
 ## Version 1.1 20/3/2019
 
 ### Fixed
@@ -69,21 +96,4 @@ AddStep
 - Added a top summary view of the recipe in the recipe detail page.
 - Check local notifications
 
-### App Store What's New
-Quick Update
-• Notifies when the recipe is complete
-• Calculation fixes regarding the timers when pausing and running in the background
-• Summary space on Recipe details page
-• UI adjustments, text spacing and sizes
 
-Full details
-• Local notifications added, triggers when a Recipe is complete
-• Pause bug occurs when the user pauses then resets and then returns to the main view to unpause. It now calculates the time properly
-• Time adjustment +15/-15, now working as intended
-• Timer now runs in background when on the Recipe detail page. In 1.0, the algorithm didn't work as intended
-• Bundled edit, delete, reset buttons on the Recipe detail page in one button to show an action sheet. Before there were three buttons littered on the top right
-• Added a top tableview header summary on the Recipe detail page showing the current step title and time and the next step title and time
-• Bottom menu animation logic now improved. Initial interactions had the step options not reveal itself unless scrolled
-• Completion dot now made larger, before it was the size of an atom
-• The Recipes now continue to run when returning from the About page previously the Recipes would halt when viewing the about page and returning to the main view
-• Alert now plays even when the step is offscreen on the Recipe detail page and on the last step after completion, previously it didn't play on the final step
