@@ -12,7 +12,7 @@ import CoreData
 class MainViewCell: EntityBaseCell<RecipeEntity> {
     public var mainViewController: MainViewController? = nil
     public var cellForIndexPath: IndexPath?
-    private var recipeTimeLabel: UILabel = {
+    private lazy var recipeTimeLabel: UILabel = {
         let label = UILabel()
         label.attributedText = NSAttributedString(string: "00h 00m 00s", attributes: Theme.Font.Recipe.TimeAttribute)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -44,13 +44,13 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
             }
         }
     }
-    private var stepNameLabel: UILabel = {
+    private lazy var stepNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private var nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = UIColor.clear
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -77,7 +77,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
     }()
     private let bottomBorder: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 0.6)//Theme.Background.Color.NavBottomBorderColor
+        view.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 0.0)//Theme.Background.Color.NavBottomBorderColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -95,6 +95,15 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         return view
     }()
 
+    private var textLabelPadding: CGFloat {
+        switch UIDevice.current.screenType {
+            case UIDevice.ScreenType.iPhones_5_5s_5c_SE:
+                return 3.0
+            default:
+                return 10.0
+        }
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         gl.frame = bounds
@@ -102,7 +111,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
     
     func prepareLabels(_ name: String,_ time: String) {
         nameLabel.attributedText = NSAttributedString(string: name, attributes: Theme.Font.Recipe.NameAttribute)
-        stepNameLabel.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Recipe.StepSubTitle)
+        stepNameLabel.attributedText = NSAttributedString(string: " ", attributes: Theme.Font.Recipe.StepSubTitle)
         recipeTimeLabel.attributedText = NSAttributedString(string: time, attributes: Theme.Font.Recipe.TimeAttribute)
         
         nameLabel.backgroundColor = Theme.Background.Color.Clear
@@ -110,9 +119,12 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         recipeTimeLabel.backgroundColor = Theme.Background.Color.Clear
         
         addSubview(nameLabel)
+        addSubview(recipeTimeLabel)
         addSubview(stepNameLabel)
         addSubview(timerHighlight)
-        addSubview(recipeTimeLabel)
+        
+        
+        
         
         labelAutoLayout()
     }
@@ -120,8 +132,8 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
     func labelAutoLayout() {
         let leftSidePadding: CGFloat = 25.0
         nameLabel.anchorView(top: contentView.topAnchor, bottom: nil, leading: contentView.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 10.0, left: leftSidePadding, bottom: 0.0, right: 0.0), size: .zero)
-        recipeTimeLabel.anchorView(top: nil, bottom: nil, leading: contentView.leadingAnchor, trailing: nil, centerY: contentView.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: leftSidePadding, bottom: 0.0, right: 0.0), size: .zero)
-        stepNameLabel.anchorView(top: nil, bottom: recipeTimeLabel.topAnchor, leading: recipeTimeLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: .zero, size: .zero)
+        recipeTimeLabel.anchorView(top: nil, bottom: nil, leading: contentView.leadingAnchor, trailing: nil, centerY: contentView.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: textLabelPadding, left: leftSidePadding, bottom: 0.0, right: 0.0), size: .zero)
+        stepNameLabel.anchorView(top: nameLabel.bottomAnchor, bottom: nil, leading: recipeTimeLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: textLabelPadding, left: 0.0, bottom: 0.0, right: 0.0), size: .zero)
         timerHighlight.anchorView(top: nil, bottom: nil, leading: recipeTimeLabel.leadingAnchor, trailing: recipeTimeLabel.trailingAnchor, centerY: recipeTimeLabel.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0), size: CGSize(width: 0.0, height: 10.0))
     }
     
@@ -137,12 +149,15 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
 
         pauseButtonView.anchorView(top: contentView.topAnchor, bottom: contentView.bottomAnchor, leading: nil, trailing: contentView.trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: CGSize(width: 80.0, height: 0.0))
         pauseButton.anchorView(top: nil, bottom: nil, leading: nil, trailing: contentView.trailingAnchor, centerY: pauseButtonView.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: -25.0), size: CGSize(width: 35.0, height: 18.0))
+        
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         nameLabel.removeFromSuperview()
         recipeTimeLabel.removeFromSuperview()
+        timerHighlight.removeFromSuperview()
+        stepNameLabel.removeFromSuperview()
     }
     
     @objc func handlePauseButton() {

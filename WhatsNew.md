@@ -7,6 +7,11 @@ Recipe View
     - Pause Button replaces add recipe
     - "Add Recipe" moved within Settings
     - You can now swipe to reset and swipe to delete a step
+Add Step
+    -  Pressing done now submits new step
+iPhone 5 screen size support
+    - Fixed unintended overlapping text and buttons throughout the app
+    - Overlay view for adding steps/receips increased to support height of device
     
 ## Version 1.1.1
 Quick Update

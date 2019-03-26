@@ -21,6 +21,14 @@ enum CollectionCellIds: String {
 }
 
 class MainViewController: ViewControllerBase {
+    public var cellSize: CGFloat {
+        switch UIDevice.current.screenType.rawValue {
+        case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
+            return 2.8
+        default:
+            return 3.0
+        }
+    }
     public var recipeCollection: [RecipeEntity] = []
     public var horizontalDelegate = HorizontalTransitionDelegate()
     public var timer: Timer?

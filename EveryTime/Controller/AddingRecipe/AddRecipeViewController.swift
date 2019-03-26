@@ -170,9 +170,18 @@ class AddRecipeViewController: ViewControllerBase {
         view.backgroundColor = UIColor.clear
     }
     
+    var caretTopPadding: CGFloat {
+        switch UIDevice.current.screenType.rawValue {
+        case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
+            return 10.0
+        default:
+            return 50.0
+        }
+    }
+    
     override func prepareAutoLayout() {
         super.prepareAutoLayout()
-        invertedCaret.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
+        invertedCaret.topAnchor.constraint(equalTo: view.topAnchor, constant: caretTopPadding).isActive = true
         invertedCaret.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
         titleLabel.topAnchor.constraint(equalTo: invertedCaret.bottomAnchor, constant: 20).isActive = true

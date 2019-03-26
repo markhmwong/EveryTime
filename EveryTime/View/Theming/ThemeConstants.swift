@@ -62,10 +62,25 @@ struct Theme {
             static var NavItem: CGFloat { return 14.0 }
             static var Caret: CGFloat { return 30.0 }
             static var StandardButton: CGFloat { return 12.0 }
-            static var Header: CGFloat { return 20.0 }
+            static var Header: CGFloat {
+                switch UIDevice.current.screenType.rawValue {
+                case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
+                    return 16.0
+                default:
+                    return 20.0
+                }
+            }
             static var HeaderContent: CGFloat { return 16.0 }
             static var HeaderContentTitle: CGFloat { return 12.0 }
-            static var HeaderContentTime: CGFloat { return 20.0 }
+            static var HeaderContentTime: CGFloat {
+                switch UIDevice.current.screenType.rawValue {
+                case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
+                    return 16.0
+                default:
+                    return 20.0
+                }
+
+            }
 
             static var About: CGFloat { return 16.0 }
             static var Error: CGFloat { return 12.0 }

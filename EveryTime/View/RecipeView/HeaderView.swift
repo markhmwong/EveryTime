@@ -101,13 +101,9 @@ class HeaderView: UIView {
 
         headerTitleLabel.attributedText = NSAttributedString(string: "No name", attributes: Theme.Font.Recipe.HeaderTableView)
         innerPaddedView.addSubview(headerTitleLabel)
-//        headerStepTimeLabel.attributedText = NSAttributedString(string: "00h 00m 00s" , attributes: Theme.Font.Recipe.HeaderTableViewContent)
         innerPaddedView.addSubview(headerStepTimeLabel)
-//        headerStepTitleLabel.attributedText = NSAttributedString(string: recipe.currStepName ?? " ", attributes: Theme.Font.Recipe.HeaderTableViewContent)
         innerPaddedView.addSubview(headerStepTitleLabel)
-//        headerNextStepTitleLabel.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Recipe.HeaderTableViewContent)
         innerPaddedView.addSubview(headerNextStepTitleLabel)
-//        headerNextStepTimeLabel.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Recipe.HeaderTableViewContent)
         innerPaddedView.addSubview(headerNextStepTimeLabel)
         headerNextStepLabel.attributedText = NSAttributedString(string: "Next Step", attributes: Theme.Font.Recipe.HeaderTableViewContentSubTitle)
         innerPaddedView.addSubview(headerNextStepLabel)
@@ -127,9 +123,14 @@ class HeaderView: UIView {
     
     private func setupAutoLayout() {
         
-        if (UIDevice.current.screenType.rawValue == UIDevice.ScreenType.iPhones_6Plus_6sPlus_7Plus_8Plus.rawValue || UIDevice.current.screenType.rawValue ==  UIDevice.ScreenType.iPhones_6_6s_7_8.rawValue) {
+        switch UIDevice.current.screenType.rawValue {
+        case UIDevice.ScreenType.iPhones_6Plus_6sPlus_7Plus_8Plus.rawValue, UIDevice.ScreenType.iPhones_6_6s_7_8.rawValue:
             heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 2.8).isActive = true
-        } else {
+        case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
+            heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 2.3).isActive = true
+        case UIDevice.ScreenType.iPhoneXSMax.rawValue, UIDevice.ScreenType.iPhoneX_iPhoneXS.rawValue, UIDevice.ScreenType.iPhoneXR.rawValue:
+            heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 3.3).isActive = true
+        default:
             heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 3.3).isActive = true
         }
         

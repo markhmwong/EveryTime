@@ -5,7 +5,6 @@
 - add recipe tableview white
 - email feedback (in info)
 - the entire adding process
-- smaller devices
 
 ## To do in near future (not a priority)
 - settings button on main view

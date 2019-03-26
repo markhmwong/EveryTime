@@ -28,6 +28,8 @@
 		4D53803522473FF40051DD0F /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53803422473FF40051DD0F /* AboutViewController.swift */; };
 		4D538037224744BD0051DD0F /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D538036224744BD0051DD0F /* AboutView.swift */; };
 		4D53803A224911140051DD0F /* TapticService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D538039224911140051DD0F /* TapticService.swift */; };
+		4D53803D2249FCC80051DD0F /* Extentions+UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53803C2249FCC80051DD0F /* Extentions+UIDevice.swift */; };
+		4D53803F224A223A0051DD0F /* PromoText.md in Resources */ = {isa = PBXBuildFile; fileRef = 4D53803E224A223A0051DD0F /* PromoText.md */; };
 		4D53C2172203F8C900EED75C /* HorizontalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53C2162203F8C900EED75C /* HorizontalPresentationController.swift */; };
 		4D53F75B21E2E38100C0AF31 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F75A21E2E38100C0AF31 /* CoreDataHelper.swift */; };
 		4D53F7BC21E72B7E00C0AF31 /* RecipeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F7BB21E72B7E00C0AF31 /* RecipeEntity.swift */; };
@@ -150,6 +152,8 @@
 		4D538036224744BD0051DD0F /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		4D538038224867B70051DD0F /* WhatsNew.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = WhatsNew.md; sourceTree = "<group>"; };
 		4D538039224911140051DD0F /* TapticService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapticService.swift; sourceTree = "<group>"; };
+		4D53803C2249FCC80051DD0F /* Extentions+UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extentions+UIDevice.swift"; sourceTree = "<group>"; };
+		4D53803E224A223A0051DD0F /* PromoText.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = PromoText.md; sourceTree = "<group>"; };
 		4D53C2162203F8C900EED75C /* HorizontalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalPresentationController.swift; sourceTree = "<group>"; };
 		4D53F75A21E2E38100C0AF31 /* CoreDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
 		4D53F7BB21E72B7E00C0AF31 /* RecipeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeEntity.swift; sourceTree = "<group>"; };
@@ -235,6 +239,7 @@
 		4D0C4B3A21AEC73A00153E76 = {
 			isa = PBXGroup;
 			children = (
+				4D53803E224A223A0051DD0F /* PromoText.md */,
 				4D53801D223FE1280051DD0F /* Update.md */,
 				4D538038224867B70051DD0F /* WhatsNew.md */,
 				4D0C4B4521AEC73A00153E76 /* EveryTime */,
@@ -264,7 +269,6 @@
 				4D94E5D1223CC6430009F176 /* EveryTime.entitlements */,
 				4D0C4B4621AEC73A00153E76 /* AppDelegate.swift */,
 				4D53803B2249FC450051DD0F /* Services */,
-				4D94E5D3223E74C10009F176 /* Notifications */,
 				4DA12F7B21B611A10049CD75 /* Extensions */,
 				4DA12F6921B108690049CD75 /* Controller */,
 				4D0C4B7921AFEE2000153E76 /* Model */,
@@ -355,18 +359,19 @@
 			path = MainView;
 			sourceTree = "<group>";
 		};
-		4D53803322468BF40051DD0F /* About View */ = {
+		4D53803322468BF40051DD0F /* AboutView */ = {
 			isa = PBXGroup;
 			children = (
 				4D6DFCB72212508E009C3044 /* SettingsViewController.swift */,
 				4D53803422473FF40051DD0F /* AboutViewController.swift */,
 			);
-			path = "About View";
+			path = AboutView;
 			sourceTree = "<group>";
 		};
 		4D53803B2249FC450051DD0F /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				4D94E5D3223E74C10009F176 /* Notifications */,
 				4D538039224911140051DD0F /* TapticService.swift */,
 			);
 			path = Services;
@@ -423,13 +428,13 @@
 			path = RecipeView;
 			sourceTree = "<group>";
 		};
-		4D563C2A220D4A550039B07F /* RecipeViewController */ = {
+		4D563C2A220D4A550039B07F /* RecipeView */ = {
 			isa = PBXGroup;
 			children = (
 				4D563C2B220D4ADC0039B07F /* RecipeViewControllerBase.swift */,
 				4D563C2D220D54280039B07F /* RecipeViewControllerWithTableView.swift */,
 			);
-			path = RecipeViewController;
+			path = RecipeView;
 			sourceTree = "<group>";
 		};
 		4D6E353522153D5500CBCC23 /* AddRecipeWizardCells */ = {
@@ -484,13 +489,13 @@
 		4DA12F6921B108690049CD75 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				4D53803322468BF40051DD0F /* About View */,
 				4DF13D5C2217EECF009BE812 /* ViewControllerBase.swift */,
-				4D5380262244BBE90051DD0F /* MainView */,
+				4D53F7D621EF0C2900C0AF31 /* Animations */,
 				4D3E24C4221E688600B0D621 /* AddStep */,
 				4DF13D5E221A153C009BE812 /* AddingRecipe */,
-				4D563C2A220D4A550039B07F /* RecipeViewController */,
-				4D53F7D621EF0C2900C0AF31 /* Animations */,
+				4D53803322468BF40051DD0F /* AboutView */,
+				4D5380262244BBE90051DD0F /* MainView */,
+				4D563C2A220D4A550039B07F /* RecipeView */,
 				4DA12F8521B8A30C0049CD75 /* Protocols */,
 			);
 			path = Controller;
@@ -516,6 +521,7 @@
 			isa = PBXGroup;
 			children = (
 				4DA12F7C21B611AF0049CD75 /* Extensions.swift */,
+				4D53803C2249FCC80051DD0F /* Extentions+UIDevice.swift */,
 				4D5380292244C2D70051DD0F /* Extension+UIView.swift */,
 			);
 			path = Extensions;
@@ -703,6 +709,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D53803F224A223A0051DD0F /* PromoText.md in Resources */,
 				4D0C4B5421AEC73C00153E76 /* LaunchScreen.storyboard in Resources */,
 				4D0C4B5121AEC73C00153E76 /* Assets.xcassets in Resources */,
 				4D53801E223FE1280051DD0F /* Update.md in Resources */,
@@ -778,6 +785,7 @@
 				4D53F7BE21E735CD00C0AF31 /* StepEntity.swift in Sources */,
 				4D0C4B4721AEC73A00153E76 /* AppDelegate.swift in Sources */,
 				4D53F7D821EF0C6500C0AF31 /* ViewControllerOverlayAnimator.swift in Sources */,
+				4D53803D2249FCC80051DD0F /* Extentions+UIDevice.swift in Sources */,
 				4D53803A224911140051DD0F /* TapticService.swift in Sources */,
 				4D53802A2244C2D70051DD0F /* Extension+UIView.swift in Sources */,
 				4D6E35382215435900CBCC23 /* AddRecipeWizardError.swift in Sources */,

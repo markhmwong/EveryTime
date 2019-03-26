@@ -145,8 +145,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         }
         
         if (recipe.isPaused) {
-            //fix. it is not dimming
-
             DispatchQueue.main.async {
                 self.navView?.rightNavItem?.alpha = 1.0
                 self.navView?.rightNavItem?.isEnabled = true
@@ -157,8 +155,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
             DispatchQueue.main.async {
                 self.navView?.rightNavItem?.isEnabled = false
                 self.navView?.rightNavItem?.alpha = 0.3
-                
-
                 self.pauseRecipeButton.updateButtonTitle(with: "Pause")
             }
         }
@@ -186,7 +182,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
 
         nav.anchorView(top: navTopConstraint, bottom: tableView.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
         nav.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: heightByNotch).isActive = true
-       
         pauseRecipeButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -45).isActive = true
         pauseRecipeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         pauseRecipeButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.33).isActive = true
@@ -203,7 +198,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
             
             let id = "\(recipe.recipeName!).\(recipe.createdDate!)"
             LocalNotificationsService.shared.addRecipeWideNotification(identifier: id, notificationContent: [NotificationDictionaryKeys.Title.rawValue : self.recipe.recipeName!], timeRemaining: self.recipe.totalTimeRemaining)
-            
             DispatchQueue.main.async {
                 self.tableView.reloadRows(at: [IndexPath(item: self.stepSelected, section: 0)], with: .none)
             }
@@ -355,7 +349,12 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return view.bounds.height / 13
+        switch UIDevice.current.screenType.rawValue {
+        case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
+            return view.bounds.height / 10
+        default:
+            return view.bounds.height / 13
+        }
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {

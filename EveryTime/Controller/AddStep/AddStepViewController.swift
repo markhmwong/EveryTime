@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddStepViewController: ViewControllerBase {
+class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
 
     //MARK: VARIABLES
     fileprivate let maxCharacterLimitForNameLabel = 30
@@ -40,7 +40,7 @@ class AddStepViewController: ViewControllerBase {
         picker.translatesAutoresizingMaskIntoConstraints = false
         return picker
     }()
-    fileprivate var labelTextField: UITextField = {
+    fileprivate lazy var labelTextField: UITextField = {
         let input = UITextField()
         input.defaultTextAttributes = Theme.Font.Recipe.TextFieldAttribute
         input.attributedPlaceholder = NSAttributedString(string: "Name the Step", attributes: Theme.Font.Recipe.TextFieldAttribute)
@@ -52,6 +52,7 @@ class AddStepViewController: ViewControllerBase {
         input.backgroundColor = UIColor.clear
         input.becomeFirstResponder()
         input.textAlignment = .center
+        input.delegate = self
         input.translatesAutoresizingMaskIntoConstraints = false
         return input
     }()
@@ -109,6 +110,10 @@ class AddStepViewController: ViewControllerBase {
             view.endEditing(true)
         }
     }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        done()
+        return true
+    }
     
     func showAlertBox(_ message: String) {
         let alert = UIAlertController(title: "Alert", message: "\(message)", preferredStyle: .alert)
@@ -121,6 +126,10 @@ class AddStepViewController: ViewControllerBase {
     
     //MARK: HANDLE DONE BUTTON
     @objc func handleDoneButton() {
+        done()
+    }
+    
+    private func done() {
         do {
             try self.grabValuesFromInput()
         } catch ErrorsToThrow.labelNotFilled {
@@ -193,22 +202,40 @@ class AddStepViewController: ViewControllerBase {
         rightNavItemButton.addTarget(self, action: #selector(handleDoneButton), for: .touchUpInside)
     }
     
+    var labelTextFieldTopAnchorPadding: CGFloat {
+        switch UIDevice.current.screenType.rawValue {
+        case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
+            return 30.0
+        default:
+            return 60.0
+        }
+    }
+    
+    var caretTopPadding: CGFloat {
+        switch UIDevice.current.screenType.rawValue {
+        case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
+            return 10.0
+        default:
+            return 50.0
+        }
+    }
+    
     override func prepareAutoLayout() {
         rightNavItemButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
         rightNavItemButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
         
         labelTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         labelTextField.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        labelTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 60).isActive = true
+        labelTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: labelTextFieldTopAnchorPadding).isActive = true
         
         countDownPicker.topAnchor.constraint(equalTo: labelTextField.bottomAnchor).isActive = true
         countDownPicker.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         countDownPicker.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         
-        invertedCaret.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
+        invertedCaret.topAnchor.constraint(equalTo: view.topAnchor, constant: caretTopPadding).isActive = true
         invertedCaret.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-        titleLabel.topAnchor.constraint(equalTo: invertedCaret.bottomAnchor, constant: 30).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: invertedCaret.bottomAnchor, constant: 20.0).isActive = true
         titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
         
         doneButton.topAnchor.constraint(equalTo: countDownPicker.bottomAnchor).isActive = true

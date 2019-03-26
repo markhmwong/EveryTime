@@ -104,7 +104,6 @@ class MainViewView: UIView {
         }
     }
 
-
     func setupAutoLayout() {
         guard let nav = navView else {
             return

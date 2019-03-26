@@ -15,9 +15,8 @@ class OverlayPresentationController: UIPresentationController {
         return view
     }()
     
-    
     override var frameOfPresentedViewInContainerView: CGRect {
-        let offset: CGFloat = 60.0
+        let offset: CGFloat = 0.0
         var size = containerView!.bounds.size
         size.height = size.height - offset
         return CGRect(origin: CGPoint(x: 0, y: offset), size: size)

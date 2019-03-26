@@ -51,7 +51,8 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         let itemSpacing: CGFloat = 0.0//8.0 //20 for left and right side
         let itemsPerRow: CGFloat = 0.0//5.0
         let width = UIScreen.main.bounds.size.width - itemSpacing * CGFloat(itemsPerRow)
-        return CGSize(width: width, height: width / 3.0)
+        
+        return CGSize(width: width, height: width / cellSize)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
