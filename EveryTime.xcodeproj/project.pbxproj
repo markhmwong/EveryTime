@@ -27,6 +27,7 @@
 		4D53803222468B140051DD0F /* SettingsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53803122468B140051DD0F /* SettingsViewCell.swift */; };
 		4D53803522473FF40051DD0F /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53803422473FF40051DD0F /* AboutViewController.swift */; };
 		4D538037224744BD0051DD0F /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D538036224744BD0051DD0F /* AboutView.swift */; };
+		4D53803A224911140051DD0F /* TapticService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D538039224911140051DD0F /* TapticService.swift */; };
 		4D53C2172203F8C900EED75C /* HorizontalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53C2162203F8C900EED75C /* HorizontalPresentationController.swift */; };
 		4D53F75B21E2E38100C0AF31 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F75A21E2E38100C0AF31 /* CoreDataHelper.swift */; };
 		4D53F7BC21E72B7E00C0AF31 /* RecipeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F7BB21E72B7E00C0AF31 /* RecipeEntity.swift */; };
@@ -148,6 +149,7 @@
 		4D53803422473FF40051DD0F /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		4D538036224744BD0051DD0F /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		4D538038224867B70051DD0F /* WhatsNew.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = WhatsNew.md; sourceTree = "<group>"; };
+		4D538039224911140051DD0F /* TapticService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapticService.swift; sourceTree = "<group>"; };
 		4D53C2162203F8C900EED75C /* HorizontalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalPresentationController.swift; sourceTree = "<group>"; };
 		4D53F75A21E2E38100C0AF31 /* CoreDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
 		4D53F7BB21E72B7E00C0AF31 /* RecipeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeEntity.swift; sourceTree = "<group>"; };
@@ -259,9 +261,10 @@
 		4D0C4B4521AEC73A00153E76 /* EveryTime */ = {
 			isa = PBXGroup;
 			children = (
-				4D94E5D3223E74C10009F176 /* Notifications */,
 				4D94E5D1223CC6430009F176 /* EveryTime.entitlements */,
 				4D0C4B4621AEC73A00153E76 /* AppDelegate.swift */,
+				4D53803B2249FC450051DD0F /* Services */,
+				4D94E5D3223E74C10009F176 /* Notifications */,
 				4DA12F7B21B611A10049CD75 /* Extensions */,
 				4DA12F6921B108690049CD75 /* Controller */,
 				4D0C4B7921AFEE2000153E76 /* Model */,
@@ -359,6 +362,14 @@
 				4D53803422473FF40051DD0F /* AboutViewController.swift */,
 			);
 			path = "About View";
+			sourceTree = "<group>";
+		};
+		4D53803B2249FC450051DD0F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				4D538039224911140051DD0F /* TapticService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		4D53C21822065FE300EED75C /* Theming */ = {
@@ -767,6 +778,7 @@
 				4D53F7BE21E735CD00C0AF31 /* StepEntity.swift in Sources */,
 				4D0C4B4721AEC73A00153E76 /* AppDelegate.swift in Sources */,
 				4D53F7D821EF0C6500C0AF31 /* ViewControllerOverlayAnimator.swift in Sources */,
+				4D53803A224911140051DD0F /* TapticService.swift in Sources */,
 				4D53802A2244C2D70051DD0F /* Extension+UIView.swift in Sources */,
 				4D6E35382215435900CBCC23 /* AddRecipeWizardError.swift in Sources */,
 				4D53F7D521EF0C2400C0AF31 /* OverlayTransitionDelegate.swift in Sources */,

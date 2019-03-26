@@ -1,10 +1,13 @@
 #  Whats New Description for App Store
 
-## Version 1.1.2 To Be Done
+## Version 1.1.11
+Taptic Feedback
+    - Now on pause buttons
 Recipe View
-    - Pause Button repalces add recipe
-    - Add Recipe moved within Settings
-
+    - Pause Button replaces add recipe
+    - "Add Recipe" moved within Settings
+    - You can now swipe to reset and swipe to delete a step
+    
 ## Version 1.1.1
 Quick Update
 • Notifies when the recipe is complete

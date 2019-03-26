@@ -132,7 +132,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         addSubview(pauseButtonView)
         backgroundColor = UIColor.clear//Theme.Background.Color.CellBackgroundColor
 
-        pauseButton.addTarget(self, action: #selector(recipePauseHandler), for: .touchUpInside)
+        pauseButton.addTarget(self, action: #selector(handlePauseButton), for: .touchUpInside)
         pauseButtonView.addSubview(pauseButton)
 
         pauseButtonView.anchorView(top: contentView.topAnchor, bottom: contentView.bottomAnchor, leading: nil, trailing: contentView.trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: CGSize(width: 80.0, height: 0.0))
@@ -145,7 +145,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         recipeTimeLabel.removeFromSuperview()
     }
     
-    @objc func recipePauseHandler() {
+    @objc func handlePauseButton() {
         updatePauseState()
         CoreDataHandler.saveContext()
     }
@@ -155,6 +155,10 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
             //TODO: - error
             return
         }
+        
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.prepare()
+        generator.impactOccurred()
         
         //should be done in the model. let the VC's VM update the cell data
         if let r = entity {

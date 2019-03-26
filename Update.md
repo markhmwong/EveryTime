@@ -2,16 +2,10 @@
 # Update Log
 
 ## To do (Priority list) 
-- taptic feedback
-    - start/stop
-    - cell selection
-    - buttons
 - add recipe tableview white
 - email feedback (in info)
 - the entire adding process
-- pause button now in recipe view
-- moved add recipe into settings
-- swipe to reset step
+- smaller devices
 
 ## To do in near future (not a priority)
 - settings button on main view

@@ -285,9 +285,52 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
 
 extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDataSource {
     //switches the objects between cells. Allows the user to reorganise the order.
-    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "delete") { (action, view, complete) in
+            if (indexPath.row == self.recipe.currStepPriority) {
+                let sortedSet = self.recipe.sortStepsByPriority()
+                let timeElapsedInStep = sortedSet[indexPath.row].totalTime - self.recipe.currStepTimeRemaining
+                self.recipe.startDate?.addTimeInterval(timeElapsedInStep)
+            }
+            
+            let id = "\(self.recipe.recipeName!).\(self.recipe.createdDate!)"
+            self.recipe.removeFromStep(self.stepArr[indexPath.row])
+            self.stepArr.remove(at: indexPath.row)
+            self.recipe.reoganiseStepsInArr(fromIndex: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            self.recipe.sumStepsForExpectedElapsedTime()
+            LocalNotificationsService.shared.addRecipeWideNotification(identifier: id, notificationContent: [NotificationDictionaryKeys.Title.rawValue : self.recipe.recipeName!], timeRemaining: self.recipe.totalTimeRemaining)
+            CoreDataHandler.saveContext()
+            complete(true)
+        }
+        
+        return UISwipeActionsConfiguration(actions: [delete])
+        
 
+    }
     
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let reset = UIContextualAction(style: .normal, title: "reset") { (action, view, complete) in
+            var indexPathsToReloadArr: [IndexPath] = []
+            self.recipe.wasReset = true
+            indexPathsToReloadArr = self.recipe.resetEntireRecipeTo(toStep: self.stepSelected)
+            self.startTimer()
+            
+            let id = "\(self.recipe.recipeName!).\(self.recipe.createdDate!)"
+            LocalNotificationsService.shared.notificationCenterInstance().removePendingNotificationRequests(withIdentifiers: [id])
+            LocalNotificationsService.shared.addRecipeWideNotification(identifier: id, notificationContent: [NotificationDictionaryKeys.Title.rawValue : self.recipe.recipeName!], timeRemaining: self.recipe.totalTimeRemaining)
+            
+            CoreDataHandler.saveContext()
+            DispatchQueue.main.async {
+                self.tableView.reloadRows(at: indexPathsToReloadArr, with: .none)
+                self.executeBottomViewState(.ShowAddStep)
+                complete(true)
+
+            }
+        }
+        
+        return UISwipeActionsConfiguration(actions: [reset])
+    }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let sourceObj = self.stepArr[sourceIndexPath.row]
@@ -325,23 +368,23 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
      
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
-            //issue when deleting the running timer, the time passed persists to the next step
-            //we alter the startDate
-            if (indexPath.row == recipe.currStepPriority) {
-                let sortedSet = recipe.sortStepsByPriority()
-                let timeElapsedInStep = sortedSet[indexPath.row].totalTime - recipe.currStepTimeRemaining
-                recipe.startDate?.addTimeInterval(timeElapsedInStep)
-            }
-            
-            
-            let id = "\(recipe.recipeName!).\(recipe.createdDate!)"
-            recipe.removeFromStep(stepArr[indexPath.row])
-            stepArr.remove(at: indexPath.row)
-            recipe.reoganiseStepsInArr(fromIndex: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            recipe.sumStepsForExpectedElapsedTime()
-            LocalNotificationsService.shared.addRecipeWideNotification(identifier: id, notificationContent: [NotificationDictionaryKeys.Title.rawValue : recipe.recipeName!], timeRemaining: recipe.totalTimeRemaining)
-            CoreDataHandler.saveContext()
+//            //issue when deleting the running timer, the time passed persists to the next step
+//            //we alter the startDate
+//            if (indexPath.row == recipe.currStepPriority) {
+//                let sortedSet = recipe.sortStepsByPriority()
+//                let timeElapsedInStep = sortedSet[indexPath.row].totalTime - recipe.currStepTimeRemaining
+//                recipe.startDate?.addTimeInterval(timeElapsedInStep)
+//            }
+//
+//
+//            let id = "\(recipe.recipeName!).\(recipe.createdDate!)"
+//            recipe.removeFromStep(stepArr[indexPath.row])
+//            stepArr.remove(at: indexPath.row)
+//            recipe.reoganiseStepsInArr(fromIndex: indexPath.row)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+//            recipe.sumStepsForExpectedElapsedTime()
+//            LocalNotificationsService.shared.addRecipeWideNotification(identifier: id, notificationContent: [NotificationDictionaryKeys.Title.rawValue : recipe.recipeName!], timeRemaining: recipe.totalTimeRemaining)
+//            CoreDataHandler.saveContext()
         }
     }
     
@@ -696,6 +739,10 @@ extension RecipeViewControllerWithTableView {
     }
 
     @objc func handlePauseRecipe() {
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.prepare()
+        generator.impactOccurred()
+        
         if (recipe.isPaused) {
             DispatchQueue.main.async {
                 self.settingsButton.isEnabled = false
