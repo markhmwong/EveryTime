@@ -211,6 +211,13 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         }
     }
     
+    func updateStepLabel() {
+        guard let e = entity else {
+            return
+        }
+        stepNameLabel.attributedText = NSAttributedString(string: e.currStepName ?? "No Step Name", attributes: Theme.Font.Recipe.StepSubTitle)
+    }
+    
     func updateTimeLabel(timeRemaining: String) {
         guard let e = entity else {
             return

@@ -15,6 +15,54 @@ enum textFieldTag: Int {
     case secondTextField
 }
 
+enum PickerViewTag: Int {
+    case HourPicker = 0
+    case MinutePicker
+    case SecondPicker
+}
+
+extension AddRecipeStepTwo: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        
+        switch pickerView.tag {
+        case PickerViewTag.HourPicker.rawValue:
+            return 24
+        case PickerViewTag.MinutePicker.rawValue, PickerViewTag.SecondPicker.rawValue:
+            return 60
+        default:
+            return 0
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        switch pickerView.tag {
+        case PickerViewTag.HourPicker.rawValue:
+            return "\(row)"
+        case PickerViewTag.MinutePicker.rawValue, PickerViewTag.SecondPicker.rawValue:
+            return "\(row)"
+        default:
+            return ""
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        switch pickerView.tag {
+        case PickerColumn.hour.rawValue:
+            hourTextfield!.text = "\(row)"
+        case PickerViewTag.MinutePicker.rawValue:
+            minuteTextfield!.text = "\(row)"
+        case PickerViewTag.SecondPicker.rawValue:
+            secondTextfield!.text = "\(row)"
+        default:
+            break;
+        }
+    }
+}
+
 class AddRecipeStepTwo: AddRecipeBaseCell {
     
     private let rowHeight: CGFloat = 120.0
@@ -24,12 +72,12 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
     private var keyboardTextField: UITextField = UITextField()
     var tableViewBottomConstraint: NSLayoutConstraint!
 
-    fileprivate var textFieldStackView: UIStackView = {
+    private var textFieldStackView: UIStackView = {
         let tf = UIStackView()
         tf.alignment = .fill
         tf.axis = .horizontal
         tf.distribution = .fillEqually
-        tf.spacing = 2.0
+        tf.spacing = 0.0
         tf.translatesAutoresizingMaskIntoConstraints = false
         return tf
     }()
@@ -47,53 +95,133 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         tv.isEditing = false
         tv.dataSource = self
         tv.separatorStyle = .none
+        tv.backgroundColor = UIColor.clear
         tv.translatesAutoresizingMaskIntoConstraints = false
         return tv
     }()
     
-    fileprivate var hourTextfield: UITextField? = {
+    private var countDownPicker: UIPickerView = {
+        let picker = UIPickerView()
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        return picker
+    }()
+    
+    private lazy var hourPickerView: UIPickerView = {
+        let picker = UIPickerView()
+        picker.tag = PickerViewTag.HourPicker.rawValue
+        picker.delegate = self
+        picker.dataSource = self
+
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        return picker
+    }()
+    
+    private lazy var minutePickerView: UIPickerView = {
+        let picker = UIPickerView()
+        picker.tag = PickerViewTag.MinutePicker.rawValue
+        picker.delegate = self
+        picker.dataSource = self
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        return picker
+    }()
+    
+    private lazy var secondPickerView: UIPickerView = {
+        let picker = UIPickerView()
+        picker.tag = PickerViewTag.SecondPicker.rawValue
+        picker.delegate = self
+        picker.dataSource = self
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        return picker
+    }()
+    
+    private lazy var hourTextfield: UITextField? = {
         let textfield = UITextField()
         textfield.tag = textFieldTag.hourTextField.rawValue
-        textfield.backgroundColor = UIColor.white
+        textfield.backgroundColor = UIColor.clear
         textfield.keyboardType = .asciiCapableNumberPad
         textfield.textAlignment = .center
         textfield.text = "0"
+        textfield.inputView = hourPickerView
+        
         textfield.placeholder = "Hrs"
         textfield.becomeFirstResponder()
         return textfield
     }()
-    fileprivate var minuteTextfield: UITextField? = {
+    private lazy var minuteTextfield: UITextField? = {
         let textfield = UITextField()
         textfield.tag = textFieldTag.minuteTextField.rawValue
-        textfield.backgroundColor = UIColor.white
+        textfield.backgroundColor = UIColor.clear
         textfield.keyboardType = .asciiCapableNumberPad
         textfield.textAlignment = .center
+        textfield.inputView = minutePickerView
         textfield.text = "0"
         textfield.placeholder = "Mins"
         return textfield
     }()
-    fileprivate var secondTextfield: UITextField? = {
+    private lazy var secondTextfield: UITextField? = {
         let textfield = UITextField()
         textfield.tag = textFieldTag.secondTextField.rawValue
-        textfield.backgroundColor = UIColor.white
+        textfield.backgroundColor = UIColor.clear
         textfield.keyboardType = .asciiCapableNumberPad
         textfield.textAlignment = .center
+        textfield.inputView = secondPickerView
         textfield.text = "0"
         textfield.placeholder = "Secs"
         return textfield
     }()
-    fileprivate var nameTextfield: UITextField? = {
+    private var nameTextfield: UITextField? = {
         let textfield = UITextField()
         textfield.tag = textFieldTag.nameTextField.rawValue
-        textfield.backgroundColor = UIColor.white
+        textfield.backgroundColor = UIColor.clear
         textfield.keyboardType = .asciiCapable
         textfield.textAlignment = .center
         textfield.placeholder = "Name"
-        textfield.text = "Step One"
+        textfield.text = "Step 1"
         textfield.spellCheckingType = .no
         textfield.autocorrectionType = .no
         textfield.translatesAutoresizingMaskIntoConstraints = false
         return textfield
+    }()
+    
+    private lazy var nameLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Name", attributes: Theme.Font.Recipe.StepNameLabelForAddRecipe)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var hoursLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.attributedText = NSAttributedString(string: "Hours", attributes: Theme.Font.Recipe.StepNameLabelForAddRecipe)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var minutesLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Minutes", attributes: Theme.Font.Recipe.StepNameLabelForAddRecipe)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var secondsLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Seconds", attributes: Theme.Font.Recipe.StepNameLabelForAddRecipe)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private var timeLabelStackView: UIStackView = {
+        let tf = UIStackView()
+        tf.alignment = .fill
+        tf.axis = .horizontal
+        tf.distribution = .fillEqually
+        tf.spacing = 2.0
+        tf.translatesAutoresizingMaskIntoConstraints = false
+        return tf
     }()
 
     override func setupView() {
@@ -115,28 +243,38 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         
         tableView.register(StepTableViewCell.self, forCellReuseIdentifier: stepCellId)
         
-        self.addSubview(tableView)
-        
+        addSubview(nameLabel)
+        addSubview(tableView)
         n.becomeFirstResponder()
-        self.addSubview(n)
+        addSubview(n)
+        addSubview(textFieldStackView)
+        addSubview(timeLabelStackView)
         
-        self.addSubview(textFieldStackView)
+        
+        
+        timeLabelStackView.addArrangedSubview(hoursLabel)
+        timeLabelStackView.addArrangedSubview(minutesLabel)
+        timeLabelStackView.addArrangedSubview(secondsLabel)
         
         textFieldStackView.addArrangedSubview(h)
         textFieldStackView.addArrangedSubview(m)
         textFieldStackView.addArrangedSubview(s)
         
-        h.addNextButtonToolbar(onNext: (target: self, action: #selector(handleContinueButton)), onCancel: nil, onDone: (target: self, action: #selector(handleDoneButton)), onDismiss: (target: self, action: #selector(handleDismissButton)))
-        m.addNextButtonToolbar(onNext: (target: self, action: #selector(handleContinueButton)), onCancel: nil, onDone: (target: self, action: #selector(handleDoneButton)))
-        n.addNextButtonToolbar(onNext: (target: self, action: #selector(handleContinueButton)), onCancel: nil, onDone: (target: self, action: #selector(handleDoneButton)))
+        h.addAddDoneButonToolbar(onDone: (target: self, action: #selector(handleDoneButton)), onAdd: (target: self, action: #selector(handleAddButton)), onDismiss: (target: self, action: #selector(handleDismissButton)))
+        m.addAddDoneButonToolbar(onDone: (target: self, action: #selector(handleDoneButton)), onAdd: (target: self, action: #selector(handleAddButton)), onDismiss: (target: self, action: #selector(handleDismissButton)))
+        n.addAddDoneButonToolbar(onDone: (target: self, action: #selector(handleDoneButton)), onAdd: (target: self, action: #selector(handleAddButton)), onDismiss: (target: self, action: #selector(handleDismissButton)))
         s.addAddDoneButonToolbar(onDone: (target: self, action: #selector(handleDoneButton)), onAdd: (target: self, action: #selector(handleAddButton)), onDismiss: (target: self, action: #selector(handleDismissButton)))
         prepareAutoLayout()
     }
     
     @objc func keyboardDidShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            keyboardHeight = keyboardSize.height
-        }
+        print(hourPickerView.frame.height)
+        
+        let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue
+        
+        
+        keyboardHeight = (keyboardFrame?.cgRectValue.height)! - ((keyboardFrame?.cgRectValue.height)! - hourPickerView.frame.height)
+
     }
     
     func prepareAutoLayout() {
@@ -146,21 +284,26 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         }
         let padding: CGFloat = 2.0
         let textFieldHeight: CGFloat = 40.0
-        n.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        
+        nameLabel.anchorView(top: topAnchor, bottom: n.topAnchor, leading: nil, trailing: nil, centerY: nil, centerX: centerXAnchor, padding: .zero, size: .zero)
+        
+        n.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 0.0).isActive = true
         n.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         n.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         n.heightAnchor.constraint(equalToConstant: textFieldHeight).isActive = true
         
-        textFieldStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        textFieldStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        textFieldStackView.topAnchor.constraint(equalTo: n.bottomAnchor, constant: padding).isActive = true
+        timeLabelStackView.anchorView(top: n.bottomAnchor, bottom: textFieldStackView.topAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
+        
+        textFieldStackView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        textFieldStackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        textFieldStackView.topAnchor.constraint(equalTo: timeLabelStackView.bottomAnchor).isActive = true
         textFieldStackView.heightAnchor.constraint(equalToConstant: textFieldHeight).isActive = true
         
         tableView.topAnchor.constraint(equalTo: textFieldStackView.bottomAnchor, constant: padding).isActive = true
         tableViewBottomConstraint = tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant:0)
         tableViewBottomConstraint.isActive = true
-        tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
     }
     
     func showAlertBox(_ message: String) {
@@ -323,8 +466,14 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
     }
     
     func checkTextFields(_ textFields: [UITextField]) throws -> Bool {
+        var allZeroFields = true
+        var hoursZero = true
+        var minutesZero = true
+        var secondsZero = true
+        
+        
+        //check if values are not empty (name) and the unit of measure is within range
         for textField in textFields {
-            
             if (textField.text?.isEmpty ?? true) {
                 //error empty
                 textField.becomeFirstResponder()
@@ -334,7 +483,6 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
             guard let t = textField.text else {
                 return false
             }
-
             
             switch textField.tag {
                 case textFieldTag.nameTextField.rawValue:
@@ -356,18 +504,50 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
                 default:
                     throw AddRecipeWizardError.InvalidTextField(message: "Invalid Text")
             }
-            
         }
-        return true
+        
+        //Checks if all values are 0
+        for textField in textFields {
+            guard let t = textField.text else {
+                return false
+            }
+            
+            switch textField.tag {
+            case textFieldTag.nameTextField.rawValue:
+                if (t.count == 0) {
+                    throw AddRecipeWizardError.InvalidLength(message: "Step name is empty")
+                }
+                case textFieldTag.hourTextField.rawValue:
+                    if (Int(t)! <= 0) {
+                        hoursZero = false
+                    }
+                case textFieldTag.minuteTextField.rawValue:
+                    if (Int(t)! <= 0) {
+                        minutesZero = false
+                    }
+                case textFieldTag.secondTextField.rawValue:
+                    if (Int(t)! <= 0) {
+                        secondsZero = false
+                    }
+                default:
+                    throw AddRecipeWizardError.InvalidTextField(message: "Invalid Text")
+            }
+        }
+        
+        if (hoursZero || minutesZero || secondsZero) {
+            return true
+        }
+        
+        throw AddRecipeWizardError.InvalidTextField(message: "At least one unit of time must be greater than 0")
     }
     
     func clearTextFields(_ textFields: [UITextField]) {
         for textField in textFields {
             switch textField.tag {
                 case textFieldTag.nameTextField.rawValue:
-                    textField.text = "Step \(dataSource.count)"
+                    textField.text = "Step \(dataSource.count + 1)"
                 default:
-                    textField.text = "00"
+                    textField.text = "0"
             }
 //            textField.text! = ""
         }
@@ -388,14 +568,6 @@ extension AddRecipeStepTwo: UITextFieldDelegate {
                 }
             }
         }
-        
-        
-        
-        
-        
-        
-
-        
     }
 }
 

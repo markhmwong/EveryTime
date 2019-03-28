@@ -3,6 +3,7 @@
 ## Version 1.1.12
 Adding Recipe/Steps
     - Textfields now have a default value
+    - Keyboard is now removed from selecting hours/minutes/seconds in favor of the picker view
 Main View    
     - The current working step now appears on the main view
     - Adding a recipe now moved to the top right navigation bar and removed from the bottom

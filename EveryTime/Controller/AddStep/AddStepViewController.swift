@@ -8,6 +8,12 @@
 
 import UIKit
 
+enum PickerColumn: Int {
+    case hour = 0
+    case min = 2
+    case sec = 4
+}
+
 class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
 
     //MARK: VARIABLES
@@ -29,18 +35,12 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
         case labelLengthTooShort
     }
     
-    enum pickerColumn: Int {
-        case hour = 0
-        case min = 2
-        case sec = 4
-    }
-    
-    fileprivate var countDownPicker: UIPickerView = {
+    private var countDownPicker: UIPickerView = {
         let picker = UIPickerView()
         picker.translatesAutoresizingMaskIntoConstraints = false
         return picker
     }()
-    fileprivate lazy var labelTextField: UITextField = {
+    private lazy var labelTextField: UITextField = {
         let input = UITextField()
         input.defaultTextAttributes = Theme.Font.Recipe.TextFieldAttribute
         input.attributedPlaceholder = NSAttributedString(string: "Step Name", attributes: Theme.Font.Recipe.TextFieldAttribute)
@@ -56,38 +56,38 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
         input.translatesAutoresizingMaskIntoConstraints = false
         return input
     }()
-    fileprivate var invertedCaret: UILabel = {
+    private var invertedCaret: UILabel = {
         let label = UILabel()
         label.attributedText = NSAttributedString(string: "\u{2304}", attributes: Theme.Font.Recipe.CaretAttribute)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    fileprivate var rightNavItemButton: UIButton = {
+    private var rightNavItemButton: UIButton = {
         let button = UIButton()
         button.setAttributedTitle(NSAttributedString(string: "Done", attributes: Theme.Font.Nav.Item), for: .normal)
         button.setTitle("Done", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    fileprivate var titleLabel: UILabel = {
+    private var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = NSAttributedString(string: "Add A New Step", attributes: Theme.Font.Recipe.TitleAttribute)
         return label
     }()
-    fileprivate lazy var navView: UIView = {
+    private lazy var navView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor.clear
         return view
     }()
-    fileprivate lazy var addButton: StandardButton = {
+    private lazy var addButton: StandardButton = {
         let button = StandardButton(title: "Add")
         button.addTarget(self, action: #selector(handleDoneButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    fileprivate lazy var blurView: UIVisualEffectView = {
+    private lazy var blurView: UIVisualEffectView = {
         let view = UIVisualEffectView()
         view.effect = UIBlurEffect(style: .extraLight)
         view.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
@@ -178,9 +178,9 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
         
         let name = labelTextField.text!
         
-        let hrs = countDownPicker.selectedRow(inComponent: pickerColumn.hour.rawValue)
-        let min = countDownPicker.selectedRow(inComponent: pickerColumn.min.rawValue)
-        let sec = countDownPicker.selectedRow(inComponent: pickerColumn.sec.rawValue)
+        let hrs = countDownPicker.selectedRow(inComponent: PickerColumn.hour.rawValue)
+        let min = countDownPicker.selectedRow(inComponent: PickerColumn.min.rawValue)
+        let sec = countDownPicker.selectedRow(inComponent: PickerColumn.sec.rawValue)
         
         let sEntity = StepEntity(name: name, hours: hrs, minutes: min, seconds: sec, priority: Int16(0))
         if let rvc = recipeViewControllerDelegate {

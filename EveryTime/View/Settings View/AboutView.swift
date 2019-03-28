@@ -49,7 +49,7 @@ class AboutView: UIView {
     Please report any bugs to hello@whizbangapps.com.
     
     Contact.\n
-    Twitter: @markhmwong\nGithub: @markhmwong\nWebsite: https://www.whizbangapps.com/\(appName)
+    Twitter: @markhmwong\nWebsite: https://www.whizbangapps.com/\(appName)
     """
     
     override init(frame: CGRect) {

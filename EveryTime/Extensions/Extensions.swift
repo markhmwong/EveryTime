@@ -16,9 +16,9 @@ extension AddStepViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         switch component {
-        case pickerColumn.hour.rawValue:
-            return 25
-        case pickerColumn.min.rawValue, pickerColumn.sec.rawValue:
+        case PickerColumn.hour.rawValue:
+            return 24
+        case PickerColumn.min.rawValue, PickerColumn.sec.rawValue:
             return 60
         default:
             return 0
@@ -31,11 +31,11 @@ extension AddStepViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         switch component {
-        case pickerColumn.hour.rawValue:
+        case PickerColumn.hour.rawValue:
             return "\(row)"
-        case pickerColumn.min.rawValue:
+        case PickerColumn.min.rawValue:
             return "\(row)"
-        case pickerColumn.sec.rawValue:
+        case PickerColumn.sec.rawValue:
             return "\(row)"
         default:
             return ""
@@ -43,11 +43,11 @@ extension AddStepViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch component {
-        case pickerColumn.hour.rawValue:
+        case PickerColumn.hour.rawValue:
             hours = row
-        case pickerColumn.min.rawValue:
+        case PickerColumn.min.rawValue:
             minutes = row
-        case pickerColumn.sec.rawValue:
+        case PickerColumn.sec.rawValue:
             seconds = row
         default:
             break;
@@ -116,7 +116,7 @@ extension UITextField {
         toolbar.items = [
             UIBarButtonItem(title: "Dismiss", style: .done, target: onDone.target, action: onDismiss.action),
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
-            UIBarButtonItem(title: "Done", style: .done, target: onDone.target, action: onDone.action),
+            UIBarButtonItem(title: "Finish", style: .done, target: onDone.target, action: onDone.action),
             UIBarButtonItem(title: "Add", style: .done, target: onAdd.target, action: onAdd.action),
         ]
         toolbar.sizeToFit()
@@ -134,7 +134,7 @@ extension UITextField {
         toolbar.items = [
             UIBarButtonItem(title: "Dismiss", style: .done, target: onDone.target, action: onDismiss.action),
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
-            UIBarButtonItem(title: "Done", style: .done, target: onDone.target, action: onDone.action),
+            UIBarButtonItem(title: "Finish", style: .done, target: onDone.target, action: onDone.action),
             UIBarButtonItem(title: "Next", style: .done, target: onNext.target, action: onNext.action)
         ]
         toolbar.sizeToFit()

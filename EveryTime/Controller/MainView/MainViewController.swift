@@ -146,6 +146,7 @@ class MainViewController: ViewControllerBase {
         
         let cell = mainViewView.collView.cellForItem(at: indexPath) as! MainViewCell
         DispatchQueue.main.async {
+            cell.updateStepLabel()
             cell.updatePauseHighlight()
             cell.updatePauseButtonView(textColor, highlightAlpha, bg)
         }
