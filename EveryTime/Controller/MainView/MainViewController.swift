@@ -204,6 +204,17 @@ extension MainViewController {
        present(alert, animated: true, completion: nil)
     }
     
+    func deleteAllRecipes() {
+        let deleteIndexPaths = Array(0..<self.recipeCollection.count).map { IndexPath(item: $0, section: 0) }
+        self.recipeCollection.removeAll()
+        self.mainViewView.collView.performBatchUpdates({
+            self.mainViewView.collView.deleteItems(at: deleteIndexPaths)
+        }, completion: nil)
+        if (CoreDataHandler.deleteAllRecordsIn(entity: RecipeEntity.self)) {
+            CoreDataHandler.saveContext()
+        }
+    }
+    
     ///Called from RecipeViewController
     func handleDeleteARecipe(_ date: Date) {
         let index = searchForIndex(date)

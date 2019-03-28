@@ -11,6 +11,8 @@ import UIKit
 
 class SettingsMainView: UIView {
     private var delegate: SettingsViewController?
+    private var mainViewControllerDelegate: MainViewController?
+    
     private let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     private lazy var dismissButton: UIButton = {
@@ -21,7 +23,7 @@ class SettingsMainView: UIView {
         return button
     }()
     private lazy var tableView: UITableView = {
-       let tableView = UITableView()
+       let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = delegate
         tableView.delegate = delegate

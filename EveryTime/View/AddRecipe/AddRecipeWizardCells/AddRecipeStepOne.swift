@@ -9,16 +9,18 @@
 import UIKit
 
 class AddRecipeStepOne: AddRecipeBaseCell {
-    var addRecipeViewControllerDelegate: AddRecipeViewController?
-    var keyboardHeight: CGFloat = 0.0 {
+    public var addRecipeViewControllerDelegate: AddRecipeViewController?
+    public var mainViewControllerDelegate: MainViewController?
+    private var continueButtonConstraint: NSLayoutConstraint!
+
+    private var keyboardHeight: CGFloat = 0.0 {
         didSet {
             continueButtonConstraint.constant = -keyboardHeight - 50.0
             NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         }
     }
-    fileprivate var continueButtonConstraint: NSLayoutConstraint!
-
-    fileprivate var recipeNameTextField: UITextField = {
+    
+    private var recipeNameTextField: UITextField = {
         let textField = UITextField()
         textField.defaultTextAttributes = Theme.Font.Recipe.TextFieldAttribute
         textField.attributedPlaceholder = NSAttributedString(string: "Recipe Name", attributes: Theme.Font.Recipe.TextFieldAttribute)
@@ -35,18 +37,20 @@ class AddRecipeStepOne: AddRecipeBaseCell {
         textField.becomeFirstResponder()
         return textField
     }()
-    var errorMessageLabel: UILabel = {
+    
+    private var errorMessageLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = NSAttributedString(string: "please enter a valid name", attributes: Theme.Font.Error.Text)
         label.layer.opacity = 0.0
         return label
     }()
-    fileprivate var continueButton: StandardButton = {
+    private var continueButton: StandardButton = {
         let button = StandardButton(title: "Continue")
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+
     
     override func setupView() {
         super.setupView()
@@ -58,6 +62,11 @@ class AddRecipeStepOne: AddRecipeBaseCell {
         )
         
         addSubview(recipeNameTextField)
+        guard let mvcd = mainViewControllerDelegate else {
+            return
+        }
+        let count = mvcd.recipeCollection.count + 1
+        recipeNameTextField.attributedText = NSAttributedString(string: "Recipe \(count)", attributes: Theme.Font.Recipe.TextFieldAttribute)
         continueButton.addTarget(self, action: #selector(handleContinueButton), for: .touchUpInside)
         addSubview(continueButton)
         addSubview(errorMessageLabel)

@@ -16,24 +16,21 @@ extension AddRecipeViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: UICollectionViewCell? = nil
+//        let cell: UICollectionViewCell? = nil
         
-        switch indexPath.item {
-            case 0:
-                addRecipeStepOne = collectionView.dequeueReusableCell(withReuseIdentifier: addRecipeNameCellId, for: indexPath) as? AddRecipeStepOne
-                addRecipeStepOne?.backgroundColor = UIColor.clear
-                addRecipeStepOne?.addRecipeViewControllerDelegate = self
-                return addRecipeStepOne!
-            case 1:
-                addRecipeStepTwo = collectionView.dequeueReusableCell(withReuseIdentifier: addRecipeStepCellId, for: indexPath) as? AddRecipeStepTwo
-                addRecipeStepTwo?.backgroundColor = UIColor.clear
-                addRecipeStepTwo?.addRecipeViewControllerDelegate = self
-                addRecipeStepTwo?.recipeName = recipeNameStr
-                return addRecipeStepTwo!
-            default:
-                break
+        if (indexPath.item == 0) {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: addRecipeNameCellId, for: indexPath) as! AddRecipeStepOne
+            cell.mainViewControllerDelegate = mainViewControllerDelegate
+            cell.addRecipeViewControllerDelegate = self
+            cell.setupView()
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: addRecipeStepCellId, for: indexPath) as! AddRecipeStepTwo
+            cell.addRecipeViewControllerDelegate = self
+            cell.recipeName = recipeNameStr
+            cell.setupView()
+            return cell
         }
-        return cell!
     }
 }
 

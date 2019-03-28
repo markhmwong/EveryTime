@@ -32,15 +32,15 @@ class MainViewView: UIView {
     
     private lazy var rightNavItemButton: UIButton = {
         let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "Clear All", attributes: Theme.Font.Nav.Item), for: .normal)//revert back to add recipe
-        button.addTarget(self, action: #selector(handleDeleteAllRecipe), for: .touchUpInside)
+        button.setAttributedTitle(NSAttributedString(string: "Add", attributes: Theme.Font.Nav.Item), for: .normal)//revert back to add recipe
+        button.addTarget(self, action: #selector(handleAddRecipe), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     private lazy var leftNavItemButton: UIButton = {
         let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "Info", attributes: Theme.Font.Nav.Item), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Settings", attributes: Theme.Font.Nav.Item), for: .normal)
         button.addTarget(self, action: #selector(handleAbout), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -62,11 +62,11 @@ class MainViewView: UIView {
         return button
     }()
     
-    public lazy var addRecipeButton: StandardButton = {
-        let button = StandardButton(title: "Add Recipe")
-        button.addTarget(self, action: #selector(handleAddRecipe), for: .touchUpInside)
-        return button
-    }()
+//    public lazy var addRecipeButton: StandardButton = {
+//        let button = StandardButton(title: "Add Recipe")
+//        button.addTarget(self, action: #selector(handleAddRecipe), for: .touchUpInside)
+//        return button
+//    }()
     
     public lazy var collView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -88,7 +88,7 @@ class MainViewView: UIView {
         addSubview(collView)
         nav.addSubview(appNameLabel)
         addSubview(nav)
-        addSubview(addRecipeButton)
+//        addSubview(addRecipeButton)
         
         collView.register(MainViewCell.self, forCellWithReuseIdentifier: CollectionCellIds.RecipeCell.rawValue)
     }
@@ -113,12 +113,12 @@ class MainViewView: UIView {
         
         nav.anchorView(top: navTopConstraint, bottom: collView.topAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
         nav.heightAnchor.constraint(equalTo: heightAnchor, multiplier: heightByNotch).isActive = true
-        
+
         leftNavItemButton.anchorView(top: nil, bottom: nil, leading: nav.leadingAnchor, trailing: nil, centerY: nav.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 10.0, bottom: 0.0, right: 0.0), size: .zero)
         rightNavItemButton.anchorView(top: nil, bottom: nil, leading: nil, trailing: nav.trailingAnchor, centerY: nav.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: -10.0), size: .zero)
         appNameLabel.anchorView(top: nil, bottom: nil, leading: nil, trailing: nil, centerY: nav.centerYAnchor, centerX: nav.centerXAnchor, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0), size: .zero)
         
-        addRecipeButton.anchorView(top: nil, bottom: bottomAnchor, leading: nil, trailing: nil, centerY: nil, centerX: centerXAnchor, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: -45.0, right: 0.0), size: CGSize(width: UIScreen.main.bounds.width / 3, height: 0.0))
+//        addRecipeButton.anchorView(top: nil, bottom: bottomAnchor, leading: nil, trailing: nil, centerY: nil, centerX: centerXAnchor, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: -45.0, right: 0.0), size: CGSize(width: UIScreen.main.bounds.width / 3, height: 0.0))
         collView.anchorView(top: nav.bottomAnchor, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0), size: .zero)
     }
     

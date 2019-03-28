@@ -1,10 +1,27 @@
 
 # Update Log
 
+## User requests
+edit names
+change keyboards to uipicker view
+
+
+
+Cannot change existing steps from recipes
+
+Adding a new recipe: keyboard hides continue button. Quite annoying. (not sure why if should be above the keyboard)
+
+
+## Bugs
+Bug: after creating and deleting a few recipes, new recipes no longer show up in the main window
+
 ## To do (Priority list) 
+- be able to edit steps and recipes (names)
 - add recipe tableview white
 - email feedback (in info)
 - the entire adding process
+- move clear all into info
+- rename info to settings
 
 ## To do in near future (not a priority)
 - settings button on main view

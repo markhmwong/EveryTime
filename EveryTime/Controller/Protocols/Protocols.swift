@@ -11,6 +11,7 @@ import UIKit
 protocol RecipeViewControllerDelegate {
     func didReturnValues(step: StepEntity)
     func willReloadTableData()
+    func stepCount() -> Int
 }
 
 protocol TimerProtocol {

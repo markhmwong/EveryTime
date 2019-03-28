@@ -43,7 +43,7 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
     fileprivate lazy var labelTextField: UITextField = {
         let input = UITextField()
         input.defaultTextAttributes = Theme.Font.Recipe.TextFieldAttribute
-        input.attributedPlaceholder = NSAttributedString(string: "Name the Step", attributes: Theme.Font.Recipe.TextFieldAttribute)
+        input.attributedPlaceholder = NSAttributedString(string: "Step Name", attributes: Theme.Font.Recipe.TextFieldAttribute)
         input.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Recipe.TextFieldAttribute)
         input.returnKeyType = UIReturnKeyType.done
         input.clearButtonMode = .never
@@ -81,7 +81,7 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
         view.backgroundColor = UIColor.clear
         return view
     }()
-    fileprivate lazy var doneButton: StandardButton = {
+    fileprivate lazy var addButton: StandardButton = {
         let button = StandardButton(title: "Add")
         button.addTarget(self, action: #selector(handleDoneButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -93,6 +93,15 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
         view.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
         return view
     }()
+    
+    init(delegate: RecipeViewControllerWithTableView) {
+        super.init(nibName: nil, bundle: nil)
+        self.recipeViewControllerDelegate = delegate
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -182,6 +191,11 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
     override func prepareViewController() {
         super.prepareViewController()
         view.backgroundColor = UIColor.clear
+        if let rvc = recipeViewControllerDelegate {
+            print(rvc.stepCount)
+            
+            labelTextField.attributedText = NSAttributedString(string: "Step \(rvc.stepCount())", attributes: Theme.Font.Recipe.TextFieldAttribute)
+        }
         
     }
     
@@ -197,8 +211,8 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
         view.addSubview(labelTextField)
         view.addSubview(invertedCaret)
         view.addSubview(titleLabel)
-        view.addSubview(doneButton)
-        
+        view.addSubview(addButton)
+
         rightNavItemButton.addTarget(self, action: #selector(handleDoneButton), for: .touchUpInside)
     }
     
@@ -238,9 +252,9 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
         titleLabel.topAnchor.constraint(equalTo: invertedCaret.bottomAnchor, constant: 20.0).isActive = true
         titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
         
-        doneButton.topAnchor.constraint(equalTo: countDownPicker.bottomAnchor).isActive = true
-        doneButton.centerXAnchor.constraint(equalTo: countDownPicker.centerXAnchor).isActive = true
-        doneButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.33).isActive = true
+        addButton.topAnchor.constraint(equalTo: countDownPicker.bottomAnchor, constant: 20.0).isActive = true
+        addButton.centerXAnchor.constraint(equalTo: countDownPicker.centerXAnchor).isActive = true
+        addButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.33).isActive = true
     }
     
     func preparePicker() {

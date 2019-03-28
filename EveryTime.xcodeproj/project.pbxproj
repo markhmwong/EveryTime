@@ -359,13 +359,13 @@
 			path = MainView;
 			sourceTree = "<group>";
 		};
-		4D53803322468BF40051DD0F /* AboutView */ = {
+		4D53803322468BF40051DD0F /* SettingsView */ = {
 			isa = PBXGroup;
 			children = (
 				4D6DFCB72212508E009C3044 /* SettingsViewController.swift */,
 				4D53803422473FF40051DD0F /* AboutViewController.swift */,
 			);
-			path = AboutView;
+			path = SettingsView;
 			sourceTree = "<group>";
 		};
 		4D53803B2249FC450051DD0F /* Services */ = {
@@ -375,6 +375,14 @@
 				4D538039224911140051DD0F /* TapticService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		4D538040224B05480051DD0F /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				4D53F7CD21ED6CB200C0AF31 /* NavView.swift */,
+			);
+			path = Navigation;
 			sourceTree = "<group>";
 		};
 		4D53C21822065FE300EED75C /* Theming */ = {
@@ -493,7 +501,7 @@
 				4D53F7D621EF0C2900C0AF31 /* Animations */,
 				4D3E24C4221E688600B0D621 /* AddStep */,
 				4DF13D5E221A153C009BE812 /* AddingRecipe */,
-				4D53803322468BF40051DD0F /* AboutView */,
+				4D53803322468BF40051DD0F /* SettingsView */,
 				4D5380262244BBE90051DD0F /* MainView */,
 				4D563C2A220D4A550039B07F /* RecipeView */,
 				4DA12F8521B8A30C0049CD75 /* Protocols */,
@@ -504,8 +512,8 @@
 		4DA12F7421B352440049CD75 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4D538040224B05480051DD0F /* Navigation */,
 				4DA12F7221B2D3DD0049CD75 /* EntityBaseCell.swift */,
-				4D53F7CD21ED6CB200C0AF31 /* NavView.swift */,
 				4D538021224386BB0051DD0F /* Settings View */,
 				4DF13D60221A1B9B009BE812 /* Button */,
 				4D6E35362215434600CBCC23 /* Error */,

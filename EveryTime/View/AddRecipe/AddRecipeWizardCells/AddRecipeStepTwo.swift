@@ -57,6 +57,7 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         textfield.backgroundColor = UIColor.white
         textfield.keyboardType = .asciiCapableNumberPad
         textfield.textAlignment = .center
+        textfield.text = "0"
         textfield.placeholder = "Hrs"
         textfield.becomeFirstResponder()
         return textfield
@@ -67,6 +68,7 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         textfield.backgroundColor = UIColor.white
         textfield.keyboardType = .asciiCapableNumberPad
         textfield.textAlignment = .center
+        textfield.text = "0"
         textfield.placeholder = "Mins"
         return textfield
     }()
@@ -76,6 +78,7 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         textfield.backgroundColor = UIColor.white
         textfield.keyboardType = .asciiCapableNumberPad
         textfield.textAlignment = .center
+        textfield.text = "0"
         textfield.placeholder = "Secs"
         return textfield
     }()
@@ -86,6 +89,7 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         textfield.keyboardType = .asciiCapable
         textfield.textAlignment = .center
         textfield.placeholder = "Name"
+        textfield.text = "Step One"
         textfield.spellCheckingType = .no
         textfield.autocorrectionType = .no
         textfield.translatesAutoresizingMaskIntoConstraints = false
@@ -293,7 +297,6 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         }
         
         if (saveToCoreData) {
-            
             dismissViewControllerAndUpdateCollectionView()
         }
     }
@@ -306,11 +309,13 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
                 let sEntity = StepEntity(name: s.name, hours: s.hours, minutes: s.minutes, seconds: s.seconds, priority: s.priority)
                 if (index == 0) {
                     sEntity.isLeading = true
+                    rEntity.currStepName = sEntity.stepName
                 }
                 rEntity.addToStep(sEntity)
             }
             
             rEntity.updateTimeRemainingForCurrentStep()
+            
             if let arv = self.addRecipeViewControllerDelegate {
                 arv.createRecipe(rEntity: rEntity)
             }
@@ -358,7 +363,13 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
     
     func clearTextFields(_ textFields: [UITextField]) {
         for textField in textFields {
-            textField.text! = ""
+            switch textField.tag {
+                case textFieldTag.nameTextField.rawValue:
+                    textField.text = "Step \(dataSource.count)"
+                default:
+                    textField.text = "00"
+            }
+//            textField.text! = ""
         }
     }
 }

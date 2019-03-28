@@ -31,7 +31,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
                 return
             }
             
-            prepareLabels(name, r.timeRemainingForCurrentStepToString())
+            prepareLabels(recipe: r)
             let bg = r.isPaused ? Theme.View.RecipeCell.RecipeCellPauseButtonInactive : Theme.View.RecipeCell.RecipeCellPauseButtonActive
             let textColor = r.isPaused ? Theme.Font.Color.TextColourDisabled : Theme.Font.Color.TextColour
             let highlightAlpha: CGFloat = r.isPaused ? 0.85 : 0.25
@@ -109,10 +109,10 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         gl.frame = bounds
     }
     
-    func prepareLabels(_ name: String,_ time: String) {
-        nameLabel.attributedText = NSAttributedString(string: name, attributes: Theme.Font.Recipe.NameAttribute)
-        stepNameLabel.attributedText = NSAttributedString(string: " ", attributes: Theme.Font.Recipe.StepSubTitle)
-        recipeTimeLabel.attributedText = NSAttributedString(string: time, attributes: Theme.Font.Recipe.TimeAttribute)
+    func prepareLabels(recipe: RecipeEntity) {
+        nameLabel.attributedText = NSAttributedString(string: recipe.recipeName ?? "Unknown Recipe Name", attributes: Theme.Font.Recipe.NameAttribute)
+        stepNameLabel.attributedText = NSAttributedString(string: recipe.currStepName ?? "Unknown Step Name", attributes: Theme.Font.Recipe.StepSubTitle)
+        recipeTimeLabel.attributedText = NSAttributedString(string: recipe.timeRemainingForCurrentStepToString(), attributes: Theme.Font.Recipe.TimeAttribute)
         
         nameLabel.backgroundColor = Theme.Background.Color.Clear
         stepNameLabel.backgroundColor = Theme.Background.Color.Clear
@@ -122,10 +122,6 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         addSubview(recipeTimeLabel)
         addSubview(stepNameLabel)
         addSubview(timerHighlight)
-        
-        
-        
-        
         labelAutoLayout()
     }
     

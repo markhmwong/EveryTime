@@ -19,6 +19,8 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     var horizontalDelegate = HorizontalTransitionDelegate()
     var dismissInteractor: OverlayInteractor!
     var horizontalTransitionInteractor: HorizontalTransitionInteractor? = nil
+    var paddedView: UIView!
+    var indexPathSelectedFromMainView: IndexPath?
     
     fileprivate let appDelegate = UIApplication.shared.delegate as! AppDelegate
     fileprivate var bottomViewState: BottomViewState?
@@ -80,8 +82,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    var paddedView: UIView!
-    var indexPathSelectedFromMainView: IndexPath?
+
     
     init(recipe: RecipeEntity, delegate: MainViewController, indexPath: IndexPath) {
         super.init(nibName: nil, bundle: nil)
@@ -189,6 +190,10 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+    }
+    
+    func stepCount() -> Int {
+        return stepArr.count
     }
     
     func modifyTime(_ seconds: Double) {
@@ -662,7 +667,7 @@ extension RecipeViewControllerWithTableView {
     }
     
     @objc func handleSettings() {
-        let optionMenu = UIAlertController(title: "Recipe Options", message: "These options affect the recipe as whole.", preferredStyle: .actionSheet)
+        let optionMenu = UIAlertController(title: "Recipe Options", message: "These options affect the recipe as a whole.", preferredStyle: .actionSheet)
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
             let alert = UIAlertController(title: "Are you sure?", message: "Deleting cannot be undone", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -726,14 +731,13 @@ extension RecipeViewControllerWithTableView {
     }
 
     func handleAddStep() {
-        let vc = AddStepViewController()
+        let vc = AddStepViewController(delegate: self)
         vc.transitioningDelegate = transitionDelegate
         vc.modalPresentationStyle = .custom
         dismissInteractor = OverlayInteractor()
         dismissInteractor.attachToViewController(viewController: vc, withView: vc.view, presentViewController: nil)
         vc.interactor = dismissInteractor
         transitionDelegate.dismissInteractor = dismissInteractor
-        vc.recipeViewControllerDelegate = self
         self.present(vc, animated: true, completion: nil)
     }
 

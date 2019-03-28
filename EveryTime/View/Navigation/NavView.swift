@@ -9,15 +9,15 @@
 import UIKit
 
 class NavView: UIView {
-    var leftNavItem: UIButton?
-    var rightNavItem: UIButton?
-    let bottomBorder: UIView = {
+    public var leftNavItem: UIButton?
+    public var rightNavItem: UIButton?
+    private lazy var bottomBorder: UIView = {
         let view = UIView()
         view.backgroundColor = Theme.Background.Color.NavBottomBorderColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -36,7 +36,9 @@ class NavView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    fileprivate func setupView() {        
+
+    
+    fileprivate func setupView() {
         if let left = leftNavItem {
             left.translatesAutoresizingMaskIntoConstraints = false
             addSubview(left)
@@ -52,6 +54,7 @@ class NavView: UIView {
         }
         
         addSubview(bottomBorder)
+        
     }
     
     fileprivate func setupAutoLayout() {

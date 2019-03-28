@@ -15,17 +15,19 @@ enum Settings: Int {
     case Share
 }
 
-class SettingsViewController: ViewControllerBase, UITableViewDelegate, UITableViewDataSource {
-    func share() {
-        let text = "Get productive with a micromanagement timer!\n"
-        let url: URL = URL(string: "https://itunes.apple.com/us/app/everytime/id1454444680?ls=1&mt=8")!
-        let vc = UIActivityViewController(activityItems: [text, url], applicationActivities: [])
-        
-        self.present(vc, animated: true, completion: nil)
-    }
+enum Data: Int {
+    case Clear = 0
+}
+
+enum SettingsSections: Int {
+    case Data = 0
+    case Support
+}
+
+extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.row {
+    func about(row: Int) {
+        switch row {
         case Settings.About.rawValue:
             let vc = AboutViewController(nibName: nil, bundle: nil)
             DispatchQueue.main.async {
@@ -40,13 +42,41 @@ class SettingsViewController: ViewControllerBase, UITableViewDelegate, UITableVi
         }
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        switch indexPath.section {
+        case SettingsSections.Data.rawValue:
+            if (indexPath.row == Data.Clear.rawValue) {
+                deleteAllAction()
+            }
+        case SettingsSections.Support.rawValue:
+            about(row: indexPath.row)
+        default:
+            print("default")
+        }
+    }
+    
+    func deleteAllAction() {
+        let alert = UIAlertController(title: "Are you sure?", message: "This will delete all Recipes", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
+                self.dismiss(animated: true, completion: {
+                    self.delegate?.deleteAllRecipes()
+            })
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource.count
+        return dataSource[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! SettingsViewCell
-        cell.updateLabel(text: dataSource[indexPath.row]!)
+        cell.updateLabel(text: dataSource[indexPath.section][indexPath.row]!)
+        if (indexPath.section == SettingsSections.Data.rawValue && indexPath.item == Data.Clear.rawValue) {
+            cell.label.textColor = UIColor.red
+        }
         return cell
     }
     
@@ -54,8 +84,35 @@ class SettingsViewController: ViewControllerBase, UITableViewDelegate, UITableVi
         return UIScreen.main.bounds.height / 17
     }
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case SettingsSections.Data.rawValue:
+            return "Data"
+        case SettingsSections.Support.rawValue:
+            return "Support"
+        default:
+            return "Other"
+        }
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return dataSource.count
+    }
+}
+
+class SettingsViewController: ViewControllerBase  {
+    func share() {
+        let text = "Get productive with a micromanagement timer!\n"
+        let url: URL = URL(string: "https://itunes.apple.com/us/app/everytime/id1454444680?ls=1&mt=8")!
+        let vc = UIActivityViewController(activityItems: [text, url], applicationActivities: [])
+        
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    
+    
     let cellId = "cellId"
-    var dataSource: [Int : String] = [0: "About", 1 : "Review In App Store", 2 : "Share with Friends"]
+    var dataSource: [[Int : String]] = [[0: "Clear All Recipes"], [0: "About", 1 : "Review In App Store", 2 : "Share with Friends"]]
     fileprivate var delegate: MainViewController?
     fileprivate lazy var mainView: SettingsMainView = {
         let view = SettingsMainView(delegate: self)
