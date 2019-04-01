@@ -87,9 +87,7 @@ class MainViewView: UIView {
         }
         addSubview(collView)
         nav.addSubview(appNameLabel)
-        addSubview(nav)
-//        addSubview(addRecipeButton)
-        
+        addSubview(nav)        
         collView.register(MainViewCell.self, forCellWithReuseIdentifier: CollectionCellIds.RecipeCell.rawValue)
     }
     
@@ -118,7 +116,6 @@ class MainViewView: UIView {
         rightNavItemButton.anchorView(top: nil, bottom: nil, leading: nil, trailing: nav.trailingAnchor, centerY: nav.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: -10.0), size: .zero)
         appNameLabel.anchorView(top: nil, bottom: nil, leading: nil, trailing: nil, centerY: nav.centerYAnchor, centerX: nav.centerXAnchor, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0), size: .zero)
         
-//        addRecipeButton.anchorView(top: nil, bottom: bottomAnchor, leading: nil, trailing: nil, centerY: nil, centerX: centerXAnchor, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: -45.0, right: 0.0), size: CGSize(width: UIScreen.main.bounds.width / 3, height: 0.0))
         collView.anchorView(top: nav.bottomAnchor, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0), size: .zero)
     }
     

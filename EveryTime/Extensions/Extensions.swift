@@ -94,7 +94,6 @@ extension TimeInterval {
 }
 
 extension Int {
-    
     func prefixZeroToInteger() -> String {
         if(self < 10) {
             return "0\(self)"

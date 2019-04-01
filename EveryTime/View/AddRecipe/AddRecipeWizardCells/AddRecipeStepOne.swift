@@ -51,7 +51,6 @@ class AddRecipeStepOne: AddRecipeBaseCell {
         return button
     }()
 
-    
     override func setupView() {
         super.setupView()
         NotificationCenter.default.addObserver(

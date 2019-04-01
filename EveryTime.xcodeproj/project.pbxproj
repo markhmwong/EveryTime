@@ -13,8 +13,8 @@
 		4D0C4B4F21AEC73A00153E76 /* SimpleRecipeTimer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4B4D21AEC73A00153E76 /* SimpleRecipeTimer.xcdatamodeld */; };
 		4D0C4B5121AEC73C00153E76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D0C4B5021AEC73C00153E76 /* Assets.xcassets */; };
 		4D0C4B5421AEC73C00153E76 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D0C4B5221AEC73C00153E76 /* LaunchScreen.storyboard */; };
-		4D0C4B5F21AEC73D00153E76 /* TimeableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4B5E21AEC73D00153E76 /* TimeableTests.swift */; };
-		4D0C4B6A21AEC73D00153E76 /* TimeableUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4B6921AEC73D00153E76 /* TimeableUITests.swift */; };
+		4D0C4B5F21AEC73D00153E76 /* EveryTimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4B5E21AEC73D00153E76 /* EveryTimeTests.swift */; };
+		4D0C4B6A21AEC73D00153E76 /* EveryTimeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4B6921AEC73D00153E76 /* EveryTimeUITests.swift */; };
 		4D205DB121FE8252008006BD /* StepTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D205DB021FE8252008006BD /* StepTableViewCell.swift */; };
 		4D53801E223FE1280051DD0F /* Update.md in Resources */ = {isa = PBXBuildFile; fileRef = 4D53801D223FE1280051DD0F /* Update.md */; };
 		4D538023224386D20051DD0F /* SettingsMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D538022224386D20051DD0F /* SettingsMainView.swift */; };
@@ -62,14 +62,14 @@
 		4D9986D1223CA3090049D55C /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9986D0223CA3090049D55C /* ExtensionDelegate.swift */; };
 		4D9986D3223CA3090049D55C /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9986D2223CA3090049D55C /* NotificationController.swift */; };
 		4D9986D5223CA30A0049D55C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D9986D4223CA30A0049D55C /* Assets.xcassets */; };
-		4DA12F6F21B181460049CD75 /* StepsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA12F6E21B181460049CD75 /* StepsProtocol.swift */; };
 		4DA12F7321B2D3DD0049CD75 /* EntityBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA12F7221B2D3DD0049CD75 /* EntityBaseCell.swift */; };
 		4DA12F7621B358AB0049CD75 /* MainViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA12F7521B358AB0049CD75 /* MainViewCell.swift */; };
 		4DA12F7A21B606A20049CD75 /* AddStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA12F7921B606A20049CD75 /* AddStepViewController.swift */; };
 		4DA12F7D21B611AF0049CD75 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA12F7C21B611AF0049CD75 /* Extensions.swift */; };
 		4DA12F8721B8A3A20049CD75 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA12F8621B8A3A20049CD75 /* Protocols.swift */; };
+		4DD542F0224E544C003C6DEC /* AddStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD542EF224E544C003C6DEC /* AddStepViewModel.swift */; };
+		4DD542F2224F675C003C6DEC /* AddStepViewControllerMVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD542F1224F675C003C6DEC /* AddStepViewControllerMVC.swift */; };
 		4DDA39C821D9D14A00D4773A /* AddRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDA39C721D9D14A00D4773A /* AddRecipeViewController.swift */; };
-		4DF13D5B2217EE08009BE812 /* ViewControllerBaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF13D5A2217EE08009BE812 /* ViewControllerBaseProtocol.swift */; };
 		4DF13D5D2217EECF009BE812 /* ViewControllerBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF13D5C2217EECF009BE812 /* ViewControllerBase.swift */; };
 		4DF13D62221A1BAB009BE812 /* StandardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF13D61221A1BAB009BE812 /* StandardButton.swift */; };
 /* End PBXBuildFile section */
@@ -132,10 +132,10 @@
 		4D0C4B5321AEC73C00153E76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4D0C4B5521AEC73C00153E76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D0C4B5A21AEC73D00153E76 /* EveryTimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EveryTimeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4D0C4B5E21AEC73D00153E76 /* TimeableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeableTests.swift; sourceTree = "<group>"; };
+		4D0C4B5E21AEC73D00153E76 /* EveryTimeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveryTimeTests.swift; sourceTree = "<group>"; };
 		4D0C4B6021AEC73D00153E76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D0C4B6521AEC73D00153E76 /* EveryTimeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EveryTimeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4D0C4B6921AEC73D00153E76 /* TimeableUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeableUITests.swift; sourceTree = "<group>"; };
+		4D0C4B6921AEC73D00153E76 /* EveryTimeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveryTimeUITests.swift; sourceTree = "<group>"; };
 		4D0C4B6B21AEC73D00153E76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D205DB021FE8252008006BD /* StepTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTableViewCell.swift; sourceTree = "<group>"; };
 		4D53801D223FE1280051DD0F /* Update.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Update.md; sourceTree = "<group>"; };
@@ -192,14 +192,14 @@
 		4D9986D4223CA30A0049D55C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4D9986D6223CA30A0049D55C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D9986D7223CA30A0049D55C /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
-		4DA12F6E21B181460049CD75 /* StepsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepsProtocol.swift; sourceTree = "<group>"; };
 		4DA12F7221B2D3DD0049CD75 /* EntityBaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityBaseCell.swift; sourceTree = "<group>"; };
 		4DA12F7521B358AB0049CD75 /* MainViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewCell.swift; sourceTree = "<group>"; };
 		4DA12F7921B606A20049CD75 /* AddStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepViewController.swift; sourceTree = "<group>"; };
 		4DA12F7C21B611AF0049CD75 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		4DA12F8621B8A3A20049CD75 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		4DD542EF224E544C003C6DEC /* AddStepViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepViewModel.swift; sourceTree = "<group>"; };
+		4DD542F1224F675C003C6DEC /* AddStepViewControllerMVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepViewControllerMVC.swift; sourceTree = "<group>"; };
 		4DDA39C721D9D14A00D4773A /* AddRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeViewController.swift; sourceTree = "<group>"; };
-		4DF13D5A2217EE08009BE812 /* ViewControllerBaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerBaseProtocol.swift; sourceTree = "<group>"; };
 		4DF13D5C2217EECF009BE812 /* ViewControllerBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerBase.swift; sourceTree = "<group>"; };
 		4DF13D61221A1BAB009BE812 /* StandardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -243,8 +243,8 @@
 				4D53801D223FE1280051DD0F /* Update.md */,
 				4D538038224867B70051DD0F /* WhatsNew.md */,
 				4D0C4B4521AEC73A00153E76 /* EveryTime */,
-				4D0C4B5D21AEC73D00153E76 /* TimeableTests */,
-				4D0C4B6821AEC73D00153E76 /* TimeableUITests */,
+				4D0C4B5D21AEC73D00153E76 /* EveryTimeTests */,
+				4D0C4B6821AEC73D00153E76 /* EveryTimeUITests */,
 				4D9986BE223CA3080049D55C /* EveryTimeW */,
 				4D9986CD223CA3090049D55C /* EveryTimeW Extension */,
 				4D0C4B4421AEC73A00153E76 /* Products */,
@@ -271,6 +271,7 @@
 				4D53803B2249FC450051DD0F /* Services */,
 				4DA12F7B21B611A10049CD75 /* Extensions */,
 				4DA12F6921B108690049CD75 /* Controller */,
+				4DD542EE224DF551003C6DEC /* ViewModel */,
 				4D0C4B7921AFEE2000153E76 /* Model */,
 				4DA12F7421B352440049CD75 /* View */,
 				4D0C4B4A21AEC73A00153E76 /* Main.storyboard */,
@@ -282,29 +283,28 @@
 			path = EveryTime;
 			sourceTree = "<group>";
 		};
-		4D0C4B5D21AEC73D00153E76 /* TimeableTests */ = {
+		4D0C4B5D21AEC73D00153E76 /* EveryTimeTests */ = {
 			isa = PBXGroup;
 			children = (
-				4D0C4B5E21AEC73D00153E76 /* TimeableTests.swift */,
+				4D0C4B5E21AEC73D00153E76 /* EveryTimeTests.swift */,
 				4D0C4B6021AEC73D00153E76 /* Info.plist */,
 			);
-			path = TimeableTests;
+			path = EveryTimeTests;
 			sourceTree = "<group>";
 		};
-		4D0C4B6821AEC73D00153E76 /* TimeableUITests */ = {
+		4D0C4B6821AEC73D00153E76 /* EveryTimeUITests */ = {
 			isa = PBXGroup;
 			children = (
-				4D0C4B6921AEC73D00153E76 /* TimeableUITests.swift */,
+				4D0C4B6921AEC73D00153E76 /* EveryTimeUITests.swift */,
 				4D0C4B6B21AEC73D00153E76 /* Info.plist */,
 			);
-			path = TimeableUITests;
+			path = EveryTimeUITests;
 			sourceTree = "<group>";
 		};
 		4D0C4B7921AFEE2000153E76 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				4D53F75A21E2E38100C0AF31 /* CoreDataHelper.swift */,
-				4DA12F6E21B181460049CD75 /* StepsProtocol.swift */,
 				4D53F7BB21E72B7E00C0AF31 /* RecipeEntity.swift */,
 				4D53F7BD21E735CD00C0AF31 /* StepEntity.swift */,
 			);
@@ -334,6 +334,7 @@
 			isa = PBXGroup;
 			children = (
 				4DA12F7921B606A20049CD75 /* AddStepViewController.swift */,
+				4DD542F1224F675C003C6DEC /* AddStepViewControllerMVC.swift */,
 			);
 			path = AddStep;
 			sourceTree = "<group>";
@@ -512,8 +513,8 @@
 		4DA12F7421B352440049CD75 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				4D538040224B05480051DD0F /* Navigation */,
 				4DA12F7221B2D3DD0049CD75 /* EntityBaseCell.swift */,
+				4D538040224B05480051DD0F /* Navigation */,
 				4D538021224386BB0051DD0F /* Settings View */,
 				4DF13D60221A1B9B009BE812 /* Button */,
 				4D6E35362215434600CBCC23 /* Error */,
@@ -538,10 +539,17 @@
 		4DA12F8521B8A30C0049CD75 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				4DF13D5A2217EE08009BE812 /* ViewControllerBaseProtocol.swift */,
 				4DA12F8621B8A3A20049CD75 /* Protocols.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		4DD542EE224DF551003C6DEC /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4DD542EF224E544C003C6DEC /* AddStepViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		4DF13D5E221A153C009BE812 /* AddingRecipe */ = {
@@ -770,10 +778,10 @@
 				4D53F8EE21F69D7200C0AF31 /* AddRecipeBaseCell.swift in Sources */,
 				4D6E353A22154C7C00CBCC23 /* AddRecipeStepOne.swift in Sources */,
 				4D53803222468B140051DD0F /* SettingsViewCell.swift in Sources */,
-				4DF13D5B2217EE08009BE812 /* ViewControllerBaseProtocol.swift in Sources */,
 				4D53F8A921F36E1B00C0AF31 /* HorizontalTransitionInteractor.swift in Sources */,
 				4DF13D62221A1BAB009BE812 /* StandardButton.swift in Sources */,
 				4D53F89E21F1CBF800C0AF31 /* ShowOverlayAnimator.swift in Sources */,
+				4DD542F0224E544C003C6DEC /* AddStepViewModel.swift in Sources */,
 				4D53F8A021F1CC0800C0AF31 /* DismissOverlayAnimator.swift in Sources */,
 				4D205DB121FE8252008006BD /* StepTableViewCell.swift in Sources */,
 				4D0C4B4921AEC73A00153E76 /* MainViewController.swift in Sources */,
@@ -795,6 +803,7 @@
 				4D53F7D821EF0C6500C0AF31 /* ViewControllerOverlayAnimator.swift in Sources */,
 				4D53803D2249FCC80051DD0F /* Extentions+UIDevice.swift in Sources */,
 				4D53803A224911140051DD0F /* TapticService.swift in Sources */,
+				4DD542F2224F675C003C6DEC /* AddStepViewControllerMVC.swift in Sources */,
 				4D53802A2244C2D70051DD0F /* Extension+UIView.swift in Sources */,
 				4D6E35382215435900CBCC23 /* AddRecipeWizardError.swift in Sources */,
 				4D53F7D521EF0C2400C0AF31 /* OverlayTransitionDelegate.swift in Sources */,
@@ -802,7 +811,6 @@
 				4D53F8A721F36DDA00C0AF31 /* HideHorizontalAnimator.swift in Sources */,
 				4DA12F7321B2D3DD0049CD75 /* EntityBaseCell.swift in Sources */,
 				4D538023224386D20051DD0F /* SettingsMainView.swift in Sources */,
-				4DA12F6F21B181460049CD75 /* StepsProtocol.swift in Sources */,
 				4D563C2C220D4ADC0039B07F /* RecipeViewControllerBase.swift in Sources */,
 				4D53F8A521F36D9100C0AF31 /* ShowHorizontalAnimator.swift in Sources */,
 				4DA12F8721B8A3A20049CD75 /* Protocols.swift in Sources */,
@@ -821,7 +829,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D0C4B5F21AEC73D00153E76 /* TimeableTests.swift in Sources */,
+				4D0C4B5F21AEC73D00153E76 /* EveryTimeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -829,7 +837,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D0C4B6A21AEC73D00153E76 /* TimeableUITests.swift in Sources */,
+				4D0C4B6A21AEC73D00153E76 /* EveryTimeUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1052,7 +1060,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GEKZN86RYS;
-				INFOPLIST_FILE = SimpleRecipeTimerTests/Info.plist;
+				INFOPLIST_FILE = EveryTimeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1073,7 +1081,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GEKZN86RYS;
-				INFOPLIST_FILE = SimpleRecipeTimerTests/Info.plist;
+				INFOPLIST_FILE = EveryTimeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1093,7 +1101,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GEKZN86RYS;
-				INFOPLIST_FILE = SimpleRecipeTimerUITests/Info.plist;
+				INFOPLIST_FILE = EveryTimeUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1113,7 +1121,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GEKZN86RYS;
-				INFOPLIST_FILE = SimpleRecipeTimerUITests/Info.plist;
+				INFOPLIST_FILE = EveryTimeUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

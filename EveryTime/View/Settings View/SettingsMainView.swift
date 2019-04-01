@@ -12,9 +12,7 @@ import UIKit
 class SettingsMainView: UIView {
     private var delegate: SettingsViewController?
     private var mainViewControllerDelegate: MainViewController?
-    
     private let appDelegate = UIApplication.shared.delegate as! AppDelegate
-
     private lazy var dismissButton: UIButton = {
         let button = UIButton()
         button.setAttributedTitle(NSAttributedString(string: "Back", attributes: Theme.Font.Nav.Item), for: .normal)
@@ -30,13 +28,11 @@ class SettingsMainView: UIView {
         tableView.separatorStyle = .none
         return tableView
     }()
-    
     private lazy var navView: NavView = {
        let view = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: nil)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false

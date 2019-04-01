@@ -1,5 +1,9 @@
 #  Whats New Description for App Store
 
+## Version 1.1.13 (Current)
+- Email feedback in support now added
+
+
 ## Version 1.1.12
 Adding Recipe/Steps
     - Textfields now have a default value

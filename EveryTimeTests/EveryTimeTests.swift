@@ -7,9 +7,9 @@
 //
 
 import XCTest
-@testable import Timeable
+@testable import EveryTime
 
-class TimeableTests: XCTestCase {
+class EveryTimeTests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.

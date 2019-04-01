@@ -22,16 +22,16 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     var paddedView: UIView!
     var indexPathSelectedFromMainView: IndexPath?
     
-    fileprivate let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    fileprivate var bottomViewState: BottomViewState?
-    fileprivate let screenSize = UIScreen.main.bounds.size
-    fileprivate let rowHeight: CGFloat = 120.0
-    fileprivate var addButtonState: ScrollingState = .Idle
-    fileprivate var stepSelected: Int = 0
-    fileprivate lazy var navView: NavView? = nil
-    fileprivate var step: StepEntity?
+    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    private var bottomViewState: BottomViewState?
+    private let screenSize = UIScreen.main.bounds.size
+    private let rowHeight: CGFloat = 120.0
+    private var addButtonState: ScrollingState = .Idle
+    private var stepSelected: Int = 0
+    private lazy var navView: NavView? = nil
+    private var step: StepEntity?
 
-    fileprivate lazy var tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let view: UITableView = UITableView()
         view.delegate = self
         view.isEditing = false
@@ -48,7 +48,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         return view
     }()
     
-    fileprivate lazy var dismissButton: UIButton = {
+    private lazy var dismissButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(Theme.Font.Color.TextColour, for: .normal)
         button.setAttributedTitle(NSAttributedString(string: "Back", attributes: Theme.Font.Nav.Item), for: .normal)
@@ -56,7 +56,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    fileprivate lazy var settingsButton: UIButton = {
+    private lazy var settingsButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(Theme.Font.Color.TextColour, for: .normal)
         button.setAttributedTitle(NSAttributedString(string: "Settings", attributes: Theme.Font.Nav.Item), for: .normal)
@@ -65,18 +65,13 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         return button
     }()
     
-//    fileprivate lazy var addStepButton: StandardButton = {
-//        let button = StandardButton(title: "Add Step")
-//        button.addTarget(self, action: #selector(handleAddStep), for: .touchUpInside)
-//        return button
-//    }()
-    fileprivate lazy var pauseRecipeButton: StandardButton = {
+    private lazy var pauseRecipeButton: StandardButton = {
         let button = StandardButton(title: "Pause")
         button.addTarget(self, action: #selector(handlePauseRecipe), for: .touchUpInside)
         return button
     }()
     
-    fileprivate lazy var border: UIView = {
+    private lazy var border: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -368,28 +363,6 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
     
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return true
-    }
-     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if (editingStyle == .delete) {
-//            //issue when deleting the running timer, the time passed persists to the next step
-//            //we alter the startDate
-//            if (indexPath.row == recipe.currStepPriority) {
-//                let sortedSet = recipe.sortStepsByPriority()
-//                let timeElapsedInStep = sortedSet[indexPath.row].totalTime - recipe.currStepTimeRemaining
-//                recipe.startDate?.addTimeInterval(timeElapsedInStep)
-//            }
-//
-//
-//            let id = "\(recipe.recipeName!).\(recipe.createdDate!)"
-//            recipe.removeFromStep(stepArr[indexPath.row])
-//            stepArr.remove(at: indexPath.row)
-//            recipe.reoganiseStepsInArr(fromIndex: indexPath.row)
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-//            recipe.sumStepsForExpectedElapsedTime()
-//            LocalNotificationsService.shared.addRecipeWideNotification(identifier: id, notificationContent: [NotificationDictionaryKeys.Title.rawValue : recipe.recipeName!], timeRemaining: recipe.totalTimeRemaining)
-//            CoreDataHandler.saveContext()
-        }
     }
     
     func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
@@ -690,7 +663,7 @@ extension RecipeViewControllerWithTableView {
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        let editAction = UIAlertAction(title: "Edit", style: .default) { (action) in
+        let editAction = UIAlertAction(title: "Shuffle Steps", style: .default) { (action) in
             self.tableView.isEditing = !self.tableView.isEditing
             self.headerView.saveButtonEnable()
         }
@@ -731,7 +704,8 @@ extension RecipeViewControllerWithTableView {
     }
 
     func handleAddStep() {
-        let vc = AddStepViewController(delegate: self)
+        let viewModel = AddStepViewModel(userSelectedValues: StepValues(name: "Step", hour: 0, min: 0, sec: 0))
+        let vc = AddStepViewController(delegate: self, viewModel: viewModel)
         vc.transitioningDelegate = transitionDelegate
         vc.modalPresentationStyle = .custom
         dismissInteractor = OverlayInteractor()
@@ -765,18 +739,6 @@ extension RecipeViewControllerWithTableView {
         }
         CoreDataHandler.saveContext()
     }
-    
-//    @objc func handleAddStep() {
-//        let vc = AddStepViewController()
-//        vc.transitioningDelegate = transitionDelegate
-//        vc.modalPresentationStyle = .custom
-//        dismissInteractor = OverlayInteractor()
-//        dismissInteractor.attachToViewController(viewController: vc, withView: vc.view, presentViewController: nil)
-//        vc.interactor = dismissInteractor
-//        transitionDelegate.dismissInteractor = dismissInteractor
-//        vc.recipeViewControllerDelegate = self
-//        self.present(vc, animated: true, completion: nil)
-//    }
     
     func handleAdditionalTime() {
         let seconds = 15.0

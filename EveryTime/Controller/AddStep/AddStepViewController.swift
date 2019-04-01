@@ -14,11 +14,16 @@ enum PickerColumn: Int {
     case sec = 4
 }
 
-class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
+protocol AddStepViewControllerDelegate {
+    
+}
 
+class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
+    
+    private var addStepViewModel: AddStepViewModel!
     //MARK: VARIABLES
-    fileprivate let maxCharacterLimitForNameLabel = 30
-    fileprivate let minCharacterLimitForNameLabel = 1
+    private let maxCharacterLimitForNameLabel = 30
+    private let minCharacterLimitForNameLabel = 1
     var recipeViewControllerDelegate: RecipeViewControllerDelegate?
     var recipeViewControllerWithTableViewDelegate: RecipeViewControllerWithTableView?
     var interactor: OverlayInteractor? = nil
@@ -69,6 +74,7 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
     private var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -94,9 +100,10 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
         return view
     }()
     
-    init(delegate: RecipeViewControllerWithTableView) {
+    init(delegate: RecipeViewControllerWithTableView, viewModel: AddStepViewModel) {
         super.init(nibName: nil, bundle: nil)
         self.recipeViewControllerDelegate = delegate
+        self.addStepViewModel = viewModel
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -135,76 +142,57 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
     
     //MARK: HANDLE DONE BUTTON
     @objc func handleDoneButton() {
-        done()
+        grabValuesFromInput()
     }
     
-    private func done() {
+    func grabValuesFromInput() {
+        let name = labelTextField.text!
+        let hrs = countDownPicker.selectedRow(inComponent: PickerColumn.hour.rawValue)
+        let min = countDownPicker.selectedRow(inComponent: PickerColumn.min.rawValue)
+        let sec = countDownPicker.selectedRow(inComponent: PickerColumn.sec.rawValue)
+
+        addStepViewModel.updateStepValues(name: name, hrs: hrs, min: min, sec: sec)
+        
         do {
-            try self.grabValuesFromInput()
+            try addStepViewModel.validateInputValues()
         } catch ErrorsToThrow.labelNotFilled {
             showAlertBox("Please fill in the label")
         } catch ErrorsToThrow.labelLengthTooLong {
-            showAlertBox("Length too long, keep it under \(maxCharacterLimitForNameLabel)")
+            showAlertBox("Length too long, keep it under \(addStepViewModel.maxCharacterLimitForNameLabel)")
         } catch ErrorsToThrow.labelInvalidLength {
             showAlertBox("Please Invalid Length")
         } catch ErrorsToThrow.labelLengthTooShort {
             showAlertBox("Too short")
         } catch {
-            //
+            showAlertBox("Error unknown")
         }
+        
+        guard let rvc = recipeViewControllerDelegate else {
+            return
+        }
+        
+        addStepViewModel.transformToEntity(priority: Int16(rvc.stepCount() - 1))
+        rvc.didReturnValues(step: addStepViewModel.grabEntity()!)
         recipeViewControllerWithTableViewDelegate?.startTimer()
         self.dismiss(animated: true) { }
-    }
-    
-    func grabValuesFromInput() throws {
-        
-        //0
-        guard labelTextField.text != "" else {
-            throw ErrorsToThrow.labelNotFilled
-        }
-        
-        //catch negative length
-        guard let length = labelTextField.text?.count else {
-            throw ErrorsToThrow.labelInvalidLength
-        }
-        guard length >= minCharacterLimitForNameLabel else {
-            throw ErrorsToThrow.labelLengthTooShort
-        }
-        
-        //catch character limit
-        guard length <= maxCharacterLimitForNameLabel else {
-            throw ErrorsToThrow.labelLengthTooLong
-        }
-        
-        let name = labelTextField.text!
-        
-        let hrs = countDownPicker.selectedRow(inComponent: PickerColumn.hour.rawValue)
-        let min = countDownPicker.selectedRow(inComponent: PickerColumn.min.rawValue)
-        let sec = countDownPicker.selectedRow(inComponent: PickerColumn.sec.rawValue)
-        
-        let sEntity = StepEntity(name: name, hours: hrs, minutes: min, seconds: sec, priority: Int16(0))
-        if let rvc = recipeViewControllerDelegate {
-            rvc.didReturnValues(step: sEntity)
-        }
     }
     
     override func prepareViewController() {
         super.prepareViewController()
         view.backgroundColor = UIColor.clear
-        if let rvc = recipeViewControllerDelegate {
-            print(rvc.stepCount)
-            
-            labelTextField.attributedText = NSAttributedString(string: "Step \(rvc.stepCount())", attributes: Theme.Font.Recipe.TextFieldAttribute)
-        }
-        
+        view.layer.cornerRadius = Theme.View.CornerRadius
+        view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
     }
     
     override func prepareView() {
         super.prepareView()
         preparePicker()
-
-        view.layer.cornerRadius = Theme.View.CornerRadius
-        view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
+        if let rvc = recipeViewControllerDelegate {
+            let stepName = "\(addStepViewModel.step().name!) \(rvc.stepCount())"
+            addStepViewModel.updateStepValues(name: stepName)
+            labelTextField.attributedText = NSAttributedString(string: addStepViewModel.step().name!, attributes: Theme.Font.Recipe.TextFieldAttribute)
+        }
+        
         view.addSubview(navView)
         view.addSubview(blurView)
         view.addSubview(rightNavItemButton)

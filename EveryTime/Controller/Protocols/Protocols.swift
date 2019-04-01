@@ -19,3 +19,9 @@ protocol TimerProtocol {
     func stopTimer()
     func update()
 }
+
+protocol ViewControllerBaseProtocol {
+    func prepareView()
+    func prepareViewController()
+    func prepareAutoLayout()
+}
