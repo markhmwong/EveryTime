@@ -7,10 +7,11 @@
 //
 
 import UIKit
-
+import StoreKit
 
 class SettingsMainView: UIView {
-    private var delegate: SettingsViewController?
+    let settingsCellId = "cellId"
+    var settingsViewControllerDelegate: SettingsViewController?
     private var mainViewControllerDelegate: MainViewController?
     private let appDelegate = UIApplication.shared.delegate as! AppDelegate
     private lazy var dismissButton: UIButton = {
@@ -23,8 +24,8 @@ class SettingsMainView: UIView {
     private lazy var tableView: UITableView = {
        let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.dataSource = delegate
-        tableView.delegate = delegate
+        tableView.dataSource = self
+        tableView.delegate = self
         tableView.separatorStyle = .none
         return tableView
     }()
@@ -46,7 +47,7 @@ class SettingsMainView: UIView {
     
     convenience init(delegate: SettingsViewController) {
         self.init(frame: .zero)
-        self.delegate = delegate
+        self.settingsViewControllerDelegate = delegate
         self.setupView()
         self.setupAutoLayout()
     }
@@ -59,7 +60,7 @@ class SettingsMainView: UIView {
         addSubview(tableView)
         addSubview(navView)
         navView.addSubview(titleLabel)
-        tableView.register(SettingsViewCell.self, forCellReuseIdentifier: "cellId")
+        tableView.register(SettingsViewCell.self, forCellReuseIdentifier: settingsCellId)
     }
     
     func setupAutoLayout() {
@@ -84,6 +85,84 @@ class SettingsMainView: UIView {
     }
     
     @objc func handleDismiss() {
-        delegate?.handleDismiss()
+        settingsViewControllerDelegate?.handleDismiss()
+    }
+}
+
+extension SettingsMainView: UITableViewDelegate, UITableViewDataSource {
+    /// Rows for the about section
+    func about(row: Int) {
+        
+        guard let svc = settingsViewControllerDelegate else {
+            return
+        }
+        
+        switch row {
+        case Settings.About.rawValue:
+            let vc = AboutViewController(nibName: nil, bundle: nil)
+            DispatchQueue.main.async {
+                svc.present(vc, animated: true, completion: nil)
+            }
+        case Settings.Review.rawValue:
+            SKStoreReviewController.requestReview()
+        case Settings.Share.rawValue:
+            svc.share()
+        case Settings.Feedback.rawValue:
+            svc.emailFeedback()
+        default:
+            print(" ")
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let svc = settingsViewControllerDelegate else {
+            return
+        }
+        
+        switch indexPath.section {
+        case SettingsSections.Data.rawValue:
+            if (indexPath.row == Data.Clear.rawValue) {
+                svc.deleteAllAction()
+            }
+        case SettingsSections.Support.rawValue:
+            about(row: indexPath.row)
+        default:
+            print(" ")
+        }
+    }
+    
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return settingsViewControllerDelegate!.settingsViewModel.dataSource[section].count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: settingsCellId, for: indexPath) as! SettingsViewCell
+        cell.updateLabel(text: settingsViewControllerDelegate!.settingsViewModel.dataSource[indexPath.section][indexPath.row]!)
+        if (indexPath.section == SettingsSections.Data.rawValue && indexPath.item == Data.Clear.rawValue) {
+            cell.label.textColor = UIColor.red
+        }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UIScreen.main.bounds.height / 17
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case SettingsSections.Data.rawValue:
+            return "Data"
+        case SettingsSections.Support.rawValue:
+            return "Support"
+        default:
+            return "Other"
+        }
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return settingsViewControllerDelegate!.settingsViewModel.dataSource.count
     }
 }

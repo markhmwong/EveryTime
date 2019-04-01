@@ -174,7 +174,9 @@ class MainViewController: ViewControllerBase {
 //MARK: - UI
 extension MainViewController {
     func handleAbout() {
-        let vc = SettingsViewController(delegate:self)
+        let dataSource: [[Int : String]] = [[0: "Clear All Recipes"], [0: "About", 1 : "Review In App Store", 2 : "Share with Friends", 3 : "Email Feedback"]]
+
+        let vc = SettingsViewController(delegate:self, viewModel: SettingsViewModel(dataSource: dataSource))
         present(vc, animated: true, completion: nil)
     }
     

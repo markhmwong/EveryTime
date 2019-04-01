@@ -29,6 +29,7 @@ Bug: after creating and deleting a few recipes, new recipes no longer show up in
 - dark mode
 - clean up
     - cells and recipeviewcontroller
+    
 ## To do in near future (not a priority)
 - notifications toggle
     - for steps

@@ -21,6 +21,7 @@ protocol AddStepViewControllerDelegate {
 class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
     
     private var addStepViewModel: AddStepViewModel!
+//    private var mainView: AddStepMainView!
     //MARK: VARIABLES
     private let maxCharacterLimitForNameLabel = 30
     private let minCharacterLimitForNameLabel = 1
@@ -33,12 +34,31 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
     var minutes: Int = 0
     var seconds: Int = 0
     
-    enum ErrorsToThrow: Error {
-        case labelNotFilled
-        case labelLengthTooLong
-        case labelInvalidLength
-        case labelLengthTooShort
+    var labelTextFieldTopAnchorPadding: CGFloat {
+        switch UIDevice.current.screenType.rawValue {
+        case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
+            return 30.0
+        default:
+            return 60.0
+        }
     }
+    
+    var caretTopPadding: CGFloat {
+        switch UIDevice.current.screenType.rawValue {
+        case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
+            return 10.0
+        default:
+            return 50.0
+        }
+    }
+    
+    
+//    enum ErrorsToThrow: Error {
+//        case labelNotFilled
+//        case labelLengthTooLong
+//        case labelInvalidLength
+//        case labelLengthTooShort
+//    }
     
     private var countDownPicker: UIPickerView = {
         let picker = UIPickerView()
@@ -127,7 +147,7 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
         }
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        done()
+        grabValuesFromInput()
         return true
     }
     
@@ -204,24 +224,7 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
         rightNavItemButton.addTarget(self, action: #selector(handleDoneButton), for: .touchUpInside)
     }
     
-    var labelTextFieldTopAnchorPadding: CGFloat {
-        switch UIDevice.current.screenType.rawValue {
-        case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
-            return 30.0
-        default:
-            return 60.0
-        }
-    }
-    
-    var caretTopPadding: CGFloat {
-        switch UIDevice.current.screenType.rawValue {
-        case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
-            return 10.0
-        default:
-            return 50.0
-        }
-    }
-    
+
     override func prepareAutoLayout() {
         rightNavItemButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
         rightNavItemButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
