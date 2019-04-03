@@ -12,11 +12,19 @@ protocol AddStepViewModelProtocol {
     
 }
 
-enum ErrorsToThrow: Error {
+enum AddStepLabelErrors: Error {
     case labelNotFilled
     case labelLengthTooLong
     case labelInvalidLength
     case labelLengthTooShort
+}
+
+enum AddStepPickerViewErrors: Error {
+    case allZero
+    case lessThanZero
+    case greaterThanADay
+    case greaterThanAMinute
+    case greaterThanAnHour
 }
 
 class AddStepViewModel {
@@ -32,24 +40,48 @@ class AddStepViewModel {
     func step() -> StepValues {
         return stepValues
     }
-    
-    func validateInputValues() throws {
+
+    func validateNameInput() throws {
         guard stepValues.name != "" else {
-            throw ErrorsToThrow.labelNotFilled
+            throw AddStepLabelErrors.labelNotFilled
         }
         
         guard let length = stepValues.name?.count else {
-            throw ErrorsToThrow.labelInvalidLength
+            throw AddStepLabelErrors.labelInvalidLength
         }
         
-        guard length >= minCharacterLimitForNameLabel else {
-            throw ErrorsToThrow.labelLengthTooShort
+        guard length > minCharacterLimitForNameLabel else {
+            throw AddStepLabelErrors.labelLengthTooShort
         }
 
         //catch character limit
         guard length <= maxCharacterLimitForNameLabel else {
-            throw ErrorsToThrow.labelLengthTooLong
+            throw AddStepLabelErrors.labelLengthTooLong
         }
+    }
+    
+    /// Must have at least one unit of time above 0
+    func validatePickerView(hrs: Int, min: Int, sec: Int) throws {
+        
+        if (hrs == 0 && min == 0 && sec == 0) {
+            throw AddStepPickerViewErrors.allZero
+        }
+        
+        if (hrs < 0 || min < 0 || sec < 0) {
+            throw AddStepPickerViewErrors.lessThanZero
+        }
+        
+        if (hrs > 24) {
+            throw AddStepPickerViewErrors.greaterThanADay
+        }
+        
+        if (min > 60) {
+            throw AddStepPickerViewErrors.greaterThanAnHour
+        }
+        
+        if (sec > 60) {
+            throw AddStepPickerViewErrors.greaterThanAMinute
+        }        
     }
     
     func updateStepValues(name: String = "Step Default", hrs: Int = 0, min: Int = 0, sec: Int = 0) {

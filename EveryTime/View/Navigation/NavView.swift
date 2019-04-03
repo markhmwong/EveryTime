@@ -9,8 +9,8 @@
 import UIKit
 
 class NavView: UIView {
-    public var leftNavItem: UIButton?
-    public var rightNavItem: UIButton?
+    var leftNavItem: UIButton?
+    var rightNavItem: UIButton?
     private lazy var bottomBorder: UIView = {
         let view = UIView()
         view.backgroundColor = Theme.Background.Color.NavBottomBorderColor

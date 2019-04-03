@@ -62,13 +62,7 @@ class MainViewView: UIView {
         return button
     }()
     
-//    public lazy var addRecipeButton: StandardButton = {
-//        let button = StandardButton(title: "Add Recipe")
-//        button.addTarget(self, action: #selector(handleAddRecipe), for: .touchUpInside)
-//        return button
-//    }()
-    
-    public lazy var collView: UICollectionView = {
+    lazy var collView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)

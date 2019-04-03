@@ -70,6 +70,7 @@
 		4DD542F0224E544C003C6DEC /* AddStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD542EF224E544C003C6DEC /* AddStepViewModel.swift */; };
 		4DD542F2224F675C003C6DEC /* AddStepViewControllerMVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD542F1224F675C003C6DEC /* AddStepViewControllerMVC.swift */; };
 		4DD542F42252284C003C6DEC /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD542F32252284C003C6DEC /* SettingsViewModel.swift */; };
+		4DD542F622545854003C6DEC /* AddStepViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD542F522545854003C6DEC /* AddStepViewControllerTest.swift */; };
 		4DDA39C821D9D14A00D4773A /* AddRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDA39C721D9D14A00D4773A /* AddRecipeViewController.swift */; };
 		4DF13D5D2217EECF009BE812 /* ViewControllerBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF13D5C2217EECF009BE812 /* ViewControllerBase.swift */; };
 		4DF13D62221A1BAB009BE812 /* StandardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF13D61221A1BAB009BE812 /* StandardButton.swift */; };
@@ -201,6 +202,7 @@
 		4DD542EF224E544C003C6DEC /* AddStepViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepViewModel.swift; sourceTree = "<group>"; };
 		4DD542F1224F675C003C6DEC /* AddStepViewControllerMVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepViewControllerMVC.swift; sourceTree = "<group>"; };
 		4DD542F32252284C003C6DEC /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		4DD542F522545854003C6DEC /* AddStepViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepViewControllerTest.swift; sourceTree = "<group>"; };
 		4DDA39C721D9D14A00D4773A /* AddRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeViewController.swift; sourceTree = "<group>"; };
 		4DF13D5C2217EECF009BE812 /* ViewControllerBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerBase.swift; sourceTree = "<group>"; };
 		4DF13D61221A1BAB009BE812 /* StandardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardButton.swift; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 			isa = PBXGroup;
 			children = (
 				4D0C4B5E21AEC73D00153E76 /* EveryTimeTests.swift */,
+				4DD542F522545854003C6DEC /* AddStepViewControllerTest.swift */,
 				4D0C4B6021AEC73D00153E76 /* Info.plist */,
 			);
 			path = EveryTimeTests;
@@ -833,6 +836,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DD542F622545854003C6DEC /* AddStepViewControllerTest.swift in Sources */,
 				4D0C4B5F21AEC73D00153E76 /* EveryTimeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

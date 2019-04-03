@@ -47,7 +47,7 @@ extension UIDevice {
     }
 }
 
-public enum Model : String {
+enum Model : String {
     case simulator     = "simulator/sandbox",
     //iPod
     iPod1              = "iPod 1",
@@ -102,7 +102,7 @@ public enum Model : String {
 //MARK: UIDevice extensions
 // #-#-#-#-#-#-#-#-#-#-#-#-#-#-#
 
-public extension UIDevice {
+extension UIDevice {
     var type: Model {
         var systemInfo = utsname()
         uname(&systemInfo)

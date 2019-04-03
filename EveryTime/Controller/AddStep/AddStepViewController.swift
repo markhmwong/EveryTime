@@ -52,14 +52,6 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
         }
     }
     
-    
-//    enum ErrorsToThrow: Error {
-//        case labelNotFilled
-//        case labelLengthTooLong
-//        case labelInvalidLength
-//        case labelLengthTooShort
-//    }
-    
     private var countDownPicker: UIPickerView = {
         let picker = UIPickerView()
         picker.translatesAutoresizingMaskIntoConstraints = false
@@ -120,7 +112,7 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
         return view
     }()
     
-    init(delegate: RecipeViewControllerWithTableView, viewModel: AddStepViewModel) {
+    init(delegate: RecipeViewControllerWithTableView?, viewModel: AddStepViewModel) {
         super.init(nibName: nil, bundle: nil)
         self.recipeViewControllerDelegate = delegate
         self.addStepViewModel = viewModel
@@ -165,28 +157,46 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
         grabValuesFromInput()
     }
     
+
+    
     func grabValuesFromInput() {
         let name = labelTextField.text!
         let hrs = countDownPicker.selectedRow(inComponent: PickerColumn.hour.rawValue)
         let min = countDownPicker.selectedRow(inComponent: PickerColumn.min.rawValue)
         let sec = countDownPicker.selectedRow(inComponent: PickerColumn.sec.rawValue)
 
-        addStepViewModel.updateStepValues(name: name, hrs: hrs, min: min, sec: sec)
-        
         do {
-            try addStepViewModel.validateInputValues()
-        } catch ErrorsToThrow.labelNotFilled {
-            showAlertBox("Please fill in the label")
-        } catch ErrorsToThrow.labelLengthTooLong {
-            showAlertBox("Length too long, keep it under \(addStepViewModel.maxCharacterLimitForNameLabel)")
-        } catch ErrorsToThrow.labelInvalidLength {
-            showAlertBox("Please Invalid Length")
-        } catch ErrorsToThrow.labelLengthTooShort {
-            showAlertBox("Too short")
+            try addStepViewModel.validatePickerView(hrs: hrs, min: min, sec: sec)
+        } catch AddStepPickerViewErrors.allZero {
+            showAlertBox("At least one unit of time must be greater than 0")
+        } catch AddStepPickerViewErrors.lessThanZero {
+            showAlertBox("One unit of time is less than 0")
+        } catch AddStepPickerViewErrors.greaterThanADay {
+            showAlertBox("Hours is greater than 24")
+        } catch AddStepPickerViewErrors.greaterThanAnHour {
+            showAlertBox("Minutes is greater than 60")
+        } catch AddStepPickerViewErrors.greaterThanAMinute {
+            showAlertBox("Seconds is greater than 60")
         } catch {
-            showAlertBox("Error unknown")
+            showAlertBox("Error unknown with picker view")
         }
         
+        do {
+            try addStepViewModel.validateNameInput()
+        } catch AddStepLabelErrors.labelNotFilled {
+            showAlertBox("Please fill in the label")
+        } catch AddStepLabelErrors.labelLengthTooLong {
+            showAlertBox("Length too long, keep it under \(addStepViewModel.maxCharacterLimitForNameLabel)")
+        } catch AddStepLabelErrors.labelInvalidLength {
+            showAlertBox("Please Invalid Length")
+        } catch AddStepLabelErrors.labelLengthTooShort {
+            showAlertBox("Too short")
+        } catch {
+            showAlertBox("Error unknown with name label")
+        }
+        
+        addStepViewModel.updateStepValues(name: name, hrs: hrs, min: min, sec: sec)
+
         guard let rvc = recipeViewControllerDelegate else {
             return
         }

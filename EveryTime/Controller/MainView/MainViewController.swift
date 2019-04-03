@@ -21,7 +21,7 @@ enum CollectionCellIds: String {
 }
 
 class MainViewController: ViewControllerBase {
-    public var cellSize: CGFloat {
+    var cellSize: CGFloat {
         switch UIDevice.current.screenType.rawValue {
         case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
             return 2.8
@@ -29,9 +29,9 @@ class MainViewController: ViewControllerBase {
             return 3.0
         }
     }
-    public var recipeCollection: [RecipeEntity] = []
-    public var horizontalDelegate = HorizontalTransitionDelegate()
-    public var timer: Timer?
+    var recipeCollection: [RecipeEntity] = []
+    var horizontalDelegate = HorizontalTransitionDelegate()
+    var timer: Timer?
 
     private var addButtonState: ScrollingState = .Idle
     private var indexPathNumber = 0
@@ -157,16 +157,16 @@ class MainViewController: ViewControllerBase {
         var left = 0
         var right = recipeCollection.count - 1
         while (left <= right) {
-                let middle = left + (right - left) / 2
-                if (recipeCollection[middle].createdDate! == date)  {
-                        return middle
-                    }
-                if (recipeCollection[middle].createdDate! < date) {
-                       left = middle + 1
-                    } else {
-                        right = middle - 1
-                    }
-            }
+            let middle = left + (right - left) / 2
+            if (recipeCollection[middle].createdDate! == date)  {
+                    return middle
+                }
+            if (recipeCollection[middle].createdDate! < date) {
+                   left = middle + 1
+                } else {
+                    right = middle - 1
+                }
+        }
         return -1
     }
 }

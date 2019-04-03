@@ -10,8 +10,8 @@ import UIKit
 import CoreData
 
 class MainViewCell: EntityBaseCell<RecipeEntity> {
-    public var mainViewController: MainViewController? = nil
-    public var cellForIndexPath: IndexPath?
+    var mainViewController: MainViewController? = nil
+    var cellForIndexPath: IndexPath?
     private lazy var recipeTimeLabel: UILabel = {
         let label = UILabel()
         label.attributedText = NSAttributedString(string: "00h 00m 00s", attributes: Theme.Font.Recipe.TimeAttribute)

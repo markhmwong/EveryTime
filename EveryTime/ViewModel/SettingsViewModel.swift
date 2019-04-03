@@ -12,7 +12,8 @@ class SettingsViewModel {
     let appName = Bundle.appName()
     let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String
     let deviceType = UIDevice().type
-    
+    let systemVersion = UIDevice.current.systemVersion
+
     let emailToRecipient: String = "hello@whizbangapps.com"
     let emailSubject: String = "EveryTime Feedback"
     
