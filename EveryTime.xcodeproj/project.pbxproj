@@ -31,7 +31,7 @@
 		4D53803D2249FCC80051DD0F /* Extentions+UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53803C2249FCC80051DD0F /* Extentions+UIDevice.swift */; };
 		4D53803F224A223A0051DD0F /* PromoText.md in Resources */ = {isa = PBXBuildFile; fileRef = 4D53803E224A223A0051DD0F /* PromoText.md */; };
 		4D53C2172203F8C900EED75C /* HorizontalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53C2162203F8C900EED75C /* HorizontalPresentationController.swift */; };
-		4D53F75B21E2E38100C0AF31 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F75A21E2E38100C0AF31 /* CoreDataHelper.swift */; };
+		4D53F75B21E2E38100C0AF31 /* CoreDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F75A21E2E38100C0AF31 /* CoreDataHandler.swift */; };
 		4D53F7BC21E72B7E00C0AF31 /* RecipeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F7BB21E72B7E00C0AF31 /* RecipeEntity.swift */; };
 		4D53F7BE21E735CD00C0AF31 /* StepEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F7BD21E735CD00C0AF31 /* StepEntity.swift */; };
 		4D53F7CC21EC47E700C0AF31 /* ThemeConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F7CB21EC47E700C0AF31 /* ThemeConstants.swift */; };
@@ -67,10 +67,13 @@
 		4DA12F7A21B606A20049CD75 /* AddStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA12F7921B606A20049CD75 /* AddStepViewController.swift */; };
 		4DA12F7D21B611AF0049CD75 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA12F7C21B611AF0049CD75 /* Extensions.swift */; };
 		4DA12F8721B8A3A20049CD75 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA12F8621B8A3A20049CD75 /* Protocols.swift */; };
+		4DA78E252254976600C018CA /* CoreDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78E242254976600C018CA /* CoreDataTests.swift */; };
+		4DA78E272254B3E500C018CA /* StepEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78E262254B3E500C018CA /* StepEntityTests.swift */; };
 		4DD542F0224E544C003C6DEC /* AddStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD542EF224E544C003C6DEC /* AddStepViewModel.swift */; };
 		4DD542F2224F675C003C6DEC /* AddStepViewControllerMVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD542F1224F675C003C6DEC /* AddStepViewControllerMVC.swift */; };
 		4DD542F42252284C003C6DEC /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD542F32252284C003C6DEC /* SettingsViewModel.swift */; };
 		4DD542F622545854003C6DEC /* AddStepViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD542F522545854003C6DEC /* AddStepViewControllerTest.swift */; };
+		4DD542F922548EF1003C6DEC /* RecipeEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD542F822548EF1003C6DEC /* RecipeEntityTests.swift */; };
 		4DDA39C821D9D14A00D4773A /* AddRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDA39C721D9D14A00D4773A /* AddRecipeViewController.swift */; };
 		4DF13D5D2217EECF009BE812 /* ViewControllerBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF13D5C2217EECF009BE812 /* ViewControllerBase.swift */; };
 		4DF13D62221A1BAB009BE812 /* StandardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF13D61221A1BAB009BE812 /* StandardButton.swift */; };
@@ -157,7 +160,7 @@
 		4D53803C2249FCC80051DD0F /* Extentions+UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extentions+UIDevice.swift"; sourceTree = "<group>"; };
 		4D53803E224A223A0051DD0F /* PromoText.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = PromoText.md; sourceTree = "<group>"; };
 		4D53C2162203F8C900EED75C /* HorizontalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalPresentationController.swift; sourceTree = "<group>"; };
-		4D53F75A21E2E38100C0AF31 /* CoreDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
+		4D53F75A21E2E38100C0AF31 /* CoreDataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHandler.swift; sourceTree = "<group>"; };
 		4D53F7BB21E72B7E00C0AF31 /* RecipeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeEntity.swift; sourceTree = "<group>"; };
 		4D53F7BD21E735CD00C0AF31 /* StepEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepEntity.swift; sourceTree = "<group>"; };
 		4D53F7CB21EC47E700C0AF31 /* ThemeConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeConstants.swift; sourceTree = "<group>"; };
@@ -199,10 +202,13 @@
 		4DA12F7921B606A20049CD75 /* AddStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepViewController.swift; sourceTree = "<group>"; };
 		4DA12F7C21B611AF0049CD75 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		4DA12F8621B8A3A20049CD75 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		4DA78E242254976600C018CA /* CoreDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataTests.swift; sourceTree = "<group>"; };
+		4DA78E262254B3E500C018CA /* StepEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepEntityTests.swift; sourceTree = "<group>"; };
 		4DD542EF224E544C003C6DEC /* AddStepViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepViewModel.swift; sourceTree = "<group>"; };
 		4DD542F1224F675C003C6DEC /* AddStepViewControllerMVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepViewControllerMVC.swift; sourceTree = "<group>"; };
 		4DD542F32252284C003C6DEC /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		4DD542F522545854003C6DEC /* AddStepViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepViewControllerTest.swift; sourceTree = "<group>"; };
+		4DD542F822548EF1003C6DEC /* RecipeEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeEntityTests.swift; sourceTree = "<group>"; };
 		4DDA39C721D9D14A00D4773A /* AddRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeViewController.swift; sourceTree = "<group>"; };
 		4DF13D5C2217EECF009BE812 /* ViewControllerBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerBase.swift; sourceTree = "<group>"; };
 		4DF13D61221A1BAB009BE812 /* StandardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardButton.swift; sourceTree = "<group>"; };
@@ -291,7 +297,8 @@
 			isa = PBXGroup;
 			children = (
 				4D0C4B5E21AEC73D00153E76 /* EveryTimeTests.swift */,
-				4DD542F522545854003C6DEC /* AddStepViewControllerTest.swift */,
+				4DD542FB22548F05003C6DEC /* ViewController */,
+				4DD542FA22548EF8003C6DEC /* CoreData */,
 				4D0C4B6021AEC73D00153E76 /* Info.plist */,
 			);
 			path = EveryTimeTests;
@@ -309,7 +316,7 @@
 		4D0C4B7921AFEE2000153E76 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4D53F75A21E2E38100C0AF31 /* CoreDataHelper.swift */,
+				4D53F75A21E2E38100C0AF31 /* CoreDataHandler.swift */,
 				4D53F7BB21E72B7E00C0AF31 /* RecipeEntity.swift */,
 				4D53F7BD21E735CD00C0AF31 /* StepEntity.swift */,
 			);
@@ -556,6 +563,24 @@
 				4DD542EF224E544C003C6DEC /* AddStepViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4DD542FA22548EF8003C6DEC /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				4DD542F822548EF1003C6DEC /* RecipeEntityTests.swift */,
+				4DA78E242254976600C018CA /* CoreDataTests.swift */,
+				4DA78E262254B3E500C018CA /* StepEntityTests.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		4DD542FB22548F05003C6DEC /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4DD542F522545854003C6DEC /* AddStepViewControllerTest.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		4DF13D5E221A153C009BE812 /* AddingRecipe */ = {
@@ -813,7 +838,7 @@
 				4D53802A2244C2D70051DD0F /* Extension+UIView.swift in Sources */,
 				4D6E35382215435900CBCC23 /* AddRecipeWizardError.swift in Sources */,
 				4D53F7D521EF0C2400C0AF31 /* OverlayTransitionDelegate.swift in Sources */,
-				4D53F75B21E2E38100C0AF31 /* CoreDataHelper.swift in Sources */,
+				4D53F75B21E2E38100C0AF31 /* CoreDataHandler.swift in Sources */,
 				4D53F8A721F36DDA00C0AF31 /* HideHorizontalAnimator.swift in Sources */,
 				4DA12F7321B2D3DD0049CD75 /* EntityBaseCell.swift in Sources */,
 				4D538023224386D20051DD0F /* SettingsMainView.swift in Sources */,
@@ -836,7 +861,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DA78E252254976600C018CA /* CoreDataTests.swift in Sources */,
 				4DD542F622545854003C6DEC /* AddStepViewControllerTest.swift in Sources */,
+				4DA78E272254B3E500C018CA /* StepEntityTests.swift in Sources */,
+				4DD542F922548EF1003C6DEC /* RecipeEntityTests.swift in Sources */,
 				4D0C4B5F21AEC73D00153E76 /* EveryTimeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

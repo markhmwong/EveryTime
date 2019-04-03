@@ -15,6 +15,7 @@ class CoreDataHandler {
     fileprivate static let debug: Bool = true
     fileprivate static var context: NSManagedObjectContext? = nil
     
+    // watchkit
     class func sharedAppGroup() -> String {
         return "group.com.whizbang.EveryTime"
     }
@@ -26,7 +27,6 @@ class CoreDataHandler {
     }
     
     class func persistantStoreCoordinator() -> NSPersistentStoreCoordinator? {
-        
         let sharedContainerURL: URL? = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: CoreDataHandler.sharedAppGroup())
         if let sharedContainerURL = sharedContainerURL {
             let storeURL = sharedContainerURL.appendingPathComponent("everytimedb.sqlite")
@@ -96,7 +96,7 @@ class CoreDataHandler {
         }
     }
 
-    
+    // date - createdDate
     class func fetchByDate<E: NSManagedObject>(in: E.Type, date: Date) -> E? {
         do {
             let fEntity = E.fetchRequest()
