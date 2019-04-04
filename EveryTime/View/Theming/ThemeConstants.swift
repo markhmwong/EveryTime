@@ -80,7 +80,31 @@ struct Theme {
                 default:
                     return 20.0
                 }
-
+            }
+            static var LargeTitle: CGFloat {
+                switch UIDevice.current.screenType.rawValue {
+                case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
+                    return 30.0
+                default:
+                    return 40.0
+                }
+            }
+            
+            static var LargeTimer: CGFloat {
+                switch UIDevice.current.screenType.rawValue {
+                case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
+                    return 45.0
+                default:
+                    return 60.0
+                }
+            }
+            static var LargeStep: CGFloat {
+                switch UIDevice.current.screenType.rawValue {
+                case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
+                    return 20.0
+                default:
+                    return 30.0
+                }
             }
 
             static var About: CGFloat { return 16.0 }
@@ -110,6 +134,12 @@ struct Theme {
             
             static var AddRecipeStepLabel: UIColor { return UIColor(red:0.4, green:0.4, blue:0.4, alpha:1.0) }
 
+        }
+        
+        struct LargeDisplay {
+            static let LargeRecipeTitleLabel: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.LargeTitle)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
+            static let LargeTimerLabel: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.LargeTimer)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
+            static let LargeStepLabel: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.LargeStep)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
         }
         
         // At the Recipe list view (Main View COntroller)

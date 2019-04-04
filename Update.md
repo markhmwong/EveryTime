@@ -14,27 +14,34 @@ Adding a new recipe: keyboard hides continue button. Quite annoying. (not sure w
 Bug: after creating and deleting a few recipes, new recipes no longer show up in the main window
 
 ## To do (Priority list)
-- auto start recipe *
-- indicator of step progress *
+- auto start recipe option *
+- indicator of step progress in main view *
 - add larger display for current time *
 - revisit font size on main/recipe view *
-- resize pill completion indicator *
+- resize/reshape pill completion indicator *
 - be able to edit steps and recipes (names) *
-- tap to dismiss  in recipe view
+- copy existing step and add it in add recipe process *
+- tap to dismiss  in recipe view (not sure what this means)
 
-- geolocation tracking for each step (for running)
-- copy existing step and add it
 - add apple watch
 - the entire adding process
 - dark mode
-- clean up
+- clean up (mvc to mvvm)
     - cells and recipeviewcontroller
-    
+- tests for viewcontrollers
+    - main view controller
+    - recipe view controller
+    - add recipe view controller
+    - add step view controller
+    - all views
+
+
 ## To do in near future (not a priority)
 - notifications toggle
     - for steps
 - themes
-- interim timer 
+- interim timer (fixed pauses between steps)
+- geolocation tracking for each step (for running)
 
 ## Planned Version Features
 

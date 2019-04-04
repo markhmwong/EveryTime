@@ -30,7 +30,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     private var stepSelected: Int = 0
     private lazy var navView: NavView? = nil
     private var step: StepEntity?
-
+    
     private lazy var tableView: UITableView = {
         let view: UITableView = UITableView()
         view.delegate = self
@@ -55,7 +55,8 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
-    }()
+    }()    
+    
     private lazy var settingsButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(Theme.Font.Color.TextColour, for: .normal)
@@ -77,7 +78,8 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-
+    
+    private var largeDisplay: LargeDisplayViewController?
     
     init(recipe: RecipeEntity, delegate: MainViewController, indexPath: IndexPath) {
         super.init(nibName: nil, bundle: nil)
@@ -149,7 +151,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
             
         } else {
             DispatchQueue.main.async {
-                self.navView?.rightNavItem?.isEnabled = false
+                self.navView?.rightNavItem?.isEnabled = true
                 self.navView?.rightNavItem?.alpha = 0.3
                 self.pauseRecipeButton.updateButtonTitle(with: "Pause")
             }
@@ -439,10 +441,16 @@ extension RecipeViewControllerWithTableView: TimerProtocol {
                             self.headerView.updateHeaderNextStepTitleLabel(title: "")
                         }
                     }
-                    
+
                     DispatchQueue.main.async {
                         self.headerView.updateHeaderStepTimeLabel(time: step.timeRemainingToString())
                         self.headerView.updateHeaderStepTitleLabel(title: step.stepName ?? "unknown")
+                    }
+                    
+                    if (largeDisplay != nil) {
+                        largeDisplay?.viewModel?.currTimeStr = step.timeRemainingToString()
+                        largeDisplay?.viewModel?.currStepStr = step.stepName ?? "unknown"
+                        largeDisplay?.viewModel?.currRecipeStr = recipe.recipeName!
                     }
                     
                     let priorityIndexPath = IndexPath(item: Int(step.priority), section: 0)
@@ -671,12 +679,26 @@ extension RecipeViewControllerWithTableView {
             //add step
             self.handleAddStep()
         }
+        let largeDisplayAction = UIAlertAction(title: "Full Screen", style: .default) { (action) in
+            //add step
+            self.handleLargeDisplay()
+        }
+        optionMenu.addAction(largeDisplayAction)
         optionMenu.addAction(addStepAction)
         optionMenu.addAction(editAction)
         optionMenu.addAction(resetAction)
         optionMenu.addAction(deleteAction)
         optionMenu.addAction(cancelAction)
         self.present(optionMenu, animated: true, completion: nil)
+    }
+    
+    func handleLargeDisplay() {
+        largeDisplay = LargeDisplayViewController()
+        guard let ld = largeDisplay else {
+            return
+        }
+        ld.viewModel = LargeDisplayViewModel(delegate: ld, time: "", step: "", recipe: "")
+        present(ld, animated: true, completion: nil)
     }
     
     func handleSave() {

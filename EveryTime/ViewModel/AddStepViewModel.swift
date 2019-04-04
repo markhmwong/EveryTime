@@ -27,6 +27,29 @@ enum AddStepPickerViewErrors: Error {
     case greaterThanAnHour
 }
 
+struct StepValues {
+    var name: String?
+    var hour: Int?
+    var min: Int?
+    var sec: Int?
+    
+    mutating func updateName(str: String) {
+        self.name = str
+    }
+    
+    mutating func updateHour(hour: Int) {
+        self.hour = hour
+    }
+    
+    mutating func updateMinute(min: Int) {
+        self.min = min
+    }
+    
+    mutating func updateSecond(sec: Int) {
+        self.sec = sec
+    }
+}
+
 class AddStepViewModel {
     private var sEntity: StepEntity?
     private var stepValues: StepValues
@@ -100,25 +123,4 @@ class AddStepViewModel {
     }
 }
 
-struct StepValues {
-    var name: String?
-    var hour: Int?
-    var min: Int?
-    var sec: Int?
-    
-    mutating func updateName(str: String) {
-        self.name = str
-    }
-    
-    mutating func updateHour(hour: Int) {
-        self.hour = hour
-    }
-    
-    mutating func updateMinute(min: Int) {
-        self.min = min
-    }
-    
-    mutating func updateSecond(sec: Int) {
-        self.sec = sec
-    }
-}
+

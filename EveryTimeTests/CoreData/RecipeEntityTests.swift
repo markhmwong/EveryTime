@@ -34,9 +34,6 @@ class RecipeEntityTests: XCTestCase {
     
     func testCreateRecipe() {
         let recipeEntity = RecipeEntity(name: "Test Entity")
-//        let stepEntity = StepEntity(name: "Test Step", hours: 1, minutes: 1, seconds: 1, priority: Int16(0))
-//        recipeEntity.addToStep(stepEntity)
-        
         XCTAssertNotNil(recipeEntity)
     }
     
