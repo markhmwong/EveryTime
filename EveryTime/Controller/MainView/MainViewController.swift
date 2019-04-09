@@ -87,7 +87,6 @@ class MainViewController: ViewControllerBase {
     override func prepareViewController() {
         super.prepareViewController()
         CoreDataHandler.loadContext()
-        
         view.layer.backgroundColor = UIColor.clear.cgColor
         view.layer.masksToBounds = true
         view.backgroundColor = UIColor.white//Theme.Background.Color.NavBackgroundColor
@@ -108,7 +107,13 @@ class MainViewController: ViewControllerBase {
         
         mainViewView.anchorView(top: view.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), size: CGSize(width: 0, height: 0))
     }
-
+    
+//    func prepareWhatsNew() {
+//        let whatsNewViewModel = WhatsNewViewModel()
+//        let whatsNewVC = WhatsNewViewController(viewModel: whatsNewViewModel)
+//
+//        addChild(whatsNewVC)
+//    }
     
     // must be paused at all layers - recipe, step
     func pauseEntireRecipe(recipe: RecipeEntity) {
@@ -152,7 +157,7 @@ class MainViewController: ViewControllerBase {
         }
     }
     
-    //binary search
+    //binary search through all recipes
     func searchForIndex(_ date: Date) -> Int {
         var left = 0
         var right = recipeCollection.count - 1
@@ -169,14 +174,18 @@ class MainViewController: ViewControllerBase {
         }
         return -1
     }
+    
+    func showWhatsNew() {
+//        let model = WhatsNew(version: <#T##String#>, build: <#T##String#>, patchNotes: <#T##[String]#>)
+//        let whatsNew = WhatsNewFactory.getWhatsNew(whatsNew: <#T##WhatsNew#>)
+        
+    }
 }
 
 //MARK: - UI
 extension MainViewController {
     func handleAbout() {
-        let dataSource: [[Int : String]] = [[0: "Clear All Recipes"], [0: "About", 1 : "Review In App Store", 2 : "Share with Friends", 3 : "Email Feedback"]]
-
-        let vc = SettingsViewController(delegate:self, viewModel: SettingsViewModel(dataSource: dataSource))
+        let vc = SettingsViewController(delegate:self, viewModel: SettingsViewModel(dataSource: SettingsDataSource.dataSource))
         present(vc, animated: true, completion: nil)
     }
     

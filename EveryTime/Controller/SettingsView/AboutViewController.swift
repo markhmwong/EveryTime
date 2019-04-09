@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AboutViewController: UIViewController {
+class AboutViewController: ViewControllerBase {
     
     private lazy var mainView: AboutView = {
         let mainView = AboutView(delegate: self)
@@ -26,8 +26,21 @@ class AboutViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+    }
+    
+    override func prepareViewController() {
+        super.prepareViewController()
         view.backgroundColor = UIColor.white
+    }
+    
+    override func prepareView() {
+        super.prepareView()
         view.addSubview(mainView)
+    }
+    
+    override func prepareAutoLayout() {
+        super.prepareAutoLayout()
         
         mainView.anchorView(top: view.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
     }

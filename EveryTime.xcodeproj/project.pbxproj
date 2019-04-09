@@ -73,6 +73,14 @@
 		4DA78E2D225571AA00C018CA /* LargeDisplayMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78E2C225571AA00C018CA /* LargeDisplayMainView.swift */; };
 		4DA78E2F22559E9C00C018CA /* LargeDisplayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78E2E22559E9C00C018CA /* LargeDisplayViewModel.swift */; };
 		4DA78E312255F5F000C018CA /* LargeDisplayViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78E302255F5F000C018CA /* LargeDisplayViewControllerTests.swift */; };
+		4DA78F062259D98800C018CA /* BasicMarqueeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F052259D98800C018CA /* BasicMarqueeLabel.swift */; };
+		4DA78F0E225B813D00C018CA /* WhatsNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F0D225B813D00C018CA /* WhatsNewViewController.swift */; };
+		4DA78F10225B829200C018CA /* WhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F0F225B829200C018CA /* WhatsNew.swift */; };
+		4DA78F14225B884A00C018CA /* WhatsNewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F13225B884A00C018CA /* WhatsNewViewModel.swift */; };
+		4DA78F16225C137000C018CA /* SettingsWhatsNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F15225C137000C018CA /* SettingsWhatsNewViewController.swift */; };
+		4DA78F18225C17F500C018CA /* AppMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F17225C17F500C018CA /* AppMetaData.swift */; };
+		4DA78F1A225C1C8000C018CA /* SettingsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F19225C1C8000C018CA /* SettingsDataSource.swift */; };
+		4DA78F1C225C25AC00C018CA /* WhatsNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F1B225C25AC00C018CA /* WhatsNewView.swift */; };
 		4DD542F0224E544C003C6DEC /* AddStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD542EF224E544C003C6DEC /* AddStepViewModel.swift */; };
 		4DD542F2224F675C003C6DEC /* AddStepViewControllerMVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD542F1224F675C003C6DEC /* AddStepViewControllerMVC.swift */; };
 		4DD542F42252284C003C6DEC /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD542F32252284C003C6DEC /* SettingsViewModel.swift */; };
@@ -212,6 +220,14 @@
 		4DA78E2C225571AA00C018CA /* LargeDisplayMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeDisplayMainView.swift; sourceTree = "<group>"; };
 		4DA78E2E22559E9C00C018CA /* LargeDisplayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeDisplayViewModel.swift; sourceTree = "<group>"; };
 		4DA78E302255F5F000C018CA /* LargeDisplayViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeDisplayViewControllerTests.swift; sourceTree = "<group>"; };
+		4DA78F052259D98800C018CA /* BasicMarqueeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicMarqueeLabel.swift; sourceTree = "<group>"; };
+		4DA78F0D225B813D00C018CA /* WhatsNewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewViewController.swift; sourceTree = "<group>"; };
+		4DA78F0F225B829200C018CA /* WhatsNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNew.swift; sourceTree = "<group>"; };
+		4DA78F13225B884A00C018CA /* WhatsNewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewViewModel.swift; sourceTree = "<group>"; };
+		4DA78F15225C137000C018CA /* SettingsWhatsNewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWhatsNewViewController.swift; sourceTree = "<group>"; };
+		4DA78F17225C17F500C018CA /* AppMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMetaData.swift; sourceTree = "<group>"; };
+		4DA78F19225C1C8000C018CA /* SettingsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDataSource.swift; sourceTree = "<group>"; };
+		4DA78F1B225C25AC00C018CA /* WhatsNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewView.swift; sourceTree = "<group>"; };
 		4DD542EF224E544C003C6DEC /* AddStepViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepViewModel.swift; sourceTree = "<group>"; };
 		4DD542F1224F675C003C6DEC /* AddStepViewControllerMVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepViewControllerMVC.swift; sourceTree = "<group>"; };
 		4DD542F32252284C003C6DEC /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -285,18 +301,19 @@
 			isa = PBXGroup;
 			children = (
 				4D94E5D1223CC6430009F176 /* EveryTime.entitlements */,
-				4D0C4B4621AEC73A00153E76 /* AppDelegate.swift */,
-				4D53803B2249FC450051DD0F /* Services */,
-				4DA12F7B21B611A10049CD75 /* Extensions */,
-				4DA12F6921B108690049CD75 /* Controller */,
-				4DD542EE224DF551003C6DEC /* ViewModel */,
-				4D0C4B7921AFEE2000153E76 /* Model */,
-				4DA12F7421B352440049CD75 /* View */,
-				4D0C4B4A21AEC73A00153E76 /* Main.storyboard */,
-				4D0C4B5021AEC73C00153E76 /* Assets.xcassets */,
-				4D0C4B5221AEC73C00153E76 /* LaunchScreen.storyboard */,
 				4D0C4B5521AEC73C00153E76 /* Info.plist */,
+				4D0C4B4621AEC73A00153E76 /* AppDelegate.swift */,
+				4DA78F17225C17F500C018CA /* AppMetaData.swift */,
+				4D0C4B5021AEC73C00153E76 /* Assets.xcassets */,
+				4DA12F6921B108690049CD75 /* Controller */,
+				4DA12F7B21B611A10049CD75 /* Extensions */,
+				4D0C4B5221AEC73C00153E76 /* LaunchScreen.storyboard */,
+				4D0C4B4A21AEC73A00153E76 /* Main.storyboard */,
+				4D0C4B7921AFEE2000153E76 /* Model */,
+				4D53803B2249FC450051DD0F /* Services */,
 				4D0C4B4D21AEC73A00153E76 /* SimpleRecipeTimer.xcdatamodeld */,
+				4DA12F7421B352440049CD75 /* View */,
+				4DD542EE224DF551003C6DEC /* ViewModel */,
 			);
 			path = EveryTime;
 			sourceTree = "<group>";
@@ -324,9 +341,12 @@
 		4D0C4B7921AFEE2000153E76 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4DA78F12225B82AB00C018CA /* WhatsNew */,
 				4D53F75A21E2E38100C0AF31 /* CoreDataHandler.swift */,
 				4D53F7BB21E72B7E00C0AF31 /* RecipeEntity.swift */,
 				4D53F7BD21E735CD00C0AF31 /* StepEntity.swift */,
+				4DA78F052259D98800C018CA /* BasicMarqueeLabel.swift */,
+				4DA78F19225C1C8000C018CA /* SettingsDataSource.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -335,8 +355,8 @@
 			isa = PBXGroup;
 			children = (
 				4D53F8ED21F69D7200C0AF31 /* AddRecipeBaseCell.swift */,
-				4D6E353522153D5500CBCC23 /* AddRecipeWizardCells */,
 				4D205DB021FE8252008006BD /* StepTableViewCell.swift */,
+				4D6E353522153D5500CBCC23 /* AddRecipeWizardCells */,
 			);
 			path = AddRecipe;
 			sourceTree = "<group>";
@@ -362,6 +382,7 @@
 		4D538021224386BB0051DD0F /* Settings View */ = {
 			isa = PBXGroup;
 			children = (
+				4DA78F11225B82A000C018CA /* WhatsNew */,
 				4D538022224386D20051DD0F /* SettingsMainView.swift */,
 				4D53803122468B140051DD0F /* SettingsViewCell.swift */,
 				4D538036224744BD0051DD0F /* AboutView.swift */,
@@ -385,6 +406,7 @@
 			children = (
 				4D6DFCB72212508E009C3044 /* SettingsViewController.swift */,
 				4D53803422473FF40051DD0F /* AboutViewController.swift */,
+				4DA78F15225C137000C018CA /* SettingsWhatsNewViewController.swift */,
 			);
 			path = SettingsView;
 			sourceTree = "<group>";
@@ -527,6 +549,7 @@
 				4D5380262244BBE90051DD0F /* MainView */,
 				4D563C2A220D4A550039B07F /* RecipeView */,
 				4DA12F8521B8A30C0049CD75 /* Protocols */,
+				4DA78F0C225B812400C018CA /* WhatsNew */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -582,12 +605,37 @@
 			path = LargeDisplay;
 			sourceTree = "<group>";
 		};
+		4DA78F0C225B812400C018CA /* WhatsNew */ = {
+			isa = PBXGroup;
+			children = (
+				4DA78F0D225B813D00C018CA /* WhatsNewViewController.swift */,
+			);
+			path = WhatsNew;
+			sourceTree = "<group>";
+		};
+		4DA78F11225B82A000C018CA /* WhatsNew */ = {
+			isa = PBXGroup;
+			children = (
+				4DA78F1B225C25AC00C018CA /* WhatsNewView.swift */,
+			);
+			path = WhatsNew;
+			sourceTree = "<group>";
+		};
+		4DA78F12225B82AB00C018CA /* WhatsNew */ = {
+			isa = PBXGroup;
+			children = (
+				4DA78F0F225B829200C018CA /* WhatsNew.swift */,
+			);
+			path = WhatsNew;
+			sourceTree = "<group>";
+		};
 		4DD542EE224DF551003C6DEC /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				4DD542F32252284C003C6DEC /* SettingsViewModel.swift */,
 				4DD542EF224E544C003C6DEC /* AddStepViewModel.swift */,
 				4DA78E2E22559E9C00C018CA /* LargeDisplayViewModel.swift */,
+				4DA78F13225B884A00C018CA /* WhatsNewViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -832,14 +880,18 @@
 			files = (
 				4D53F7DA21EF0D7700C0AF31 /* OverlayPresentationController.swift in Sources */,
 				4D53C2172203F8C900EED75C /* HorizontalPresentationController.swift in Sources */,
+				4DA78F10225B829200C018CA /* WhatsNew.swift in Sources */,
 				4D5380282244BC750051DD0F /* MainViewController+UICollectionView.swift in Sources */,
 				4DA78E2F22559E9C00C018CA /* LargeDisplayViewModel.swift in Sources */,
+				4DA78F18225C17F500C018CA /* AppMetaData.swift in Sources */,
+				4DA78F062259D98800C018CA /* BasicMarqueeLabel.swift in Sources */,
 				4DDA39C821D9D14A00D4773A /* AddRecipeViewController.swift in Sources */,
 				4D53F8EE21F69D7200C0AF31 /* AddRecipeBaseCell.swift in Sources */,
 				4D6E353A22154C7C00CBCC23 /* AddRecipeStepOne.swift in Sources */,
 				4D53803222468B140051DD0F /* SettingsViewCell.swift in Sources */,
 				4D53F8A921F36E1B00C0AF31 /* HorizontalTransitionInteractor.swift in Sources */,
 				4DA78E2D225571AA00C018CA /* LargeDisplayMainView.swift in Sources */,
+				4DA78F16225C137000C018CA /* SettingsWhatsNewViewController.swift in Sources */,
 				4DF13D62221A1BAB009BE812 /* StandardButton.swift in Sources */,
 				4D53F89E21F1CBF800C0AF31 /* ShowOverlayAnimator.swift in Sources */,
 				4DD542F0224E544C003C6DEC /* AddStepViewModel.swift in Sources */,
@@ -861,9 +913,12 @@
 				4DA12F7621B358AB0049CD75 /* MainViewCell.swift in Sources */,
 				4D53F89C21F1A42200C0AF31 /* OverlayInteractor.swift in Sources */,
 				4D53F7BE21E735CD00C0AF31 /* StepEntity.swift in Sources */,
+				4DA78F1A225C1C8000C018CA /* SettingsDataSource.swift in Sources */,
 				4D0C4B4721AEC73A00153E76 /* AppDelegate.swift in Sources */,
 				4D53F7D821EF0C6500C0AF31 /* ViewControllerOverlayAnimator.swift in Sources */,
+				4DA78F0E225B813D00C018CA /* WhatsNewViewController.swift in Sources */,
 				4D53803D2249FCC80051DD0F /* Extentions+UIDevice.swift in Sources */,
+				4DA78F14225B884A00C018CA /* WhatsNewViewModel.swift in Sources */,
 				4D53803A224911140051DD0F /* TapticService.swift in Sources */,
 				4DD542F2224F675C003C6DEC /* AddStepViewControllerMVC.swift in Sources */,
 				4D53802A2244C2D70051DD0F /* Extension+UIView.swift in Sources */,
@@ -882,6 +937,7 @@
 				4D563C30220D7FB70039B07F /* RecipeViewCell.swift in Sources */,
 				4DD542F42252284C003C6DEC /* SettingsViewModel.swift in Sources */,
 				4D53803522473FF40051DD0F /* AboutViewController.swift in Sources */,
+				4DA78F1C225C25AC00C018CA /* WhatsNewView.swift in Sources */,
 				4D6DFCB82212508E009C3044 /* SettingsViewController.swift in Sources */,
 				4DA12F7D21B611AF0049CD75 /* Extensions.swift in Sources */,
 				4D53F7CC21EC47E700C0AF31 /* ThemeConstants.swift in Sources */,

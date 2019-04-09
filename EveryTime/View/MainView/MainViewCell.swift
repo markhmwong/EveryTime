@@ -27,9 +27,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
             guard let r = entity else {
                 return
             }
-            guard let name = r.recipeName else {
-                return
-            }
+
             
             prepareLabels(recipe: r)
             let bg = r.isPaused ? Theme.View.RecipeCell.RecipeCellPauseButtonInactive : Theme.View.RecipeCell.RecipeCellPauseButtonActive

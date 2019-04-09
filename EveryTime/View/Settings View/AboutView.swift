@@ -9,9 +9,15 @@
 import UIKit
 
 class AboutView: UIView {
+    
     private let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    private let appName = Bundle.appName()
-    private let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String
+    
+    private let appName = AppMetaData.name
+    
+    private let appVersion = AppMetaData.version
+    
+    private let appBuild = AppMetaData.build
+    
     private var delegate: AboutViewController?
 
     private lazy var dismissButton: UIButton = {
@@ -21,6 +27,7 @@ class AboutView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
     lazy var navView: NavView = {
         let view = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: nil)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -38,7 +45,7 @@ class AboutView: UIView {
     
 
     private lazy var details = """
-    Thanks for using \(appName) v\(appVersion ?? "").\n
+    Thanks for using \(appName) v\(appVersion ?? " unknown"), build \(appBuild ?? "unknown").\n
     I'm not the best cook but I love a good a steak. The first bite always gets me when you've cooked it to your liking, and thats the problem it wasn't always the way it was made previously; I made this app to keep track of the amount of times I had flipped my steak for it to cook evenly knowing Gordan Ramsey would kick my arse for overcooking it.\n
     I do really hope you enjoy using it and get the most of out it, whether you need to track your own cooking, an execise routine or a series of steps that you simply can never get down perfectly. This was made for that in mind.\n
     
@@ -74,19 +81,19 @@ class AboutView: UIView {
     }
     
     private func setupAutoLayout() {
-        let safeAreaGuideLayout = safeAreaLayoutGuide
         let navTopConstraint = !appDelegate.hasTopNotch ? topAnchor : nil
-        navView.anchorView(top: navTopConstraint, bottom: nil, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
-        navView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: Theme.View.Nav.HeightWithNotch).isActive = true
+        let heightByNotch = !appDelegate.hasTopNotch ? Theme.View.Nav.HeightWithoutNotch : Theme.View.Nav.HeightWithNotch
         
+        navView.anchorView(top: navTopConstraint, bottom: textView.topAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
+        navView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: heightByNotch).isActive = true
+
         textView.anchorView(top: navView.bottomAnchor, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
     }
     
-    override func updateConstraints() {
-        super.updateConstraints()
+    override func safeAreaInsetsDidChange() {
+        super.safeAreaInsetsDidChange()
         if (appDelegate.hasTopNotch) {
             let safeAreaInsets = self.safeAreaInsets
-            
             navView.topAnchor.constraint(equalTo: topAnchor, constant: safeAreaInsets.top).isActive = true //keeps the bar in position as the view performs the transition
         }
     }

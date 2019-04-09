@@ -9,8 +9,7 @@
 import UIKit
 
 class ViewControllerBase: UIViewController, ViewControllerBaseProtocol {
-
-    
+   
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }

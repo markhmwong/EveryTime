@@ -39,13 +39,17 @@ class LargeDisplayViewController: ViewControllerBase {
         mainView.anchorView(top: view.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        mainView.marqueeLabel.prepareAnimationProperties()
+        mainView.marqueeLabel.applyAnimation()
+    }
+    
     func handleClose() {
-
         self.dismiss(animated: true, completion: nil)
     }
     
     func updateViewRecipeLabel(recipeName: String) {
-//        mainView.updateRecipeLabel(currRecipe: recipeName)
         mainView.updateRecipeLabel(currRecipe: recipeName)
     }
     

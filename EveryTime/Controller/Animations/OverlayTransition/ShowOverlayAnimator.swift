@@ -45,5 +45,6 @@ class ShowOverlayAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         }) { (finished) in
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         }
+        
     }
 }

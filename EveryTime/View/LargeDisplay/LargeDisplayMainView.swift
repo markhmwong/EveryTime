@@ -43,6 +43,13 @@ class LargeDisplayMainView: UIView {
         return label
     }()
     
+    lazy var marqueeLabel: BasicMarqueeLabel = {
+        let label = BasicMarqueeLabel()
+        label.attributedText = NSAttributedString(string: "A let keyword mark's a variable to employ a characteristic", attributes: Theme.Font.LargeDisplay.LargeStepLabel)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupView()
@@ -69,6 +76,7 @@ class LargeDisplayMainView: UIView {
         addSubview(timeLabel)
         addSubview(recipeLabel)
         addSubview(stepLabel)
+        addSubview(marqueeLabel)
         addSubview(closeButton)
     }
     
@@ -80,7 +88,10 @@ class LargeDisplayMainView: UIView {
         timeLabel.anchorView(top: topAnchor, bottom: nil, leading: nil, trailing: nil, centerY: nil, centerX: centerXAnchor, padding: UIEdgeInsets(top: screenSize.height / 3, left: 0.0, bottom: 0.0, right: 0.0), size: .zero)
         stepLabel.anchorView(top: nil, bottom: timeLabel.topAnchor, leading: timeLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: .zero, size: .zero)
         closeButton.anchorView(top: nil, bottom: bottomAnchor, leading: nil, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0, left: 0, bottom: -40, right: -10), size: .zero)
+        marqueeLabel.anchorView(top: timeLabel.bottomAnchor, bottom: nil, leading: leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), size: .zero)
     }
+    
+    
     
     override func safeAreaInsetsDidChange() {
         super.safeAreaInsetsDidChange()

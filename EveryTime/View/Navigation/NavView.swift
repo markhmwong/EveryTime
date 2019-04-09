@@ -36,8 +36,6 @@ class NavView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-
-    
     fileprivate func setupView() {
         if let left = leftNavItem {
             left.translatesAutoresizingMaskIntoConstraints = false

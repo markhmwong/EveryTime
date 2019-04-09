@@ -10,21 +10,9 @@ import UIKit
 
 import MessageUI
 
-enum Settings: Int {
-    case About = 0
-    case Review
-    case Share
-    case Feedback
-}
 
-enum Data: Int {
-    case Clear = 0
-}
 
-enum SettingsSections: Int {
-    case Data = 0
-    case Support
-}
+
 
 extension SettingsViewController: MFMailComposeViewControllerDelegate {
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
@@ -33,11 +21,14 @@ extension SettingsViewController: MFMailComposeViewControllerDelegate {
 }
 
 class SettingsViewController: ViewControllerBase  {
+    
     var settingsViewModel: SettingsViewModel!
+    
     private var delegate: MainViewController?
+    
     private lazy var mainView: SettingsMainView = {
         let view = SettingsMainView(delegate: self)
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = Theme.Background.Color.NavTopFillBackgroundColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -54,7 +45,6 @@ class SettingsViewController: ViewControllerBase  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         //The super will call prepare_ functions
     }
     
@@ -65,7 +55,7 @@ class SettingsViewController: ViewControllerBase  {
     
     override func prepareAutoLayout() {
         super.prepareAutoLayout()
-        mainView.anchorView(top: view.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
+        mainView.fillSuperView()
     }
     
     override func prepareViewController() {
@@ -79,6 +69,7 @@ class SettingsViewController: ViewControllerBase  {
         }
         
         mvc.startTimer()
+        
         dismiss(animated: true, completion: nil)
     }
     
@@ -112,3 +103,5 @@ class SettingsViewController: ViewControllerBase  {
         present(alert, animated: true, completion: nil)
     }
 }
+
+

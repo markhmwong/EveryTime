@@ -9,6 +9,18 @@
 import UIKit
 
 extension UIView {
+    func fillSuperView() {
+        
+        guard let s = superview else {
+            return
+        }
+        
+        topAnchor.constraint(equalTo: s.topAnchor).isActive = true
+        bottomAnchor.constraint(equalTo: s.bottomAnchor).isActive = true
+        leadingAnchor.constraint(equalTo: s.leadingAnchor).isActive = true
+        trailingAnchor.constraint(equalTo: s.trailingAnchor).isActive = true
+    }
+    
     func anchorView(top: NSLayoutYAxisAnchor?, bottom: NSLayoutYAxisAnchor?, leading: NSLayoutXAxisAnchor?, trailing: NSLayoutXAxisAnchor?, centerY: NSLayoutYAxisAnchor?, centerX: NSLayoutXAxisAnchor?, padding: UIEdgeInsets = .zero, size: CGSize = .zero) {
         if let top = top {
             topAnchor.constraint(equalTo: top, constant: padding.top).isActive = true
@@ -94,4 +106,6 @@ extension UIView {
                                               attribute: .trailing,
                                               multiplier: 1, constant: margins))
     }
+    
+
 }

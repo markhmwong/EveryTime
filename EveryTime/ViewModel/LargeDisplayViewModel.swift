@@ -15,7 +15,6 @@ class LargeDisplayViewModel {
     var currTimeStr: String {
         didSet {
             /// passed on to the view controller that then handles the call to the view
-            print("didset")
             delegate?.updateViewTimeLabel(timeRemaining: currTimeStr)
         }
     }

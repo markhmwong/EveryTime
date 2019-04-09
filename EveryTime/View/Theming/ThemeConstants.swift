@@ -19,8 +19,8 @@ struct Theme {
         static var CornerRadius: CGFloat { return 0.0 }
         
         struct Nav {
-            static var HeightWithNotch: CGFloat { return 0.06 }
-            static var HeightWithoutNotch: CGFloat { return 0.08 }
+            static var HeightWithNotch: CGFloat { return 0.04 }
+            static var HeightWithoutNotch: CGFloat { return 0.06 }
 
         }
         
@@ -37,6 +37,7 @@ struct Theme {
     }
     struct Font {
         fileprivate typealias tf = Theme.Font
+        static let standardTextSize: CGFloat = 12.0
         
         struct Error {
             static let Text: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.Error)!, NSAttributedString.Key.foregroundColor: tf.Color.ErrorColor, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
@@ -48,21 +49,22 @@ struct Theme {
         }
         
         private struct Size {
-            static var SizeCell: CGFloat { return 14.0 }
-            static var AddRecipeLabel: CGFloat { return 12.0 }
-            static var MainViewCellName: CGFloat { return 12.0 }
+            
+            static var SizeCell: CGFloat { return standardTextSize }
+            static var AddRecipeLabel: CGFloat { return standardTextSize }
+            static var MainViewCellName: CGFloat { return standardTextSize }
             static var MainViewCellTime: CGFloat { return 26.0 }
-            static var MainViewStepName: CGFloat { return 12.0 }
+            static var MainViewStepName: CGFloat { return standardTextSize }
             static var StepTitle: CGFloat { return 20.0 }
             static var StepTime: CGFloat { return 40.0 }
-            static var StepCellTitle: CGFloat { return 11.0 }
+            static var StepCellTitle: CGFloat { return standardTextSize }
             static var StepCellTime: CGFloat { return 18.0 }
             static var AddStepPlaceholder: CGFloat { return 40.0 }
-            static var PageTitle: CGFloat { return 12.0 }
+            static var PageTitle: CGFloat { return standardTextSize }
             static var TextField: CGFloat { return 20.0 }
             static var NavItem: CGFloat { return 14.0 }
             static var Caret: CGFloat { return 30.0 }
-            static var StandardButton: CGFloat { return 12.0 }
+            static var StandardButton: CGFloat { return standardTextSize }
             static var Header: CGFloat {
                 switch UIDevice.current.screenType.rawValue {
                 case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
@@ -72,7 +74,7 @@ struct Theme {
                 }
             }
             static var HeaderContent: CGFloat { return 16.0 }
-            static var HeaderContentTitle: CGFloat { return 12.0 }
+            static var HeaderContentTitle: CGFloat { return standardTextSize }
             static var HeaderContentTime: CGFloat {
                 switch UIDevice.current.screenType.rawValue {
                 case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
@@ -107,8 +109,11 @@ struct Theme {
                 }
             }
 
-            static var About: CGFloat { return 16.0 }
-            static var Error: CGFloat { return 12.0 }
+            static var About: CGFloat { return standardTextSize }
+            static var PatchNotesText: CGFloat { return standardTextSize }
+            static var PatchNotesSubHeading: CGFloat { return standardTextSize }
+
+            static var Error: CGFloat { return standardTextSize }
             static var CompleteDot: CGFloat { return 30.0 }
         }
         
@@ -122,7 +127,8 @@ struct Theme {
         struct Color {
             static var ErrorColor: UIColor { return UIColor(red:0.73, green:0.24, blue:0.13, alpha:1.0) }
             static var TextColour: UIColor { return UIColor(red:0.01, green:0.09, blue:0.14, alpha:1.0) }
-            
+            static var LightTextColour: UIColor { return UIColor(red:0.01, green:0.09, blue:0.14, alpha:0.6) }
+
             static var TextColourDisabled: UIColor { return UIColor(red:0.7, green:0.7, blue:0.7, alpha:1.0) }
             static var RecipeLabelBackgroundColour : UIColor { return UIColor(red: 1, green: 1, blue: 1, alpha: 1.0) }
             static var RecipeCellStepTitle: UIColor { return UIColor(red:0.01, green:0.09, blue:0.14, alpha:1.0) }
@@ -188,12 +194,21 @@ struct Theme {
         struct About {
             static let Text: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.About)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
         }
+        
+        struct PatchNotes {
+            static let SubHeading: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.PatchNotesSubHeading)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
+
+            static let Text: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.PatchNotesText)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
+            static let Date: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.PatchNotesText)!, NSAttributedString.Key.foregroundColor: tf.Color.LightTextColour, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
+
+        }
     }
     
     struct Background {
         fileprivate typealias tb = Theme.Background
         struct Color {
             static var Clear: UIColor { return UIColor(red:1.0, green:1.0, blue:1.0, alpha:0.0) }
+            static var NavTopFillBackgroundColor: UIColor { return UIColor(red:1.0, green:1.0, blue:1.0, alpha:1.0) }
             static var GeneralBackgroundColor: UIColor { return UIColor(red:0.92, green:0.92, blue:0.92, alpha:1.0) }
             static var CellBackgroundColor: UIColor { return UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0) }
             static var NavBackgroundColor: UIColor { return UIColor(red:1.0, green:1.0, blue:1.0, alpha:1.0) }
