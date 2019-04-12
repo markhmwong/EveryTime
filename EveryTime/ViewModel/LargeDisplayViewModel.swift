@@ -12,30 +12,68 @@ class LargeDisplayViewModel {
     
     var delegate: LargeDisplayViewController?
     
-    var currTimeStr: String {
+    var stepsComplete: Int?
+    
+    var totalSteps: Int?
+    
+    var nextStepStr: String? {
+        didSet {
+            delegate?.updateViewNextStepLabel(nextStepName: nextStepStr ?? "Unknown")
+        }
+    }
+    
+    var currTimeStr: String? {
         didSet {
             /// passed on to the view controller that then handles the call to the view
-            delegate?.updateViewTimeLabel(timeRemaining: currTimeStr)
+            delegate?.updateViewTimeLabel(timeRemaining: currTimeStr ?? "Unknown")
         }
     }
     
-    var currStepStr: String {
+    var currStepStr: String? {
         didSet {
-            delegate?.updateViewStepLabel(stepName: currStepStr)
+            delegate?.updateViewStepLabel(stepName: currStepStr ?? "Unknown")
         }
     }
     
-    var currRecipeStr: String {
+    var currRecipeStr: String? {
         didSet {
-//            delegate?.updateViewRecipeLabel(recipeName: currRecipeStr)
-            delegate?.updateViewRecipeLabel(recipeName: currRecipeStr)
+            delegate?.updateViewRecipeLabel(recipeName: currRecipeStr ?? "Unknown")
         }
     }
     
-    init(delegate: LargeDisplayViewController?, time: String, step: String, recipe: String) {
+    var stepsCompleteString: String? {
+        didSet {
+            delegate?.updateViewStepsCompleteLabel(stepComplete: "\(stepsComplete ?? 1)/\(totalSteps ?? 0)" )
+        }
+    }
+    
+    init(delegate: LargeDisplayViewController?, time: String, stepName: String, recipeName: String, recipeEntity: RecipeEntity? = nil, sortedSet: [StepEntity]) {
         self.delegate = delegate
-        self.currTimeStr = time
-        self.currStepStr = step
-        self.currRecipeStr = recipe
+        self.totalSteps = recipeEntity?.stepSetSize()
+
+        if let r = recipeEntity {
+            self.stepsComplete = r.stepsComplete()
+        }
+        defer {
+            self.stepsCompleteString = { self.stepsCompleteString }()
+            self.currTimeStr = time
+            self.currStepStr = stepName
+            self.currRecipeStr = recipeName
+            
+            if let r = recipeEntity {
+                let priority = r.currStepPriority
+                if (priority < sortedSet.count - 1) {
+                    self.nextStepStr = sortedSet[Int(r.currStepPriority) + 1].stepName
+                } else if (priority == sortedSet.count - 1) {
+                    self.nextStepStr = ""
+                } else {
+                    self.nextStepStr = sortedSet[Int(r.currStepPriority)].stepName
+                }
+            }
+        }
+    }
+    
+    deinit {
+        print("deinit largedisplayviewmodel")
     }
 }

@@ -68,10 +68,12 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
     private let rowHeight: CGFloat = 120.0
     private let stepCellId = "wizardCellId"
     private var addStepButtonStackView: UIStackView?
-    private var dataSource: [TableViewStep] = []
     private var keyboardTextField: UITextField = UITextField()
+    var recipeName = ""
+    var addRecipeViewControllerDelegate: AddRecipeViewController?
     var tableViewBottomConstraint: NSLayoutConstraint!
-
+    var dataSource: [TableViewStep] = []
+    
     private var textFieldStackView: UIStackView = {
         let tf = UIStackView()
         tf.alignment = .fill
@@ -81,8 +83,7 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         tf.translatesAutoresizingMaskIntoConstraints = false
         return tf
     }()
-    var recipeName = ""
-    var addRecipeViewControllerDelegate: AddRecipeViewController?
+
     var keyboardHeight: CGFloat = 0.0 {
         didSet {
             tableViewBottomConstraint.constant = -keyboardHeight
@@ -92,7 +93,7 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
     lazy var tableView: UITableView = {
         let tv = UITableView()
         tv.delegate = self
-        tv.isEditing = false
+        tv.isEditing = true
         tv.dataSource = self
         tv.separatorStyle = .none
         tv.backgroundColor = UIColor.clear
@@ -226,6 +227,7 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
 
     override func setupView() {
         super.setupView()
+        addRecipeViewControllerDelegate?.addRecipeStepTwo = self
         guard let n = nameTextfield, let h = hourTextfield, let m = minuteTextfield, let s = secondTextfield else {
             return
         }
@@ -250,8 +252,6 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         addSubview(textFieldStackView)
         addSubview(timeLabelStackView)
         
-        
-        
         timeLabelStackView.addArrangedSubview(hoursLabel)
         timeLabelStackView.addArrangedSubview(minutesLabel)
         timeLabelStackView.addArrangedSubview(secondsLabel)
@@ -268,13 +268,8 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
     }
     
     @objc func keyboardDidShow(notification: NSNotification) {
-        print(hourPickerView.frame.height)
-        
         let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue
-        
-        
         keyboardHeight = (keyboardFrame?.cgRectValue.height)! - ((keyboardFrame?.cgRectValue.height)! - hourPickerView.frame.height)
-
     }
     
     func prepareAutoLayout() {
@@ -348,7 +343,6 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         }
         
         tableViewBottomConstraint.constant = 0
-        
     }
     
     /**
@@ -374,7 +368,7 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
         do {
             try checkTextFields([n, h, m, s])
             addStep(saveToCoreData: false, h: h.text, m: m.text, s: s.text, n: n.text)
-            clearTextFields([n, h, m, s])
+            clearTextFields([n])
             n.becomeFirstResponder()
         } catch AddRecipeWizardError.Empty(let message) {
             showAlertBox(message)
@@ -388,7 +382,6 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
             print("\(error.localizedDescription)")
         }
     }
-    
     /**
         # Done button
      
@@ -549,9 +542,10 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
                 default:
                     textField.text = "0"
             }
-//            textField.text! = ""
         }
     }
+    
+    
 }
 
 extension AddRecipeStepTwo: UITextFieldDelegate {
@@ -585,12 +579,23 @@ extension AddRecipeStepTwo: UITableViewDelegate {
     }
 }
 
+extension AddRecipeStepTwo: UITableViewDropDelegate {
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
+        print("perform drop with")
+    }
+}
+
 extension AddRecipeStepTwo: UITableViewDataSource {
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
+    func tableView(_ tableView: UITableView, performAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) {
+        //copy
+    }
+    
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        
         let sourceObj = self.dataSource[sourceIndexPath.row]
         let destinationObj = self.dataSource[destinationIndexPath.row]
         

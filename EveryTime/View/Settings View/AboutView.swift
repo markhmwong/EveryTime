@@ -18,7 +18,7 @@ class AboutView: UIView {
     
     private let appBuild = AppMetaData.build
     
-    private var delegate: AboutViewController?
+    private weak var delegate: AboutViewController?
 
     private lazy var dismissButton: UIButton = {
         let button = UIButton()

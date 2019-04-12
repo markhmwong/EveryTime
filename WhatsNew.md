@@ -1,7 +1,28 @@
 #  Whats New Description for App Store
 
 ## Version 1.1.13 (Current)
+
+
+
 - Email feedback in support now added
+"Minor UI changes",
+Full screen view
+    The Recipe view now contains a button for a full screen view of the header view that shows the current timer (done)
+    show next timer
+    include forward and back controls
+    full screen with user interactivity (child viewcontroller)
+recipe view
+    up next title in between the header and tableview will need to create a new uiview for hte header instead of using the existing tableview header
+    "Names of the recipes/steps can now be edited", add a new option in settings to edit name.
+Add recipe view
+    "When creating a new Recipe, you can now chose whether the timer begins immediately or a time of your choosing.",
+    "When creating a new Recipe you can now copy an existing step that was already made.",
+
+Whats new view
+    "A Whats New section in the Settings to keep updated on the latest changes to the app.", (done)
+
+Bug
+    When adding a new step, the value would be 0 despite a different value selected on the picker. It now correctly displays the correct values and does not "reset" to 0.
 
 
 ## Version 1.1.12

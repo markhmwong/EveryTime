@@ -53,21 +53,28 @@ class HeaderView: UIView {
         return label
     }()
 
-    fileprivate lazy var additionalTimeButton: StandardButton = {
+    private lazy var additionalTimeButton: StandardButton = {
         let button = StandardButton(title: "+15")
         button.addTarget(self, action: #selector(handleAdditionalTime), for: .touchUpInside)
         return button
     }()
     
-    fileprivate lazy var subtractTimeButton: StandardButton = {
+    private lazy var subtractTimeButton: StandardButton = {
         let button = StandardButton(title: "-15")
         button.addTarget(self, action: #selector(handleMinusTime), for: .touchUpInside)
         return button
     }()
     
-    fileprivate lazy var resetTimeButton: StandardButton = {
+    private lazy var resetTimeButton: StandardButton = {
         let button = StandardButton(title: "Reset")
         button.addTarget(self, action: #selector(handleResetStepTime), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var fullScreenButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "FullScreen.png"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
@@ -119,6 +126,11 @@ class HeaderView: UIView {
         innerPaddedView.addSubview(additionalTimeButton)
         innerPaddedView.addSubview(subtractTimeButton)
         innerPaddedView.addSubview(resetTimeButton)
+        
+        
+
+        fullScreenButton.addTarget(self, action: #selector(handleFullScreen), for: .touchUpInside)
+        innerPaddedView.addSubview(fullScreenButton)
     }
     
     private func setupAutoLayout() {
@@ -160,11 +172,16 @@ class HeaderView: UIView {
         resetTimeButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.18).isActive = true
 
         subtractTimeButton.leadingAnchor.constraint(equalTo: innerPaddedView.trailingAnchor, constant: -(screenSize.width / 8) * 2).isActive = true
-        subtractTimeButton.bottomAnchor.constraint(equalTo: innerPaddedView.bottomAnchor, constant: -10).isActive = true
+        subtractTimeButton.bottomAnchor.constraint(equalTo: innerPaddedView.bottomAnchor, constant: -10.0).isActive = true
         subtractTimeButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.18).isActive = true
         
-        saveButton.trailingAnchor.constraint(equalTo: innerPaddedView.trailingAnchor, constant: -10).isActive = true
-        saveButton.topAnchor.constraint(equalTo: innerPaddedView.topAnchor, constant: 10).isActive = true
+        saveButton.trailingAnchor.constraint(equalTo: innerPaddedView.trailingAnchor, constant: -10.0).isActive = true
+        saveButton.topAnchor.constraint(equalTo: innerPaddedView.topAnchor, constant: 10.0).isActive = true
+        
+        fullScreenButton.topAnchor.constraint(equalTo: innerPaddedView.topAnchor, constant: 10.0).isActive = true
+        fullScreenButton.trailingAnchor.constraint(equalTo: innerPaddedView.trailingAnchor, constant: -10.0).isActive = true
+        fullScreenButton.widthAnchor.constraint(equalToConstant: 15.0).isActive = true
+        fullScreenButton.heightAnchor.constraint(equalToConstant: 15.0).isActive = true
     }
     
 
@@ -221,13 +238,21 @@ class HeaderView: UIView {
     
     @objc func handleResetStepTime() {
         if let delegate = delegate {
-            delegate.handleReset()
+//            delegate.handleReset()
+            delegate.handleResetStepTime()
         }
     }
     
     @objc func handleSave() {
         if let delegate = delegate {
             delegate.handleSave()
+        }
+    }
+    
+    @objc func handleFullScreen() {
+        print("redbox")
+        if let delegate = delegate {
+            delegate.handleLargeDisplay()
         }
     }
 }

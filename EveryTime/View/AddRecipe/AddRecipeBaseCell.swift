@@ -22,6 +22,7 @@ class AddRecipeBaseCell: UICollectionViewCell {
     func setupView() {
         //
     }
+    
 }
 
 class TableViewStep {

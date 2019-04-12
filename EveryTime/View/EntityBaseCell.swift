@@ -33,7 +33,7 @@ class EntityBaseTableViewCell<E>: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupView()
+        self.setupView()
     }
     
     required init?(coder aDecoder: NSCoder) {

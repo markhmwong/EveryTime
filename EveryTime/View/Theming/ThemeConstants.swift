@@ -86,9 +86,9 @@ struct Theme {
             static var LargeTitle: CGFloat {
                 switch UIDevice.current.screenType.rawValue {
                 case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
-                    return 30.0
+                    return 18.0
                 default:
-                    return 40.0
+                    return 25.0
                 }
             }
             
@@ -100,12 +100,20 @@ struct Theme {
                     return 60.0
                 }
             }
-            static var LargeStep: CGFloat {
+            static var LargeStepCount: CGFloat {
                 switch UIDevice.current.screenType.rawValue {
                 case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
-                    return 20.0
+                    return 14.0
                 default:
-                    return 30.0
+                    return 18.0
+                }
+            }
+            static var LargeUpNextStepName: CGFloat {
+                switch UIDevice.current.screenType.rawValue {
+                case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
+                    return 14.0
+                default:
+                    return 18.0
                 }
             }
 
@@ -127,7 +135,7 @@ struct Theme {
         struct Color {
             static var ErrorColor: UIColor { return UIColor(red:0.73, green:0.24, blue:0.13, alpha:1.0) }
             static var TextColour: UIColor { return UIColor(red:0.01, green:0.09, blue:0.14, alpha:1.0) }
-            static var LightTextColour: UIColor { return UIColor(red:0.01, green:0.09, blue:0.14, alpha:0.6) }
+            static var LightTextColour: UIColor { return UIColor(red:0.01, green:0.09, blue:0.14, alpha:0.65) }
 
             static var TextColourDisabled: UIColor { return UIColor(red:0.7, green:0.7, blue:0.7, alpha:1.0) }
             static var RecipeLabelBackgroundColour : UIColor { return UIColor(red: 1, green: 1, blue: 1, alpha: 1.0) }
@@ -143,9 +151,11 @@ struct Theme {
         }
         
         struct LargeDisplay {
-            static let LargeRecipeTitleLabel: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.LargeTitle)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
+            static let LargeRecipeTitleLabel: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.LargeTitle)!, NSAttributedString.Key.foregroundColor: tf.Color.LightTextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
             static let LargeTimerLabel: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.LargeTimer)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
-            static let LargeStepLabel: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.LargeStep)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
+            static let LargeStepLabel: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.LargeStepCount)!, NSAttributedString.Key.foregroundColor: tf.Color.LightTextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
+            static let UpNextStepNameLabel: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.LargeUpNextStepName)!, NSAttributedString.Key.foregroundColor: tf.Color.LightTextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
+
         }
         
         // At the Recipe list view (Main View COntroller)

@@ -13,25 +13,40 @@ protocol AddStepViewModelProtocol {
 }
 
 enum AddStepLabelErrors: Error {
+    
     case labelNotFilled
+    
     case labelLengthTooLong
+    
     case labelInvalidLength
+    
     case labelLengthTooShort
 }
 
 enum AddStepPickerViewErrors: Error {
+    
     case allZero
+    
     case lessThanZero
+    
     case greaterThanADay
+    
     case greaterThanAMinute
+    
     case greaterThanAnHour
+    
 }
 
 struct StepValues {
+    
     var name: String?
+    
     var hour: Int?
+    
     var min: Int?
+    
     var sec: Int?
+    
     
     mutating func updateName(str: String) {
         self.name = str
@@ -51,10 +66,15 @@ struct StepValues {
 }
 
 class AddStepViewModel {
+    
     private var sEntity: StepEntity?
+    
     private var stepValues: StepValues
+    
     let maxCharacterLimitForNameLabel = 30
+    
     private let minCharacterLimitForNameLabel = 1
+    
     
     init(userSelectedValues stepValues: StepValues) {
         self.stepValues = stepValues

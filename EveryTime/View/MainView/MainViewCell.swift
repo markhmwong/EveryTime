@@ -26,9 +26,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         didSet {
             guard let r = entity else {
                 return
-            }
-
-            
+            }            
             prepareLabels(recipe: r)
             let bg = r.isPaused ? Theme.View.RecipeCell.RecipeCellPauseButtonInactive : Theme.View.RecipeCell.RecipeCellPauseButtonActive
             let textColor = r.isPaused ? Theme.Font.Color.TextColourDisabled : Theme.Font.Color.TextColour

@@ -28,6 +28,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     private let rowHeight: CGFloat = 120.0
     private var addButtonState: ScrollingState = .Idle
     private var stepSelected: Int = 0
+    private var sortedStepSet: [StepEntity] = []
     private lazy var navView: NavView? = nil
     private var step: StepEntity?
     
@@ -107,6 +108,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         super.prepareViewController()
         setNeedsStatusBarAppearanceUpdate()
         bottomViewState = .ShowAddStep
+        sortedStepSet = recipe.sortStepsByPriority()
     }
 
 
@@ -151,7 +153,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
             
         } else {
             DispatchQueue.main.async {
-                self.navView?.rightNavItem?.isEnabled = true
+                self.navView?.rightNavItem?.isEnabled = false
                 self.navView?.rightNavItem?.alpha = 0.3
                 self.pauseRecipeButton.updateButtonTitle(with: "Pause")
             }
@@ -174,7 +176,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         }
         
         tableView.anchorView(top: nav.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
-
         let navTopConstraint = !appDelegate.hasTopNotch ? view.topAnchor : nil
         let heightByNotch = !appDelegate.hasTopNotch ? Theme.View.Nav.HeightWithoutNotch : Theme.View.Nav.HeightWithNotch
 
@@ -405,7 +406,7 @@ extension RecipeViewControllerWithTableView: TimerProtocol {
 
         if (!recipe.isPaused) {
             
-            let sortedSet = recipe.sortStepsByPriority()
+            let sortedSet = recipe.sortStepsByPriority() //needs update
             let tp = recipe.timePassedSinceStart() + recipe.pauseTimeInterval
             var elapsedTime: Double = 0.0
             
@@ -433,26 +434,34 @@ extension RecipeViewControllerWithTableView: TimerProtocol {
                         let nextStep: StepEntity = sortedSet[Int(recipe.currStepPriority) + 1]
                         DispatchQueue.main.async {
                             self.headerView.updateHeaderNextStepTimeLabel(time: nextStep.timeRemainingToString())
-                            self.headerView.updateHeaderNextStepTitleLabel(title: nextStep.stepName ?? "unknown")
+                            self.headerView.updateHeaderNextStepTitleLabel(title: nextStep.stepName ?? "Unknown")
+                            if (self.largeDisplay != nil) {
+                                self.largeDisplay?.viewModel?.nextStepStr = nextStep.stepName
+                            }
                         }
                     } else {
                         DispatchQueue.main.async {
                             self.headerView.updateHeaderNextStepTimeLabel(time: "")
                             self.headerView.updateHeaderNextStepTitleLabel(title: "")
+                            if (self.largeDisplay != nil) {
+                                self.largeDisplay?.viewModel?.nextStepStr = ""
+                            }
                         }
                     }
 
                     DispatchQueue.main.async {
                         self.headerView.updateHeaderStepTimeLabel(time: step.timeRemainingToString())
-                        self.headerView.updateHeaderStepTitleLabel(title: step.stepName ?? "unknown")
+                        self.headerView.updateHeaderStepTitleLabel(title: step.stepName ?? "Unknown")
                     }
                     
+                    /// Updates full screen labels
                     if (largeDisplay != nil) {
                         largeDisplay?.viewModel?.currTimeStr = step.timeRemainingToString()
-                        largeDisplay?.viewModel?.currStepStr = step.stepName ?? "unknown"
-                        largeDisplay?.viewModel?.currRecipeStr = recipe.recipeName!
+                        largeDisplay?.viewModel?.currStepStr = step.stepName ?? "Unknown"
+                        largeDisplay?.viewModel?.currRecipeStr = recipe.recipeName ?? "Unknown"
+                        largeDisplay?.viewModel?.stepsComplete = recipe.stepsComplete() // remove sort
+                        
                     }
-                    
                     let priorityIndexPath = IndexPath(item: Int(step.priority), section: 0)
                     if (visibleCell.contains(priorityIndexPath)) {
                         let stepCell = tableView.cellForRow(at: priorityIndexPath) as! RecipeViewCell
@@ -461,7 +470,6 @@ extension RecipeViewControllerWithTableView: TimerProtocol {
                             stepCell.updateCompletionStatusLabel()
                         }
                     }
-
                     break
                 } else {
                     //step complete
@@ -473,8 +481,14 @@ extension RecipeViewControllerWithTableView: TimerProtocol {
                     if (sortedSet.count - 1 == recipe.currStepPriority) {
                         DispatchQueue.main.async {
                             self.headerView.updateHeaderStepTimeLabel(time: "00h 00m 00s")
-                            self.headerView.updateHeaderStepTitleLabel(title: self.recipe.currStepName!)
+                            self.headerView.updateHeaderStepTitleLabel(title: self.recipe.currStepName ?? "Unknown")
                         }
+                    }
+                    
+                    /// Update steps complete count
+                    if (largeDisplay != nil) {
+                        largeDisplay?.viewModel?.totalSteps = recipe.stepSetSize()
+                        largeDisplay?.viewModel?.stepsCompleteString = { largeDisplay?.viewModel?.stepsCompleteString }()
                     }
                     
                     let priorityIndexPath = IndexPath(item: Int(step.priority), section: 0)
@@ -617,7 +631,7 @@ extension RecipeViewControllerWithTableView {
      # Full Recipe reset
      */
     func handleReset() {
-        let alert = UIAlertController(title: "Are you sure?", message: "Reset cannot be undone", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Are you sure?", message: "Resetting the whole recipe cannot be undone", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
             var indexPathsToReloadArr: [IndexPath] = []
@@ -679,11 +693,7 @@ extension RecipeViewControllerWithTableView {
             //add step
             self.handleAddStep()
         }
-        let largeDisplayAction = UIAlertAction(title: "Full Screen", style: .default) { (action) in
-            //add step
-            self.handleLargeDisplay()
-        }
-        optionMenu.addAction(largeDisplayAction)
+
         optionMenu.addAction(addStepAction)
         optionMenu.addAction(editAction)
         optionMenu.addAction(resetAction)
@@ -693,12 +703,20 @@ extension RecipeViewControllerWithTableView {
     }
     
     func handleLargeDisplay() {
-        largeDisplay = LargeDisplayViewController()
+
+        largeDisplay = LargeDisplayViewController(delegate: self)
+
         guard let ld = largeDisplay else {
             return
         }
-        ld.viewModel = LargeDisplayViewModel(delegate: ld, time: "", step: "", recipe: "")
+        ld.viewModel = LargeDisplayViewModel(delegate: largeDisplay, time: recipe.timeRemainingForCurrentStepToString(), stepName: recipe.currStepName ?? "Unknown Name", recipeName: recipe.recipeName ?? "Unknown Name", recipeEntity: recipe, sortedSet: sortedStepSet)
         present(ld, animated: true, completion: nil)
+    }
+    
+    func dismissFullScreenDisplay() {
+        dismiss(animated: true) {
+            self.largeDisplay = nil
+        }
     }
     
     func handleSave() {
@@ -744,19 +762,17 @@ extension RecipeViewControllerWithTableView {
         
         if (recipe.isPaused) {
             DispatchQueue.main.async {
-                self.settingsButton.isEnabled = false
-                self.settingsButton.alpha = 0.3
+                self.settingsButton.isEnabled = true
+                self.settingsButton.alpha = 1.0
                 self.pauseRecipeButton.updateButtonTitle(with: "Pause")
             }
-
             recipe.unpauseStepArr()
         } else {
             DispatchQueue.main.async {
-                self.settingsButton.isEnabled = true
-                self.settingsButton.alpha = 1.0
+                self.settingsButton.isEnabled = false
+                self.settingsButton.alpha = 0.3
                 self.pauseRecipeButton.updateButtonTitle(with: "Unpause")
             }
-
             recipe.pauseStepArr()
         }
         CoreDataHandler.saveContext()

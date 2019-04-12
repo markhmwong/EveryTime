@@ -60,4 +60,8 @@ class StepTableViewCell: UITableViewCell {
         timeLabel.removeFromSuperview()
         nameLabel.removeFromSuperview()
     }
+    
+//    override func willTransition(to state: UITableViewCell.StateMask) {
+//        <#code#>
+//    }
 }

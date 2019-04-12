@@ -10,7 +10,7 @@ import UIKit
 
 class WhatsNewView: UIView {
     
-    private var delegate: SettingsWhatsNewViewController?
+    private weak var delegate: SettingsWhatsNewViewController?
 
     private let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
@@ -114,5 +114,9 @@ class WhatsNewView: UIView {
     
     @objc func handleDismiss() {
         delegate?.handleDismiss()
+    }
+    
+    deinit {
+        print("deinitialised")
     }
 }

@@ -81,6 +81,8 @@
 		4DA78F18225C17F500C018CA /* AppMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F17225C17F500C018CA /* AppMetaData.swift */; };
 		4DA78F1A225C1C8000C018CA /* SettingsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F19225C1C8000C018CA /* SettingsDataSource.swift */; };
 		4DA78F1C225C25AC00C018CA /* WhatsNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F1B225C25AC00C018CA /* WhatsNewView.swift */; };
+		4DA78F1E225D648000C018CA /* MarqueeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F1D225D647F00C018CA /* MarqueeLabel.swift */; };
+		4DA78F21225D6A9500C018CA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DA78F20225D6A9500C018CA /* QuartzCore.framework */; };
 		4DD542F0224E544C003C6DEC /* AddStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD542EF224E544C003C6DEC /* AddStepViewModel.swift */; };
 		4DD542F2224F675C003C6DEC /* AddStepViewControllerMVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD542F1224F675C003C6DEC /* AddStepViewControllerMVC.swift */; };
 		4DD542F42252284C003C6DEC /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD542F32252284C003C6DEC /* SettingsViewModel.swift */; };
@@ -228,6 +230,8 @@
 		4DA78F17225C17F500C018CA /* AppMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMetaData.swift; sourceTree = "<group>"; };
 		4DA78F19225C1C8000C018CA /* SettingsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDataSource.swift; sourceTree = "<group>"; };
 		4DA78F1B225C25AC00C018CA /* WhatsNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewView.swift; sourceTree = "<group>"; };
+		4DA78F1D225D647F00C018CA /* MarqueeLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarqueeLabel.swift; sourceTree = "<group>"; };
+		4DA78F20225D6A9500C018CA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4DD542EF224E544C003C6DEC /* AddStepViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepViewModel.swift; sourceTree = "<group>"; };
 		4DD542F1224F675C003C6DEC /* AddStepViewControllerMVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepViewControllerMVC.swift; sourceTree = "<group>"; };
 		4DD542F32252284C003C6DEC /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -243,6 +247,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DA78F21225D6A9500C018CA /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,6 +287,7 @@
 				4D9986BE223CA3080049D55C /* EveryTimeW */,
 				4D9986CD223CA3090049D55C /* EveryTimeW Extension */,
 				4D0C4B4421AEC73A00153E76 /* Products */,
+				4DA78F1F225D6A9500C018CA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -300,6 +306,7 @@
 		4D0C4B4521AEC73A00153E76 /* EveryTime */ = {
 			isa = PBXGroup;
 			children = (
+				4DA78F1D225D647F00C018CA /* MarqueeLabel.swift */,
 				4D94E5D1223CC6430009F176 /* EveryTime.entitlements */,
 				4D0C4B5521AEC73C00153E76 /* Info.plist */,
 				4D0C4B4621AEC73A00153E76 /* AppDelegate.swift */,
@@ -311,7 +318,6 @@
 				4D0C4B4A21AEC73A00153E76 /* Main.storyboard */,
 				4D0C4B7921AFEE2000153E76 /* Model */,
 				4D53803B2249FC450051DD0F /* Services */,
-				4D0C4B4D21AEC73A00153E76 /* SimpleRecipeTimer.xcdatamodeld */,
 				4DA12F7421B352440049CD75 /* View */,
 				4DD542EE224DF551003C6DEC /* ViewModel */,
 			);
@@ -341,6 +347,7 @@
 		4D0C4B7921AFEE2000153E76 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4D0C4B4D21AEC73A00153E76 /* SimpleRecipeTimer.xcdatamodeld */,
 				4DA78F12225B82AB00C018CA /* WhatsNew */,
 				4D53F75A21E2E38100C0AF31 /* CoreDataHandler.swift */,
 				4D53F7BB21E72B7E00C0AF31 /* RecipeEntity.swift */,
@@ -390,7 +397,7 @@
 			path = "Settings View";
 			sourceTree = "<group>";
 		};
-		4D5380262244BBE90051DD0F /* MainView */ = {
+		4D5380262244BBE90051DD0F /* Main */ = {
 			isa = PBXGroup;
 			children = (
 				4D0C4B4821AEC73A00153E76 /* MainViewController.swift */,
@@ -398,17 +405,17 @@
 				4D5380272244BC750051DD0F /* MainViewController+UICollectionView.swift */,
 				4D53802B22458E410051DD0F /* MainViewController+Scroll.swift */,
 			);
-			path = MainView;
+			path = Main;
 			sourceTree = "<group>";
 		};
-		4D53803322468BF40051DD0F /* SettingsView */ = {
+		4D53803322468BF40051DD0F /* Settings */ = {
 			isa = PBXGroup;
 			children = (
 				4D6DFCB72212508E009C3044 /* SettingsViewController.swift */,
 				4D53803422473FF40051DD0F /* AboutViewController.swift */,
 				4DA78F15225C137000C018CA /* SettingsWhatsNewViewController.swift */,
 			);
-			path = SettingsView;
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		4D53803B2249FC450051DD0F /* Services */ = {
@@ -479,13 +486,13 @@
 			path = RecipeView;
 			sourceTree = "<group>";
 		};
-		4D563C2A220D4A550039B07F /* RecipeView */ = {
+		4D563C2A220D4A550039B07F /* Recipe */ = {
 			isa = PBXGroup;
 			children = (
 				4D563C2B220D4ADC0039B07F /* RecipeViewControllerBase.swift */,
 				4D563C2D220D54280039B07F /* RecipeViewControllerWithTableView.swift */,
 			);
-			path = RecipeView;
+			path = Recipe;
 			sourceTree = "<group>";
 		};
 		4D6E353522153D5500CBCC23 /* AddRecipeWizardCells */ = {
@@ -544,10 +551,10 @@
 				4D53F7D621EF0C2900C0AF31 /* Animations */,
 				4D3E24C4221E688600B0D621 /* AddStep */,
 				4DF13D5E221A153C009BE812 /* AddingRecipe */,
-				4D53803322468BF40051DD0F /* SettingsView */,
+				4D53803322468BF40051DD0F /* Settings */,
 				4DA78E282254CCF900C018CA /* LargeDisplayViewController */,
-				4D5380262244BBE90051DD0F /* MainView */,
-				4D563C2A220D4A550039B07F /* RecipeView */,
+				4D5380262244BBE90051DD0F /* Main */,
+				4D563C2A220D4A550039B07F /* Recipe */,
 				4DA12F8521B8A30C0049CD75 /* Protocols */,
 				4DA78F0C225B812400C018CA /* WhatsNew */,
 			);
@@ -627,6 +634,14 @@
 				4DA78F0F225B829200C018CA /* WhatsNew.swift */,
 			);
 			path = WhatsNew;
+			sourceTree = "<group>";
+		};
+		4DA78F1F225D6A9500C018CA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4DA78F20225D6A9500C018CA /* QuartzCore.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		4DD542EE224DF551003C6DEC /* ViewModel */ = {
@@ -907,6 +922,7 @@
 				4D6E353C22154CE000CBCC23 /* AddRecipeStepTwo.swift in Sources */,
 				4D53F8AB21F36F5500C0AF31 /* HorizontalTransitionDelegate.swift in Sources */,
 				4D5380302245F5C40051DD0F /* HeaderView.swift in Sources */,
+				4DA78F1E225D648000C018CA /* MarqueeLabel.swift in Sources */,
 				4D94E5D5223E74DA0009F176 /* LocalNotificationsService.swift in Sources */,
 				4D0C4B4F21AEC73A00153E76 /* SimpleRecipeTimer.xcdatamodeld in Sources */,
 				4DA78E2A2254CD2D00C018CA /* LargeDisplayViewController.swift in Sources */,

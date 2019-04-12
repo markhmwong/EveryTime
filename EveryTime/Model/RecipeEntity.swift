@@ -164,7 +164,8 @@ extension RecipeEntity {
      
         Doubles as a full reset and a partial reset
      */
-    func resetEntireRecipeTo(toStep: Int = 0) -> [IndexPath]{
+    func resetEntireRecipeTo(toStep: Int = 0) -> [IndexPath] {
+        print(toStep)
         let sortedSet = sortStepsByPriority()
         var indexPathsToReload: [IndexPath] = []
         var timePassed: Double = 0.0
@@ -324,5 +325,13 @@ extension RecipeEntity {
         pauseTimeInterval = pauseTimeInterval + tempInterval
 
         CoreDataHandler.saveContext()
+    }
+    
+    func stepSetSize() -> Int {
+        return step?.count ?? 0
+    }
+    
+    func stepsComplete() -> Int {
+        return Int(self.currStepPriority) + 1
     }
 }

@@ -72,26 +72,26 @@ class AddRecipeViewController: ViewControllerBase {
         label.attributedText = NSAttributedString(string: "\u{2304}", attributes: Theme.Font.Recipe.CaretAttribute)
         return label
     }()
-    var titleLabel: UILabel = {
+    lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = NSAttributedString(string: "Add Recipe".uppercased(), attributes: Theme.Font.Recipe.TitleAttribute)
         return label
     }()
-    var editButton: UIButton = {
+    lazy var finishButton: UIButton = {
         let button = UIButton()
         button.alpha = 0.5
         button.isEnabled = false
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setAttributedTitle(NSAttributedString(string: "edit", attributes: Theme.Font.Recipe.TitleAttribute), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Add Recipe", attributes: Theme.Font.Recipe.TitleAttribute), for: .normal)
         return button
     }()
-    var backButton: UIButton = {
+    lazy var backButton: UIButton = {
         let button = UIButton()
         button.alpha = 0.5
         button.isEnabled = false
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setAttributedTitle(NSAttributedString(string: "back", attributes: Theme.Font.Recipe.TitleAttribute), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Back", attributes: Theme.Font.Recipe.TitleAttribute), for: .normal)
         return button
     }()
     fileprivate lazy var blurView: UIVisualEffectView = {
@@ -151,8 +151,8 @@ class AddRecipeViewController: ViewControllerBase {
         view.addSubview(titleLabel)
         view.addSubview(collView)
         
-        editButton.addTarget(self, action: #selector(handleEditButton), for: .touchUpInside)
-        view.addSubview(editButton)
+        finishButton.addTarget(self, action: #selector(handleFinishButton), for: .touchUpInside)
+        view.addSubview(finishButton)
         backButton.addTarget(self, action: #selector(handleBackButton), for: .touchUpInside)
         view.addSubview(backButton)
         
@@ -189,8 +189,8 @@ class AddRecipeViewController: ViewControllerBase {
         collView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         collView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         
-        editButton.topAnchor.constraint(equalTo: view.topAnchor, constant:20).isActive = true
-        editButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        finishButton.topAnchor.constraint(equalTo: view.topAnchor, constant:20).isActive = true
+        finishButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         
         backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
         backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
@@ -219,9 +219,9 @@ class AddRecipeViewController: ViewControllerBase {
     func showEditButton() {
         UIView.animate(withDuration: 0.3, delay: 0.0, options: [.curveEaseInOut], animations: {
             self.backButton.alpha = 1.0
-            self.editButton.alpha = 1.0
+            self.finishButton.alpha = 1.0
         }) { (complete: Bool) in
-            self.editButton.isEnabled = true
+            self.finishButton.isEnabled = true
             self.backButton.isEnabled = true
         }
     }
@@ -229,9 +229,9 @@ class AddRecipeViewController: ViewControllerBase {
     func hideEditButton() {
         UIView.animate(withDuration: 0.3, delay: 0.0, options: [.curveEaseInOut], animations: {
             self.backButton.alpha = 0.5
-            self.editButton.alpha = 0.5
+            self.finishButton.alpha = 0.5
         }) { (complete: Bool) in
-            self.editButton.isEnabled = false
+            self.finishButton.isEnabled = false
             self.backButton.isEnabled = false
         }
     }
@@ -264,20 +264,44 @@ extension AddRecipeViewController {
         mvc.dismiss(animated: true, completion: nil)
     }
     
-    @objc func handleEditButton() {
-        let cell = collView.cellForItem(at: IndexPath(item: 1, section: 0)) as! AddRecipeStepTwo
-        let tableView = cell.tableView
+    @objc func handleFinishButton() {
+//        let cell = collView.cellForItem(at: IndexPath(item: 1, section: 0)) as! AddRecipeStepTwo
+//        let tableView = cell.tableView
         guard let i = interactor else {
             return
         }
-        tableView.isEditing = !tableView.isEditing
-        
-        if (tableView.isEditing) {
-            i.pan.isEnabled = false
-            editButton.setAttributedTitle(NSAttributedString(string: "save", attributes: Theme.Font.Recipe.TitleAttribute), for: .normal)
-        } else {
-            i.pan.isEnabled = true
-            editButton.setAttributedTitle(NSAttributedString(string: "edit", attributes: Theme.Font.Recipe.TitleAttribute), for: .normal)
+        i.pan.isEnabled = false
+//        tableView.isEditing = !tableView.isEditing
+//        finishButton.setAttributedTitle(NSAttributedString(string: "Finish", attributes: Theme.Font.Recipe.TitleAttribute), for: .normal)
+
+        self.resignFirstResponder()
+        guard let stepTwo = addRecipeStepTwo else {
+            return
         }
+        
+        if (stepTwo.dataSource.count > 0) {
+            stepTwo.dismissViewControllerAndUpdateCollectionView()
+        }
+        self.dismiss(animated: true, completion: nil)
+        
+//        if (tableView.isEditing) {
+//            i.pan.isEnabled = false
+////            editButton.setAttributedTitle(NSAttributedString(string: "save", attributes: Theme.Font.Recipe.TitleAttribute), for: .normal)
+
     }
 }
+
+//let cell = collView.cellForItem(at: IndexPath(item: 1, section: 0)) as! AddRecipeStepTwo
+//let tableView = cell.tableView
+//guard let i = interactor else {
+//    return
+//}
+//tableView.isEditing = !tableView.isEditing
+//
+//if (tableView.isEditing) {
+//    i.pan.isEnabled = false
+//    //            editButton.setAttributedTitle(NSAttributedString(string: "save", attributes: Theme.Font.Recipe.TitleAttribute), for: .normal)
+//} else {
+//    i.pan.isEnabled = true
+//    finishButton.setAttributedTitle(NSAttributedString(string: "finish", attributes: Theme.Font.Recipe.TitleAttribute), for: .normal)
+//}

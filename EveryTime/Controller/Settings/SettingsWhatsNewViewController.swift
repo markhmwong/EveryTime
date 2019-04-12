@@ -10,9 +10,9 @@ import UIKit
 
 class SettingsWhatsNewViewController: ViewControllerBase {
     
-    var delegate: SettingsViewController!
+    weak var delegate: SettingsViewController!
     
-    var viewModel: WhatsNewViewModel!
+    var viewModel: WhatsNewViewModel?
     
     private lazy var mainView: WhatsNewView = {
         let mainView = WhatsNewView(delegate: self)
@@ -47,8 +47,8 @@ class SettingsWhatsNewViewController: ViewControllerBase {
         super.prepareView()
         view.addSubview(mainView)
         
-        mainView.updateDateLabel(date: viewModel.whatsNew.date)
-        mainView.updatedPatchNotes(patchNotes: viewModel.patchNotes)
+        mainView.updateDateLabel(date: viewModel?.whatsNew.date ?? "Unknown Date")
+        mainView.updatedPatchNotes(patchNotes: viewModel?.patchNotes ?? "Unknown Notes")
     }
     
     override func prepareAutoLayout() {
@@ -59,5 +59,9 @@ class SettingsWhatsNewViewController: ViewControllerBase {
     
     func handleDismiss() {
         delegate.handleDismiss()
+    }
+    
+    deinit {
+        print("settings vc - deinitialised")
     }
 }

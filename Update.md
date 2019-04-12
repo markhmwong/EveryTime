@@ -11,7 +11,8 @@ Adding a new recipe: keyboard hides continue button. Quite annoying. (not sure w
 
 
 ## Bugs
-Bug: after creating and deleting a few recipes, new recipes no longer show up in the main window
+after creating and deleting a few recipes, new recipes no longer show up in the main window
+crashes when the final step is set at 0 and the user adjusts time by -15secs on the second last step 
 
 ## To do (Priority list)
 - add keyword (interval, pomodoro) *

@@ -11,8 +11,13 @@ import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
+    var orientationLock = UIInterfaceOrientationMask.portrait
+    
+    var myOrientation: UIInterfaceOrientationMask = .portrait
+    
     var window: UIWindow?
+    
     var hasTopNotch: Bool {
         if #available(iOS 11.0,  *) {
             return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20
@@ -45,6 +50,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         CoreDataHandler.saveContext()
+    }
+    
+
+    
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return myOrientation
     }
 
     // MARK: - Core Data stack

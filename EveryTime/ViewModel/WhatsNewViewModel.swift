@@ -12,17 +12,12 @@ class WhatsNewViewModel {
     
     var whatsNew: WhatsNewProtocol
     
-    var patchNotes: String!
+    var patchNotes: String
     
     init(whatsNew: WhatsNewProtocol = WhatsNewFactory.getLatestWhatsNew()) {
         self.whatsNew = whatsNew
-        self.patchNotes = self.preparePatchNotes()
-    }
-    
-    func preparePatchNotes() -> String {
-        return whatsNew.patchNotes.reduce("") { (curr, next) -> String in
+        self.patchNotes = whatsNew.patchNotes.reduce("") { (curr, next) -> String in
             return "• \(next)" + "\n\n\(curr)"
         }
     }
-    
 }

@@ -9,8 +9,11 @@
 import UIKit
 
 class AddRecipeStepOne: AddRecipeBaseCell {
+    
     var addRecipeViewControllerDelegate: AddRecipeViewController?
+    
     var mainViewControllerDelegate: MainViewController?
+    
     private var continueButtonConstraint: NSLayoutConstraint!
 
     private var keyboardHeight: CGFloat = 0.0 {

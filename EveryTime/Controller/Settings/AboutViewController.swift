@@ -48,4 +48,8 @@ class AboutViewController: ViewControllerBase {
     func handleDismiss() {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    deinit {
+        print("deinitialised")
+    }
 }

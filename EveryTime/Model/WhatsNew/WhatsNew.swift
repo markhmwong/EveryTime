@@ -18,7 +18,6 @@ protocol WhatsNewProtocol {
     
     var patchNotes: [String] { get }
     
-    
 }
 
 struct WhatsNewFactory {
@@ -36,14 +35,13 @@ struct WhatsNewFactory {
 
 struct WhatsNewDetails {
     
-    
     struct WhatsNew1_1_14: WhatsNewProtocol {
         
         let date: String = ""
         
         let version: String = "1.1.14"
         
-        let build: String = "1.11"
+        let build: String = "1.12"
         
         let patchNotes: [String] = [
             "To be done. Apple Watch. Forward and back stepping. Whats new view controller pop up"
@@ -60,7 +58,7 @@ struct WhatsNewDetails {
         
         let patchNotes: [String] = [
             "Minor UI changes",
-            "The Recipe view now contains a button to show a larger view of the header view that shows the current timer and the next timer. Along with controls to adjust the timer.",
+            "The Recipe view now contains a button for a full screen view of the header view that shows the current timer and the next timer. Along with controls to adjust the timer.",
             "When creating a new Recipe, you can now chose whether the timer begins immediately or a time of your choosing.",
             "Names of the recipes/steps can now be edited",
             "A Whats New section in the Settings to keep updated on the latest changes to the app.",
