@@ -52,7 +52,7 @@ struct Theme {
             
             static var SizeCell: CGFloat { return standardTextSize }
             static var AddRecipeLabel: CGFloat { return standardTextSize }
-            static var MainViewCellName: CGFloat { return standardTextSize }
+            static var MainViewCellName: CGFloat { return 20.0 }
             static var MainViewCellTime: CGFloat { return 26.0 }
             static var MainViewStepName: CGFloat { return standardTextSize }
             static var StepTitle: CGFloat { return 20.0 }
@@ -116,6 +116,14 @@ struct Theme {
                     return 18.0
                 }
             }
+            static var LargeCloseButton: CGFloat {
+                switch UIDevice.current.screenType.rawValue {
+                case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
+                    return 12.0
+                default:
+                    return 14.0
+                }
+            }
 
             static var About: CGFloat { return standardTextSize }
             static var PatchNotesText: CGFloat { return standardTextSize }
@@ -151,10 +159,13 @@ struct Theme {
         }
         
         struct LargeDisplay {
-            static let LargeRecipeTitleLabel: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.LargeTitle)!, NSAttributedString.Key.foregroundColor: tf.Color.LightTextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
+            static let LargeRecipeTitleLabel: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.LargeTitle)!, NSAttributedString.Key.foregroundColor: tf.Color.LightTextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
+            static let LargeRecipeSubTitleLabel: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.LargeTitle)!, NSAttributedString.Key.foregroundColor: tf.Color.LightTextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
+
             static let LargeTimerLabel: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.LargeTimer)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
             static let LargeStepLabel: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.LargeStepCount)!, NSAttributedString.Key.foregroundColor: tf.Color.LightTextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
             static let UpNextStepNameLabel: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.LargeUpNextStepName)!, NSAttributedString.Key.foregroundColor: tf.Color.LightTextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
+            static let CloseButton: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.LargeCloseButton)!, NSAttributedString.Key.foregroundColor: tf.Color.LightTextColour, NSAttributedString.Key.kern: tf.Kern.TitleKernValue]
 
         }
         
@@ -197,7 +208,7 @@ struct Theme {
             static let StandardButton: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.StandardButton)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
             static let Item: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.NavItem)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
             static let RecipeTitle: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.NavItem)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
-            static let AppName: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.NavItem)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
+            static let Title: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.NavItem)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
             static let Height: CGFloat = 0.08
         }
         
@@ -222,7 +233,7 @@ struct Theme {
             static var GeneralBackgroundColor: UIColor { return UIColor(red:0.92, green:0.92, blue:0.92, alpha:1.0) }
             static var CellBackgroundColor: UIColor { return UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0) }
             static var NavBackgroundColor: UIColor { return UIColor(red:1.0, green:1.0, blue:1.0, alpha:1.0) }
-            static var NavBottomBorderColor: UIColor { return UIColor(red: 220.0 / 255.0, green: 220.0 / 255.0, blue: 220.0 / 255.0, alpha: 1.0) }
+            static var NavBottomBorderColor: UIColor { return UIColor(red: 220.0 / 255.0, green: 220.0 / 255.0, blue: 220.0 / 255.0, alpha: 0.5) }
             static var CellButtonBackgroundColor: UIColor { return UIColor(red:0.01, green:0.09, blue:0.14, alpha:1.0) }
         }
         

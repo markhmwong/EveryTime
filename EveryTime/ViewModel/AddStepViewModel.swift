@@ -39,13 +39,13 @@ enum AddStepPickerViewErrors: Error {
 
 struct StepValues {
     
-    var name: String?
+    var name: String
     
-    var hour: Int?
+    var hour: Int
     
-    var min: Int?
+    var min: Int
     
-    var sec: Int?
+    var sec: Int
     
     
     mutating func updateName(str: String) {
@@ -69,7 +69,7 @@ class AddStepViewModel {
     
     private var sEntity: StepEntity?
     
-    private var stepValues: StepValues
+    private var stepValues: StepValues?
     
     let maxCharacterLimitForNameLabel = 30
     
@@ -80,16 +80,20 @@ class AddStepViewModel {
         self.stepValues = stepValues
     }
     
-    func step() -> StepValues {
+    init(userSelectedValues stepEntity: StepEntity) {
+        self.sEntity = stepEntity
+    }
+    
+    func step() -> StepValues? {
         return stepValues
     }
 
     func validateNameInput() throws {
-        guard stepValues.name != "" else {
+        guard stepValues?.name != "" else {
             throw AddStepLabelErrors.labelNotFilled
         }
         
-        guard let length = stepValues.name?.count else {
+        guard let length = stepValues?.name.count else {
             throw AddStepLabelErrors.labelInvalidLength
         }
         
@@ -97,6 +101,24 @@ class AddStepViewModel {
             throw AddStepLabelErrors.labelLengthTooShort
         }
 
+        //catch character limit
+        guard length <= maxCharacterLimitForNameLabel else {
+            throw AddStepLabelErrors.labelLengthTooLong
+        }
+    }
+    
+    func validateNameInputWithEntity(name: String) throws {
+        
+        let length = name.count
+        
+        guard length != 0 else {
+            throw AddStepLabelErrors.labelNotFilled
+        }
+        
+        guard length > minCharacterLimitForNameLabel else {
+            throw AddStepLabelErrors.labelLengthTooShort
+        }
+        
         //catch character limit
         guard length <= maxCharacterLimitForNameLabel else {
             throw AddStepLabelErrors.labelLengthTooLong
@@ -128,18 +150,28 @@ class AddStepViewModel {
     }
     
     func updateStepValues(name: String = "Step Default", hrs: Int = 0, min: Int = 0, sec: Int = 0) {
-        stepValues.updateName(str: name)
-        stepValues.updateHour(hour: hrs)
-        stepValues.updateMinute(min: min)
-        stepValues.updateSecond(sec: sec)
+        stepValues?.updateName(str: name)
+        stepValues?.updateHour(hour: hrs)
+        stepValues?.updateMinute(min: min)
+        stepValues?.updateSecond(sec: sec)
     }
     
+    /// Creates a StepEntity from the provided data in the UIPicker View
     func transformToEntity(priority: Int16) {
-        sEntity = StepEntity(name: stepValues.name!, hours: stepValues.hour!, minutes: stepValues.min!, seconds: stepValues.sec!, priority: priority)
+        
+        guard let sv = stepValues else {
+            return
+        }
+        print("sv.name \(sv.name)")
+        sEntity = StepEntity(name: sv.name, hours: sv.hour, minutes: sv.min, seconds: sv.sec, priority: priority)
     }
     
     func grabEntity() -> StepEntity? {
         return sEntity
+    }
+    
+    func createStepEntity(name: String = "Step Default", hours: Int = 0, minutes: Int = 0, seconds: Int = 0, priority: Int16) {
+        sEntity = StepEntity(name: name, hours: hours, minutes: minutes, seconds: seconds, priority: priority)
     }
 }
 

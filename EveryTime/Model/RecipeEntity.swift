@@ -20,7 +20,7 @@ class RecipeEntity: NSManagedObject {
         self.init(entity: RecipeEntity.entity(), insertInto: CoreDataHandler.getContext())
         self.recipeName = name
         self.isPaused = true
-        self.createdDate = Date() //like an ID, don't change through the lifecycle of the recipe
+        self.createdDate = Date() //like an ID, don't change through the lifecycle of the recipe. must remain unique
         self.startDate = self.createdDate
         self.pauseStartDate = self.createdDate
         self.wasReset = false
@@ -94,7 +94,7 @@ extension RecipeEntity {
                 guard let date = createdDate else {
                     return
                 }
-                mvc.mainViewView.stepComplete(date)
+                mvc.mainView.stepComplete(date)
             }
             currStep.isLeading = false
             currStep.isComplete = true

@@ -25,6 +25,7 @@ class HeaderView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
     private lazy var headerStepTitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -78,16 +79,12 @@ class HeaderView: UIView {
         return button
     }()
     
-    private lazy var saveButton: UIButton = {
-        let button = UIButton()
-        button.setTitleColor(Theme.Font.Color.TextColour, for: .normal)
-        button.setAttributedTitle(NSAttributedString(string: "Save", attributes: Theme.Font.Nav.Item), for: .normal)
+    private lazy var saveButton: StandardButton = {
+        let button = StandardButton(title:"Save")
         button.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.alpha = 0.0
-        button.layer.cornerRadius = 5.0
-        button.layer.backgroundColor = UIColor.green.cgColor
-        button.contentEdgeInsets = UIEdgeInsets(top: 5.0, left: 15.0, bottom: 5.0, right: 15.0)
+        button.isEnabled = false
         return button
     }()
 
@@ -106,6 +103,9 @@ class HeaderView: UIView {
         backgroundColor = UIColor.clear
         addSubview(innerPaddedView)
 
+        fullScreenButton.addTarget(self, action: #selector(handleFullScreen), for: .touchUpInside)
+        innerPaddedView.addSubview(fullScreenButton)
+        
         headerTitleLabel.attributedText = NSAttributedString(string: "No name", attributes: Theme.Font.Recipe.HeaderTableView)
         innerPaddedView.addSubview(headerTitleLabel)
         innerPaddedView.addSubview(headerStepTimeLabel)
@@ -126,15 +126,11 @@ class HeaderView: UIView {
         innerPaddedView.addSubview(additionalTimeButton)
         innerPaddedView.addSubview(subtractTimeButton)
         innerPaddedView.addSubview(resetTimeButton)
-        
-        
-
-        fullScreenButton.addTarget(self, action: #selector(handleFullScreen), for: .touchUpInside)
-        innerPaddedView.addSubview(fullScreenButton)
     }
     
     private func setupAutoLayout() {
         
+        /// Height for header
         switch UIDevice.current.screenType.rawValue {
         case UIDevice.ScreenType.iPhones_6Plus_6sPlus_7Plus_8Plus.rawValue, UIDevice.ScreenType.iPhones_6_6s_7_8.rawValue:
             heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 2.8).isActive = true
@@ -177,7 +173,8 @@ class HeaderView: UIView {
         
         saveButton.trailingAnchor.constraint(equalTo: innerPaddedView.trailingAnchor, constant: -10.0).isActive = true
         saveButton.topAnchor.constraint(equalTo: innerPaddedView.topAnchor, constant: 10.0).isActive = true
-        
+        saveButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.18).isActive = true
+
         fullScreenButton.topAnchor.constraint(equalTo: innerPaddedView.topAnchor, constant: 10.0).isActive = true
         fullScreenButton.trailingAnchor.constraint(equalTo: innerPaddedView.trailingAnchor, constant: -10.0).isActive = true
         fullScreenButton.widthAnchor.constraint(equalToConstant: 15.0).isActive = true
@@ -238,7 +235,6 @@ class HeaderView: UIView {
     
     @objc func handleResetStepTime() {
         if let delegate = delegate {
-//            delegate.handleReset()
             delegate.handleResetStepTime()
         }
     }
@@ -250,7 +246,6 @@ class HeaderView: UIView {
     }
     
     @objc func handleFullScreen() {
-        print("redbox")
         if let delegate = delegate {
             delegate.handleLargeDisplay()
         }

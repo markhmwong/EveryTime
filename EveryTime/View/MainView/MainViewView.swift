@@ -49,7 +49,7 @@ class MainViewView: UIView {
     private lazy var appNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.attributedText = NSAttributedString(string: Bundle.appName(), attributes: Theme.Font.Nav.AppName)
+        label.attributedText = NSAttributedString(string: Bundle.appName(), attributes: Theme.Font.Nav.Title)
         return label
     }()
     
@@ -127,7 +127,7 @@ class MainViewView: UIView {
     
     func addToCollectionView() {
         DispatchQueue.main.async {
-            self.collView.insertItems(at: [IndexPath(item: self.delegate.recipeCollection.count - 1, section: 0)])
+            self.collView.insertItems(at: [IndexPath(item: self.delegate.dataSource.count - 1, section: 0)])
         }
     }
     
@@ -186,7 +186,7 @@ class MainViewView: UIView {
             CoreDataHandler.saveContext()
             DispatchQueue.main.async {
                 self.collView.performBatchUpdates({
-                    let insertIndexPaths = Array(0..<self.delegate.recipeCollection.count).map { IndexPath(item: $0, section: 0) }
+                    let insertIndexPaths = Array(0..<self.delegate.dataSource.count).map { IndexPath(item: $0, section: 0) }
                     self.collView.insertItems(at: insertIndexPaths)
                 }, completion: nil)
             }

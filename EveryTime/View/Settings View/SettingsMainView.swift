@@ -62,7 +62,7 @@ class SettingsMainView: UIView {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.attributedText = NSAttributedString(string: "Info", attributes: Theme.Font.Nav.AppName)
+        label.attributedText = NSAttributedString(string: "Settings", attributes: Theme.Font.Nav.Title)
         return label
     }()
     
@@ -164,6 +164,7 @@ extension SettingsMainView: UITableViewDelegate, UITableViewDataSource {
                     svc.present(vc, animated: true, completion: nil)
                 }
         }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -171,7 +172,6 @@ extension SettingsMainView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: settingsCellId, for: indexPath) as! SettingsViewCell
         cell.updateLabel(text: settingsViewControllerDelegate!.settingsViewModel.dataSource[indexPath.section][indexPath.row])
         if (indexPath.section == SettingsSections.Data.rawValue && indexPath.item == Data.Clear.rawValue) {

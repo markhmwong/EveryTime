@@ -14,7 +14,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         let cell = collectionView.cellForItem(at: indexPath) as! MainViewCell
         cell.animateCellForSelection()
         
-        let vc = RecipeViewControllerWithTableView(recipe: recipeCollection[indexPath.item], delegate: self, indexPath: indexPath)
+        let vc = RecipeViewControllerWithTableView(recipe: dataSource[indexPath.item], delegate: self, indexPath: indexPath)
         //        horizontalDelegate.dismissInteractor  = HorizontalTransitionInteractor(viewController: vc) // to be worked on. issue with timer when swiping to dismiss
         vc.transitioningDelegate = horizontalDelegate
         vc.modalPresentationStyle = .custom
@@ -24,7 +24,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return recipeCollection.count
+        return dataSource.count
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -35,7 +35,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionCellIds.RecipeCell.rawValue, for: indexPath) as! MainViewCell
         cell.mainViewController = self
-        cell.entity = recipeCollection[indexPath.row]
+        cell.entity = dataSource[indexPath.row]
         cell.cellForIndexPath = indexPath
         return cell
     }

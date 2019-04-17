@@ -15,19 +15,11 @@ after creating and deleting a few recipes, new recipes no longer show up in the 
 crashes when the final step is set at 0 and the user adjusts time by -15secs on the second last step 
 
 ## To do (Priority list)
-- add keyword (interval, pomodoro) *
-- auto start recipe option *
-- indicator of step progress in main view *
-- add larger display for current time *
-- revisit font size on main/recipe view *
+update name of step - still says 'unknown'
+- numeric indicator of step progress in main view *
 - resize/reshape pill completion indicator *
 - be able to edit steps and recipes (names) *
 - copy existing step and add it in add recipe process *
-- uilabel marquee
-- whats new page *
-
-- tap to dismiss  in recipe view (not sure what this means)
-
 
 - add apple watch
 - the entire adding process

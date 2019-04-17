@@ -7,12 +7,7 @@
 //
 
 import UIKit
-
 import MessageUI
-
-
-
-
 
 extension SettingsViewController: MFMailComposeViewControllerDelegate {
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {

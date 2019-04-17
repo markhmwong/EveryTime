@@ -10,23 +10,29 @@ import UIKit
 import CoreData
 
 class MainViewCell: EntityBaseCell<RecipeEntity> {
+    
     var mainViewController: MainViewController? = nil
+    
     var cellForIndexPath: IndexPath?
+    
     private lazy var recipeTimeLabel: UILabel = {
         let label = UILabel()
         label.attributedText = NSAttributedString(string: "00h 00m 00s", attributes: Theme.Font.Recipe.TimeAttribute)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
     private var nextShortestTimeLabel: UILabel? = nil
+    
     private lazy var nameLabelAnimationYMovement: CGFloat = 0.0
+    
     private var stepName: String? = nil
 
     override var entity: RecipeEntity? {
         didSet {
             guard let r = entity else {
                 return
-            }            
+            }
             prepareLabels(recipe: r)
             let bg = r.isPaused ? Theme.View.RecipeCell.RecipeCellPauseButtonInactive : Theme.View.RecipeCell.RecipeCellPauseButtonActive
             let textColor = r.isPaused ? Theme.Font.Color.TextColourDisabled : Theme.Font.Color.TextColour
@@ -73,13 +79,13 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
     }()
     private let bottomBorder: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 0.0)//Theme.Background.Color.NavBottomBorderColor
+        view.backgroundColor = Theme.Background.Color.NavBottomBorderColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     private lazy var pauseButtonView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.clear//Theme.Background.Color.CellButtonBackgroundColor
+        view.backgroundColor = Theme.Background.Color.Clear
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -117,6 +123,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         addSubview(nameLabel)
         addSubview(recipeTimeLabel)
         addSubview(stepNameLabel)
+        addSubview(bottomBorder)
         addSubview(timerHighlight)
         labelAutoLayout()
     }
@@ -125,8 +132,9 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         let leftSidePadding: CGFloat = 25.0
         nameLabel.anchorView(top: contentView.topAnchor, bottom: nil, leading: contentView.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 10.0, left: leftSidePadding, bottom: 0.0, right: 0.0), size: .zero)
         recipeTimeLabel.anchorView(top: nil, bottom: nil, leading: contentView.leadingAnchor, trailing: nil, centerY: contentView.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: textLabelPadding, left: leftSidePadding, bottom: 0.0, right: 0.0), size: .zero)
-        stepNameLabel.anchorView(top: nameLabel.bottomAnchor, bottom: nil, leading: recipeTimeLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: textLabelPadding, left: 0.0, bottom: 0.0, right: 0.0), size: .zero)
+        stepNameLabel.anchorView(top: nameLabel.bottomAnchor, bottom: nil, leading: recipeTimeLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0), size: .zero)
         timerHighlight.anchorView(top: nil, bottom: nil, leading: recipeTimeLabel.leadingAnchor, trailing: recipeTimeLabel.trailingAnchor, centerY: recipeTimeLabel.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0), size: CGSize(width: 0.0, height: 10.0))
+        bottomBorder.anchorView(top: nil, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: CGSize(width: 0.0, height: 1.0))
     }
     
     override func setupView() {

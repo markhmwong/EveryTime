@@ -1,41 +1,36 @@
 //
-//  AddStepsViewController.swift
-//  SimpleRecipeTimer
+//  AddRecipeSettingsAddStepViewController.swift
+//  EveryTime
 //
-//  Created by Mark Wong on 4/12/18.
-//  Copyright © 2018 Mark Wong. All rights reserved.
+//  Created by Mark Wong on 14/4/19.
+//  Copyright © 2019 Mark Wong. All rights reserved.
 //
 
 import UIKit
 
-enum PickerColumn: Int {
-    case hour = 0
-    case min = 2
-    case sec = 4
-}
-
-// refactor addstep into one base view controller
-protocol AddStepProtocol {
-    func grabValuesFromInput()
-    func preparePicker()
-}
-
-
-class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
+class AddRecipeAddStepViewController: ViewControllerBase, UITextFieldDelegate {
     
-    private var addStepViewModel: AddStepViewModel!
-//    private var mainView: AddStepMainView!
+    private var viewModel: AddStepViewModel!
+    //    private var mainView: AddStepMainView!
     //MARK: VARIABLES
+    
     private let maxCharacterLimitForNameLabel = 30
+    
     private let minCharacterLimitForNameLabel = 1
-    var recipeViewControllerDelegate: RecipeViewControllerDelegate?
+    
+    var delegate: AddRecipeViewController_B?
+    
     var recipeViewControllerWithTableViewDelegate: RecipeViewControllerWithTableView?
+    
     var interactor: OverlayInteractor? = nil
-
+    
     //UIPickerView
     var hours: Int = 0
+    
     var minutes: Int = 0
+    
     var seconds: Int = 0
+    
     
     var labelTextFieldTopAnchorPadding: CGFloat {
         switch UIDevice.current.screenType.rawValue {
@@ -43,15 +38,6 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
             return 30.0
         default:
             return 60.0
-        }
-    }
-    
-    var caretTopPadding: CGFloat {
-        switch UIDevice.current.screenType.rawValue {
-        case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
-            return 10.0
-        default:
-            return 50.0
         }
     }
     
@@ -77,19 +63,13 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
         input.translatesAutoresizingMaskIntoConstraints = false
         return input
     }()
-
-    private lazy var backButton: UIButton = {
+    
+    private lazy var dismissButton: UIButton = {
         let button = UIButton()
         button.setAttributedTitle(NSAttributedString(string: "Back", attributes: Theme.Font.Nav.Item), for: .normal)
-        button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
-    }()
-    
-    private lazy var navView: NavView = {
-        let view = NavView(frame: .zero, leftNavItem: backButton, rightNavItem: addButton)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
     }()
     
     private var titleLabel: UILabel = {
@@ -98,30 +78,37 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
         label.attributedText = NSAttributedString(string: "New Step", attributes: Theme.Font.Nav.Title)
         return label
     }()
-    
-    private lazy var addButton: UIButton = {
-        let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "Add", attributes: Theme.Font.Nav.Item), for: .normal)
-        button.addTarget(self, action: #selector(handleAdd), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+
+    private lazy var navView: NavView = {
+        let view = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: addButton)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     // to be changed
     private lazy var mainView: UIView = {
-        let view = UIView()
+       let view = UIView()
         view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
         
     }()
     
+    private lazy var addButton: UIButton = {
+        let button = UIButton()
+        button.setAttributedTitle(NSAttributedString(string: "Add", attributes: Theme.Font.Nav.Item), for: .normal)
+        button.addTarget(self, action: #selector(handleAddStep), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     private let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
-    init(delegate: RecipeViewControllerWithTableView?, viewModel: AddStepViewModel) {
+    init(delegate: AddRecipeViewController_B?, viewModel: AddStepViewModel) {
         super.init(nibName: nil, bundle: nil)
-        self.recipeViewControllerDelegate = delegate
-        self.addStepViewModel = viewModel
+        self.delegate = delegate
+        self.viewModel = viewModel
+        self.labelTextField.attributedText = NSAttributedString(string: "\(viewModel.grabEntity()?.stepName ?? "Step")", attributes: Theme.Font.Recipe.TextFieldAttribute)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -134,9 +121,7 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        if let rvc = recipeViewControllerDelegate {
-            rvc.willReloadTableData()
-        }
+        super.viewWillDisappear(animated)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -147,14 +132,18 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
     func showAlertBox(_ message: String) {
         let alert = UIAlertController(title: "Hold up!", message: "\(message)", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        guard let delegate = recipeViewControllerWithTableViewDelegate else {
+        alert.modalPresentationStyle = .overCurrentContext
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    @objc func handleDismiss() {
+        guard let d = delegate else {
             return
         }
-        delegate.present(alert, animated: true, completion: nil)
+        d.dismiss(animated: true, completion: nil)
     }
     
-    //MARK: HANDLE DONE BUTTON
-    @objc func handleAdd() {
+    @objc func handleAddStep() {
         grabValuesFromInput()
     }
     
@@ -165,7 +154,15 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
         let sec = countDownPicker.selectedRow(inComponent: PickerColumn.sec.rawValue)
 
         do {
-            try addStepViewModel.validatePickerView(hrs: hrs, min: min, sec: sec)
+            try viewModel.validatePickerView(hrs: hrs, min: min, sec: sec)
+            try viewModel.validateNameInputWithEntity(name: name)
+            guard let vm = delegate?.viewModel else {
+                return
+            }
+            let priority = vm.dataSource.count
+            viewModel.createStepEntity(name: name, hours: hrs, minutes: min, seconds: sec, priority: Int16(priority))
+            delegate?.didReturnValuesFromAddingStep(step: viewModel.grabEntity()!)
+            self.dismiss(animated: true) { }
         } catch AddStepPickerViewErrors.allZero {
             showAlertBox("At least one unit of time must be greater than 0")
         } catch AddStepPickerViewErrors.lessThanZero {
@@ -176,66 +173,45 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
             showAlertBox("Minutes is greater than 60")
         } catch AddStepPickerViewErrors.greaterThanAMinute {
             showAlertBox("Seconds is greater than 60")
-        } catch {
-            showAlertBox("Error unknown with picker view")
-        }
-        
-        do {
-            try addStepViewModel.validateNameInput()
         } catch AddStepLabelErrors.labelNotFilled {
             showAlertBox("Please fill in the label")
         } catch AddStepLabelErrors.labelLengthTooLong {
-            showAlertBox("Length too long, keep it under \(addStepViewModel.maxCharacterLimitForNameLabel)")
+            showAlertBox("Length too long, keep it under \(viewModel.maxCharacterLimitForNameLabel)")
         } catch AddStepLabelErrors.labelInvalidLength {
             showAlertBox("Please Invalid Length")
         } catch AddStepLabelErrors.labelLengthTooShort {
-            showAlertBox("Too short")
+            showAlertBox("Label is too short, minimum characters is 2")
         } catch {
             showAlertBox("Error unknown with name label")
         }
-        
-
-        guard let rvc = recipeViewControllerDelegate else {
-            return
-        }
-        addStepViewModel.updateStepValues(name: name, hrs: hrs, min: min, sec: sec)
-        addStepViewModel.transformToEntity(priority: Int16(rvc.stepCount() - 1))
-        rvc.didReturnValues(step: addStepViewModel.grabEntity()!)
-        recipeViewControllerWithTableViewDelegate?.startTimer()
-        self.dismiss(animated: true) { }
     }
     
     override func prepareViewController() {
         super.prepareViewController()
         view.layer.cornerRadius = Theme.View.CornerRadius
-        view.backgroundColor = Theme.Background.Color.NavTopFillBackgroundColor
+        view.backgroundColor = UIColor.white
     }
     
     override func prepareView() {
         super.prepareView()
         view.addSubview(mainView)
-
         preparePicker()
-        if let rvc = recipeViewControllerDelegate {
-            
-            guard let step = addStepViewModel.step() else {
-                return
-            }
-            
-            let stepName = "\(step.name) \(rvc.stepCount())"
-            addStepViewModel.updateStepValues(name: stepName)
-            labelTextField.attributedText = NSAttributedString(string: stepName, attributes: Theme.Font.Recipe.TextFieldAttribute)
-        }
-        
         view.addSubview(navView)
         view.addSubview(labelTextField)
+        
         navView.addSubview(titleLabel)
-
+        
     }
     
-
     override func prepareAutoLayout() {
         super.prepareAutoLayout()
+        
+        let navTopConstraint = !appDelegate.hasTopNotch ? view.topAnchor : nil
+        let heightByNotch = !appDelegate.hasTopNotch ? Theme.View.Nav.HeightWithoutNotch : Theme.View.Nav.HeightWithNotch
+        
+        navView.anchorView(top: navTopConstraint, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
+        navView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: heightByNotch).isActive = true
+        
         labelTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         labelTextField.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         labelTextField.topAnchor.constraint(equalTo: navView.bottomAnchor, constant: labelTextFieldTopAnchorPadding).isActive = true
@@ -247,12 +223,6 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
         titleLabel.centerYAnchor.constraint(equalTo: navView.centerYAnchor, constant: 0.0).isActive = true
         titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
         
-        let navTopConstraint = !appDelegate.hasTopNotch ? view.topAnchor : nil
-        let heightByNotch = !appDelegate.hasTopNotch ? Theme.View.Nav.HeightWithoutNotch : Theme.View.Nav.HeightWithNotch
-        
-        navView.anchorView(top: navTopConstraint, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
-        navView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: heightByNotch).isActive = true
-
         mainView.anchorView(top: navView.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
     }
     
@@ -262,6 +232,7 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
             let safeAreaInsets = self.view.safeAreaInsets
             navView.topAnchor.constraint(equalTo: view.topAnchor, constant: safeAreaInsets.top).isActive = true //keeps the bar in position as the view performs the transition
         }
+
     }
     
     func preparePicker() {
@@ -285,9 +256,5 @@ class AddStepViewController: ViewControllerBase, UITextFieldDelegate {
         countDownPicker.translatesAutoresizingMaskIntoConstraints = false
         countDownPicker.setPickerLabels(labels: labelDict, containedView: view)
         view.addSubview(countDownPicker)
-    }
-    
-    @objc func handleCancel() {
-        self.dismiss(animated: true, completion: nil)
     }
 }

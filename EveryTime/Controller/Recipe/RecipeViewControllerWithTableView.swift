@@ -15,21 +15,35 @@ enum BottomViewState: Int {
 }
 
 class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewControllerDelegate {
+    
     var transitionDelegate = OverlayTransitionDelegate()
+    
     var horizontalDelegate = HorizontalTransitionDelegate()
+    
     var dismissInteractor: OverlayInteractor!
+    
     var horizontalTransitionInteractor: HorizontalTransitionInteractor? = nil
+    
     var paddedView: UIView!
+    
     var indexPathSelectedFromMainView: IndexPath?
     
     private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     private var bottomViewState: BottomViewState?
+    
     private let screenSize = UIScreen.main.bounds.size
+    
     private let rowHeight: CGFloat = 120.0
+    
     private var addButtonState: ScrollingState = .Idle
+    
     private var stepSelected: Int = 0
+    
     private var sortedStepSet: [StepEntity] = []
+    
     private lazy var navView: NavView? = nil
+    
     private var step: StepEntity?
     
     private lazy var tableView: UITableView = {
@@ -101,7 +115,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+        super.viewDidAppear(animated)
     }
     
     override func prepareViewController() {
@@ -150,7 +164,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
                 self.navView?.rightNavItem?.isEnabled = true
                 self.pauseRecipeButton.updateButtonTitle(with: "Unpause")
             }
-            
         } else {
             DispatchQueue.main.async {
                 self.navView?.rightNavItem?.isEnabled = false
@@ -162,6 +175,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     }
     
     override func viewSafeAreaInsetsDidChange() {
+        super.viewSafeAreaInsetsDidChange()
         let safeAreaInsets = self.view.safeAreaInsets
         guard let nav = navView else {
             return
@@ -176,6 +190,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         }
         
         tableView.anchorView(top: nav.bottomAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
+        
         let navTopConstraint = !appDelegate.hasTopNotch ? view.topAnchor : nil
         let heightByNotch = !appDelegate.hasTopNotch ? Theme.View.Nav.HeightWithoutNotch : Theme.View.Nav.HeightWithNotch
 
@@ -302,8 +317,6 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
         }
         
         return UISwipeActionsConfiguration(actions: [delete])
-        
-
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -322,7 +335,6 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
                 self.tableView.reloadRows(at: indexPathsToReloadArr, with: .none)
                 self.executeBottomViewState(.ShowAddStep)
                 complete(true)
-
             }
         }
         
@@ -379,6 +391,7 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
         }
         stepSelected = indexPath.row
         step = stepArr[stepSelected]
+
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -550,8 +563,6 @@ extension RecipeViewControllerWithTableView: UIScrollViewDelegate {
         UIView.animate(withDuration: 0.2, delay: 0.2, options: [.curveEaseInOut], animations: {
             self.pauseRecipeButton.center.y = self.view.frame.maxY - 50.0
         }, completion: nil)
-
-
     }
 }
 
@@ -746,12 +757,12 @@ extension RecipeViewControllerWithTableView {
     func handleAddStep() {
         let viewModel = AddStepViewModel(userSelectedValues: StepValues(name: "Step", hour: 0, min: 0, sec: 0))
         let vc = AddStepViewController(delegate: self, viewModel: viewModel)
-        vc.transitioningDelegate = transitionDelegate
-        vc.modalPresentationStyle = .custom
-        dismissInteractor = OverlayInteractor()
-        dismissInteractor.attachToViewController(viewController: vc, withView: vc.view, presentViewController: nil)
-        vc.interactor = dismissInteractor
-        transitionDelegate.dismissInteractor = dismissInteractor
+//        vc.transitioningDelegate = transitionDelegate
+        vc.modalPresentationStyle = .overCurrentContext
+//        dismissInteractor = OverlayInteractor()
+//        dismissInteractor.attachToViewController(viewController: vc, withView: vc.view, presentViewController: nil)
+//        vc.interactor = dismissInteractor
+//        transitionDelegate.dismissInteractor = dismissInteractor
         self.present(vc, animated: true, completion: nil)
     }
 
@@ -762,15 +773,15 @@ extension RecipeViewControllerWithTableView {
         
         if (recipe.isPaused) {
             DispatchQueue.main.async {
-                self.settingsButton.isEnabled = true
-                self.settingsButton.alpha = 1.0
+                self.settingsButton.isEnabled = false
+                self.settingsButton.alpha = 0.3
                 self.pauseRecipeButton.updateButtonTitle(with: "Pause")
             }
             recipe.unpauseStepArr()
         } else {
             DispatchQueue.main.async {
-                self.settingsButton.isEnabled = false
-                self.settingsButton.alpha = 0.3
+                self.settingsButton.isEnabled = true
+                self.settingsButton.alpha = 1.0
                 self.pauseRecipeButton.updateButtonTitle(with: "Unpause")
             }
             recipe.pauseStepArr()

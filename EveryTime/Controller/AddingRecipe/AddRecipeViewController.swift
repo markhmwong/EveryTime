@@ -211,7 +211,7 @@ class AddRecipeViewController: ViewControllerBase {
         CoreDataHandler.saveContext()
         if let mvc = mainViewControllerDelegate {
             mvc.addToRecipeCollection(r: rEntity)
-            mvc.mainViewView.addToCollectionView()
+            mvc.mainView.addToCollectionView()
             mvc.startTimer()
         }
     }
@@ -267,10 +267,10 @@ extension AddRecipeViewController {
     @objc func handleFinishButton() {
 //        let cell = collView.cellForItem(at: IndexPath(item: 1, section: 0)) as! AddRecipeStepTwo
 //        let tableView = cell.tableView
-        guard let i = interactor else {
-            return
-        }
-        i.pan.isEnabled = false
+//        guard let i = interactor else {
+//            return
+//        }
+//        i.pan.isEnabled = false
 //        tableView.isEditing = !tableView.isEditing
 //        finishButton.setAttributedTitle(NSAttributedString(string: "Finish", attributes: Theme.Font.Recipe.TitleAttribute), for: .normal)
 

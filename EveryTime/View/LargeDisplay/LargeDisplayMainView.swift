@@ -16,10 +16,8 @@ class LargeDisplayMainView: UIView {
 
     private lazy var closeButton: UIButton = {
         let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "close", attributes: Theme.Font.LargeDisplay.UpNextStepNameLabel), for: .normal)
-//        button.setTitle("close", for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "close", attributes: Theme.Font.LargeDisplay.CloseButton), for: .normal)
         button.contentEdgeInsets = UIEdgeInsets(top: 0.01, left: 0.0, bottom: 0.0, right: -0.01)
-//        button.setTitleColor(UIColor.black, for: .normal)
         button.addTarget(self, action: #selector(handleClose), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -41,7 +39,7 @@ class LargeDisplayMainView: UIView {
     
     lazy var stepLabel: MarqueeLabel = {
         let label = MarqueeLabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50.0), rate: 30.0, fadeLength: 10.0)
-        label.attributedText = NSAttributedString(string: "Unknown step", attributes: Theme.Font.LargeDisplay.LargeRecipeTitleLabel)
+        label.attributedText = NSAttributedString(string: "Unknown step", attributes: Theme.Font.LargeDisplay.LargeRecipeSubTitleLabel)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         return label
@@ -57,7 +55,7 @@ class LargeDisplayMainView: UIView {
     
     lazy var upNextStepLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "Up Next", attributes: Theme.Font.LargeDisplay.LargeRecipeTitleLabel)
+        label.attributedText = NSAttributedString(string: "Up Next", attributes: Theme.Font.LargeDisplay.LargeRecipeSubTitleLabel)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         return label
@@ -121,10 +119,10 @@ class LargeDisplayMainView: UIView {
     func setupConstraints() {
         let topConstraint = !appDelegate.hasTopNotch ? topAnchor : nil
         
-        recipeLabel.anchorView(top: topConstraint, bottom: nil, leading: leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 20, left: 10, bottom: 0, right: -10), size: .zero)
+        recipeLabel.anchorView(top: topConstraint, bottom: nil, leading: leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 40, left: 10, bottom: 0, right: -10), size: .zero)
         timeLabel.anchorView(top: nil, bottom: nil, leading: nil, trailing: nil, centerY: centerYAnchor, centerX: centerXAnchor, padding: .zero, size: .zero)
         stepLabel.anchorView(top: nil, bottom: timeLabel.topAnchor, leading: recipeLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: .zero, size: CGSize(width: UIScreen.main.bounds.width - 20.0, height: 40.0))
-        closeButton.anchorView(top: topAnchor, bottom: nil, leading: nil, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0), size: CGSize(width: 80, height: 0))
+        closeButton.anchorView(top: topAnchor, bottom: nil, leading: nil, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0), size: CGSize(width: 80, height: 0))
         upNextStepLabel.anchorView(top: nil, bottom: upNextStepNameLabel.topAnchor, leading: recipeLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: .zero, size: .zero)
         upNextStepNameLabel.anchorView(top: nil, bottom: bottomAnchor, leading: recipeLabel.leadingAnchor, trailing: recipeLabel.trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: CGSize(width: UIScreen.main.bounds.width, height: 40.0))
         stepsCompleteLabel.anchorView(top: recipeLabel.bottomAnchor, bottom: nil, leading: timeLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: .zero, size: .zero)

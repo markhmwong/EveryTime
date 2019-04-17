@@ -410,21 +410,21 @@ class AddRecipeStepTwo: AddRecipeBaseCell {
             return
         }
         
-        let step = TableViewStep()
+        let step = TableViewStep(hours: hour.integerValue!, minutes: minute.integerValue!, seconds: second.integerValue!, name: name, date: Date(), priority: Int16(dataSource.count))
         
-        step.name = name
-        if let hourValue = hour.integerValue {
-            step.hours = hourValue
-        }
-        
-        if let minuteValue = minute.integerValue {
-            step.minutes = minuteValue
-        }
-        
-        if let secondValue = second.integerValue {
-            step.seconds = secondValue
-        }
-        step.priority = Int16(dataSource.count)
+//        step.name = name
+//        if let hourValue = hour.integerValue {
+//            step.hours = hourValue
+//        }
+//
+//        if let minuteValue = minute.integerValue {
+//            step.minutes = minuteValue
+//        }
+//
+//        if let secondValue = second.integerValue {
+//            step.seconds = secondValue
+//        }
+//        step.priority = Int16(dataSource.count)
         dataSource.append(step)
         
         if (dataSource.count > 0) {
@@ -596,8 +596,8 @@ extension AddRecipeStepTwo: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
-        let sourceObj = self.dataSource[sourceIndexPath.row]
-        let destinationObj = self.dataSource[destinationIndexPath.row]
+        var sourceObj = self.dataSource[sourceIndexPath.row]
+        var destinationObj = self.dataSource[destinationIndexPath.row]
         
         //switch dates
         let tempDestinationPriority = destinationObj.priority

@@ -67,7 +67,7 @@ class AddRecipeStepOne: AddRecipeBaseCell {
         guard let mvcd = mainViewControllerDelegate else {
             return
         }
-        let count = mvcd.recipeCollection.count + 1
+        let count = mvcd.dataSource.count + 1
         recipeNameTextField.attributedText = NSAttributedString(string: "Recipe \(count)", attributes: Theme.Font.Recipe.TextFieldAttribute)
         continueButton.addTarget(self, action: #selector(handleContinueButton), for: .touchUpInside)
         addSubview(continueButton)
@@ -143,4 +143,5 @@ class AddRecipeStepOne: AddRecipeBaseCell {
     func hideErrorMessage() {
         errorMessageLabel.layer.opacity = 0.0
     }
+    
 }

@@ -24,12 +24,3 @@ class AddRecipeBaseCell: UICollectionViewCell {
     }
     
 }
-
-class TableViewStep {
-    var hours: Int = 0
-    var minutes: Int = 0
-    var seconds: Int = 0
-    var name: String = ""
-    var date: Date = Date()
-    var priority: Int16 = 0
-}

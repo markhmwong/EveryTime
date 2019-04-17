@@ -26,7 +26,7 @@ extension MainViewController: TimerProtocol {
     }
     
     @objc func update() {
-        let cells = self.mainViewView.collView.visibleCells as! [MainViewCell] //change this to all cells not just visible
+        let cells = self.mainView.collView.visibleCells as! [MainViewCell] //change this to all cells not just visible
         for cell in cells {
             if let r = cell.entity {
                 if (!r.isPaused) {

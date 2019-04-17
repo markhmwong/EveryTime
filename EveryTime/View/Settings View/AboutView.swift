@@ -34,6 +34,13 @@ class AboutView: UIView {
         return view
     }()
     
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.attributedText = NSAttributedString(string: "About", attributes: Theme.Font.Nav.Title)
+        return label
+    }()
+    
     private let textView: UITextView = {
         let view = UITextView()
         view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
@@ -77,6 +84,7 @@ class AboutView: UIView {
     private func setupView() {
         addSubview(navView)
         textView.attributedText = NSAttributedString(string: details, attributes: Theme.Font.About.Text)
+        addSubview(titleLabel)
         addSubview(textView)
     }
     
@@ -88,6 +96,8 @@ class AboutView: UIView {
         navView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: heightByNotch).isActive = true
 
         textView.anchorView(top: navView.bottomAnchor, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
+        titleLabel.anchorView(top: nil, bottom: nil, leading: nil, trailing: nil, centerY: navView.centerYAnchor, centerX: navView.centerXAnchor, padding: .zero, size: .zero)
+
     }
     
     override func safeAreaInsetsDidChange() {

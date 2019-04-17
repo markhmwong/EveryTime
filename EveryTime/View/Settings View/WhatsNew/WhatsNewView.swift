@@ -28,6 +28,13 @@ class WhatsNewView: UIView {
         return view
     }()
     
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.attributedText = NSAttributedString(string: "What's New", attributes: Theme.Font.Nav.Title)
+        return label
+    }()
+    
     lazy var patchNotesTextView: UITextView = {
         let view = UITextView()
         view.backgroundColor = Theme.Background.Color.Clear
@@ -81,6 +88,7 @@ class WhatsNewView: UIView {
         addSubview(textContainer)
         addSubview(patchNotesHeader)
         addSubview(dateLabel)
+        navView.addSubview(titleLabel)
         textContainer.addSubview(patchNotesTextView)
     }
     
@@ -94,6 +102,8 @@ class WhatsNewView: UIView {
         patchNotesHeader.anchorView(top: textContainer.topAnchor, bottom: nil, leading: textContainer.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: .zero, size: .zero)
         dateLabel.anchorView(top: patchNotesHeader.bottomAnchor, bottom: nil, leading: textContainer.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: .zero, size: .zero)
         patchNotesTextView.anchorView(top: dateLabel.bottomAnchor, bottom: textContainer.bottomAnchor, leading: textContainer.leadingAnchor, trailing: textContainer.trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 50.0, left: 0.0, bottom: 0.0, right: 0.0), size: .zero)
+        titleLabel.anchorView(top: nil, bottom: nil, leading: nil, trailing: nil, centerY: navView.centerYAnchor, centerX: navView.centerXAnchor, padding: .zero, size: .zero)
+
     }
     
     override func safeAreaInsetsDidChange() {
@@ -117,6 +127,5 @@ class WhatsNewView: UIView {
     }
     
     deinit {
-        print("deinitialised")
     }
 }

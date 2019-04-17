@@ -29,7 +29,7 @@ class MainViewController: ViewControllerBase {
             return 3.0
         }
     }
-    var recipeCollection: [RecipeEntity] = []
+    var dataSource: [RecipeEntity] = []
     var horizontalDelegate = HorizontalTransitionDelegate()
     var timer: Timer?
 
@@ -40,7 +40,7 @@ class MainViewController: ViewControllerBase {
     private var sections: Int = 0
     private let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
-    lazy var mainViewView: MainViewView = {
+    lazy var mainView: MainViewView = {
        let view = MainViewView(delegate: self)
         view.backgroundColor = UIColor.white
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -97,7 +97,7 @@ class MainViewController: ViewControllerBase {
 
      override func prepareView() {
         super.prepareView()
-        view.addSubview(mainViewView)
+        view.addSubview(mainView)
         loadDataFromCoreData()
 
     }
@@ -105,7 +105,7 @@ class MainViewController: ViewControllerBase {
     override func prepareAutoLayout() {
         super.prepareAutoLayout()
         
-        mainViewView.anchorView(top: view.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), size: CGSize(width: 0, height: 0))
+        mainView.anchorView(top: view.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), size: CGSize(width: 0, height: 0))
     }
     
 //    func prepareWhatsNew() {
@@ -125,7 +125,7 @@ class MainViewController: ViewControllerBase {
     }
 
     func addToRecipeCollection(r: RecipeEntity) {
-        recipeCollection.append(r)
+        dataSource.append(r)
     }
 
     func loadDataFromCoreData() {
@@ -133,8 +133,8 @@ class MainViewController: ViewControllerBase {
             guard let rEntityArr = CoreDataHandler.fetchEntity(in: RecipeEntity.self) else {
                 return
             }
-            self.recipeCollection = self.sortRecipeCollection(in: rEntityArr)
-            self.mainViewView.willReloadTableData()
+            self.dataSource = self.sortRecipeCollection(in: rEntityArr)
+            self.mainView.willReloadTableData()
         }
     }
     
@@ -149,7 +149,7 @@ class MainViewController: ViewControllerBase {
         let textColor = !recipe.isPaused ? Theme.Font.Color.TextColour : Theme.Font.Color.TextColourDisabled
         let highlightAlpha: CGFloat = !recipe.isPaused ? 0.25 : 0.85
         
-        let cell = mainViewView.collView.cellForItem(at: indexPath) as! MainViewCell
+        let cell = mainView.collView.cellForItem(at: indexPath) as! MainViewCell
         DispatchQueue.main.async {
             cell.updateStepLabel()
             cell.updatePauseHighlight()
@@ -160,13 +160,13 @@ class MainViewController: ViewControllerBase {
     //binary search through all recipes
     func searchForIndex(_ date: Date) -> Int {
         var left = 0
-        var right = recipeCollection.count - 1
+        var right = dataSource.count - 1
         while (left <= right) {
             let middle = left + (right - left) / 2
-            if (recipeCollection[middle].createdDate! == date)  {
+            if (dataSource[middle].createdDate! == date)  {
                     return middle
                 }
-            if (recipeCollection[middle].createdDate! < date) {
+            if (dataSource[middle].createdDate! < date) {
                    left = middle + 1
                 } else {
                     right = middle - 1
@@ -190,13 +190,15 @@ extension MainViewController {
     }
     
     func handleAddRecipe() {
-        let vc = AddRecipeViewController(delegate:self)
-        vc.transitioningDelegate = transitionDelegate
-        vc.modalPresentationStyle = .custom
-        dismissInteractor = OverlayInteractor()
-        dismissInteractor.attachToViewController(viewController: vc, withView: vc.view, presentViewController: nil)
-        vc.interactor = dismissInteractor
-        transitionDelegate.dismissInteractor = dismissInteractor
+        let vc = AddRecipeViewController_B(delegate:self)
+//        let vc = AddRecipeViewController(delegate:self)
+//        vc.transitioningDelegate = transitionDelegate
+//        vc.modalPresentationStyle = .custom
+//        dismissInteractor = OverlayInteractor()
+//        dismissInteractor.attachToViewController(viewController: vc, withView: vc.view, presentViewController: nil)
+//        vc.interactor = dismissInteractor
+        vc.modalPresentationStyle = .overCurrentContext
+//        transitionDelegate.dismissInteractor = dismissInteractor
         present(vc, animated: true, completion: nil)
     }
 
@@ -204,10 +206,10 @@ extension MainViewController {
         let alert = UIAlertController(title: "Are you sure?", message: "This will delete every recipes", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
-            let deleteIndexPaths = Array(0..<self.recipeCollection.count).map { IndexPath(item: $0, section: 0) }
-           self.recipeCollection.removeAll()
-            self.mainViewView.collView.performBatchUpdates({
-                self.mainViewView.collView.deleteItems(at: deleteIndexPaths)
+            let deleteIndexPaths = Array(0..<self.dataSource.count).map { IndexPath(item: $0, section: 0) }
+           self.dataSource.removeAll()
+            self.mainView.collView.performBatchUpdates({
+                self.mainView.collView.deleteItems(at: deleteIndexPaths)
             }, completion: nil)
             if (CoreDataHandler.deleteAllRecordsIn(entity: RecipeEntity.self)) {
                 CoreDataHandler.saveContext()
@@ -217,10 +219,10 @@ extension MainViewController {
     }
     
     func deleteAllRecipes() {
-        let deleteIndexPaths = Array(0..<self.recipeCollection.count).map { IndexPath(item: $0, section: 0) }
-        self.recipeCollection.removeAll()
-        self.mainViewView.collView.performBatchUpdates({
-            self.mainViewView.collView.deleteItems(at: deleteIndexPaths)
+        let deleteIndexPaths = Array(0..<self.dataSource.count).map { IndexPath(item: $0, section: 0) }
+        self.dataSource.removeAll()
+        self.mainView.collView.performBatchUpdates({
+            self.mainView.collView.deleteItems(at: deleteIndexPaths)
         }, completion: nil)
         if (CoreDataHandler.deleteAllRecordsIn(entity: RecipeEntity.self)) {
             CoreDataHandler.saveContext()
@@ -232,14 +234,14 @@ extension MainViewController {
         let index = searchForIndex(date)
 
         if (index != -1) {
-            let recipeName = recipeCollection[index].recipeName
-            let recipeDate = recipeCollection[index].createdDate
+            let recipeName = dataSource[index].recipeName
+            let recipeDate = dataSource[index].createdDate
             let id = "\(recipeName!).\(recipeDate)"
             LocalNotificationsService.shared.notificationCenterInstance().removePendingNotificationRequests(withIdentifiers: [id])
             
-            recipeCollection.remove(at: index)
+            dataSource.remove(at: index)
             DispatchQueue.main.async {
-                self.mainViewView.collView.deleteItems(at: [IndexPath(item: index, section: 0)])
+                self.mainView.collView.deleteItems(at: [IndexPath(item: index, section: 0)])
             }
             CoreDataHandler.deleteEntity(entity: RecipeEntity.self, createdDate: date)
         }

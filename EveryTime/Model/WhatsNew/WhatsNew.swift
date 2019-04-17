@@ -50,19 +50,19 @@ struct WhatsNewDetails {
     
     struct WhatsNew1_1_13: WhatsNewProtocol {
         
-        let date: String = "April 9, 2019"
+        let date: String = "April 16, 2019"
         
         let version: String = "1.1.13"
         
-        let build: String = "1.11"
+        let build: String = "1.13"
         
         let patchNotes: [String] = [
-            "Minor UI changes",
-            "The Recipe view now contains a button for a full screen view of the header view that shows the current timer and the next timer. Along with controls to adjust the timer.",
-            "When creating a new Recipe, you can now chose whether the timer begins immediately or a time of your choosing.",
-            "Names of the recipes/steps can now be edited",
-            "A Whats New section in the Settings to keep updated on the latest changes to the app.",
-            "When creating a new Recipe you can now copy an existing step that was already made.",
+            "Minor UI changes throughout the app to improve consistency and clarity",
+            "Email feedback now available",
+            "Full Screen - A full screen view of the Recipe. The new feature contains a minimal design of larger text for clarity with details of the current step and next step.",
+            "Auto Start - When creating a new Recipe, you can now chose whether the timer begins immediately or a time of your choosing.",
+            "Whats New - A Whats New section in Settings to keep updated on the latest changes to the app.",
+            "UI Changes - Adding a recipe now made easier",
         ]
     }
     

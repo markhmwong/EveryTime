@@ -33,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
+    /* not running, active, inactive, suspended and background*/
 
     func applicationWillResignActive(_ application: UIApplication) {
         CoreDataHandler.saveContext()
