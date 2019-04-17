@@ -15,6 +15,18 @@ class CoreDataHandler {
     fileprivate static let debug: Bool = true
     fileprivate static var context: NSManagedObjectContext? = nil
     
+    static var persistentContainer: NSPersistentContainer = {
+        
+        let container = NSPersistentContainer(name: "SimpleRecipeTimer")
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        })
+        container.viewContext.mergePolicy = NSMergePolicy(merge: NSMergePolicyType.mergeByPropertyObjectTrumpMergePolicyType);
+        return container
+    }()
+    
     // watchkit
     class func sharedAppGroup() -> String {
         return "group.com.whizbang.EveryTime"
@@ -49,15 +61,19 @@ class CoreDataHandler {
 //        moc.persistentStoreCoordinator = coordinator
 //        return moc
 //    }
-    
+//    class func loadContext() -> NSManagedObjectContext {
+//        let coordinator = CoreDataHandler.persistantStoreCoordinator()
+//        let moc = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)//check
+//        moc.persistentStoreCoordinator = coordinator
+//        return moc
+//    }
     
     class func loadContext() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        self.context = appDelegate.persistentContainer.viewContext
-//        self.context = CoreDataHandler.getContext()
+        self.context = persistentContainer.viewContext
     }
     
     class func getContext() -> NSManagedObjectContext {
+        
         return self.context!
     }
     
