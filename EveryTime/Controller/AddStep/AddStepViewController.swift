@@ -93,8 +93,7 @@ class AddStepViewController: AddStepViewControllerBase {
         }
         viewModel.updateStepValues(name: name, hrs: hrs, min: min, sec: sec)
         viewModel.transformToEntity(priority: Int16(rvc.stepCount() - 1))
-        rvc.didReturnValues(step: viewModel.grabEntity()!)
-        delegate?.startTimer()
+        rvc.didReturnValues(step: viewModel.grabEntity()!)        
         self.dismiss(animated: true) { }
     }
 }
