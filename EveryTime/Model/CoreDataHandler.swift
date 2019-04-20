@@ -27,53 +27,11 @@ class CoreDataHandler {
         return container
     }()
     
-    // watchkit
-    class func sharedAppGroup() -> String {
-        return "group.com.whizbang.EveryTime"
-    }
-    
-    class func managedObjecModel() -> NSManagedObjectModel {
-        let proxyBundle = Bundle(identifier: "com.whizbang.EveryTime")
-        let modelURL = proxyBundle?.url(forResource: "SimpleRecipeTimer", withExtension: "momd")
-        return NSManagedObjectModel(contentsOf: modelURL!)!
-    }
-    
-    class func persistantStoreCoordinator() -> NSPersistentStoreCoordinator? {
-        let sharedContainerURL: URL? = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: CoreDataHandler.sharedAppGroup())
-        if let sharedContainerURL = sharedContainerURL {
-            let storeURL = sharedContainerURL.appendingPathComponent("everytimedb.sqlite")
-            let coordinator: NSPersistentStoreCoordinator? = NSPersistentStoreCoordinator(managedObjectModel: CoreDataHandler.managedObjecModel())
-            
-            do {
-                try coordinator?.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: nil)
-            } catch let error {
-                print("\(error.localizedDescription)")
-            }
-            
-            return coordinator
-        }
-        return nil
-    }
-    
-//    class func getContext() -> NSManagedObjectContext {
-//        let coordinator = CoreDataHandler.persistantStoreCoordinator()
-//        let moc = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)//check
-//        moc.persistentStoreCoordinator = coordinator
-//        return moc
-//    }
-//    class func loadContext() -> NSManagedObjectContext {
-//        let coordinator = CoreDataHandler.persistantStoreCoordinator()
-//        let moc = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)//check
-//        moc.persistentStoreCoordinator = coordinator
-//        return moc
-//    }
-    
     class func loadContext() {
         self.context = persistentContainer.viewContext
     }
     
     class func getContext() -> NSManagedObjectContext {
-        
         return self.context!
     }
     
