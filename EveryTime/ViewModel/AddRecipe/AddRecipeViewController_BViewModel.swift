@@ -24,7 +24,6 @@ class AddRecipeViewController_BViewModel {
     
     func checkTextField() throws {
         
-        
         guard let name = delegate?.mainView.recipeNameTextField?.text else {
             throw AddRecipeWizardError.InvalidTextField(message: "empty recipe name")
         }

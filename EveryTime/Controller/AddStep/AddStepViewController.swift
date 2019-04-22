@@ -42,7 +42,7 @@ class AddStepViewController: AddStepViewControllerBase {
             
             let stepName = "\(step.name) \(rvc.stepCount())"
             viewModel.updateStepValues(name: stepName)
-            labelTextField.attributedText = NSAttributedString(string: stepName, attributes: Theme.Font.Recipe.TextFieldAttribute)
+            mainView.labelTextField.attributedText = NSAttributedString(string: stepName, attributes: Theme.Font.Recipe.TextFieldAttribute)
         }
     }
     
@@ -53,10 +53,10 @@ class AddStepViewController: AddStepViewControllerBase {
     }
     
     override func grabValuesFromInput() {
-        let name = labelTextField.text!
-        let hrs = countDownPicker.selectedRow(inComponent: PickerColumn.hour.rawValue)
-        let min = countDownPicker.selectedRow(inComponent: PickerColumn.min.rawValue)
-        let sec = countDownPicker.selectedRow(inComponent: PickerColumn.sec.rawValue)
+        let name = mainView.labelTextField.text!
+        let hrs = mainView.countDownPicker.selectedRow(inComponent: PickerColumn.hour.rawValue)
+        let min = mainView.countDownPicker.selectedRow(inComponent: PickerColumn.min.rawValue)
+        let sec = mainView.countDownPicker.selectedRow(inComponent: PickerColumn.sec.rawValue)
         
         do {
             try viewModel.validatePickerView(hrs: hrs, min: min, sec: sec)
