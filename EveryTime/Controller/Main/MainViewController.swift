@@ -190,7 +190,7 @@ extension MainViewController {
     }
     
     func handleAddRecipe() {
-        let vc = AddRecipeViewController_B(delegate:self)
+        let vc = AddRecipeViewController(delegate:self)
 //        let vc = AddRecipeViewController(delegate:self)
 //        vc.transitioningDelegate = transitionDelegate
 //        vc.modalPresentationStyle = .custom

@@ -46,7 +46,6 @@
 		4D53F8A721F36DDA00C0AF31 /* HideHorizontalAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F8A621F36DDA00C0AF31 /* HideHorizontalAnimator.swift */; };
 		4D53F8A921F36E1B00C0AF31 /* HorizontalTransitionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F8A821F36E1B00C0AF31 /* HorizontalTransitionInteractor.swift */; };
 		4D53F8AB21F36F5500C0AF31 /* HorizontalTransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F8AA21F36F5500C0AF31 /* HorizontalTransitionDelegate.swift */; };
-		4D53F8EE21F69D7200C0AF31 /* AddRecipeBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53F8ED21F69D7200C0AF31 /* AddRecipeBaseCell.swift */; };
 		4D54E29F2266C16C00BB8336 /* WhatsNewHistory.md in Resources */ = {isa = PBXBuildFile; fileRef = 4D54E29E2266C16C00BB8336 /* WhatsNewHistory.md */; };
 		4D563C2C220D4ADC0039B07F /* RecipeViewControllerBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D563C2B220D4ADC0039B07F /* RecipeViewControllerBase.swift */; };
 		4D563C2E220D54280039B07F /* RecipeViewControllerWithTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D563C2D220D54280039B07F /* RecipeViewControllerWithTableView.swift */; };
@@ -55,8 +54,6 @@
 		4D56D48A226B1A8800E28376 /* AddStepMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D56D489226B1A8800E28376 /* AddStepMainView.swift */; };
 		4D6DFCB82212508E009C3044 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6DFCB72212508E009C3044 /* SettingsViewController.swift */; };
 		4D6E35382215435900CBCC23 /* AddRecipeWizardError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6E35372215435900CBCC23 /* AddRecipeWizardError.swift */; };
-		4D6E353A22154C7C00CBCC23 /* AddRecipeStepOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6E353922154C7C00CBCC23 /* AddRecipeStepOne.swift */; };
-		4D6E353C22154CE000CBCC23 /* AddRecipeStepTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6E353B22154CE000CBCC23 /* AddRecipeStepTwo.swift */; };
 		4D94E5D5223E74DA0009F176 /* LocalNotificationsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D94E5D4223E74DA0009F176 /* LocalNotificationsService.swift */; };
 		4D9986C1223CA3080049D55C /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D9986BF223CA3080049D55C /* Interface.storyboard */; };
 		4D9986C3223CA3090049D55C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D9986C2223CA3090049D55C /* Assets.xcassets */; };
@@ -86,19 +83,18 @@
 		4DA78F1C225C25AC00C018CA /* WhatsNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F1B225C25AC00C018CA /* WhatsNewView.swift */; };
 		4DA78F1E225D648000C018CA /* MarqueeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F1D225D647F00C018CA /* MarqueeLabel.swift */; };
 		4DA78F21225D6A9500C018CA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DA78F20225D6A9500C018CA /* QuartzCore.framework */; };
-		4DA78F232260B99400C018CA /* AddRecipeViewController_B.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F222260B99400C018CA /* AddRecipeViewController_B.swift */; };
+		4DA78F232260B99400C018CA /* AddRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F222260B99400C018CA /* AddRecipeViewController.swift */; };
 		4DA78F252262F30100C018CA /* AddRecipeOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F242262F30100C018CA /* AddRecipeOptionsViewController.swift */; };
 		4DA78F272262FF9800C018CA /* AddRecipeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F262262FF9800C018CA /* AddRecipeSettingsViewModel.swift */; };
 		4DA78F2922630FB700C018CA /* AddRecipeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F2822630FB700C018CA /* AddRecipeHeaderView.swift */; };
 		4DA78F2B22630FFB00C018CA /* AddRecipeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F2A22630FFB00C018CA /* AddRecipeMainView.swift */; };
 		4DA78F2F22634BF200C018CA /* AddRecipeAddStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F2E22634BF200C018CA /* AddRecipeAddStepViewController.swift */; };
 		4DA78F312263746800C018CA /* AddstepViewController+UIPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F302263746800C018CA /* AddstepViewController+UIPickerView.swift */; };
-		4DA78F35226417A600C018CA /* AddRecipeViewController_BViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F34226417A600C018CA /* AddRecipeViewController_BViewModel.swift */; };
+		4DA78F35226417A600C018CA /* AddRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F34226417A600C018CA /* AddRecipeViewModel.swift */; };
 		4DD542F0224E544C003C6DEC /* AddStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD542EF224E544C003C6DEC /* AddStepViewModel.swift */; };
 		4DD542F42252284C003C6DEC /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD542F32252284C003C6DEC /* SettingsViewModel.swift */; };
 		4DD542F622545854003C6DEC /* AddStepViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD542F522545854003C6DEC /* AddStepViewControllerTest.swift */; };
 		4DD542F922548EF1003C6DEC /* RecipeEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD542F822548EF1003C6DEC /* RecipeEntityTests.swift */; };
-		4DDA39C821D9D14A00D4773A /* AddRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDA39C721D9D14A00D4773A /* AddRecipeViewController.swift */; };
 		4DF13D5D2217EECF009BE812 /* ViewControllerBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF13D5C2217EECF009BE812 /* ViewControllerBase.swift */; };
 		4DF13D62221A1BAB009BE812 /* StandardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF13D61221A1BAB009BE812 /* StandardButton.swift */; };
 /* End PBXBuildFile section */
@@ -199,7 +195,6 @@
 		4D53F8A621F36DDA00C0AF31 /* HideHorizontalAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideHorizontalAnimator.swift; sourceTree = "<group>"; };
 		4D53F8A821F36E1B00C0AF31 /* HorizontalTransitionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalTransitionInteractor.swift; sourceTree = "<group>"; };
 		4D53F8AA21F36F5500C0AF31 /* HorizontalTransitionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalTransitionDelegate.swift; sourceTree = "<group>"; };
-		4D53F8ED21F69D7200C0AF31 /* AddRecipeBaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeBaseCell.swift; sourceTree = "<group>"; };
 		4D54E29E2266C16C00BB8336 /* WhatsNewHistory.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = WhatsNewHistory.md; sourceTree = "<group>"; };
 		4D563C2B220D4ADC0039B07F /* RecipeViewControllerBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewControllerBase.swift; sourceTree = "<group>"; };
 		4D563C2D220D54280039B07F /* RecipeViewControllerWithTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewControllerWithTableView.swift; sourceTree = "<group>"; };
@@ -208,8 +203,6 @@
 		4D56D489226B1A8800E28376 /* AddStepMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepMainView.swift; sourceTree = "<group>"; };
 		4D6DFCB72212508E009C3044 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		4D6E35372215435900CBCC23 /* AddRecipeWizardError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeWizardError.swift; sourceTree = "<group>"; };
-		4D6E353922154C7C00CBCC23 /* AddRecipeStepOne.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeStepOne.swift; sourceTree = "<group>"; };
-		4D6E353B22154CE000CBCC23 /* AddRecipeStepTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeStepTwo.swift; sourceTree = "<group>"; };
 		4D94E5D1223CC6430009F176 /* EveryTime.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EveryTime.entitlements; sourceTree = "<group>"; };
 		4D94E5D2223CC6570009F176 /* EveryTimeW.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EveryTimeW.entitlements; sourceTree = "<group>"; };
 		4D94E5D4223E74DA0009F176 /* LocalNotificationsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsService.swift; sourceTree = "<group>"; };
@@ -245,20 +238,19 @@
 		4DA78F1B225C25AC00C018CA /* WhatsNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewView.swift; sourceTree = "<group>"; };
 		4DA78F1D225D647F00C018CA /* MarqueeLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarqueeLabel.swift; sourceTree = "<group>"; };
 		4DA78F20225D6A9500C018CA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		4DA78F222260B99400C018CA /* AddRecipeViewController_B.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeViewController_B.swift; sourceTree = "<group>"; };
+		4DA78F222260B99400C018CA /* AddRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeViewController.swift; sourceTree = "<group>"; };
 		4DA78F242262F30100C018CA /* AddRecipeOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeOptionsViewController.swift; sourceTree = "<group>"; };
 		4DA78F262262FF9800C018CA /* AddRecipeSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeSettingsViewModel.swift; sourceTree = "<group>"; };
 		4DA78F2822630FB700C018CA /* AddRecipeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeHeaderView.swift; sourceTree = "<group>"; };
 		4DA78F2A22630FFB00C018CA /* AddRecipeMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeMainView.swift; sourceTree = "<group>"; };
 		4DA78F2E22634BF200C018CA /* AddRecipeAddStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeAddStepViewController.swift; sourceTree = "<group>"; };
 		4DA78F302263746800C018CA /* AddstepViewController+UIPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddstepViewController+UIPickerView.swift"; sourceTree = "<group>"; };
-		4DA78F34226417A600C018CA /* AddRecipeViewController_BViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeViewController_BViewModel.swift; sourceTree = "<group>"; };
+		4DA78F34226417A600C018CA /* AddRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeViewModel.swift; sourceTree = "<group>"; };
 		4DA78F372264378C00C018CA /* SimpleRecipeTimer v3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SimpleRecipeTimer v3.xcdatamodel"; sourceTree = "<group>"; };
 		4DD542EF224E544C003C6DEC /* AddStepViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepViewModel.swift; sourceTree = "<group>"; };
 		4DD542F32252284C003C6DEC /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		4DD542F522545854003C6DEC /* AddStepViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepViewControllerTest.swift; sourceTree = "<group>"; };
 		4DD542F822548EF1003C6DEC /* RecipeEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeEntityTests.swift; sourceTree = "<group>"; };
-		4DDA39C721D9D14A00D4773A /* AddRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeViewController.swift; sourceTree = "<group>"; };
 		4DF13D5C2217EECF009BE812 /* ViewControllerBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerBase.swift; sourceTree = "<group>"; };
 		4DF13D61221A1BAB009BE812 /* StandardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -383,9 +375,7 @@
 		4D205DB221FE82B5008006BD /* AddRecipe */ = {
 			isa = PBXGroup;
 			children = (
-				4D53F8ED21F69D7200C0AF31 /* AddRecipeBaseCell.swift */,
 				4D205DB021FE8252008006BD /* StepTableViewCell.swift */,
-				4D6E353522153D5500CBCC23 /* AddRecipeWizardCells */,
 			);
 			path = AddRecipe;
 			sourceTree = "<group>";
@@ -519,15 +509,6 @@
 			path = Recipe;
 			sourceTree = "<group>";
 		};
-		4D6E353522153D5500CBCC23 /* AddRecipeWizardCells */ = {
-			isa = PBXGroup;
-			children = (
-				4D6E353922154C7C00CBCC23 /* AddRecipeStepOne.swift */,
-				4D6E353B22154CE000CBCC23 /* AddRecipeStepTwo.swift */,
-			);
-			path = AddRecipeWizardCells;
-			sourceTree = "<group>";
-		};
 		4D6E35362215434600CBCC23 /* Error */ = {
 			isa = PBXGroup;
 			children = (
@@ -548,7 +529,7 @@
 			isa = PBXGroup;
 			children = (
 				4DA78F262262FF9800C018CA /* AddRecipeSettingsViewModel.swift */,
-				4DA78F34226417A600C018CA /* AddRecipeViewController_BViewModel.swift */,
+				4DA78F34226417A600C018CA /* AddRecipeViewModel.swift */,
 			);
 			path = AddRecipe;
 			sourceTree = "<group>";
@@ -746,8 +727,7 @@
 			children = (
 				4DA78F332264177300C018CA /* ViewModel */,
 				4DA78F322264176D00C018CA /* View */,
-				4DDA39C721D9D14A00D4773A /* AddRecipeViewController.swift */,
-				4DA78F222260B99400C018CA /* AddRecipeViewController_B.swift */,
+				4DA78F222260B99400C018CA /* AddRecipeViewController.swift */,
 				4DA78F242262F30100C018CA /* AddRecipeOptionsViewController.swift */,
 			);
 			path = AddingRecipe;
@@ -972,10 +952,7 @@
 				4DA78E2F22559E9C00C018CA /* LargeDisplayViewModel.swift in Sources */,
 				4DA78F18225C17F500C018CA /* AppMetaData.swift in Sources */,
 				4DA78F062259D98800C018CA /* BasicMarqueeLabel.swift in Sources */,
-				4DA78F232260B99400C018CA /* AddRecipeViewController_B.swift in Sources */,
-				4DDA39C821D9D14A00D4773A /* AddRecipeViewController.swift in Sources */,
-				4D53F8EE21F69D7200C0AF31 /* AddRecipeBaseCell.swift in Sources */,
-				4D6E353A22154C7C00CBCC23 /* AddRecipeStepOne.swift in Sources */,
+				4DA78F232260B99400C018CA /* AddRecipeViewController.swift in Sources */,
 				4D53803222468B140051DD0F /* SettingsViewCell.swift in Sources */,
 				4D53F8A921F36E1B00C0AF31 /* HorizontalTransitionInteractor.swift in Sources */,
 				4DA78E2D225571AA00C018CA /* LargeDisplayMainView.swift in Sources */,
@@ -994,7 +971,6 @@
 				4DA12F7A21B606A20049CD75 /* AddStepViewController.swift in Sources */,
 				4D53802C22458E410051DD0F /* MainViewController+Scroll.swift in Sources */,
 				4D53F7CE21ED6CB200C0AF31 /* NavView.swift in Sources */,
-				4D6E353C22154CE000CBCC23 /* AddRecipeStepTwo.swift in Sources */,
 				4D53F8AB21F36F5500C0AF31 /* HorizontalTransitionDelegate.swift in Sources */,
 				4DA78F2922630FB700C018CA /* AddRecipeHeaderView.swift in Sources */,
 				4D5380302245F5C40051DD0F /* HeaderView.swift in Sources */,
@@ -1021,7 +997,7 @@
 				4D53F75B21E2E38100C0AF31 /* CoreDataHandler.swift in Sources */,
 				4D53F8A721F36DDA00C0AF31 /* HideHorizontalAnimator.swift in Sources */,
 				4DA12F7321B2D3DD0049CD75 /* EntityBaseCell.swift in Sources */,
-				4DA78F35226417A600C018CA /* AddRecipeViewController_BViewModel.swift in Sources */,
+				4DA78F35226417A600C018CA /* AddRecipeViewModel.swift in Sources */,
 				4D538023224386D20051DD0F /* SettingsMainView.swift in Sources */,
 				4D56D4882269F3B300E28376 /* AddStepViewControllerBase.swift in Sources */,
 				4D563C2C220D4ADC0039B07F /* RecipeViewControllerBase.swift in Sources */,

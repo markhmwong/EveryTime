@@ -8,15 +8,15 @@
 
 import UIKit
 
-class AddRecipeViewController_BViewModel {
+class AddRecipeViewModel {
     
     var recipeEntity: RecipeEntity
     
     var dataSource: [StepEntity]
     
-    var delegate: AddRecipeViewController_B?
+    var delegate: AddRecipeViewController?
     
-    init(dataSource: [StepEntity] = [], mainDelegate: MainViewController?, delegate: AddRecipeViewController_B?) {
+    init(dataSource: [StepEntity] = [], mainDelegate: MainViewController?, delegate: AddRecipeViewController?) {
         self.dataSource = dataSource
         self.recipeEntity = RecipeEntity(name: "Recipe \(mainDelegate?.dataSource.count ?? 0)")
         self.delegate = delegate

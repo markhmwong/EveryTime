@@ -51,7 +51,7 @@ class AddRecipeOptionsViewController: UIViewController {
     
     var viewModel: AddRecipeSettingsViewModel = AddRecipeSettingsViewModel(options: [RecipeOptions.AutoStart : "Auto Start"])
     
-    weak var delegate: AddRecipeViewController_B?
+    weak var delegate: AddRecipeViewController?
     
     lazy var tableView: UITableView = {
        let tv = UITableView(frame: .zero, style: .grouped)
@@ -92,7 +92,7 @@ class AddRecipeOptionsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(delegate: AddRecipeViewController_B, recipeEntity: RecipeEntity?) {
+    convenience init(delegate: AddRecipeViewController, recipeEntity: RecipeEntity?) {
         self.init(nibName: nil, bundle: nil)
         self.delegate = delegate
         self.recipeEntity = recipeEntity

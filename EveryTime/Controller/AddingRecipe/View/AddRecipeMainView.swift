@@ -213,13 +213,13 @@ class AddRecipeMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         return button
     }()
     
-    weak var delegate: AddRecipeViewController_B?
+    weak var delegate: AddRecipeViewController?
     
     private let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     var recipeNameTextField: UITextField?
     
-    init(delegate: AddRecipeViewController_B) {
+    init(delegate: AddRecipeViewController) {
         super.init(frame: .zero)
         self.delegate = delegate
         self.setupView()

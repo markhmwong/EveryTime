@@ -9,9 +9,9 @@
 import UIKit
 
 class AddRecipeAddStepViewController: AddStepViewControllerBase, AddStepProtocol {
-    weak var delegate: AddRecipeViewController_B?
+    weak var delegate: AddRecipeViewController?
     
-    init(delegate: AddRecipeViewController_B?, viewModel: AddStepViewModel) {
+    init(delegate: AddRecipeViewController?, viewModel: AddStepViewModel) {
         super.init()
         self.delegate = delegate
         self.viewModel = viewModel
