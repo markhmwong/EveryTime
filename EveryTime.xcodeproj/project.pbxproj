@@ -59,6 +59,7 @@
 		4D6E7DBC22746A5000716FB5 /* RecipeOptionsModalTransistionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6E7DBB22746A5000716FB5 /* RecipeOptionsModalTransistionDelegate.swift */; };
 		4D6E7DBE2274728100716FB5 /* RecipeModalAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6E7DBD2274728100716FB5 /* RecipeModalAnimatedTransitioning.swift */; };
 		4D6E7DC02274729100716FB5 /* RecipeModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6E7DBF2274729100716FB5 /* RecipeModalPresentationController.swift */; };
+		4D78479F227ABBD100160658 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D78479E227ABBD100160658 /* MainViewModel.swift */; };
 		4D94E5D5223E74DA0009F176 /* LocalNotificationsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D94E5D4223E74DA0009F176 /* LocalNotificationsService.swift */; };
 		4D9986C1223CA3080049D55C /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D9986BF223CA3080049D55C /* Interface.storyboard */; };
 		4D9986C3223CA3090049D55C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D9986C2223CA3090049D55C /* Assets.xcassets */; };
@@ -214,6 +215,7 @@
 		4D6E7DBB22746A5000716FB5 /* RecipeOptionsModalTransistionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeOptionsModalTransistionDelegate.swift; sourceTree = "<group>"; };
 		4D6E7DBD2274728100716FB5 /* RecipeModalAnimatedTransitioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeModalAnimatedTransitioning.swift; sourceTree = "<group>"; };
 		4D6E7DBF2274729100716FB5 /* RecipeModalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeModalPresentationController.swift; sourceTree = "<group>"; };
+		4D78479E227ABBD100160658 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		4D94E5D1223CC6430009F176 /* EveryTime.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EveryTime.entitlements; sourceTree = "<group>"; };
 		4D94E5D2223CC6570009F176 /* EveryTimeW.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EveryTimeW.entitlements; sourceTree = "<group>"; };
 		4D94E5D4223E74DA0009F176 /* LocalNotificationsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsService.swift; sourceTree = "<group>"; };
@@ -567,6 +569,14 @@
 			path = RecipeOptionsModal;
 			sourceTree = "<group>";
 		};
+		4D78479D227ABBAC00160658 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				4D78479E227ABBD100160658 /* MainViewModel.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 		4D94E5D3223E74C10009F176 /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
@@ -709,16 +719,10 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		4DA78F332264177300C018CA /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		4DD542EE224DF551003C6DEC /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				4D78479D227ABBAC00160658 /* Main */,
 				4D6E7DB3226D8D3C00716FB5 /* AddStep */,
 				4D6E7DB2226D8D3600716FB5 /* AddRecipe */,
 				4DD542F32252284C003C6DEC /* SettingsViewModel.swift */,
@@ -751,7 +755,6 @@
 		4DF13D5E221A153C009BE812 /* AddRecipe */ = {
 			isa = PBXGroup;
 			children = (
-				4DA78F332264177300C018CA /* ViewModel */,
 				4DA78F322264176D00C018CA /* View */,
 				4DA78F222260B99400C018CA /* AddRecipeViewController.swift */,
 				4DA78F242262F30100C018CA /* AddRecipeOptionsViewController.swift */,
@@ -1022,6 +1025,7 @@
 				4D53803A224911140051DD0F /* TapticService.swift in Sources */,
 				4D53802A2244C2D70051DD0F /* Extension+UIView.swift in Sources */,
 				4D6E35382215435900CBCC23 /* AddRecipeWizardError.swift in Sources */,
+				4D78479F227ABBD100160658 /* MainViewModel.swift in Sources */,
 				4D53F7D521EF0C2400C0AF31 /* OverlayTransitionDelegate.swift in Sources */,
 				4D53F75B21E2E38100C0AF31 /* CoreDataHandler.swift in Sources */,
 				4D53F8A721F36DDA00C0AF31 /* HideHorizontalAnimator.swift in Sources */,

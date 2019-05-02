@@ -1,3 +1,12 @@
+## Version 1.1.14
+
+Minor UI Changes - You may notice slight changes to fonts, colours and layout. Any major changes will be listed
+Existing and new steps can now be edited
+New Recipe options menu
+Steps have the ability to either skip a step or return to the previous step while in full screen mode
+While creating a new Recipe, it is now easier to recreate existing steps by using the copy button
+New Recipes will now show the correct step name rather than an unknown
+
 ## Version 1.1.13 
 
 Major Updates

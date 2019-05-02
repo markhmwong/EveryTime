@@ -29,7 +29,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
         window?.makeKeyAndVisible()
-        window?.rootViewController = UINavigationController(rootViewController: MainViewController())
+        
+        let main = MainViewController()
+        main.viewModel = MainViewModel(delegate: main)
+        window?.rootViewController = UINavigationController(rootViewController: main)
         
         return true
     }

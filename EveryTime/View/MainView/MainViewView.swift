@@ -45,7 +45,7 @@ class MainViewView: UIView {
     private lazy var leftNavItemButton: UIButton = {
         let button = UIButton()
         button.setAttributedTitle(NSAttributedString(string: "Settings", attributes: Theme.Font.Nav.Item), for: .normal)
-        button.addTarget(self, action: #selector(handleAbout), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -130,14 +130,24 @@ class MainViewView: UIView {
     }
     
     func addToCollectionView() {
+        
+        guard let vm = self.delegate.viewModel else {
+            return
+        }
+        
         DispatchQueue.main.async {
-            self.collView.insertItems(at: [IndexPath(item: self.delegate.dataSource.count - 1, section: 0)])
+            self.collView.insertItems(at: [IndexPath(item: vm.dataSource.count - 1, section: 0)])
         }
     }
     
     func stepComplete(_ date: Date) {
         playSound()
-        let index = delegate.searchForIndex(date)
+        
+        guard let vm = delegate.viewModel else {
+            return
+        }
+        
+        let index = vm.searchForIndex(date)
         if (index != -1) {
             let cell = collView.cellForItem(at: IndexPath(row: index, section: 0)) as! MainViewCell
             //animate bg colour
@@ -157,8 +167,8 @@ class MainViewView: UIView {
         delegate.handleAddRecipe()
     }
     
-    @objc func handleAbout() {
-        delegate.handleAbout()
+    @objc func handleSettings() {
+        delegate.handleSettings()
     }
     
     
@@ -188,12 +198,33 @@ class MainViewView: UIView {
                 self.delegate.addToRecipeCollection(r: rEntity)
             }
             CoreDataHandler.saveContext()
+            
+            guard let vm = self.delegate.viewModel else {
+                return
+            }
+            
             DispatchQueue.main.async {
                 self.collView.performBatchUpdates({
-                    let insertIndexPaths = Array(0..<self.delegate.dataSource.count).map { IndexPath(item: $0, section: 0) }
+                    let insertIndexPaths = Array(0..<vm.dataSource.count).map { IndexPath(item: $0, section: 0) }
                     self.collView.insertItems(at: insertIndexPaths)
                 }, completion: nil)
             }
         }
+    }
+    
+    func deleteRecipesFromCollectionView(indexPaths: [IndexPath]) {
+        DispatchQueue.main.async {
+            self.collView.performBatchUpdates({
+                self.collView.deleteItems(at: indexPaths)
+            }, completion: nil)
+            if (CoreDataHandler.deleteAllRecordsIn(entity: RecipeEntity.self)) {
+                CoreDataHandler.saveContext()
+            }
+        }
+    }
+    
+    func showSettings() {
+        let vc = SettingsViewController(delegate:delegate, viewModel: SettingsViewModel(dataSource: SettingsDataSource.dataSource))
+        delegate?.present(vc, animated: true, completion: nil)
     }
 }

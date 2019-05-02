@@ -21,24 +21,14 @@ enum CollectionCellIds: String {
 }
 
 class MainViewController: ViewControllerBase {
-    var cellSize: CGFloat {
-        switch UIDevice.current.screenType.rawValue {
-        case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
-            return 2.8
-        default:
-            return 3.0
-        }
-    }
-    var dataSource: [RecipeEntity] = []
+    
     var horizontalDelegate = HorizontalTransitionDelegate()
-    var timer: Timer?
 
-    private var addButtonState: ScrollingState = .Idle
-    private var indexPathNumber = 0
     private var transitionDelegate = OverlayTransitionDelegate()
+    
     private var dismissInteractor: OverlayInteractor!
-    private var sections: Int = 0
-    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
+    var viewModel: MainViewModel?
 
     lazy var mainView: MainViewView = {
        let view = MainViewView(delegate: self)
@@ -47,7 +37,11 @@ class MainViewController: ViewControllerBase {
         return view
     }()
 
-
+    convenience init(viewModel: MainViewModel? = nil) {
+        self.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
+    }
+    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nil, bundle: nil)
     }
@@ -59,20 +53,20 @@ class MainViewController: ViewControllerBase {
     
     ///The super class will call prepare_ functions. They don't need to be called
     override func viewDidLoad() {
-            super.viewDidLoad()
+        super.viewDidLoad()
         UIApplication.shared.isStatusBarHidden = true
-    //        testData()
+        //testData()
     }
 
     func testData() {
         if (CoreDataHandler.deleteAllRecordsIn(entity: RecipeEntity.self)) {
-                print("Successfully deleted all records")
-            }
+            print("Successfully deleted all records")
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-            stopTimer()
+        stopTimer()
     }
 
     override func beginAppearanceTransition(_ isAppearing: Bool, animated: Bool) {
@@ -81,7 +75,7 @@ class MainViewController: ViewControllerBase {
 
     override func endAppearanceTransition() {
         super.endAppearanceTransition()
-            stopTimer()
+        stopTimer()
     }
 
     override func prepareViewController() {
@@ -98,8 +92,7 @@ class MainViewController: ViewControllerBase {
      override func prepareView() {
         super.prepareView()
         view.addSubview(mainView)
-        loadDataFromCoreData()
-
+        viewModel?.loadDataFromCoreData()
     }
 
     override func prepareAutoLayout() {
@@ -117,33 +110,28 @@ class MainViewController: ViewControllerBase {
     
     // must be paused at all layers - recipe, step
     func pauseEntireRecipe(recipe: RecipeEntity) {
-        recipe.pauseStepArr()
+        guard let vm = viewModel else {
+            return
+        }
+        
+        vm.pauseRecipe(recipe: recipe)
     }
 
     func unpauseEntireRecipe(recipe: RecipeEntity) {
-        recipe.unpauseStepArr()
+        guard let vm = viewModel else {
+            return
+        }
+        
+        vm.stopRecipe(recipe: recipe)
     }
 
     func addToRecipeCollection(r: RecipeEntity) {
-        dataSource.append(r)
+        guard let vm = viewModel else {
+            return
+        }
+        vm.dataSource.append(r)
     }
 
-    func loadDataFromCoreData() {
-        CoreDataHandler.getContext().perform {
-            guard let rEntityArr = CoreDataHandler.fetchEntity(in: RecipeEntity.self) else {
-                return
-            }
-            self.dataSource = self.sortRecipeCollection(in: rEntityArr)
-            self.mainView.willReloadTableData()
-        }
-    }
-    
-    func sortRecipeCollection(in rEntityArr: [RecipeEntity]) -> [RecipeEntity] {
-        return rEntityArr.sorted { (x, y) -> Bool in
-            return (x.createdDate?.compare(y.createdDate!) == .orderedAscending)
-        }
-    }
-    
     func updateCellPauseState(indexPath: IndexPath, recipe: RecipeEntity) {
         let bg = !recipe.isPaused ? Theme.View.RecipeCell.RecipeCellPauseButtonActive : Theme.View.RecipeCell.RecipeCellPauseButtonInactive
         let textColor = !recipe.isPaused ? Theme.Font.Color.TextColour : Theme.Font.Color.TextColourDisabled
@@ -157,23 +145,7 @@ class MainViewController: ViewControllerBase {
         }
     }
     
-    //binary search through all recipes
-    func searchForIndex(_ date: Date) -> Int {
-        var left = 0
-        var right = dataSource.count - 1
-        while (left <= right) {
-            let middle = left + (right - left) / 2
-            if (dataSource[middle].createdDate! == date)  {
-                    return middle
-                }
-            if (dataSource[middle].createdDate! < date) {
-                   left = middle + 1
-                } else {
-                    right = middle - 1
-                }
-        }
-        return -1
-    }
+
     
     func showWhatsNew() {
 //        let model = WhatsNew(version: <#T##String#>, build: <#T##String#>, patchNotes: <#T##[String]#>)
@@ -184,62 +156,58 @@ class MainViewController: ViewControllerBase {
 
 //MARK: - UI
 extension MainViewController {
-    func handleAbout() {
-        let vc = SettingsViewController(delegate:self, viewModel: SettingsViewModel(dataSource: SettingsDataSource.dataSource))
-        present(vc, animated: true, completion: nil)
+    func handleSettings() {
+        mainView.showSettings()
     }
     
     func handleAddRecipe() {
         let vc = AddRecipeViewController(delegate:self)
+        vc.modalPresentationStyle = .overCurrentContext
+        present(vc, animated: true, completion: nil)
+        
 //        let vc = AddRecipeViewController(delegate:self)
 //        vc.transitioningDelegate = transitionDelegate
 //        vc.modalPresentationStyle = .custom
 //        dismissInteractor = OverlayInteractor()
 //        dismissInteractor.attachToViewController(viewController: vc, withView: vc.view, presentViewController: nil)
 //        vc.interactor = dismissInteractor
-        vc.modalPresentationStyle = .overCurrentContext
 //        transitionDelegate.dismissInteractor = dismissInteractor
-        present(vc, animated: true, completion: nil)
+        
     }
-
+    
+    ///Deprecated
     func handleDeleteAllRecipe() {
-        let alert = UIAlertController(title: "Are you sure?", message: "This will delete every recipes", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
-            let deleteIndexPaths = Array(0..<self.dataSource.count).map { IndexPath(item: $0, section: 0) }
-           self.dataSource.removeAll()
-            self.mainView.collView.performBatchUpdates({
-                self.mainView.collView.deleteItems(at: deleteIndexPaths)
-            }, completion: nil)
-            if (CoreDataHandler.deleteAllRecordsIn(entity: RecipeEntity.self)) {
-                CoreDataHandler.saveContext()
-            }
-        }))
-       present(alert, animated: true, completion: nil)
+        guard let vm = viewModel else {
+            return
+        }
+        vm.handleDeleteAllRecipe()
     }
     
     func deleteAllRecipes() {
-        let deleteIndexPaths = Array(0..<self.dataSource.count).map { IndexPath(item: $0, section: 0) }
-        self.dataSource.removeAll()
-        self.mainView.collView.performBatchUpdates({
-            self.mainView.collView.deleteItems(at: deleteIndexPaths)
-        }, completion: nil)
-        if (CoreDataHandler.deleteAllRecordsIn(entity: RecipeEntity.self)) {
-            CoreDataHandler.saveContext()
+        guard let vm = viewModel else {
+            return
         }
+        let indexPathsToDelete = vm.clearLocalStorage()
+        mainView.deleteRecipesFromCollectionView(indexPaths: indexPathsToDelete)
     }
     
-    ///Called from RecipeViewController
+    ///Called from RecipeViewController to delete the Recipe from the recipe view
     func handleDeleteARecipe(_ date: Date) {
-        let index = searchForIndex(date)
+        
+        guard let vm = viewModel else {
+            return
+        }
+        
+        let index = vm.searchForIndex(date)
 
         if (index != -1) {
-            let recipeName = dataSource[index].recipeName
-            let recipeDate = dataSource[index].createdDate
+            
+            let recipeName = vm.dataSource[index].recipeName
+            let recipeDate = vm.dataSource[index].createdDate
             let id = "\(recipeName!).\(recipeDate)"
             LocalNotificationsService.shared.notificationCenterInstance().removePendingNotificationRequests(withIdentifiers: [id])
             
-            dataSource.remove(at: index)
+            vm.dataSource.remove(at: index)
             DispatchQueue.main.async {
                 self.mainView.collView.deleteItems(at: [IndexPath(item: index, section: 0)])
             }

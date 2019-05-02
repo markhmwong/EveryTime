@@ -23,6 +23,7 @@ protocol WhatsNewProtocol {
 struct WhatsNewFactory {
     
     static let whatsNewDictionary: [ String : WhatsNewProtocol ] = [
+        "1.1.15" : WhatsNewDetails.WhatsNew1_1_15(),
         "1.1.14" : WhatsNewDetails.WhatsNew1_1_14(),
         "1.1.13" : WhatsNewDetails.WhatsNew1_1_13()
     ]
@@ -36,13 +37,27 @@ struct WhatsNewFactory {
 /// List patch notes from least important first
 struct WhatsNewDetails {
     
-    struct WhatsNew1_1_14: WhatsNewProtocol {
+    struct WhatsNew1_1_15: WhatsNewProtocol {
         
         let date: String = ""
         
+        let version: String = "1.1.15"
+        
+        let build: String = "1.15"
+        
+        let patchNotes: [String] = [
+            "",
+        ]
+        
+    }
+    
+    struct WhatsNew1_1_14: WhatsNewProtocol {
+        
+        let date: String = "May 2, 2019"
+        
         let version: String = "1.1.14"
         
-        let build: String = "1.12"
+        let build: String = "1.14"
         
         let patchNotes: [String] = [
             "Minor UI Changes - You may notice slight changes to fonts, colours and layout. Any major changes will be listed",
@@ -51,7 +66,6 @@ struct WhatsNewDetails {
             "Steps have the ability to either skip a step or return to the previous step while in full screen mode",
             "While creating a new Recipe, it is now easier to recreate existing steps by using the copy button",
             "New Recipes will now show the correct step name rather than an unknown",
-            
         ]
     }
     

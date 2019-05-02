@@ -18,7 +18,7 @@ class AddRecipeViewModel {
     
     init(dataSource: [StepEntity] = [], mainDelegate: MainViewController?, delegate: AddRecipeViewController?) {
         self.dataSource = dataSource
-        self.recipeEntity = RecipeEntity(name: "Recipe \(mainDelegate?.dataSource.count ?? 0)")
+        self.recipeEntity = RecipeEntity(name: "Recipe \(mainDelegate?.viewModel?.dataSource.count ?? 0)")
         self.delegate = delegate
     }
     

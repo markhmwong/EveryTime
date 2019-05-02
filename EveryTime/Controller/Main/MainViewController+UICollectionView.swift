@@ -14,17 +14,19 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         let cell = collectionView.cellForItem(at: indexPath) as! MainViewCell
         cell.animateCellForSelection()
         
-        let vc = RecipeViewControllerWithTableView(recipe: dataSource[indexPath.item], delegate: self, indexPath: indexPath)
-        //        horizontalDelegate.dismissInteractor  = HorizontalTransitionInteractor(viewController: vc) // to be worked on. issue with timer when swiping to dismiss
-        vc.transitioningDelegate = horizontalDelegate
-        vc.modalPresentationStyle = .custom
-        
-        stopTimer()
-        self.present(vc, animated: true, completion: nil)
+        if let vm = viewModel {
+            let vc = RecipeViewControllerWithTableView(recipe: vm.dataSource[indexPath.item], delegate: self, indexPath: indexPath)
+            //        horizontalDelegate.dismissInteractor  = HorizontalTransitionInteractor(viewController: vc) // to be worked on. issue with timer when swiping to dismiss
+            vc.transitioningDelegate = horizontalDelegate
+            vc.modalPresentationStyle = .custom
+            
+            stopTimer()
+            self.present(vc, animated: true, completion: nil)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource.count
+        return viewModel?.dataSource.count ?? 0
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -35,7 +37,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionCellIds.RecipeCell.rawValue, for: indexPath) as! MainViewCell
         cell.mainViewController = self
-        cell.entity = dataSource[indexPath.row]
+        cell.entity = viewModel?.dataSource[indexPath.row]
         cell.cellForIndexPath = indexPath
         return cell
     }
@@ -52,7 +54,11 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         let itemsPerRow: CGFloat = 0.0//5.0
         let width = UIScreen.main.bounds.size.width - itemSpacing * CGFloat(itemsPerRow)
         
-        return CGSize(width: width, height: width / cellSize)
+        guard let vm = viewModel else {
+            return CGSize(width: width, height: width / 2.8)
+        }
+        
+        return CGSize(width: width, height: width / vm.cellSize)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
