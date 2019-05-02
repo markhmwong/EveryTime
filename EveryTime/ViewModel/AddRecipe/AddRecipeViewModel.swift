@@ -42,4 +42,17 @@ class AddRecipeViewModel {
         }
     }
     
+    
+    func getStepAtIndex(index: Int) -> StepEntity? {
+        if (index >= 0 && index <= dataSource.count) {
+            return dataSource[index]
+        } else {
+            print("cannot get step at index")
+            return nil
+        }
+    }
+    
+    func addStepToDataSource(step: StepEntity) {
+        dataSource.append(step)
+    }
 }

@@ -144,8 +144,8 @@ class HeaderView: UIView {
         
         widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
         
-        innerPaddedView.anchorView(top: topAnchor, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 10, left: 10.0, bottom: -10.0, right: -10.0), size: .zero)
-        headerTitleLabel.anchorView(top: innerPaddedView.topAnchor, bottom: nil, leading: innerPaddedView.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 10.0, left: 20.0, bottom: 0, right: 0), size: .zero)
+        innerPaddedView.anchorView(top: topAnchor, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
+        headerTitleLabel.anchorView(top: innerPaddedView.topAnchor, bottom: nil, leading: innerPaddedView.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 10.0, left: 30.0, bottom: 0, right: 0), size: .zero)
         headerStepTimeLabel.anchorView(top: headerTitleLabel.bottomAnchor, bottom: nil, leading: leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 20.0, left: 30.0, bottom: 0.0, right: 0.0), size: .zero)
         headerStepTitleLabel.anchorView(top: headerStepTimeLabel.bottomAnchor, bottom: nil, leading: headerStepTimeLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: .zero, size: .zero)
         

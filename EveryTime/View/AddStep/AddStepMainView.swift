@@ -59,14 +59,14 @@ class AddStepMainView: UIView {
         return view
     }()
     
-    private var titleLabel: UILabel = {
+    lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = NSAttributedString(string: "New Step", attributes: Theme.Font.Nav.Title)
         return label
     }()
     
-    private lazy var addButton: UIButton = {
+    lazy var addButton: UIButton = {
         let button = UIButton()
         button.setAttributedTitle(NSAttributedString(string: "Add", attributes: Theme.Font.Nav.Item), for: .normal)
         button.addTarget(self, action: #selector(handleAdd), for: .touchUpInside)
@@ -77,8 +77,8 @@ class AddStepMainView: UIView {
 
 
     init(delegate: AddStepViewControllerBase) {
-        super.init(frame: .zero)
         self.delegate = delegate
+        super.init(frame: .zero)
         self.setupView()
         self.setupLayout()
     }
@@ -90,6 +90,9 @@ class AddStepMainView: UIView {
     func setupView() {
         addSubview(navView)
         addSubview(labelTextField)
+        addSubview(countDownPicker)
+        preparePicker()
+
         navView.addSubview(titleLabel)
         
         guard let delegate = delegate else {
@@ -103,13 +106,13 @@ class AddStepMainView: UIView {
         labelTextField.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         labelTextField.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
         labelTextField.topAnchor.constraint(equalTo: navView.bottomAnchor, constant: labelTextFieldTopAnchorPadding).isActive = true
-        
+
         countDownPicker.topAnchor.constraint(equalTo: labelTextField.bottomAnchor).isActive = true
         countDownPicker.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         countDownPicker.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
         
         titleLabel.centerYAnchor.constraint(equalTo: navView.centerYAnchor, constant: 0.0).isActive = true
-        titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0).isActive = true
+        titleLabel.centerXAnchor.constraint(equalTo: navView.centerXAnchor, constant: 0.0).isActive = true
         
         let navTopConstraint = !appDelegate.hasTopNotch ? topAnchor : nil
         let heightByNotch = !appDelegate.hasTopNotch ? Theme.View.Nav.HeightWithoutNotch : Theme.View.Nav.HeightWithNotch
@@ -130,6 +133,7 @@ class AddStepMainView: UIView {
         guard let delegate = delegate else {
             return
         }
+        
         let hoursLabel: UILabel = UILabel()
         hoursLabel.text = "hours"
         
@@ -148,7 +152,7 @@ class AddStepMainView: UIView {
         countDownPicker.delegate = delegate
         countDownPicker.dataSource = delegate
         countDownPicker.translatesAutoresizingMaskIntoConstraints = false
-        countDownPicker.setPickerLabels(labels: labelDict, containedView: self)
+        countDownPicker.setPickerLabels(labels: labelDict, containedView: delegate.view)
         addSubview(countDownPicker)
     }
     

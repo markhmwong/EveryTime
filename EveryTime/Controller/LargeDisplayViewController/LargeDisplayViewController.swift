@@ -12,7 +12,13 @@ class LargeDisplayViewController: ViewControllerBase {
     
     var viewModel: LargeDisplayViewModel?
     
-    var delegate: RecipeViewControllerWithTableView?
+    weak var delegate: RecipeViewControllerWithTableView?
+    
+    lazy var mainView: LargeDisplayMainView = {
+        let view = LargeDisplayMainView(delegate: self)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     init(delegate: RecipeViewControllerWithTableView, viewModel: LargeDisplayViewModel? = nil) {
         super.init(nibName: nil, bundle: nil)
@@ -23,16 +29,6 @@ class LargeDisplayViewController: ViewControllerBase {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    lazy var mainView: LargeDisplayMainView = {
-       let view = LargeDisplayMainView(delegate: self)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-//    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-//        return .landscapeLeft
-//    }
     
     func rotateDeviceRight() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -66,7 +62,7 @@ class LargeDisplayViewController: ViewControllerBase {
             rotateDeviceLeft()
 
         } else if UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
-            rotateDeviceRight()
+            rotateDeviceLeft()
 
         } else {
             rotateDevicePortrait()
@@ -133,8 +129,55 @@ class LargeDisplayViewController: ViewControllerBase {
         mainView.updateViewStepsCompleteLabel(stepComplete: stepComplete)
     }
     
+    func updateViewControls(pauseState: Bool) {
+        mainView.updateControls(pauseState: pauseState)
+    }
+    
+    func triggerNextStep() throws {
+        guard let recipe = delegate?.recipe else {
+            return
+        }
+        
+        let time = -recipe.currStepTimeRemaining
+        let priority = recipe.currStepPriority
+        guard let stepSet = recipe.step else {
+            return
+        }
+        
+        if (priority < stepSet.count) {
+            do {
+                try recipe.adjustTime(by: time, selectedStep: Int(priority))
+            } catch StepOptionsError.StepAlreadyComplete(let message) {
+                ()//show alert box
+            } catch StepOptionsError.StepAlreadyComplete(let message) {
+                ()
+            } catch {
+                ()
+            }
+        } else {
+            throw ControlsError.LimitReached(message: "Upper Bound Reached")
+        }
+
+    }
+    
+    func triggerPrevStep() throws {
+        
+        guard let recipe = delegate?.recipe else {
+            return
+        }
+        
+        let priority = recipe.currStepPriority
+        if (priority > 0) {
+            recipe.resetEntireRecipeTo(toStep: Int(priority - 1))
+        } else {
+            throw ControlsError.LimitReached(message:"Lower Bound Reached")
+        }
+        
+    }
+    
     /// Executes 10 April 2019
     deinit {
-        print("LargeDisplayViewController - deinit")
+//        print("LargeDisplayViewController - deinit")
     }
 }
+

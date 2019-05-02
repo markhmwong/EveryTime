@@ -19,3 +19,7 @@ enum AddRecipeWizardError: Error {
 enum StepOptionsError: Error {
     case StepAlreadyComplete(message: String)
 }
+
+enum ControlsError: Error {
+    case LimitReached(message: String)
+}

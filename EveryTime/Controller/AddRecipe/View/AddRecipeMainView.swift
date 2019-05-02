@@ -11,6 +11,7 @@ import UIKit
 class AddRecipeMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     let cellId = "cellId"
+    let stepCellId = "stepCellId"
     
     enum AddRecipeSections: Int {
         case Name
@@ -27,7 +28,6 @@ class AddRecipeMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        
         guard let vm = delegate?.viewModel else {
             return
         }
@@ -106,14 +106,24 @@ class AddRecipeMainView: UIView, UITableViewDelegate, UITableViewDataSource {
                 let recipeEntity = d.viewModel?.recipeEntity
                 
                 let vc = AddRecipeOptionsViewController(delegate: delegate!, recipeEntity: recipeEntity)
-                delegate?.present(vc, animated: true, completion: nil)
+                d.present(vc, animated: true, completion: nil)
             case AddRecipeSections.Steps:
-                () //do nothing
+                guard let d = delegate else {
+                    return
+                }
+                
+                guard let step = d.viewModel?.dataSource[indexPath.row] else {
+                    return
+                }
+                let vc = EditStepViewController(delegate: d, selectedRow: indexPath.row, viewModel: AddStepViewModel(userSelectedValues: step))
+                d.present(vc, animated: true, completion: nil)
             }
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -134,7 +144,8 @@ class AddRecipeMainView: UIView, UITableViewDelegate, UITableViewDataSource {
                     cell.textLabel!.text = "Options"
                     return cell
                 case AddRecipeSections.Steps:
-                    let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! StepTableViewCellB
+                    let cell = tableView.dequeueReusableCell(withIdentifier: stepCellId, for: indexPath) as! StepTableViewCell
+                    cell.delegate = delegate
                     cell.step = delegate?.viewModel?.dataSource[indexPath.row]
                     return cell
             }
@@ -146,6 +157,16 @@ class AddRecipeMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if let section = AddRecipeSections(rawValue: indexPath.section) {
+            switch section {
+            case AddRecipeSections.Name:
+                return 50.0
+            case AddRecipeSections.Settings:
+                return 50.0
+            case AddRecipeSections.Steps:
+                return 70.0
+            }
+        }
         return 50.0
     }
     
@@ -231,7 +252,8 @@ class AddRecipeMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     func setupView() {
         addSubview(navView)
-        tableView.register(StepTableViewCellB.self, forCellReuseIdentifier: cellId)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
+        tableView.register(StepTableViewCell.self, forCellReuseIdentifier: stepCellId)
         addSubview(tableView)
         navView.addSubview(titleLabel)
 
@@ -273,7 +295,11 @@ class AddRecipeMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func reloadTableSteps() {
-        tableView.reloadSections(IndexSet(arrayLiteral: AddRecipeSections.Steps.rawValue), with: .automatic)
+//        tableView.reloadSections(IndexSet(arrayLiteral: AddRecipeSections.Steps.rawValue), with: .right)
+        guard let vm = delegate?.viewModel else {
+            return
+        }
+        tableView.insertRows(at: [IndexPath(row: vm.dataSource.count - 1, section: AddRecipeSections.Steps.rawValue)], with: .right)
     }
     
     func showAlertBox(_ message: String) {
@@ -303,5 +329,13 @@ class AddRecipeMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         delegate.present(alert, animated: true, completion: nil)
     }
     
+    func selectedRowIndex() -> IndexPath? {
+        guard let selected = tableView.indexPathForSelectedRow else {
+            print("no row selected")
+            return nil
+        }
+        
+        return selected
+    }
 }
 

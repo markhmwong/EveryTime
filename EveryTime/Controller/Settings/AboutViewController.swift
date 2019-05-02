@@ -50,6 +50,6 @@ class AboutViewController: ViewControllerBase {
     }
     
     deinit {
-        print("deinitialised")
+//        print("deinitialised")
     }
 }

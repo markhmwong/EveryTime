@@ -61,7 +61,7 @@ extension RecipeEntity {
         let tp = timePassedSinceStart() + pauseTimeInterval
         var elapsedTime: Double = 0.0
         for step in sortedSet {
-            elapsedTime = elapsedTime + step.totalTime //+ step.timeAdjustment //might need to add on timer adjustment here. but we'll need a new attribute in the core data model
+            elapsedTime = elapsedTime + step.totalTime //might need to add on timer adjustment here. but we'll need a new attribute in the core data model
             let time = elapsedTime - tp
             currStepName = step.stepName
             currStepPriority = step.priority
@@ -162,10 +162,11 @@ extension RecipeEntity {
     /**
         Reset entire recipe
      
+        Returns indexPaths to reload
+     
         Doubles as a full reset and a partial reset
      */
     func resetEntireRecipeTo(toStep: Int = 0) -> [IndexPath] {
-        print(toStep)
         let sortedSet = sortStepsByPriority()
         var indexPathsToReload: [IndexPath] = []
         var timePassed: Double = 0.0

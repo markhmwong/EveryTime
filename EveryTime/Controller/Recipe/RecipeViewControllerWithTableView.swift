@@ -14,7 +14,15 @@ enum BottomViewState: Int {
     case ShowAddStep
 }
 
-class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewControllerDelegate {
+class RecipeViewControllerWithTableViewViewModel {
+    
+    var stepArr: [StepEntity] = []
+
+}
+
+class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewControllerDelegate, UIGestureRecognizerDelegate {
+    
+    var viewModel: RecipeViewControllerWithTableViewViewModel?
     
     var transitionDelegate = OverlayTransitionDelegate()
     
@@ -45,6 +53,14 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     private lazy var navView: NavView? = nil
     
     private var step: StepEntity?
+    
+    private lazy var overlayView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .black
+        view.alpha = 0.0
+        return view
+    }()
     
     private lazy var tableView: UITableView = {
         let view: UITableView = UITableView()
@@ -96,12 +112,38 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     
     private var largeDisplay: LargeDisplayViewController?
     
+    //animations uiviewpropertyanimator
+    lazy var recipeOptionsViewController: RecipeOptionsModalViewController = RecipeOptionsModalViewController(delegate:self)
+    
+    var runningAnimations = [UIViewPropertyAnimator]()
+    
+    var runninggGestures = [UIGestureRecognizer]()
+    
+    var animationProgressWhenInterrupted:CGFloat = 0
+    
+    var recipeOptionsVisible: Bool = false
+    
+    var recipeOptionsCurrentState: RecipeOptionsState {
+        return recipeOptionsVisible ? RecipeOptionsState.open : RecipeOptionsState.closed
+    }
+    
+    var overlayTapGestureRecognizer: UITapGestureRecognizer?
+    
+    var panGestureRecognizer: UIPanGestureRecognizer?
+    
+    private var bottomConstraint = NSLayoutConstraint()
+    
+    enum RecipeOptionsState {
+        case closed
+        case open
+    }
+    
     init(recipe: RecipeEntity, delegate: MainViewController, indexPath: IndexPath) {
         super.init(nibName: nil, bundle: nil)
         self.mainViewControllerDelegate = delegate
         self.recipe = recipe
-        self.stepSet = recipe.step as? Set<StepEntity>
-        self.stepArr = recipe.sortStepsByPriority()
+        self.viewModel = RecipeViewControllerWithTableViewViewModel()
+        self.viewModel?.stepArr = recipe.sortStepsByPriority()
         self.indexPathSelectedFromMainView = indexPath
     }
     
@@ -112,6 +154,20 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     override func viewDidLoad() {
         super.viewDidLoad()
         startTimer()
+        
+        //will need to move
+        view.addSubview(overlayView)
+        overlayView.fillSuperView()
+        recipeOptionsViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        addChild(recipeOptionsViewController)
+        view.addSubview(recipeOptionsViewController.view)
+
+        let heightOfRecipeOptionsModal = heightForRecipeModal()
+        
+        recipeOptionsViewController.view.anchorView(top: nil, bottom: nil, leading: view.leadingAnchor, trailing: nil, centerY: nil, centerX: view.centerXAnchor, padding: UIEdgeInsets(top: 0.0, left: 10.0, bottom: -10.0, right: -10.0), size: CGSize(width: 0.0, height: heightOfRecipeOptionsModal))
+        
+        bottomConstraint = recipeOptionsViewController.view.topAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0)
+        bottomConstraint.isActive = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -136,6 +192,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         view.addSubview(tableView)
         view.addSubview(pauseRecipeButton)
 
+        
         headerView.delegate = self
         tableView.tableHeaderView = headerView
         tableView.setNeedsLayout()
@@ -144,7 +201,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         headerView.updateHeaderStepTimeLabel(time: "\(recipe.timeRemainingForCurrentStepToString())")
         headerView.updateHeaderStepTitleLabel(title: recipe.currStepName ?? "Unknown Name")
         
-        let sortedSet = recipe.sortStepsByPriority()
+        let sortedSet = recipe.sortStepsByPriority() //replace with viewmodel's array
         if (sortedSet.count - 1 > recipe.currStepPriority) {
             let nextStep: StepEntity = sortedSet[Int(recipe.currStepPriority) + 1]
             DispatchQueue.main.async {
@@ -162,7 +219,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
             DispatchQueue.main.async {
                 self.navView?.rightNavItem?.alpha = 1.0
                 self.navView?.rightNavItem?.isEnabled = true
-                self.pauseRecipeButton.updateButtonTitle(with: "Unpause")
+                self.pauseRecipeButton.updateButtonTitle(with: "Start")
             }
         } else {
             DispatchQueue.main.async {
@@ -206,7 +263,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     }
     
     func stepCount() -> Int {
-        return stepArr.count
+        return viewModel?.stepArr.count ?? 0
     }
     
     func modifyTime(_ seconds: Double) {
@@ -260,11 +317,12 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
             return
         }
         if (currIndex < maxItems) {
-            let nextEntity = stepArr[currIndex + 1]
-            nextEntity.isLeading = true
-            nextEntity.isComplete = false
-            nextEntity.updateExpiry()
-            r.updateStepInRecipe(nextEntity)
+            if let nextEntity = viewModel?.stepArr[currIndex + 1] {
+                nextEntity.isLeading = true
+                nextEntity.isComplete = false
+                nextEntity.updateExpiry()
+                r.updateStepInRecipe(nextEntity)
+            }
         }
     }
 
@@ -283,9 +341,14 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     
     //MARK: - RecipeVCDelegate Protocol Functions -
     func didReturnValues(step: StepEntity) {
-        step.priority = Int16(stepArr.count)
+        
+        guard let vm = viewModel else {
+            return
+        }
+        
+        step.priority = Int16(vm.stepArr.count)
         self.recipe.addToStep(step)
-        self.stepArr.append(step)
+        self.viewModel?.stepArr.append(step)
         CoreDataHandler.saveContext()
         startTimer()
     }
@@ -306,14 +369,17 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
             }
             
             let id = "\(self.recipe.recipeName!).\(self.recipe.createdDate!)"
-            self.recipe.removeFromStep(self.stepArr[indexPath.row])
-            self.stepArr.remove(at: indexPath.row)
-            self.recipe.reoganiseStepsInArr(fromIndex: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            self.recipe.sumStepsForExpectedElapsedTime()
-            LocalNotificationsService.shared.addRecipeWideNotification(identifier: id, notificationContent: [NotificationDictionaryKeys.Title.rawValue : self.recipe.recipeName!], timeRemaining: self.recipe.totalTimeRemaining)
-            CoreDataHandler.saveContext()
-            complete(true)
+            
+            if let vm = self.viewModel {
+                self.recipe.removeFromStep(vm.stepArr[indexPath.row])
+                vm.stepArr.remove(at: indexPath.row)
+                self.recipe.reoganiseStepsInArr(fromIndex: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                self.recipe.sumStepsForExpectedElapsedTime()
+                LocalNotificationsService.shared.addRecipeWideNotification(identifier: id, notificationContent: [NotificationDictionaryKeys.Title.rawValue : self.recipe.recipeName!], timeRemaining: self.recipe.totalTimeRemaining)
+                CoreDataHandler.saveContext()
+                complete(true)
+            }
         }
         
         return UISwipeActionsConfiguration(actions: [delete])
@@ -342,24 +408,31 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let sourceObj = self.stepArr[sourceIndexPath.row]
-        let destinationObj = self.stepArr[destinationIndexPath.row]
+        
+        guard let vm = viewModel else {
+            return
+        }
+        
+        let sourceObj = vm.stepArr[sourceIndexPath.row]
+        let destinationObj = vm.stepArr[destinationIndexPath.row]
         
         let tempDestinationPriority = destinationObj.priority
         destinationObj.priority = sourceObj.priority
         sourceObj.priority = tempDestinationPriority
         
-        stepArr.remove(at: sourceIndexPath.row)
-        stepArr.insert(sourceObj, at: destinationIndexPath.row)
+        vm.stepArr.remove(at: sourceIndexPath.row)
+        vm.stepArr.insert(sourceObj, at: destinationIndexPath.row)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return stepArr.count
+        return viewModel?.stepArr.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: stepCellId, for: indexPath) as! RecipeViewCell
-        cell.entity = stepArr[indexPath.item]
+        if let vm = viewModel {
+            cell.entity = vm.stepArr[indexPath.item]
+        }
         return cell
     }
     
@@ -390,12 +463,25 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
             self.headerView.enableStepOptions()
         }
         stepSelected = indexPath.row
-        step = stepArr[stepSelected]
+        guard let vm = viewModel else {
+            return
+        }
+        recipeOptionsViewController.isEditOptionEnabled()
+        step = vm.stepArr[stepSelected]
 
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         changeBottomViewStateWhileDragging()
+    }
+    
+    func heightForRecipeModal() -> CGFloat {
+        let heightOfRecipeOptionsModal = heightForCell() * CGFloat(self.recipeOptionsViewController.dataSource.count)
+        return heightOfRecipeOptionsModal
+    }
+    
+    func heightForCell() -> CGFloat {
+        return self.recipeOptionsViewController.tableView.rowHeight
     }
 }
 
@@ -568,6 +654,19 @@ extension RecipeViewControllerWithTableView: UIScrollViewDelegate {
 
 extension RecipeViewControllerWithTableView {
     
+    func didEditStep(step: StepEntity, rowToUpdate: Int) {
+        let targetStep = recipe.sortStepsByPriority()[rowToUpdate]
+        
+        targetStep.timeRemaining = step.timeRemaining
+        targetStep.timeAdjustment = 0.0
+        targetStep.totalTime = step.totalTime
+        targetStep.stepName = step.stepName
+        
+        CoreDataHandler.saveContext()
+        headerView.updateHeaderNextStepTimeLabel(time: step.timeRemainingToString())
+        tableView.reloadRows(at: [IndexPath(row: rowToUpdate, section: 0)], with: .none)
+    }
+    
     func showTimerOptions() {
         UIView.animate(withDuration: 0.3, delay: 0.0, options: [.curveEaseInOut], animations: {
             self.pauseRecipeButton.center.y = self.view.frame.maxY + 50.0
@@ -642,6 +741,9 @@ extension RecipeViewControllerWithTableView {
      # Full Recipe reset
      */
     func handleReset() {
+        recipeOptionsVisible = false
+        animateTransitionIfNeeded(state: recipeOptionsCurrentState)
+        
         let alert = UIAlertController(title: "Are you sure?", message: "Resetting the whole recipe cannot be undone", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
@@ -672,49 +774,186 @@ extension RecipeViewControllerWithTableView {
         dismissCurrentViewController()
     }
     
-    @objc func handleSettings() {
-        let optionMenu = UIAlertController(title: "Recipe Options", message: "These options affect the recipe as a whole.", preferredStyle: .actionSheet)
-        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
-            let alert = UIAlertController(title: "Are you sure?", message: "Deleting cannot be undone", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
-                self.dismiss(animated: true) {
-                    //
-                    guard let mvc = self.mainViewControllerDelegate else {
-                        return
-                    }
-                    guard let date = self.recipe.createdDate else {
-                        return
-                    }
-                    mvc.handleDeleteARecipe(date)
-                }
-            }))
-            self.present(alert, animated: true, completion: nil)
-        }
-        let resetAction = UIAlertAction(title: "Reset", style: .default) { (action) in
-            self.handleReset()
+    func animateTransitionIfNeeded(state: RecipeOptionsState) {
+        let duration = 0.5
+        guard runningAnimations.isEmpty else {
+            return
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        let editAction = UIAlertAction(title: "Shuffle Steps", style: .default) { (action) in
-            self.tableView.isEditing = !self.tableView.isEditing
-            self.headerView.saveButtonEnable()
+        let overlayAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1.0) {
+            switch state {
+                case RecipeOptionsState.open:
+                    
+                    self.overlayView.alpha = 0.5
+                
+                case RecipeOptionsState.closed:
+
+                    self.overlayView.alpha = 0.0
+                
+            }
+
         }
-        let addStepAction = UIAlertAction(title: "Add Step", style: .default) { (action) in
-            //add step
-            self.handleAddStep()
+        overlayAnimator.isUserInteractionEnabled = true
+        overlayAnimator.addCompletion { (position) in
+            
+            switch position {
+            case .start:
+                self.recipeOptionsVisible = true
+            case .end:
+                self.recipeOptionsVisible = !self.recipeOptionsVisible
+            case .current:
+                ()
+            }
+            self.runningAnimations.removeAll()
         }
 
-        optionMenu.addAction(addStepAction)
-        optionMenu.addAction(editAction)
-        optionMenu.addAction(resetAction)
-        optionMenu.addAction(deleteAction)
-        optionMenu.addAction(cancelAction)
-        self.present(optionMenu, animated: true, completion: nil)
+        overlayAnimator.startAnimation()
+        runningAnimations.append(overlayAnimator)
+        
+        let popOverAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 0.75) {
+            switch state {
+                case RecipeOptionsState.open:
+                    
+                    self.bottomConstraint.constant = -self.heightForRecipeModal() - 10.0 //+ self.heightForCell()
+                    self.recipeOptionsViewController.view.layer.cornerRadius = 8.0
+                case RecipeOptionsState.closed:
+                    
+                    self.recipeOptionsViewController.view.layer.cornerRadius = 0.0
+                    self.bottomConstraint.constant = 25.0
+                
+            }
+            self.view.layoutIfNeeded()
+        }
+        popOverAnimator.startAnimation()
+        runningAnimations.append(popOverAnimator)
+    }
+    
+    func startInteractiveTransition(state:RecipeOptionsState, duration:TimeInterval) {
+        animateTransitionIfNeeded(state: state)
+
+        for animator in runningAnimations {
+            animator.pauseAnimation()
+            animationProgressWhenInterrupted = animator.fractionComplete
+        }
+    }
+    
+    func updateInteractiveTransition(fractionCompleted:CGFloat) {
+        for animator in runningAnimations {
+            animator.fractionComplete = fractionCompleted + animationProgressWhenInterrupted
+        }
+    }
+    
+    func closeInteractiveTransition() {
+        for animator in runningAnimations {
+            animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
+        }
+    }
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+    func removeGesturesFromView() {
+        guard let tapGesture = overlayTapGestureRecognizer else {
+            return
+        }
+        overlayView.removeGestureRecognizer(tapGesture)
+    }
+    
+    @objc func handleCardTap(recognizer: UITapGestureRecognizer) {
+        switch recognizer.state {
+        case .ended:
+            animateTransitionIfNeeded(state: recipeOptionsCurrentState)
+        default:
+            ()
+        }
+    }
+
+    @objc func handleCardPan(recognizer: UIPanGestureRecognizer) {
+        let translation = recognizer.translation(in: recipeOptionsViewController.view)
+        
+        switch recognizer.state {
+            case .began:
+                startInteractiveTransition(state: recipeOptionsCurrentState, duration: 0.5)
+            case .changed:
+                
+                var fractionComplete = translation.y / heightForRecipeModal()
+                
+                if (recipeOptionsVisible) {
+                    fractionComplete *= -1
+                }
+
+                updateInteractiveTransition(fractionCompleted: fractionComplete)
+            
+            case .ended:
+                closeInteractiveTransition()
+            default:
+                ()
+        }
+    }
+    
+    @objc func handleOverlayDismisser(recognizer: UITapGestureRecognizer) {
+        
+        switch recognizer.state {
+        case .ended:
+            animateTransitionIfNeeded(state: recipeOptionsCurrentState)
+        default:
+            ()
+        }
+    }
+    
+    @objc func handleSettings() {
+        if (overlayTapGestureRecognizer == nil) {
+            overlayTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleOverlayDismisser(recognizer:)))
+            guard let tapGesture = overlayTapGestureRecognizer else {
+                return
+            }
+            tapGesture.cancelsTouchesInView = false
+            overlayView.addGestureRecognizer(tapGesture)
+        }
+        
+        // to be looked at
+        if (panGestureRecognizer == nil) {
+            panGestureRecognizer = UIPanGestureRecognizer()
+            guard let panGesture = panGestureRecognizer else {
+                return
+            }
+            panGesture.delegate = recipeOptionsViewController
+            panGesture.cancelsTouchesInView = false
+            
+            panGesture.addTarget(self, action: #selector(handleCardPan(recognizer:)))
+//            recipeOptionsViewController.view.addGestureRecognizer(panGesture)
+        }
+
+        recipeOptionsVisible = true
+        animateTransitionIfNeeded(state: recipeOptionsCurrentState)
+    }
+    
+    func handleShuffle() {
+        recipeOptionsVisible = false
+        animateTransitionIfNeeded(state: recipeOptionsCurrentState)
+        
+        self.tableView.isEditing = !self.tableView.isEditing
+        self.headerView.saveButtonEnable()
+    }
+    
+    func handleEditStep() {
+        recipeOptionsVisible = false
+        animateTransitionIfNeeded(state: recipeOptionsCurrentState)
+        
+        if let index = tableView.indexPathForSelectedRow {
+            let selectedRow = index.row
+            guard let step = viewModel?.stepArr[selectedRow] else {
+                return
+            }
+            let vc = EditStepViewControllerInExistingRecipe(delegate: self, selectedRow: selectedRow, viewModel: AddStepViewModel(userSelectedValues: step))
+            present(vc, animated: true, completion: nil)
+        } else {
+            print("to be compeleted - select a cell warning")
+        }
     }
     
     func handleLargeDisplay() {
-
         largeDisplay = LargeDisplayViewController(delegate: self)
 
         guard let ld = largeDisplay else {
@@ -737,6 +976,9 @@ extension RecipeViewControllerWithTableView {
     }
     
     @objc func handleDelete() {
+        recipeOptionsVisible = false
+        animateTransitionIfNeeded(state: recipeOptionsCurrentState)
+        
         let alert = UIAlertController(title: "Are you sure?", message: "Deleting cannot be undone", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
@@ -753,16 +995,19 @@ extension RecipeViewControllerWithTableView {
         }))
         present(alert, animated: true, completion: nil)
     }
+    
+    func handleClose() {
+        recipeOptionsVisible = false
+        animateTransitionIfNeeded(state: recipeOptionsCurrentState)
+    }
 
     func handleAddStep() {
+        recipeOptionsVisible = false
+        animateTransitionIfNeeded(state: recipeOptionsCurrentState)
+        
         let viewModel = AddStepViewModel(userSelectedValues: StepValues(name: "Step", hour: 0, min: 0, sec: 0))
         let vc = AddStepViewController(delegate: self, viewModel: viewModel)
-//        vc.transitioningDelegate = transitionDelegate
         vc.modalPresentationStyle = .overCurrentContext
-//        dismissInteractor = OverlayInteractor()
-//        dismissInteractor.attachToViewController(viewController: vc, withView: vc.view, presentViewController: nil)
-//        vc.interactor = dismissInteractor
-//        transitionDelegate.dismissInteractor = dismissInteractor
         self.present(vc, animated: true, completion: nil)
     }
 
@@ -782,7 +1027,7 @@ extension RecipeViewControllerWithTableView {
             DispatchQueue.main.async {
                 self.settingsButton.isEnabled = true
                 self.settingsButton.alpha = 1.0
-                self.pauseRecipeButton.updateButtonTitle(with: "Unpause")
+                self.pauseRecipeButton.updateButtonTitle(with: "Start")
             }
             recipe.pauseStepArr()
         }

@@ -8,11 +8,7 @@
 
 import UIKit
 
-enum PickerColumn: Int {
-    case hour = 0
-    case min = 2
-    case sec = 4
-}
+
 
 // refactor addstep into one base view controller
 protocol AddStepProtocol {
@@ -23,8 +19,8 @@ class AddStepViewController: AddStepViewControllerBase {
     var delegate: RecipeViewControllerDelegate?
 
     init(delegate: RecipeViewControllerWithTableView?, viewModel: AddStepViewModel) {
-        super.init()
         self.delegate = delegate
+        super.init()
         self.viewModel = viewModel
     }
     
@@ -36,7 +32,7 @@ class AddStepViewController: AddStepViewControllerBase {
         super.viewDidLoad()
         if let rvc = delegate {
             
-            guard let step = viewModel.step() else {
+            guard let step = viewModel.grabStepValues() else {
                 return
             }
             
@@ -53,6 +49,7 @@ class AddStepViewController: AddStepViewControllerBase {
     }
     
     override func grabValuesFromInput() {
+        super.grabValuesFromInput()
         let name = mainView.labelTextField.text!
         let hrs = mainView.countDownPicker.selectedRow(inComponent: PickerColumn.hour.rawValue)
         let min = mainView.countDownPicker.selectedRow(inComponent: PickerColumn.min.rawValue)
@@ -60,6 +57,15 @@ class AddStepViewController: AddStepViewControllerBase {
         
         do {
             try viewModel.validatePickerView(hrs: hrs, min: min, sec: sec)
+            try viewModel.validateNameInput()
+            guard let rvc = delegate else {
+                return
+            }
+            viewModel.updateStepValues(name: name, hrs: hrs, min: min, sec: sec)
+            viewModel.transformToEntity(priority: Int16(rvc.stepCount() - 1))
+            rvc.didReturnValues(step: viewModel.grabEntity()!)
+            self.dismiss(animated: true) { }
+            
         } catch AddStepPickerViewErrors.allZero {
             showAlertBox("At least one unit of time must be greater than 0")
         } catch AddStepPickerViewErrors.lessThanZero {
@@ -70,12 +76,6 @@ class AddStepViewController: AddStepViewControllerBase {
             showAlertBox("Minutes is greater than 60")
         } catch AddStepPickerViewErrors.greaterThanAMinute {
             showAlertBox("Seconds is greater than 60")
-        } catch {
-            showAlertBox("Error unknown with picker view")
-        }
-        
-        do {
-            try viewModel.validateNameInput()
         } catch AddStepLabelErrors.labelNotFilled {
             showAlertBox("Please fill in the label")
         } catch AddStepLabelErrors.labelLengthTooLong {
@@ -85,17 +85,7 @@ class AddStepViewController: AddStepViewControllerBase {
         } catch AddStepLabelErrors.labelLengthTooShort {
             showAlertBox("Too short")
         } catch {
-            showAlertBox("Error unknown with name label")
+            showAlertBox("Error unknown with picker view")
         }
-        
-        guard let rvc = delegate else {
-            return
-        }
-        viewModel.updateStepValues(name: name, hrs: hrs, min: min, sec: sec)
-        viewModel.transformToEntity(priority: Int16(rvc.stepCount() - 1))
-        rvc.didReturnValues(step: viewModel.grabEntity()!)        
-        self.dismiss(animated: true) { }
     }
 }
-
-

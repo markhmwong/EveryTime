@@ -55,7 +55,7 @@ class LargeDisplayMainView: UIView {
     
     lazy var upNextStepLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "Up Next", attributes: Theme.Font.LargeDisplay.LargeRecipeSubTitleLabel)
+        label.attributedText = NSAttributedString(string: "Up Next", attributes: Theme.Font.LargeDisplay.LargeRecipeTitleLabel)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         return label
@@ -73,7 +73,19 @@ class LargeDisplayMainView: UIView {
         return label
     }()
     
+    lazy var nextStepButton: StandardButton = {
+        let button = StandardButton(title: "Next")
+        button.addTarget(self, action: #selector(handleNextStep), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     
+    lazy var prevStepButton: StandardButton = {
+        let button = StandardButton(title: "Prev")
+        button.addTarget(self, action: #selector(handlePrevStep), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -110,23 +122,36 @@ class LargeDisplayMainView: UIView {
         addSubview(stepsCompleteLabel)
         addSubview(upNextStepLabel)
         addSubview(upNextStepNameLabel)
+        addSubview(nextStepButton)
+        addSubview(prevStepButton)
         upNextStepNameLabel.restartLabel()
+        
+        delegate?.viewModel
+        
     }
     override func layoutSubviews() {
         super.layoutSubviews()
     }
+
     
     func setupConstraints() {
         let topConstraint = !appDelegate.hasTopNotch ? topAnchor : nil
         
         recipeLabel.anchorView(top: topConstraint, bottom: nil, leading: leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 40, left: 10, bottom: 0, right: -10), size: .zero)
-        timeLabel.anchorView(top: nil, bottom: nil, leading: nil, trailing: nil, centerY: centerYAnchor, centerX: centerXAnchor, padding: .zero, size: .zero)
+        timeLabel.anchorView(top: nil, bottom: centerYAnchor, leading: nil, trailing: nil, centerY: nil, centerX: centerXAnchor, padding: .zero, size: .zero)
         stepLabel.anchorView(top: nil, bottom: timeLabel.topAnchor, leading: recipeLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: .zero, size: CGSize(width: UIScreen.main.bounds.width - 20.0, height: 40.0))
         closeButton.anchorView(top: topAnchor, bottom: nil, leading: nil, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0), size: CGSize(width: 80, height: 0))
         upNextStepLabel.anchorView(top: nil, bottom: upNextStepNameLabel.topAnchor, leading: recipeLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: .zero, size: .zero)
         upNextStepNameLabel.anchorView(top: nil, bottom: bottomAnchor, leading: recipeLabel.leadingAnchor, trailing: recipeLabel.trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: CGSize(width: UIScreen.main.bounds.width, height: 40.0))
         stepsCompleteLabel.anchorView(top: recipeLabel.bottomAnchor, bottom: nil, leading: timeLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: .zero, size: .zero)
+        
+        let screenHeight = UIScreen.main.bounds.height
+        
+        nextStepButton.anchorView(top: nil, bottom: bottomAnchor, leading: centerXAnchor, trailing: nil, centerY: nil, centerX: nil, padding: .init(top: 0.0, left: 10.0, bottom: -(screenHeight / 4), right: 0.0), size: .zero)
+        nextStepButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.25).isActive = true
 
+        prevStepButton.anchorView(top: nil, bottom: bottomAnchor, leading: nil, trailing: centerXAnchor, centerY: nil, centerX: nil, padding: .init(top: 0.0, left: -10.0, bottom: -(screenHeight / 4), right: -10.0), size: .zero)
+        prevStepButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.25).isActive = true
     }
     
     override func safeAreaInsetsDidChange() {
@@ -166,6 +191,37 @@ class LargeDisplayMainView: UIView {
     func updateViewStepsCompleteLabel(stepComplete: String = "Unknown Step", _ completionHandler: (() -> ())? = nil) {
         DispatchQueue.main.async {
             self.stepsCompleteLabel.attributedText = NSAttributedString(string: stepComplete, attributes: Theme.Font.LargeDisplay.LargeStepLabel)
+        }
+    }
+    
+    func updateControls(pauseState: Bool) {
+        nextStepButton.isEnabled = pauseState ? false : true
+        prevStepButton.isEnabled = pauseState ? false : true
+        
+        nextStepButton.alpha = pauseState ? 0.5 : 1.0
+        prevStepButton.alpha = pauseState ? 0.5 : 1.0
+
+    }
+    
+    @objc func handleNextStep() {
+        
+        do {
+            try delegate?.triggerNextStep()
+        } catch ControlsError.LimitReached(let message) {
+            print("\(message)")
+        } catch {
+            print("control error")
+        }
+    }
+    
+    @objc func handlePrevStep() {
+        
+        do {
+            try delegate?.triggerPrevStep()
+        } catch ControlsError.LimitReached(let message) {
+            print("\(message)")
+        } catch {
+            print("control error")
         }
     }
 }

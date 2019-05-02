@@ -33,6 +33,7 @@ struct WhatsNewFactory {
     }
 }
 
+/// List patch notes from least important first
 struct WhatsNewDetails {
     
     struct WhatsNew1_1_14: WhatsNewProtocol {
@@ -44,7 +45,13 @@ struct WhatsNewDetails {
         let build: String = "1.12"
         
         let patchNotes: [String] = [
-            "To be done. Apple Watch. Forward and back stepping. Whats new view controller pop up"
+            "Minor UI Changes - You may notice slight changes to fonts, colours and layout. Any major changes will be listed",
+            "Existing and new steps can now be edited",
+            "New Recipe options menu",
+            "Steps have the ability to either skip a step or return to the previous step while in full screen mode",
+            "While creating a new Recipe, it is now easier to recreate existing steps by using the copy button",
+            "New Recipes will now show the correct step name rather than an unknown",
+            
         ]
     }
     

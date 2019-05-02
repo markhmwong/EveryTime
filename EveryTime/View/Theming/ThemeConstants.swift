@@ -31,8 +31,8 @@ struct Theme {
         }
         
         struct StepCell {
-            static var CellIndicatorComplete: UIColor { return UIColor(red:0.52, green:0.83, blue:0.73, alpha:1.0) } //to do
-            static var CellIndicatorIncomplete: UIColor { return UIColor(red:0.92, green:0.83, blue:0.73, alpha:0.9) } //to do
+            static var CellIndicatorComplete: UIColor { return UIColor(red:0.52, green:0.83, blue:0.73, alpha:1.0) } 
+            static var CellIndicatorIncomplete: UIColor { return UIColor(red:0.4, green:0.4, blue:0.4, alpha:0.2) }
         }
     }
     struct Font {
@@ -207,6 +207,8 @@ struct Theme {
         struct Nav {
             static let StandardButton: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.StandardButton)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
             static let Item: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.NavItem)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
+            static let DisabledItem: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.NavItem)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColourDisabled, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
+
             static let RecipeTitle: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.NavItem)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
             static let Title: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont(name: tf.Style.Bold, size: tf.Size.NavItem)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
             static let Height: CGFloat = 0.08

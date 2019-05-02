@@ -54,6 +54,11 @@
 		4D56D48A226B1A8800E28376 /* AddStepMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D56D489226B1A8800E28376 /* AddStepMainView.swift */; };
 		4D6DFCB82212508E009C3044 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6DFCB72212508E009C3044 /* SettingsViewController.swift */; };
 		4D6E35382215435900CBCC23 /* AddRecipeWizardError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6E35372215435900CBCC23 /* AddRecipeWizardError.swift */; };
+		4D6E7DB7226FF57000716FB5 /* EditStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6E7DB6226FF57000716FB5 /* EditStepViewController.swift */; };
+		4D6E7DB92274525800716FB5 /* RecipeOptionsModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6E7DB82274525800716FB5 /* RecipeOptionsModalViewController.swift */; };
+		4D6E7DBC22746A5000716FB5 /* RecipeOptionsModalTransistionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6E7DBB22746A5000716FB5 /* RecipeOptionsModalTransistionDelegate.swift */; };
+		4D6E7DBE2274728100716FB5 /* RecipeModalAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6E7DBD2274728100716FB5 /* RecipeModalAnimatedTransitioning.swift */; };
+		4D6E7DC02274729100716FB5 /* RecipeModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6E7DBF2274729100716FB5 /* RecipeModalPresentationController.swift */; };
 		4D94E5D5223E74DA0009F176 /* LocalNotificationsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D94E5D4223E74DA0009F176 /* LocalNotificationsService.swift */; };
 		4D9986C1223CA3080049D55C /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D9986BF223CA3080049D55C /* Interface.storyboard */; };
 		4D9986C3223CA3090049D55C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D9986C2223CA3090049D55C /* Assets.xcassets */; };
@@ -89,12 +94,13 @@
 		4DA78F2922630FB700C018CA /* AddRecipeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F2822630FB700C018CA /* AddRecipeHeaderView.swift */; };
 		4DA78F2B22630FFB00C018CA /* AddRecipeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F2A22630FFB00C018CA /* AddRecipeMainView.swift */; };
 		4DA78F2F22634BF200C018CA /* AddRecipeAddStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F2E22634BF200C018CA /* AddRecipeAddStepViewController.swift */; };
-		4DA78F312263746800C018CA /* AddstepViewController+UIPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F302263746800C018CA /* AddstepViewController+UIPickerView.swift */; };
+		4DA78F312263746800C018CA /* AddStepViewController+UIPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F302263746800C018CA /* AddStepViewController+UIPickerView.swift */; };
 		4DA78F35226417A600C018CA /* AddRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F34226417A600C018CA /* AddRecipeViewModel.swift */; };
 		4DD542F0224E544C003C6DEC /* AddStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD542EF224E544C003C6DEC /* AddStepViewModel.swift */; };
 		4DD542F42252284C003C6DEC /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD542F32252284C003C6DEC /* SettingsViewModel.swift */; };
 		4DD542F622545854003C6DEC /* AddStepViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD542F522545854003C6DEC /* AddStepViewControllerTest.swift */; };
 		4DD542F922548EF1003C6DEC /* RecipeEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD542F822548EF1003C6DEC /* RecipeEntityTests.swift */; };
+		4DD9683E2278866000C6D94B /* InstantPanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD9683D2278866000C6D94B /* InstantPanGestureRecognizer.swift */; };
 		4DF13D5D2217EECF009BE812 /* ViewControllerBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF13D5C2217EECF009BE812 /* ViewControllerBase.swift */; };
 		4DF13D62221A1BAB009BE812 /* StandardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF13D61221A1BAB009BE812 /* StandardButton.swift */; };
 /* End PBXBuildFile section */
@@ -203,6 +209,11 @@
 		4D56D489226B1A8800E28376 /* AddStepMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepMainView.swift; sourceTree = "<group>"; };
 		4D6DFCB72212508E009C3044 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		4D6E35372215435900CBCC23 /* AddRecipeWizardError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeWizardError.swift; sourceTree = "<group>"; };
+		4D6E7DB6226FF57000716FB5 /* EditStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStepViewController.swift; sourceTree = "<group>"; };
+		4D6E7DB82274525800716FB5 /* RecipeOptionsModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeOptionsModalViewController.swift; sourceTree = "<group>"; };
+		4D6E7DBB22746A5000716FB5 /* RecipeOptionsModalTransistionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeOptionsModalTransistionDelegate.swift; sourceTree = "<group>"; };
+		4D6E7DBD2274728100716FB5 /* RecipeModalAnimatedTransitioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeModalAnimatedTransitioning.swift; sourceTree = "<group>"; };
+		4D6E7DBF2274729100716FB5 /* RecipeModalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeModalPresentationController.swift; sourceTree = "<group>"; };
 		4D94E5D1223CC6430009F176 /* EveryTime.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EveryTime.entitlements; sourceTree = "<group>"; };
 		4D94E5D2223CC6570009F176 /* EveryTimeW.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EveryTimeW.entitlements; sourceTree = "<group>"; };
 		4D94E5D4223E74DA0009F176 /* LocalNotificationsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsService.swift; sourceTree = "<group>"; };
@@ -244,13 +255,14 @@
 		4DA78F2822630FB700C018CA /* AddRecipeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeHeaderView.swift; sourceTree = "<group>"; };
 		4DA78F2A22630FFB00C018CA /* AddRecipeMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeMainView.swift; sourceTree = "<group>"; };
 		4DA78F2E22634BF200C018CA /* AddRecipeAddStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeAddStepViewController.swift; sourceTree = "<group>"; };
-		4DA78F302263746800C018CA /* AddstepViewController+UIPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddstepViewController+UIPickerView.swift"; sourceTree = "<group>"; };
+		4DA78F302263746800C018CA /* AddStepViewController+UIPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddStepViewController+UIPickerView.swift"; sourceTree = "<group>"; };
 		4DA78F34226417A600C018CA /* AddRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeViewModel.swift; sourceTree = "<group>"; };
 		4DA78F372264378C00C018CA /* SimpleRecipeTimer v3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SimpleRecipeTimer v3.xcdatamodel"; sourceTree = "<group>"; };
 		4DD542EF224E544C003C6DEC /* AddStepViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepViewModel.swift; sourceTree = "<group>"; };
 		4DD542F32252284C003C6DEC /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		4DD542F522545854003C6DEC /* AddStepViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepViewControllerTest.swift; sourceTree = "<group>"; };
 		4DD542F822548EF1003C6DEC /* RecipeEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeEntityTests.swift; sourceTree = "<group>"; };
+		4DD9683D2278866000C6D94B /* InstantPanGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstantPanGestureRecognizer.swift; sourceTree = "<group>"; };
 		4DF13D5C2217EECF009BE812 /* ViewControllerBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerBase.swift; sourceTree = "<group>"; };
 		4DF13D61221A1BAB009BE812 /* StandardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -394,8 +406,9 @@
 			children = (
 				4DA78F2E22634BF200C018CA /* AddRecipeAddStepViewController.swift */,
 				4DA12F7921B606A20049CD75 /* AddStepViewController.swift */,
-				4DA78F302263746800C018CA /* AddstepViewController+UIPickerView.swift */,
+				4DA78F302263746800C018CA /* AddStepViewController+UIPickerView.swift */,
 				4D56D4872269F3B300E28376 /* AddStepViewControllerBase.swift */,
+				4D6E7DB6226FF57000716FB5 /* EditStepViewController.swift */,
 			);
 			path = AddStep;
 			sourceTree = "<group>";
@@ -460,6 +473,7 @@
 		4D53F7D621EF0C2900C0AF31 /* Animations */ = {
 			isa = PBXGroup;
 			children = (
+				4D6E7DBA22746A2F00716FB5 /* RecipeOptionsModal */,
 				4D53F8EF21F6A7B800C0AF31 /* OverlayTransition */,
 				4D53F8A321F36D6F00C0AF31 /* HorizontalTransition */,
 			);
@@ -505,6 +519,8 @@
 			children = (
 				4D563C2B220D4ADC0039B07F /* RecipeViewControllerBase.swift */,
 				4D563C2D220D54280039B07F /* RecipeViewControllerWithTableView.swift */,
+				4D6E7DB82274525800716FB5 /* RecipeOptionsModalViewController.swift */,
+				4DD9683D2278866000C6D94B /* InstantPanGestureRecognizer.swift */,
 			);
 			path = Recipe;
 			sourceTree = "<group>";
@@ -539,6 +555,16 @@
 			children = (
 			);
 			path = AddStep;
+			sourceTree = "<group>";
+		};
+		4D6E7DBA22746A2F00716FB5 /* RecipeOptionsModal */ = {
+			isa = PBXGroup;
+			children = (
+				4D6E7DBB22746A5000716FB5 /* RecipeOptionsModalTransistionDelegate.swift */,
+				4D6E7DBD2274728100716FB5 /* RecipeModalAnimatedTransitioning.swift */,
+				4D6E7DBF2274729100716FB5 /* RecipeModalPresentationController.swift */,
+			);
+			path = RecipeOptionsModal;
 			sourceTree = "<group>";
 		};
 		4D94E5D3223E74C10009F176 /* Notifications */ = {
@@ -579,7 +605,7 @@
 				4DF13D5C2217EECF009BE812 /* ViewControllerBase.swift */,
 				4D53F7D621EF0C2900C0AF31 /* Animations */,
 				4D3E24C4221E688600B0D621 /* AddStep */,
-				4DF13D5E221A153C009BE812 /* AddingRecipe */,
+				4DF13D5E221A153C009BE812 /* AddRecipe */,
 				4D53803322468BF40051DD0F /* Settings */,
 				4DA78E282254CCF900C018CA /* LargeDisplayViewController */,
 				4D5380262244BBE90051DD0F /* Main */,
@@ -722,7 +748,7 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
-		4DF13D5E221A153C009BE812 /* AddingRecipe */ = {
+		4DF13D5E221A153C009BE812 /* AddRecipe */ = {
 			isa = PBXGroup;
 			children = (
 				4DA78F332264177300C018CA /* ViewModel */,
@@ -730,7 +756,7 @@
 				4DA78F222260B99400C018CA /* AddRecipeViewController.swift */,
 				4DA78F242262F30100C018CA /* AddRecipeOptionsViewController.swift */,
 			);
-			path = AddingRecipe;
+			path = AddRecipe;
 			sourceTree = "<group>";
 		};
 		4DF13D60221A1B9B009BE812 /* Button */ = {
@@ -945,10 +971,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D6E7DBC22746A5000716FB5 /* RecipeOptionsModalTransistionDelegate.swift in Sources */,
 				4D53F7DA21EF0D7700C0AF31 /* OverlayPresentationController.swift in Sources */,
 				4D53C2172203F8C900EED75C /* HorizontalPresentationController.swift in Sources */,
 				4DA78F10225B829200C018CA /* WhatsNew.swift in Sources */,
 				4D5380282244BC750051DD0F /* MainViewController+UICollectionView.swift in Sources */,
+				4D6E7DB92274525800716FB5 /* RecipeOptionsModalViewController.swift in Sources */,
 				4DA78E2F22559E9C00C018CA /* LargeDisplayViewModel.swift in Sources */,
 				4DA78F18225C17F500C018CA /* AppMetaData.swift in Sources */,
 				4DA78F062259D98800C018CA /* BasicMarqueeLabel.swift in Sources */,
@@ -958,7 +986,7 @@
 				4DA78E2D225571AA00C018CA /* LargeDisplayMainView.swift in Sources */,
 				4DA78F16225C137000C018CA /* SettingsWhatsNewViewController.swift in Sources */,
 				4DF13D62221A1BAB009BE812 /* StandardButton.swift in Sources */,
-				4DA78F312263746800C018CA /* AddstepViewController+UIPickerView.swift in Sources */,
+				4DA78F312263746800C018CA /* AddStepViewController+UIPickerView.swift in Sources */,
 				4D53F89E21F1CBF800C0AF31 /* ShowOverlayAnimator.swift in Sources */,
 				4DD542F0224E544C003C6DEC /* AddStepViewModel.swift in Sources */,
 				4DA78F2F22634BF200C018CA /* AddRecipeAddStepViewController.swift in Sources */,
@@ -990,6 +1018,7 @@
 				4DA78F252262F30100C018CA /* AddRecipeOptionsViewController.swift in Sources */,
 				4D53803D2249FCC80051DD0F /* Extentions+UIDevice.swift in Sources */,
 				4DA78F14225B884A00C018CA /* WhatsNewViewModel.swift in Sources */,
+				4D6E7DC02274729100716FB5 /* RecipeModalPresentationController.swift in Sources */,
 				4D53803A224911140051DD0F /* TapticService.swift in Sources */,
 				4D53802A2244C2D70051DD0F /* Extension+UIView.swift in Sources */,
 				4D6E35382215435900CBCC23 /* AddRecipeWizardError.swift in Sources */,
@@ -1001,6 +1030,7 @@
 				4D538023224386D20051DD0F /* SettingsMainView.swift in Sources */,
 				4D56D4882269F3B300E28376 /* AddStepViewControllerBase.swift in Sources */,
 				4D563C2C220D4ADC0039B07F /* RecipeViewControllerBase.swift in Sources */,
+				4D6E7DB7226FF57000716FB5 /* EditStepViewController.swift in Sources */,
 				4D53F8A521F36D9100C0AF31 /* ShowHorizontalAnimator.swift in Sources */,
 				4DA78F2B22630FFB00C018CA /* AddRecipeMainView.swift in Sources */,
 				4DA12F8721B8A3A20049CD75 /* Protocols.swift in Sources */,
@@ -1011,9 +1041,11 @@
 				4DD542F42252284C003C6DEC /* SettingsViewModel.swift in Sources */,
 				4D53803522473FF40051DD0F /* AboutViewController.swift in Sources */,
 				4DA78F1C225C25AC00C018CA /* WhatsNewView.swift in Sources */,
+				4D6E7DBE2274728100716FB5 /* RecipeModalAnimatedTransitioning.swift in Sources */,
 				4D6DFCB82212508E009C3044 /* SettingsViewController.swift in Sources */,
 				4DA12F7D21B611AF0049CD75 /* Extensions.swift in Sources */,
 				4D53F7CC21EC47E700C0AF31 /* ThemeConstants.swift in Sources */,
+				4DD9683E2278866000C6D94B /* InstantPanGestureRecognizer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

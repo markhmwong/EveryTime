@@ -11,10 +11,10 @@ import UIKit
 class RecipeViewControllerBase: ViewControllerBase {
     var timer: Timer?
     
-    //Collection Datasource
+    //Collection Datasource - move to viewmodel
     let stepCellId = "stepCellId"
-    var stepSet: Set<StepEntity>!
-    var stepArr: [StepEntity] = []
+//    var stepSet: Set<StepEntity>!
+//    var stepArr: [StepEntity] = []
     var recipe: RecipeEntity!
 
     var mainViewControllerDelegate: MainViewController?

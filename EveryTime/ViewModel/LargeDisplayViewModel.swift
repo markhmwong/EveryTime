@@ -54,6 +54,11 @@ class LargeDisplayViewModel {
         if let r = recipeEntity {
             self.stepsComplete = r.stepsComplete()
         }
+        
+        if let pause = recipeEntity?.isPaused {
+            delegate?.updateViewControls(pauseState: pause)
+        }
+        
         defer {
             self.stepsCompleteString = { self.stepsCompleteString }()
             self.currTimeStr = time
@@ -74,6 +79,6 @@ class LargeDisplayViewModel {
     }
     
     deinit {
-        print("deinit largedisplayviewmodel")
+//        print("deinit largedisplayviewmodel")
     }
 }

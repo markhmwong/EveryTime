@@ -46,15 +46,15 @@ class AddRecipeViewController: UIViewController {
         //Add step to table (dataSource)
         viewModel?.dataSource.append(step)
         mainView.reloadTableSteps()
-
+    }
+    
+    func didEditStep(step: StepEntity, rowToUpdate: Int) {
+        viewModel?.dataSource[rowToUpdate] = step
+        mainView.tableView.reloadRows(at: [IndexPath(row: rowToUpdate, section: 2)], with: .none)
     }
     
     func handleDismiss() {
-        guard let vm = viewModel else {
-            return
-        }
-        
-        guard let delegate = delegate else {
+        guard let vm = viewModel, let delegate = delegate else {
             return
         }
         
@@ -68,19 +68,27 @@ class AddRecipeViewController: UIViewController {
     }
     
     func saveAndDismiss() {
-        
-        guard let vm = viewModel else {
-            return
-        }
-        
-        guard let delegate = delegate else {
+        guard let vm = viewModel, let delegate = delegate else {
             return
         }
         
         //check recipe label
         do {
             try vm.checkTextField()
+            //add entire step array to recipeEntity
             vm.recipeEntity.recipeName = mainView.recipeNameTextField?.text
+            
+            let firstStep = vm.dataSource[0]
+            vm.recipeEntity.currStepName = firstStep.stepName ?? "Step Name"
+            vm.recipeEntity.addToStep(NSSet(array: vm.dataSource))
+            vm.recipeEntity.startDate = Date()
+            vm.recipeEntity.pauseStartDate = vm.recipeEntity.startDate
+            //save
+            CoreDataHandler.saveContext()
+            delegate.addToRecipeCollection(r: vm.recipeEntity)
+            delegate.mainView.addToCollectionView()
+            delegate.startTimer()
+            delegate.dismiss(animated: true, completion: nil)
         } catch AddRecipeWizardError.Empty(let message) {
             mainView.showAlertBox(message)
         } catch AddRecipeWizardError.InvalidCharacters(let message) {
@@ -90,19 +98,6 @@ class AddRecipeViewController: UIViewController {
         } catch {
             mainView.showAlertBox("unexpected error")
         }
-        
-        //add entire step array to recipeEntity
-        vm.recipeEntity.addToStep(NSSet(array: vm.dataSource))
-        vm.recipeEntity.startDate = Date()
-        vm.recipeEntity.pauseStartDate = vm.recipeEntity.startDate
-        //save
-        
-
-        CoreDataHandler.saveContext()
-        delegate.addToRecipeCollection(r: vm.recipeEntity)
-        delegate.mainView.addToCollectionView()
-        delegate.startTimer()
-        delegate.dismiss(animated: true, completion: nil)
     }
     
     func cancel() {
@@ -111,5 +106,17 @@ class AddRecipeViewController: UIViewController {
         }
         
         delegate.dismiss(animated: true, completion: nil)
+    }
+    
+    func copyWith(step: StepEntity) {
+        
+        guard let vm = viewModel else {
+            return
+        }
+        
+        let (h,m,s) = step.getRawValues()
+        let newStep = StepEntity(name: step.stepName ?? "Step Name", hours: h, minutes: m, seconds: s, priority: Int16(vm.dataSource.count))
+        vm.addStepToDataSource(step: newStep)
+        mainView.reloadTableSteps()
     }
 }

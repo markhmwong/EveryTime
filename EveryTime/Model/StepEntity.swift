@@ -62,12 +62,15 @@ extension StepEntity {
     }
     
     func updateStep() {
-
         totalTime = totalTime - timeAdjustment
         timeAdjustment = 0.0
         timeRemaining = 0.0
         isComplete = true
         isLeading = false
+    }
+    
+    func getRawValues() -> (Int, Int, Int) {
+        return timeRemaining.secondsToHoursMinutesSeconds()
     }
     
     func timeRemainingToString() -> String {

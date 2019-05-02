@@ -10,9 +10,13 @@ import UIKit
 import AVFoundation
 
 class MainViewView: UIView {
+    
     private lazy var navView: NavView? = nil
+    
     private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     private var player: AVAudioPlayer?
+    
     private var delegate: MainViewController!
 
     override init(frame: CGRect) {

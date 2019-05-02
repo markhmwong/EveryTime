@@ -46,6 +46,7 @@ class RecipeViewCell: EntityBaseTableViewCell<StepEntity> {
             prepareAutoLayout()
         }
     }
+    
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
@@ -90,9 +91,9 @@ class RecipeViewCell: EntityBaseTableViewCell<StepEntity> {
         gl.frame = bounds
     }
     
-    func prepareLabel(_ e: StepEntity) {
-        timeLabel.attributedText = NSAttributedString(string: "\(e.timeRemainingToString())", attributes: Theme.Font.Step.CellTimeAttribute)
-        nameLabel.attributedText = NSAttributedString(string: e.stepName ?? "No Name", attributes: Theme.Font.Step.CellNameAttribute)
+    func prepareLabel(_ s: StepEntity) {
+        timeLabel.attributedText = NSAttributedString(string: "\(s.timeRemainingToString())", attributes: Theme.Font.Step.CellTimeAttribute)
+        nameLabel.attributedText = NSAttributedString(string: s.stepName ?? "No Name", attributes: Theme.Font.Step.CellNameAttribute)
         updateCompletionStatusLabel()
 
         contentView.addSubview(completeIndicatorView)
@@ -106,7 +107,7 @@ class RecipeViewCell: EntityBaseTableViewCell<StepEntity> {
         timeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 25.0).isActive = true
         timeLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor).isActive = true
         
-        nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 13.0).isActive = true
+        nameLabel.leadingAnchor.constraint(equalTo: timeLabel.leadingAnchor, constant: 0.0).isActive = true
         nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10).isActive = true
     }
     

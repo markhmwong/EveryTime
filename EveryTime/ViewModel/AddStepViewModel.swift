@@ -84,7 +84,7 @@ class AddStepViewModel {
         self.sEntity = stepEntity
     }
     
-    func step() -> StepValues? {
+    func grabStepValues() -> StepValues? {
         return stepValues
     }
 
@@ -126,8 +126,8 @@ class AddStepViewModel {
     }
     
     /// Must have at least one unit of time above 0
-    func validatePickerView(hrs: Int, min: Int, sec: Int) throws {
-        
+    func
+        validatePickerView(hrs: Int, min: Int, sec: Int) throws {
         if (hrs == 0 && min == 0 && sec == 0) {
             throw AddStepPickerViewErrors.allZero
         }
@@ -162,7 +162,6 @@ class AddStepViewModel {
         guard let sv = stepValues else {
             return
         }
-        print("sv.name \(sv.name)")
         sEntity = StepEntity(name: sv.name, hours: sv.hour, minutes: sv.min, seconds: sv.sec, priority: priority)
     }
     
