@@ -136,7 +136,7 @@ class EditStepViewControllerInExistingRecipe: AddStepViewControllerBase {
             guard let vm = delegate?.viewModel else {
                 return
             }
-            let priority = vm.stepArr.count
+            let priority = vm.dataSource.count
             viewModel.createStepEntity(name: name, hours: hrs, minutes: min, seconds: sec, priority: Int16(priority - 1))
             viewModel.grabEntity()?.updateExpiry()
             delegate?.didEditStep(step: viewModel.grabEntity()!, rowToUpdate: selectedRow)

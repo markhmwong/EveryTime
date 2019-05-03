@@ -12,7 +12,7 @@ class RecipeViewControllerBase: ViewControllerBase {
     var timer: Timer?
     
     //Collection Datasource - move to viewmodel
-    let stepCellId = "stepCellId"
+//    let stepCellId = "stepCellId"
 //    var stepSet: Set<StepEntity>!
 //    var stepArr: [StepEntity] = []
     var recipe: RecipeEntity!

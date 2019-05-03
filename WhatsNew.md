@@ -2,6 +2,7 @@
 
 ## Version 1.1.15 (Current)
 
+- Internal house cleaning
 
 
 ## Possible Feature List
@@ -20,7 +21,7 @@ truncate leading time if it is 0 e.g. 00h 00m 01s now becomes 01s
 store existing popular steps
 
 cleaning!!!!
-main
+main (done)
 AddStep View Controller Base
 MVVM
 Tests

@@ -15,7 +15,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         cell.animateCellForSelection()
         
         if let vm = viewModel {
-            let vc = RecipeViewControllerWithTableView(recipe: vm.dataSource[indexPath.item], delegate: self, indexPath: indexPath)
+            let vc = RecipeViewControllerWithTableView(recipe: vm.dataSource[indexPath.item], delegate: self, indexPath: indexPath, viewModel: RecipeViewModel())
             //        horizontalDelegate.dismissInteractor  = HorizontalTransitionInteractor(viewController: vc) // to be worked on. issue with timer when swiping to dismiss
             vc.transitioningDelegate = horizontalDelegate
             vc.modalPresentationStyle = .custom

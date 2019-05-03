@@ -82,7 +82,6 @@ class RecipeOptionsModalViewController: ViewControllerBase, UIGestureRecognizerD
         let cell = tableView.cellForRow(at: IndexPath(item: OptionsMenu.Edit.rawValue, section: 0))
 
         cell?.isUserInteractionEnabled = isEditRowEnabled
-        cell?.backgroundColor = .purple
         dataSource[OptionsMenu.Edit.rawValue] = "Edit Step"
         DispatchQueue.main.async {
             cell?.textLabel?.attributedText = NSAttributedString(string: self.dataSource[OptionsMenu.Edit.rawValue], attributes: Theme.Font.Nav.Item)

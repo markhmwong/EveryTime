@@ -125,9 +125,7 @@ class LargeDisplayMainView: UIView {
         addSubview(nextStepButton)
         addSubview(prevStepButton)
         upNextStepNameLabel.restartLabel()
-        
-        delegate?.viewModel
-        
+                
     }
     override func layoutSubviews() {
         super.layoutSubviews()

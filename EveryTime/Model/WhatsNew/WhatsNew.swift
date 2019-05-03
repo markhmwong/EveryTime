@@ -46,9 +46,8 @@ struct WhatsNewDetails {
         let build: String = "1.15"
         
         let patchNotes: [String] = [
-            "",
+            "Internal Cleaning",
         ]
-        
     }
     
     struct WhatsNew1_1_14: WhatsNewProtocol {

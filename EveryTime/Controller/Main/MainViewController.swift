@@ -54,7 +54,7 @@ class MainViewController: ViewControllerBase {
     ///The super class will call prepare_ functions. They don't need to be called
     override func viewDidLoad() {
         super.viewDidLoad()
-        UIApplication.shared.isStatusBarHidden = true
+//        UIApplication.shared.isStatusBarHidden = true
         //testData()
     }
 
@@ -203,15 +203,19 @@ extension MainViewController {
         if (index != -1) {
             
             let recipeName = vm.dataSource[index].recipeName
-            let recipeDate = vm.dataSource[index].createdDate
-            let id = "\(recipeName!).\(recipeDate)"
-            LocalNotificationsService.shared.notificationCenterInstance().removePendingNotificationRequests(withIdentifiers: [id])
-            
-            vm.dataSource.remove(at: index)
-            DispatchQueue.main.async {
-                self.mainView.collView.deleteItems(at: [IndexPath(item: index, section: 0)])
+            if let recipeDate = vm.dataSource[index].createdDate {
+                let id = "\(recipeName!).\(recipeDate)"
+                LocalNotificationsService.shared.notificationCenterInstance().removePendingNotificationRequests(withIdentifiers: [id])
+                
+                vm.dataSource.remove(at: index)
+                DispatchQueue.main.async {
+                    self.mainView.collView.deleteItems(at: [IndexPath(item: index, section: 0)])
+                }
+                if (CoreDataHandler.deleteEntity(entity: RecipeEntity.self, createdDate: date)) {
+                    print("could not delete")
+                }
             }
-            CoreDataHandler.deleteEntity(entity: RecipeEntity.self, createdDate: date)
+            
         }
         startTimer()
     }
