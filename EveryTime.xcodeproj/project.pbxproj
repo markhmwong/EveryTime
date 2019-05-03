@@ -226,6 +226,7 @@
 		4D7847AA227B296100160658 /* RecipeViewControllerWithTableView+Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecipeViewControllerWithTableView+Timer.swift"; sourceTree = "<group>"; };
 		4D7847AC227B37F400160658 /* RecipeViewControllerWithTableView+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecipeViewControllerWithTableView+TableView.swift"; sourceTree = "<group>"; };
 		4D7847AE227B3CF500160658 /* RecipeViewControllerWithTableView+ScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecipeViewControllerWithTableView+ScrollView.swift"; sourceTree = "<group>"; };
+		4D7847B1227C2B2400160658 /* SimpleRecipeTimer v4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SimpleRecipeTimer v4.xcdatamodel"; sourceTree = "<group>"; };
 		4D94E5D1223CC6430009F176 /* EveryTime.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EveryTime.entitlements; sourceTree = "<group>"; };
 		4D94E5D2223CC6570009F176 /* EveryTimeW.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EveryTimeW.entitlements; sourceTree = "<group>"; };
 		4D94E5D4223E74DA0009F176 /* LocalNotificationsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsService.swift; sourceTree = "<group>"; };
@@ -399,6 +400,8 @@
 		4D205DB221FE82B5008006BD /* AddRecipe */ = {
 			isa = PBXGroup;
 			children = (
+				4DA78F2A22630FFB00C018CA /* AddRecipeMainView.swift */,
+				4DA78F2822630FB700C018CA /* AddRecipeHeaderView.swift */,
 				4D205DB021FE8252008006BD /* StepTableViewCell.swift */,
 			);
 			path = AddRecipe;
@@ -530,12 +533,11 @@
 		4D563C2A220D4A550039B07F /* Recipe */ = {
 			isa = PBXGroup;
 			children = (
+				4D7847B0227BE37D00160658 /* Animation */,
 				4D563C2B220D4ADC0039B07F /* RecipeViewControllerBase.swift */,
-				4D7847A9227B290200160658 /* Modal */,
 				4D563C2D220D54280039B07F /* RecipeViewControllerWithTableView.swift */,
 				4D7847AE227B3CF500160658 /* RecipeViewControllerWithTableView+ScrollView.swift */,
 				4D7847AC227B37F400160658 /* RecipeViewControllerWithTableView+TableView.swift */,
-				4DD9683D2278866000C6D94B /* InstantPanGestureRecognizer.swift */,
 				4D7847AA227B296100160658 /* RecipeViewControllerWithTableView+Timer.swift */,
 			);
 			path = Recipe;
@@ -605,6 +607,15 @@
 				4D6E7DB82274525800716FB5 /* RecipeOptionsModalViewController.swift */,
 			);
 			path = Modal;
+			sourceTree = "<group>";
+		};
+		4D7847B0227BE37D00160658 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				4D7847A9227B290200160658 /* Modal */,
+				4DD9683D2278866000C6D94B /* InstantPanGestureRecognizer.swift */,
+			);
+			path = Animation;
 			sourceTree = "<group>";
 		};
 		4D94E5D3223E74C10009F176 /* Notifications */ = {
@@ -740,15 +751,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		4DA78F322264176D00C018CA /* View */ = {
-			isa = PBXGroup;
-			children = (
-				4DA78F2A22630FFB00C018CA /* AddRecipeMainView.swift */,
-				4DA78F2822630FB700C018CA /* AddRecipeHeaderView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		4DD542EE224DF551003C6DEC /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -786,7 +788,6 @@
 		4DF13D5E221A153C009BE812 /* AddRecipe */ = {
 			isa = PBXGroup;
 			children = (
-				4DA78F322264176D00C018CA /* View */,
 				4DA78F222260B99400C018CA /* AddRecipeViewController.swift */,
 				4DA78F242262F30100C018CA /* AddRecipeOptionsViewController.swift */,
 			);
@@ -1551,11 +1552,12 @@
 		4D0C4B4D21AEC73A00153E76 /* SimpleRecipeTimer.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				4D7847B1227C2B2400160658 /* SimpleRecipeTimer v4.xcdatamodel */,
 				4DA78F372264378C00C018CA /* SimpleRecipeTimer v3.xcdatamodel */,
 				4D53801F2240B9FA0051DD0F /* SimpleRecipeTimer v2.xcdatamodel */,
 				4D0C4B4E21AEC73A00153E76 /* SimpleRecipeTimer.xcdatamodel */,
 			);
-			currentVersion = 4DA78F372264378C00C018CA /* SimpleRecipeTimer v3.xcdatamodel */;
+			currentVersion = 4D7847B1227C2B2400160658 /* SimpleRecipeTimer v4.xcdatamodel */;
 			path = SimpleRecipeTimer.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

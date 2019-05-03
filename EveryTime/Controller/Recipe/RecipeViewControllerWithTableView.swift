@@ -29,7 +29,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     var dismissInteractor: OverlayInteractor!
     
     var horizontalTransitionInteractor: HorizontalTransitionInteractor? = nil
-        
+    
     lazy var overlayView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -138,18 +138,12 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         }
         
         mainView.handleRightNavItem(pauseState: recipe.isPaused)
-        mainView.handlePauseButton(pauseState: recipe.isPaused)
+        mainView.handlePauseButton(pauseState: !recipe.isPaused)
     }
     
     override func prepareAutoLayout() {
         super.prepareAutoLayout()
-        
-        guard let vm = viewModel else {
-            return
-        }
-        
         mainView.fillSuperView()
-
     }
 
     override func viewDidLayoutSubviews() {
@@ -254,9 +248,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     func willReloadTableData() {
         mainView.tableView.reloadData()
     }
-}
-
-extension RecipeViewControllerWithTableView {
     
     func didEditStep(step: StepEntity, rowToUpdate: Int) {
         let targetStep = recipe.sortStepsByPriority()[rowToUpdate]
@@ -269,33 +260,6 @@ extension RecipeViewControllerWithTableView {
         CoreDataHandler.saveContext()
         mainView.headerView.updateHeaderNextStepTimeLabel(time: step.timeRemainingToString())
         mainView.tableView.reloadRows(at: [IndexPath(row: rowToUpdate, section: 0)], with: .none)
-    }
-
-    func changeBottomViewStateWhileDragging() {
-        
-        guard let viewState = viewModel?.bottomViewState else {
-            return
-        }
-
-        if (viewState == .ShowStepOptions) {
-            executeBottomViewState(.ShowAddStep)
-        }
-    }
-
-    
-    func executeBottomViewState(_ viewState: BottomViewState) {
-        let offset: CGFloat = 50.0
-        switch viewState {
-        case .ShowStepOptions:
-            mainView.handleStepButtonAnimation(offset: offset)
-        case .ShowAddStep:
-            mainView.handleStepButtonAnimation(offset: -offset)
-        }
-        
-        guard let vm = viewModel else {
-            return
-        }
-        vm.bottomViewState = viewState
     }
 }
 
@@ -603,14 +567,12 @@ extension RecipeViewControllerWithTableView {
         
         mainView.handleSettingsButton(pauseState: recipe.isPaused)
         mainView.handlePauseButton(pauseState: recipe.isPaused)
+        
         if (recipe.isPaused) {
-
             recipe.unpauseStepArr()
         } else {
-
             recipe.pauseStepArr()
         }
-        CoreDataHandler.saveContext()
     }
     
     func handleAdditionalTime() {

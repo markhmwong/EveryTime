@@ -97,7 +97,7 @@ struct Theme {
                 case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
                     return 45.0
                 default:
-                    return 60.0
+                    return 55.0
                 }
             }
             static var LargeStepCount: CGFloat {

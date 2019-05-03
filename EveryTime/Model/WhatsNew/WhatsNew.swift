@@ -46,7 +46,9 @@ struct WhatsNewDetails {
         let build: String = "1.15"
         
         let patchNotes: [String] = [
-            "Internal Cleaning",
+            "Add Start/Pause Button to fullscreen mode",
+            "Internal house keeping that you won't see",
+            "Minor UI Improvements",
         ]
     }
     

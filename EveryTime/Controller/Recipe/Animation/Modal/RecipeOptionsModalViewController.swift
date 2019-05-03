@@ -100,7 +100,7 @@ extension RecipeOptionsModalViewController: UITableViewDelegate, UITableViewData
         if (indexPath.row == OptionsMenu.Edit.rawValue && !isEditRowEnabled) {
             dataSource[OptionsMenu.Edit.rawValue] = "Edit Step - Select A Step"
             cell.textLabel?.attributedText = NSAttributedString(string: dataSource[OptionsMenu.Edit.rawValue], attributes: Theme.Font.Nav.Item)
-            cell.textLabel?.alpha = 0.7
+            cell.textLabel?.alpha = 0.5
             cell.isUserInteractionEnabled = false
         }
         
@@ -130,7 +130,6 @@ extension RecipeOptionsModalViewController: UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //remove menu and perform action
-        print("didselect")
         guard let option = OptionsMenu(rawValue: indexPath.row) else { return }
         
         switch option {

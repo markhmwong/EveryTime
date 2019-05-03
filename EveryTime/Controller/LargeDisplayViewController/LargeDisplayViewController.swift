@@ -174,7 +174,28 @@ class LargeDisplayViewController: ViewControllerBase {
         
     }
     
-    /// Executes 10 April 2019
+    func handlePauseButton() {
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.prepare()
+        generator.impactOccurred()
+        
+        guard let vm = viewModel else {
+            return
+        }
+        
+        guard let r = vm.recipeEntity else {
+            return
+        }
+        
+        //update button text
+        guard let delegate = delegate else {
+            return
+        }
+        mainView.updateViewPauseButton(pausedState:  !delegate.recipe.isPaused)
+        mainView.updateControls(pauseState: !delegate.recipe.isPaused)
+        delegate.handlePauseRecipe()
+    }
+    
     deinit {
 //        print("LargeDisplayViewController - deinit")
     }

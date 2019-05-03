@@ -47,10 +47,12 @@ class LargeDisplayViewModel {
         }
     }
     
+    var recipeEntity: RecipeEntity?
+    
     init(delegate: LargeDisplayViewController?, time: String, stepName: String, recipeName: String, recipeEntity: RecipeEntity? = nil, sortedSet: [StepEntity]) {
         self.delegate = delegate
         self.totalSteps = recipeEntity?.stepSetSize()
-
+        self.recipeEntity = recipeEntity
         if let r = recipeEntity {
             self.stepsComplete = r.stepsComplete()
         }

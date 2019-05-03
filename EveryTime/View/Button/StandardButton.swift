@@ -28,9 +28,8 @@ class StandardButton: UIButton {
     }
     
     func updateButtonTitle(with title: String) {
-        setAttributedTitle(NSAttributedString(string: title, attributes: Theme.Font.Nav.StandardButton), for: .normal)
+        DispatchQueue.main.async {
+            self.setAttributedTitle(NSAttributedString(string: title, attributes: Theme.Font.Nav.StandardButton), for: .normal)
+        }
     }
-    
-    
-    
 }

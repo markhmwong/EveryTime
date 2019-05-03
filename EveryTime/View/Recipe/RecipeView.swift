@@ -90,7 +90,6 @@ class RecipeView: UIView {
         addSubview(tableView)
         addSubview(pauseRecipeButton)
         tableView.register(RecipeViewCell.self, forCellReuseIdentifier: stepCellId)
-
     }
     
     func setupAutoLayout() {
@@ -154,11 +153,13 @@ class RecipeView: UIView {
     }
     
     func handlePauseButton(pauseState: Bool) {
-        DispatchQueue.main.async {
-            if (pauseState) {
-                self.pauseRecipeButton.updateButtonTitle(with: "Start")
-            } else {
+        if (pauseState) {
+            DispatchQueue.main.async {
                 self.pauseRecipeButton.updateButtonTitle(with: "Pause")
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.pauseRecipeButton.updateButtonTitle(with: "Start")
             }
         }
     }

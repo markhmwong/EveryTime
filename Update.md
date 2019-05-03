@@ -2,23 +2,14 @@
 # Update Log
 
 ## User requests
-edit names
-
-rename "edit" to "shuffle"
-touch and hold to move steps
-
-Adding a new recipe: keyboard hides continue button. Quite annoying. (not sure why if should be above the keyboard)
 
 
 ## Bugs
 after creating and deleting a few recipes, new recipes no longer show up in the main window
-crashes when the final step is set at 0 and the user adjusts time by -15secs on the second last step 
 
 ## To do (Priority list)
 update name of step - still says 'unknown'
 - numeric indicator of step progress in main view *
-- resize/reshape pill completion indicator *
-- be able to edit steps and recipes (names) *
 - copy existing step and add it in add recipe process *
 
 - add apple watch

@@ -87,6 +87,13 @@ class LargeDisplayMainView: UIView {
         return button
     }()
     
+    lazy var pauseButton: StandardButton = {
+        let button = StandardButton(title: "Start")
+        button.addTarget(self, action: #selector(handlePauseButton), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupView()
@@ -124,6 +131,7 @@ class LargeDisplayMainView: UIView {
         addSubview(upNextStepNameLabel)
         addSubview(nextStepButton)
         addSubview(prevStepButton)
+        addSubview(pauseButton)
         upNextStepNameLabel.restartLabel()
                 
     }
@@ -141,15 +149,19 @@ class LargeDisplayMainView: UIView {
         closeButton.anchorView(top: topAnchor, bottom: nil, leading: nil, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0), size: CGSize(width: 80, height: 0))
         upNextStepLabel.anchorView(top: nil, bottom: upNextStepNameLabel.topAnchor, leading: recipeLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: .zero, size: .zero)
         upNextStepNameLabel.anchorView(top: nil, bottom: bottomAnchor, leading: recipeLabel.leadingAnchor, trailing: recipeLabel.trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: CGSize(width: UIScreen.main.bounds.width, height: 40.0))
-        stepsCompleteLabel.anchorView(top: recipeLabel.bottomAnchor, bottom: nil, leading: timeLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: .zero, size: .zero)
+        stepsCompleteLabel.anchorView(top: recipeLabel.bottomAnchor, bottom: nil, leading: recipeLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: .zero, size: .zero)
         
         let screenHeight = UIScreen.main.bounds.height
         
-        nextStepButton.anchorView(top: nil, bottom: bottomAnchor, leading: centerXAnchor, trailing: nil, centerY: nil, centerX: nil, padding: .init(top: 0.0, left: 10.0, bottom: -(screenHeight / 4), right: 0.0), size: .zero)
-        nextStepButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.25).isActive = true
+        nextStepButton.anchorView(top: nil, bottom: bottomAnchor, leading: pauseButton.trailingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: .init(top: 0.0, left: 10.0, bottom: -(screenHeight / 4), right: 0.0), size: .zero)
+        nextStepButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.22).isActive = true
 
-        prevStepButton.anchorView(top: nil, bottom: bottomAnchor, leading: nil, trailing: centerXAnchor, centerY: nil, centerX: nil, padding: .init(top: 0.0, left: -10.0, bottom: -(screenHeight / 4), right: -10.0), size: .zero)
-        prevStepButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.25).isActive = true
+        prevStepButton.anchorView(top: nil, bottom: bottomAnchor, leading: nil, trailing: pauseButton.leadingAnchor, centerY: nil, centerX: nil, padding: .init(top: 0.0, left: -10.0, bottom: -(screenHeight / 4), right: -10.0), size: .zero)
+        prevStepButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.22).isActive = true
+        
+        pauseButton.anchorView(top: nil, bottom: bottomAnchor, leading: nil, trailing: nil, centerY: nil, centerX: centerXAnchor, padding: .init(top: 0.0, left: -10.0, bottom: -(screenHeight / 4), right: -10.0), size: .zero)
+        pauseButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.30).isActive = true
+
     }
     
     override func safeAreaInsetsDidChange() {
@@ -192,19 +204,30 @@ class LargeDisplayMainView: UIView {
         }
     }
     
+    func updateViewPauseButton(pausedState: Bool) {
+        if (pausedState) {
+            pauseButton.updateButtonTitle(with: "Start")
+        } else {
+            pauseButton.updateButtonTitle(with: "Pause")
+
+        }
+    }
+    
     func updateControls(pauseState: Bool) {
         nextStepButton.isEnabled = pauseState ? false : true
         prevStepButton.isEnabled = pauseState ? false : true
-        
-        nextStepButton.alpha = pauseState ? 0.5 : 1.0
-        prevStepButton.alpha = pauseState ? 0.5 : 1.0
-
+        DispatchQueue.main.async {
+            self.nextStepButton.alpha = pauseState ? 0.5 : 1.0
+            self.prevStepButton.alpha = pauseState ? 0.5 : 1.0
+        }
     }
     
     @objc func handleNextStep() {
-        
+        guard let delegate = delegate else {
+            return
+        }
         do {
-            try delegate?.triggerNextStep()
+            try delegate.triggerNextStep()
         } catch ControlsError.LimitReached(let message) {
             print("\(message)")
         } catch {
@@ -213,13 +236,28 @@ class LargeDisplayMainView: UIView {
     }
     
     @objc func handlePrevStep() {
-        
+        guard let delegate = delegate else {
+            return
+        }
         do {
-            try delegate?.triggerPrevStep()
+            try delegate.triggerPrevStep()
         } catch ControlsError.LimitReached(let message) {
             print("\(message)")
         } catch {
             print("control error")
         }
     }
+    
+    @objc func handlePauseButton() {
+        
+        guard let delegate = delegate else {
+            return
+        }
+        
+        delegate.handlePauseButton()
+        
+        print("pause Button")
+    }
+    
+    
 }
