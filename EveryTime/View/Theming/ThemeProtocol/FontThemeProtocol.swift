@@ -6,4 +6,11 @@
 //  Copyright © 2019 Mark Wong. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+protocol FontThemeProtocol {
+    var Regular: String { get }
+    var Bold: String { get }
+    var TextColour: UIColor { get }
+//    static var TextColor: UIColor { get }
+}

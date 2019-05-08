@@ -17,13 +17,13 @@ extension SettingsViewController: MFMailComposeViewControllerDelegate {
 
 class SettingsViewController: ViewControllerBase  {
     
-    var settingsViewModel: SettingsViewModel!
+    var viewModel: SettingsViewModel?
     
     private var delegate: MainViewController?
     
-    private lazy var mainView: SettingsMainView = {
+    lazy var mainView: SettingsMainView = {
         let view = SettingsMainView(delegate: self)
-        view.backgroundColor = Theme.Background.Color.NavTopFillBackgroundColor
+//        view.backgroundColor = Theme.Background.Color.NavTopFillBackgroundColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -31,7 +31,7 @@ class SettingsViewController: ViewControllerBase  {
     init(delegate: MainViewController, viewModel: SettingsViewModel) {
         super.init(nibName: nil, bundle: nil)
         self.delegate = delegate
-        self.settingsViewModel = viewModel
+        self.viewModel = viewModel
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -41,6 +41,24 @@ class SettingsViewController: ViewControllerBase  {
     override func viewDidLoad() {
         super.viewDidLoad()
         //The super will call prepare_ functions
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        mainView.removeFromSuperview()
+        mainView = SettingsMainView(delegate: self)
+        mainView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(mainView)
+        mainView.fillSuperView()
+        view.layoutIfNeeded()
+//        let windows = UIApplication.shared.windows
+//        print("will appear")
+//        for window in windows {
+//            for view in window.subviews {
+//                view.removeFromSuperview()
+//                window.addSubview(view)
+//            }
+//        }
     }
     
     override func prepareView() {
@@ -55,7 +73,7 @@ class SettingsViewController: ViewControllerBase  {
     
     override func prepareViewController() {
         super.prepareViewController()
-        view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
+//        view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
     }
     
     func handleDismiss() {
@@ -69,19 +87,27 @@ class SettingsViewController: ViewControllerBase  {
     }
     
     // leave these functions here. place data type like setToRecipients in a variable
-    func emailFeedback() {        
+    func emailFeedback() {
+        
+        guard let vm = viewModel else {
+            return
+        }
+        
         let picker: MFMailComposeViewController = MFMailComposeViewController(nibName: nil, bundle: nil)
         picker.mailComposeDelegate = self
-        picker.setToRecipients([settingsViewModel.emailToRecipient])
-        picker.setSubject(settingsViewModel.emailSubject)
+        picker.setToRecipients([vm.emailToRecipient])
+        picker.setSubject(vm.emailSubject)
 
-        picker.setMessageBody(settingsViewModel.emailBody(), isHTML: true)
+        picker.setMessageBody(vm.emailBody(), isHTML: true)
         present(picker, animated: true, completion: nil)
     }
     
     func share() {
-        let text = settingsViewModel.shareText
-        let url: URL = URL(string: settingsViewModel.shareURL)!
+        guard let vm = viewModel else {
+            return
+        }
+        let text = vm.shareText
+        let url: URL = URL(string: vm.shareURL)!
         let vc = UIActivityViewController(activityItems: [text, url], applicationActivities: [])
         
         self.present(vc, animated: true, completion: nil)

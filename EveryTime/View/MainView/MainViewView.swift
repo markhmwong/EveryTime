@@ -19,13 +19,17 @@ class MainViewView: UIView {
     
     private var delegate: MainViewController!
 
+    var theme: ThemeManager?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
-    convenience init(delegate: MainViewController) {
+    convenience init(delegate: MainViewController, theme: ThemeManager?) {
         self.init(frame: .zero)
         self.delegate = delegate
+        self.theme = theme
+        self.theme?.currentTheme.applyTheme()
         self.setupView()
         self.setupAutoLayout()
     }
@@ -36,7 +40,7 @@ class MainViewView: UIView {
     
     private lazy var rightNavItemButton: UIButton = {
         let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "Add", attributes: Theme.Font.Nav.Item), for: .normal)//revert back to add recipe
+        button.setAttributedTitle(NSAttributedString(string: "Add", attributes: Theme.Font.Nav.Item), for: .normal)//seg faults here because of theme
         button.addTarget(self, action: #selector(handleAddRecipe), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -45,6 +49,7 @@ class MainViewView: UIView {
     private lazy var leftNavItemButton: UIButton = {
         let button = UIButton()
         button.setAttributedTitle(NSAttributedString(string: "Settings", attributes: Theme.Font.Nav.Item), for: .normal)
+//        button.setAttributedTitle(NSAttributedString(string: "Settings", attributes: theme?.), for: .normal)
         button.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -58,7 +63,7 @@ class MainViewView: UIView {
     }()
     
     /// Test data button
-    private lazy var leftNavItemButtonA: UIButton = {
+    private lazy var leftNavItemButtonTest: UIButton = {
         let button = UIButton()
         button.setAttributedTitle(NSAttributedString(string: "Test Random Data", attributes: Theme.Font.Nav.Item), for: .normal)
         button.addTarget(self, action: #selector(handleTest), for: .touchUpInside)
@@ -80,6 +85,8 @@ class MainViewView: UIView {
     
     func setupView() {
         navView = NavView(frame: .zero, leftNavItem: leftNavItemButton, rightNavItem: rightNavItemButton)
+        
+//        navView?.backgroundColor = theme?.currentTheme.navigation.backgroundColor
         guard let nav = navView else {
             return
         }
@@ -224,7 +231,12 @@ class MainViewView: UIView {
     }
     
     func showSettings() {
-        let vc = SettingsViewController(delegate:delegate, viewModel: SettingsViewModel(dataSource: SettingsDataSource.dataSource))
-        delegate?.present(vc, animated: true, completion: nil)
+        guard let theme = theme else {
+            return
+        }
+        let vc = SettingsViewController(delegate:delegate, viewModel: SettingsViewModel(dataSource: SettingsDataSource.dataSource, theme: theme))
+        DispatchQueue.main.async {
+            self.delegate?.present(vc, animated: true, completion: nil)
+        }
     }
 }

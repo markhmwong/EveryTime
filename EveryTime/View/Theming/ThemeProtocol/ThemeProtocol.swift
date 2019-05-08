@@ -6,4 +6,17 @@
 //  Copyright © 2019 Mark Wong. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+protocol ThemeProtocol {
+    
+    var navigation: NavigationThemeProtocol { get set }
+    
+    var font: FontThemeProtocol { get }
+    
+    var attributedText: AttributedTextProtocol { get }
+    
+    var tableView: TableViewThemeProtocol { get }
+    
+    func applyTheme()
+}

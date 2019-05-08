@@ -7,3 +7,7 @@
 //
 
 import Foundation
+
+protocol AttributedTextProtocol {
+    var navigationItem: [NSAttributedString.Key: Any] { get }
+}

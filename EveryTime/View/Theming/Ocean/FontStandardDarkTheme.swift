@@ -13,16 +13,21 @@ struct FontStandardDarkTheme: FontThemeProtocol {
     
     var Bold: String { return FontStyle.Bold.rawValue }
     
-//    static var white: UIColor { return UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.0) }
-//    static var TextColor: UIColor { return UIColor(red:0.01, green:0.09, blue:0.14, alpha:1.0) }
+    var TextColour: UIColor { return UIColor.OceanColourPalette.white }
     
     enum FontStyle: String {
         case Regular = "Avenir-Medium"
         case Bold = "Avenir-Black"
     }
     
-    enum FontKern: CGFloat {
-        case General = 0.3
+    enum FontKern: Int {
+        case General
+        
+        var floatValue: Float {
+            switch self {
+            case .General: return 0.5
+            }
+        }
     }
     
     enum StandardSizes: CGFloat {
@@ -36,6 +41,7 @@ struct FontStandardDarkTheme: FontThemeProtocol {
         case b1 = 20.0
         case b2 = 16.0
         case b3 = 14.0
+        case b4 = 12.0
     }
     
     enum FontSize {

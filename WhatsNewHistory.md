@@ -1,3 +1,8 @@
+## Version 1.1.15
+- Add Start/Pause Button to fullscreen mode
+- Internal house keeping that you won't see
+- Minor UI Improvements
+
 ## Version 1.1.14
 
 Minor UI Changes - You may notice slight changes to fonts, colours and layout. Any major changes will be listed

@@ -29,9 +29,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
         window?.makeKeyAndVisible()
+//        UIFont.overrideInitialize() // to be determined
+        let theme: ThemeManager = ThemeManager.init(currentTheme: StandardLightTheme())
+        let main = MainViewController(viewModel: nil)
+        main.viewModel = MainViewModel(delegate: main, theme: theme)
         
-        let main = MainViewController()
-        main.viewModel = MainViewModel(delegate: main)
         window?.rootViewController = UINavigationController(rootViewController: main)
         
         return true

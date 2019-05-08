@@ -29,9 +29,9 @@ class MainViewController: ViewControllerBase {
     private var dismissInteractor: OverlayInteractor!
     
     var viewModel: MainViewModel?
-
+    
     lazy var mainView: MainViewView = {
-       let view = MainViewView(delegate: self)
+        let view = MainViewView(delegate: self, theme: viewModel?.theme)
         view.backgroundColor = UIColor.white
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -91,6 +91,12 @@ class MainViewController: ViewControllerBase {
 
      override func prepareView() {
         super.prepareView()
+        
+        guard let vm = viewModel else {
+            return
+        }
+        
+        mainView.theme = vm.theme
         view.addSubview(mainView)
         viewModel?.loadDataFromCoreData()
     }
@@ -162,7 +168,7 @@ extension MainViewController {
     
     func handleAddRecipe() {
         let vc = AddRecipeViewController(delegate:self)
-        vc.modalPresentationStyle = .overCurrentContext
+//        vc.modalPresentationStyle = .overCurrentContext
         present(vc, animated: true, completion: nil)
         
 //        let vc = AddRecipeViewController(delegate:self)

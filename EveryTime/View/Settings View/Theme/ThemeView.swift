@@ -25,13 +25,12 @@ class ThemeView: UIView {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.attributedText = NSAttributedString(string: "Theme", attributes: delegate?.viewModel?.theme?.currentTheme.navigation.navigationItem)
+        label.attributedText = NSAttributedString(string: "Theme", attributes: delegate?.viewModel?.theme?.currentTheme.navigation.navigationTitle)
         return label
     }()
     
     private lazy var navView: NavView = {
         let view = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: nil, titleLabel: titleLabel)
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -100,7 +99,8 @@ extension ThemeView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: (delegate?.viewModel?.themeCellId)!, for: indexPath) as! ThemeTableViewCell
         if let vm = delegate?.viewModel {
-            cell.textLabel?.text = vm.dataSource[indexPath.row]
+            cell.textLabel?.attributedText = NSAttributedString(string: vm.dataSource[indexPath.row], attributes: vm.theme?.currentTheme.tableView.cellAttributedText)
+            cell.textLabel?.textColor = vm.theme?.currentTheme.tableView.cellTextColor
         }
         
         return cell

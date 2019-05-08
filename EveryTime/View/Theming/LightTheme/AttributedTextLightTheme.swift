@@ -8,6 +8,8 @@
 
 import UIKit
 
-struct AttributedText {
-    
+struct AttributedTextLightTheme: AttributedTextProtocol {
+    //Navigation
+    var navigationItem: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardLightTheme.FontStyle.Regular.rawValue, size: FontStandardLightTheme.FontSize.Standard(.b3).value)!, NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.kern: FontStandardLightTheme.FontKern.General]
+    var navigationTitle: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardLightTheme.FontStyle.Regular.rawValue, size: FontStandardLightTheme.FontSize.Standard(.b3).value)!, NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.kern: FontStandardLightTheme.FontKern.General]
 }

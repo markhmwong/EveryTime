@@ -1,11 +1,20 @@
 #  Feature Scratch pad
 
-## Version 1.1.15 (Current)
-- Add Start/Pause Button to fullscreen mode
-- Internal house keeping that you won't see
-- Minor UI Improvements
+## Version 1.1.16 [Current]
+- IAP
+- Clean up Theme Code
+- Tutorial
+- Customisable Sounds
+- Notifications in settings
+- Colour for recipe
+- Sorting
+- Pinning
 
 ## Possible Feature List
+forced response - manual toggle to continue each step
+whats new pop up - ask for notifications
+welcome page
+color on recipe
 iap
 share Recipes
 dark mode

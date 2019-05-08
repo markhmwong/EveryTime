@@ -11,6 +11,7 @@ import Foundation
 struct SettingsDataSource {
     static let dataSource: [[String]] = [
         ["Clear All Recipes"],
+        ["Theme"],
         ["About", "Review In App Store", "Share with Friends", "Email Feedback"],
         ["What's New"]
     ]
