@@ -13,16 +13,19 @@ enum RecipeOptions: Int {
     //pause between steps
 }
 
-extension AddRecipeOptionsViewController: UITableViewDelegate, UITableViewDataSource {
+extension AddRecipeSettingsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.options.count
+        guard let vm = viewModel else {
+            return 0
+        }
+        return vm.options.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
         
         let rowSettings = RecipeOptions(rawValue: indexPath.row)
-        cell.textLabel!.text = viewModel.options[rowSettings!]
+        cell.textLabel?.attributedText = NSAttributedString(string: viewModel?.options[rowSettings!] ?? "Unknown Option", attributes: viewModel?.theme?.currentTheme.tableView.settingsCell)
         let switchView = UISwitch(frame: .zero)
         switchView.setOn(!(recipeEntity!.isPaused), animated: true)
         switchView.tag = indexPath.row // for detect which row switch Changed
@@ -41,7 +44,7 @@ extension AddRecipeOptionsViewController: UITableViewDelegate, UITableViewDataSo
     }
 }
 
-class AddRecipeOptionsViewController: UIViewController {
+class AddRecipeSettingsViewController: UIViewController {
 
     var recipeEntity: RecipeEntity?
     
@@ -49,7 +52,7 @@ class AddRecipeOptionsViewController: UIViewController {
     
     let cellId = "cellId"
     
-    var viewModel: AddRecipeSettingsViewModel = AddRecipeSettingsViewModel(options: [RecipeOptions.AutoStart : "Auto Start"])
+    var viewModel: AddRecipeSettingsViewModel?
     
     weak var delegate: AddRecipeViewController?
     
@@ -63,7 +66,7 @@ class AddRecipeOptionsViewController: UIViewController {
     
     private lazy var dismissButton: UIButton = {
         let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "Back", attributes: Theme.Font.Nav.Item), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Back", attributes: viewModel?.theme?.currentTheme.navigation.item), for: .normal)
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -78,7 +81,7 @@ class AddRecipeOptionsViewController: UIViewController {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.attributedText = NSAttributedString(string: "Options", attributes: Theme.Font.Nav.Title)
+        label.attributedText = NSAttributedString(string: "Options", attributes: viewModel?.theme?.currentTheme.navigation.title)
         return label
     }()
     
@@ -92,9 +95,10 @@ class AddRecipeOptionsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(delegate: AddRecipeViewController, recipeEntity: RecipeEntity?) {
+    convenience init(delegate: AddRecipeViewController, recipeEntity: RecipeEntity?, viewModel: AddRecipeSettingsViewModel) {
         self.init(nibName: nil, bundle: nil)
         self.delegate = delegate
+        self.viewModel = viewModel
         self.recipeEntity = recipeEntity
     }
     
@@ -129,8 +133,6 @@ class AddRecipeOptionsViewController: UIViewController {
     }
     
     @objc func handleSwitchChanged(_ sender : UISwitch) {
-        print(sender.isOn)
-        
         let settingType = RecipeOptions(rawValue: sender.tag)!
         
         switch settingType {

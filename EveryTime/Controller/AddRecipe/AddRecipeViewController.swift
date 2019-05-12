@@ -15,7 +15,7 @@ class AddRecipeViewController: UIViewController {
     weak var delegate: MainViewController?
     
     lazy var mainView: AddRecipeMainView = {
-        let view = AddRecipeMainView(delegate: self)
+        let view = AddRecipeMainView(delegate: self, theme: viewModel?.theme)
         view.backgroundColor = Theme.Background.Color.NavTopFillBackgroundColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -25,10 +25,10 @@ class AddRecipeViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    convenience init(delegate: MainViewController) {
+    convenience init(delegate: MainViewController, viewModel: AddRecipeViewModel?) {
         self.init(nibName: nil, bundle: nil)
         self.delegate = delegate
-        viewModel = AddRecipeViewModel(dataSource: [], mainDelegate: delegate, delegate: self)
+        self.viewModel = viewModel
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -37,7 +37,7 @@ class AddRecipeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = viewModel?.theme?.currentTheme.generalBackgroundColour
         view.addSubview(mainView)
         mainView.fillSuperView()
     }

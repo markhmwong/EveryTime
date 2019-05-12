@@ -23,6 +23,7 @@ protocol WhatsNewProtocol {
 struct WhatsNewFactory {
     
     static let whatsNewDictionary: [ String : WhatsNewProtocol ] = [
+        "1.1.16" : WhatsNewDetails.WhatsNew1_1_16(),
         "1.1.15" : WhatsNewDetails.WhatsNew1_1_15(),
         "1.1.14" : WhatsNewDetails.WhatsNew1_1_14(),
         "1.1.13" : WhatsNewDetails.WhatsNew1_1_13()
@@ -34,12 +35,26 @@ struct WhatsNewFactory {
     }
 }
 
-/// List patch notes from least important first
+/// List patch notes as least important to most important.
 struct WhatsNewDetails {
+    
+    struct WhatsNew1_1_16: WhatsNewProtocol {
+        
+        let date: String = "May 12, 2019"
+        
+        let version: String = "1.1.16"
+        
+        let build: String = "1.17"
+        
+        let patchNotes: [String] = [
+            "Minor UI Improvements",
+            "All new theming feature beginning with Dark Mint as our first new theme. Dark Mint brings a darker colour palette bringing easier viewing at night and less eye strain. This update will begin a series of new themes for the future.",
+        ]
+    }
     
     struct WhatsNew1_1_15: WhatsNewProtocol {
         
-        let date: String = ""
+        let date: String = "May 3, 2019"
         
         let version: String = "1.1.15"
         

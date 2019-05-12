@@ -8,6 +8,16 @@
 
 import UIKit
 
+class RecipeOptionsModalViewModel {
+    
+    var theme: ThemeManager?
+    
+    init(theme: ThemeManager?) {
+        self.theme = theme
+    }
+    
+}
+
 class RecipeOptionsModalViewController: ViewControllerBase, UIGestureRecognizerDelegate {
     
     enum OptionsMenu: Int {
@@ -18,6 +28,8 @@ class RecipeOptionsModalViewController: ViewControllerBase, UIGestureRecognizerD
         case Delete
         case Close
     }
+    
+    var viewModel: RecipeOptionsModalViewModel?
     
     weak var delegate: RecipeViewControllerWithTableView?
     
@@ -47,9 +59,10 @@ class RecipeOptionsModalViewController: ViewControllerBase, UIGestureRecognizerD
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
-    convenience init(delegate: RecipeViewControllerWithTableView) {
+    convenience init(delegate: RecipeViewControllerWithTableView, viewModel: RecipeOptionsModalViewModel) {
         self.init(nibName: nil, bundle: nil)
         self.delegate = delegate
+        self.viewModel = viewModel
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -66,7 +79,7 @@ class RecipeOptionsModalViewController: ViewControllerBase, UIGestureRecognizerD
         view.clipsToBounds = true
         
         tableView.allowsSelection = true
-        tableView.rowHeight = 55.0
+        tableView.rowHeight = UIScreen.main.bounds.height / 20.0
         tableView.separatorStyle = .none
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
         view.addSubview(tableView)
@@ -84,7 +97,7 @@ class RecipeOptionsModalViewController: ViewControllerBase, UIGestureRecognizerD
         cell?.isUserInteractionEnabled = isEditRowEnabled
         dataSource[OptionsMenu.Edit.rawValue] = "Edit Step"
         DispatchQueue.main.async {
-            cell?.textLabel?.attributedText = NSAttributedString(string: self.dataSource[OptionsMenu.Edit.rawValue], attributes: Theme.Font.Nav.Item)
+            cell?.textLabel?.attributedText = NSAttributedString(string: self.dataSource[OptionsMenu.Edit.rawValue], attributes: self.viewModel?.theme?.currentTheme.tableView.recipeCellStepName)
             self.tableView.reloadRows(at: [IndexPath(item: OptionsMenu.Edit.rawValue, section: 0)], with: .none)
         }
     }
@@ -99,7 +112,7 @@ extension RecipeOptionsModalViewController: UITableViewDelegate, UITableViewData
         
         if (indexPath.row == OptionsMenu.Edit.rawValue && !isEditRowEnabled) {
             dataSource[OptionsMenu.Edit.rawValue] = "Edit Step - Select A Step"
-            cell.textLabel?.attributedText = NSAttributedString(string: dataSource[OptionsMenu.Edit.rawValue], attributes: Theme.Font.Nav.Item)
+            cell.textLabel?.attributedText = NSAttributedString(string: dataSource[OptionsMenu.Edit.rawValue], attributes: viewModel?.theme?.currentTheme.tableView.recipeCellStepName)
             cell.textLabel?.alpha = 0.5
             cell.isUserInteractionEnabled = false
         }
@@ -110,7 +123,7 @@ extension RecipeOptionsModalViewController: UITableViewDelegate, UITableViewData
             cell.textLabel?.alpha = 0.7
             let backgroundView = UIView()
             let subview = UIView()
-            subview.backgroundColor = Theme.Font.Color.StandardButtonColor
+            subview.backgroundColor = viewModel?.theme?.currentTheme.button.backgroundColor
             subview.layer.cornerRadius = 5.0
             subview.clipsToBounds = true
             subview.translatesAutoresizingMaskIntoConstraints = false
@@ -124,7 +137,7 @@ extension RecipeOptionsModalViewController: UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
-        cell.textLabel?.attributedText = NSAttributedString(string: dataSource[indexPath.row], attributes: Theme.Font.Nav.Item)
+        cell.textLabel?.attributedText = NSAttributedString(string: dataSource[indexPath.row], attributes: viewModel?.theme?.currentTheme.tableView.recipeCellStepName)
         return cell
     }
     

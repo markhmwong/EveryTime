@@ -30,8 +30,14 @@ class RecipeViewModel {
     
     var bottomViewState: BottomViewState?
     
+    var theme: ThemeManager?
+    
     func dataSourceForStep() -> StepEntity {
         return dataSource[stepSelected]
+    }
+    
+    init(theme: ThemeManager) {
+        self.theme = theme
     }
     
     func setStep() {

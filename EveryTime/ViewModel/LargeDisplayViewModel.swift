@@ -10,6 +10,10 @@ import UIKit
 
 class LargeDisplayViewModel {
     
+    var recipeEntity: RecipeEntity?
+    
+    var theme: ThemeManager?
+    
     var delegate: LargeDisplayViewController?
     
     var stepsComplete: Int?
@@ -37,7 +41,10 @@ class LargeDisplayViewModel {
     
     var currRecipeStr: String? {
         didSet {
-            delegate?.updateViewRecipeLabel(recipeName: currRecipeStr ?? "Unknown")
+            guard let delegate = delegate else {
+                return
+            }
+            delegate.updateViewRecipeLabel(recipeName: currRecipeStr ?? "Unknown")
         }
     }
     
@@ -47,12 +54,11 @@ class LargeDisplayViewModel {
         }
     }
     
-    var recipeEntity: RecipeEntity?
-    
-    init(delegate: LargeDisplayViewController?, time: String, stepName: String, recipeName: String, recipeEntity: RecipeEntity? = nil, sortedSet: [StepEntity]) {
-        self.delegate = delegate
+    init(time: String, stepName: String, recipeName: String, recipeEntity: RecipeEntity? = nil, sortedSet: [StepEntity]?, theme: ThemeManager?) {
+        self.theme = theme
         self.totalSteps = recipeEntity?.stepSetSize()
         self.recipeEntity = recipeEntity
+        
         if let r = recipeEntity {
             self.stepsComplete = r.stepsComplete()
         }
@@ -62,12 +68,11 @@ class LargeDisplayViewModel {
         }
         
         defer {
-            self.stepsCompleteString = { self.stepsCompleteString }()
             self.currTimeStr = time
             self.currStepStr = stepName
             self.currRecipeStr = recipeName
             
-            if let r = recipeEntity {
+            if let r = recipeEntity, let sortedSet = sortedSet {
                 let priority = r.currStepPriority
                 if (priority < sortedSet.count - 1) {
                     self.nextStepStr = sortedSet[Int(r.currStepPriority) + 1].stepName
@@ -76,6 +81,28 @@ class LargeDisplayViewModel {
                 } else {
                     self.nextStepStr = sortedSet[Int(r.currStepPriority)].stepName
                 }
+            }
+        }
+    }
+    
+    func updateFullScreen(sortedSet: [StepEntity]?) {
+        guard let delegate = delegate else {
+            return
+        }
+        delegate.updateViewStepsCompleteLabel(stepComplete: "\(stepsComplete ?? 1)/\(totalSteps ?? 0)")
+        delegate.updateViewRecipeLabel(recipeName: currRecipeStr ?? "Unknown")
+        delegate.updateViewNextStepLabel(nextStepName: nextStepStr ?? "Unknown")
+        delegate.updateViewTimeLabel(timeRemaining: currTimeStr ?? "Unknown")
+        delegate.updateViewStepLabel(stepName: currStepStr ?? "Unknown")
+        
+        if let r = recipeEntity, let sortedSet = sortedSet {
+            let priority = r.currStepPriority
+            if (priority < sortedSet.count - 1) {
+                self.nextStepStr = sortedSet[Int(r.currStepPriority) + 1].stepName
+            } else if (priority == sortedSet.count - 1) {
+                self.nextStepStr = ""
+            } else {
+                self.nextStepStr = sortedSet[Int(r.currStepPriority)].stepName
             }
         }
     }

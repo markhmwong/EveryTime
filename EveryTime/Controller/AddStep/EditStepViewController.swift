@@ -20,7 +20,6 @@ class EditStepViewController: AddStepViewControllerBase {
         
         super.init()
         self.viewModel = viewModel
-        self.mainView.titleLabel.attributedText = NSAttributedString(string: "Edit Step", attributes: Theme.Font.Nav.Title)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -31,7 +30,11 @@ class EditStepViewController: AddStepViewControllerBase {
         super.viewDidLoad()
         let step = viewModel.grabEntity()
         
-        mainView.labelTextField.attributedText = NSAttributedString(string: "\(step?.stepName ?? "Step Name")", attributes: Theme.Font.Recipe.TextFieldAttribute)
+//        guard let theme = viewModel.theme else { return }
+//        
+//        mainView.titleLabel.attributedText = NSAttributedString(string: "Edit Step", attributes: theme.currentTheme.navigation.title)
+//        mainView.labelTextField.attributedText = NSAttributedString(string: "\(step?.stepName ?? "Step Name")", attributes: theme.currentTheme.font
+//        .stepName)
         
         let (h,m,s) = step?.getRawValues() ?? (0,0,0)
         mainView.countDownPicker.selectRow(h, inComponent: 0, animated: true)
@@ -105,14 +108,21 @@ class EditStepViewControllerInExistingRecipe: AddStepViewControllerBase {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard let theme = viewModel.theme?.currentTheme else {
+            return
+        }
+        mainView.backgroundColor = theme.generalBackgroundColour
     }
     
     override func prepareView() {
         super.prepareView()
         let step = viewModel.grabEntity()
 
-        mainView.titleLabel.attributedText = NSAttributedString(string: "Edit Step", attributes: Theme.Font.Nav.Title)
-        mainView.labelTextField.attributedText = NSAttributedString(string: "\(step?.stepName ?? "Step Name")", attributes: Theme.Font.Recipe.TextFieldAttribute)
+        guard let theme = viewModel.theme else { return }
+        
+        mainView.titleLabel.attributedText = NSAttributedString(string: "Edit Step", attributes: theme.currentTheme.navigation.title)
+        mainView.labelTextField.attributedText = NSAttributedString(string: "\(step?.stepName ?? "Step Name")", attributes: theme.currentTheme.font
+            .stepName)
         
         let (h,m,s) = step?.getRawValues() ?? (0,0,0)
         mainView.countDownPicker.selectRow(h, inComponent: 0, animated: true)

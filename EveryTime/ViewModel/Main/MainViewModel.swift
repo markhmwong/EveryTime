@@ -25,8 +25,11 @@ class MainViewModel {
 
     weak var delegate: MainViewController?
     
-    init(delegate: MainViewController?) {
+    var theme: ThemeManager?
+    
+    init(delegate: MainViewController?, theme: ThemeManager) {
         self.delegate = delegate
+        self.theme = theme
     }
     
     //binary search through all recipes

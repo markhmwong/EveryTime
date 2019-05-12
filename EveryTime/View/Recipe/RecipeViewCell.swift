@@ -9,6 +9,9 @@
 import UIKit
 
 class RecipeViewCell: EntityBaseTableViewCell<StepEntity> {
+    
+    var theme: ThemeManager?
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         guard let e = entity else {
             return
@@ -71,18 +74,16 @@ class RecipeViewCell: EntityBaseTableViewCell<StepEntity> {
     
     private lazy var selectedBg: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 0.85, green: 0.85, blue: 0.85, alpha: 0.6)
         return view
     }()
     
     override func setupView() {
         super.setupView()
         selectedBackgroundView = selectedBg
-        backgroundColor = Theme.Background.Color.CellBackgroundColor
         
         if let s = entity {
-            timeLabel.attributedText = NSAttributedString(string: "\(s.timeRemainingToString())", attributes: Theme.Font.Step.CellTimeAttribute)
-            nameLabel.attributedText = NSAttributedString(string: s.stepName!, attributes: Theme.Font.Step.CellNameAttribute)
+            timeLabel.attributedText = NSAttributedString(string: "\(s.timeRemainingToString())", attributes: theme?.currentTheme.tableView.recipeCellRecipeTime)
+            nameLabel.attributedText = NSAttributedString(string: s.stepName!, attributes: theme?.currentTheme.tableView.recipeCellStepName)
         }
     }
     
@@ -91,9 +92,9 @@ class RecipeViewCell: EntityBaseTableViewCell<StepEntity> {
         gl.frame = bounds
     }
     
-    func prepareLabel(_ s: StepEntity) {
-        timeLabel.attributedText = NSAttributedString(string: "\(s.timeRemainingToString())", attributes: Theme.Font.Step.CellTimeAttribute)
-        nameLabel.attributedText = NSAttributedString(string: s.stepName ?? "No Name", attributes: Theme.Font.Step.CellNameAttribute)
+    func prepareLabel(_ stepEntity: StepEntity) {
+        timeLabel.attributedText = NSAttributedString(string: "\(stepEntity.timeRemainingToString())", attributes: theme?.currentTheme.tableView.recipeCellRecipeTime)
+        nameLabel.attributedText = NSAttributedString(string: stepEntity.stepName ?? "No Name", attributes: theme?.currentTheme.tableView.recipeCellStepName)
         updateCompletionStatusLabel()
 
         contentView.addSubview(completeIndicatorView)
@@ -112,11 +113,11 @@ class RecipeViewCell: EntityBaseTableViewCell<StepEntity> {
     }
     
     func updateNameLabel(name: String) {
-        nameLabel.attributedText = NSAttributedString(string: name, attributes: Theme.Font.Step.CellNameAttribute)
+        nameLabel.attributedText = NSAttributedString(string: name, attributes: theme?.currentTheme.tableView.recipeCellStepName)
     }
     
     func updateTimeLabel(time: String) {
-        timeLabel.attributedText = NSAttributedString(string: time, attributes: Theme.Font.Step.CellTimeAttribute)
+        timeLabel.attributedText = NSAttributedString(string: time, attributes: theme?.currentTheme.tableView.recipeCellRecipeTime)
     }
     
     func updateCompletionStatusLabel() {

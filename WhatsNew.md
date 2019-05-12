@@ -1,23 +1,35 @@
 #  Feature Scratch pad
 
-## Version 1.1.15 (Current)
-- Add Start/Pause Button to fullscreen mode
-- Internal house keeping that you won't see
-- Minor UI Improvements
+## Version 1.1.16 [Current]
+- IAP
+- Tutorial
+- Customisable Sounds
+- Notifications in settings
+- Colour for recipe
+- Sorting
+
 
 ## Possible Feature List
-iap
-share Recipes
-dark mode
-apple watch
-separate the header view and tableview (recipe detail view)
-get ready count down
-Whats new view controller pop up
-include forward and back controls (on recipe view and main view)
-full screen with user interactivity (child viewcontroller)
-up next title in between the header and tableview will need to create a new uiview for hte header instead of using the existing tableview header
-truncate leading time if it is 0 e.g. 00h 00m 01s now becomes 01s 
-store existing popular steps
+Major releases
+    Apple Watch
+    Whats New Page / Welcome Page
+        whats new pop up asks for notifications
+    Theming
+    iap
+    share Recipes
+
+Minor
+    Pinning
+    recipes colors
+    start timer when I leave a location
+    forced response - manual toggle to continue each step
+    separate the header view and tableview (recipe detail view)
+        up next title in between the header and tableview will need to create a new uiview for hte header instead of using the existing tableview header
+    get ready count down
+    forward and back controls on main view and recipe view
+    truncate leading time if it is 0 e.g. 00h 00m 01s now becomes 01s 
+    store existing popular steps
+
 
 MVVM
 Tests

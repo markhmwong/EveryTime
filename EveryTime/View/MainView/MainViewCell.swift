@@ -11,16 +11,11 @@ import CoreData
 
 class MainViewCell: EntityBaseCell<RecipeEntity> {
     
+    var theme: ThemeManager?
+    
     var mainViewController: MainViewController? = nil
     
     var cellForIndexPath: IndexPath?
-    
-    private lazy var recipeTimeLabel: UILabel = {
-        let label = UILabel()
-        label.attributedText = NSAttributedString(string: "00h 00m 00s", attributes: Theme.Font.Recipe.TimeAttribute)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
     
     private var nextShortestTimeLabel: UILabel? = nil
     
@@ -30,12 +25,12 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
 
     override var entity: RecipeEntity? {
         didSet {
-            guard let r = entity else {
+            guard let r = entity, let theme = theme else {
                 return
             }
             prepareLabels(recipe: r)
             let bg = r.isPaused ? Theme.View.RecipeCell.RecipeCellPauseButtonInactive : Theme.View.RecipeCell.RecipeCellPauseButtonActive
-            let textColor = r.isPaused ? Theme.Font.Color.TextColourDisabled : Theme.Font.Color.TextColour
+            let textColor: UIColor = r.isPaused ? theme.currentTheme.tableView.pausedTextColor : theme.currentTheme.tableView.cellTextColor
             let highlightAlpha: CGFloat = r.isPaused ? 0.85 : 0.25
             updatePauseButtonView(textColor, highlightAlpha, bg)
             
@@ -47,15 +42,23 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         }
     }
     
+    private lazy var recipeTimeLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .clear
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     private lazy var stepNameLabel: UILabel = {
         let label = UILabel()
+        label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var recipeNameLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = UIColor.clear
+        label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -78,9 +81,9 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         gradientLayer.masksToBounds = true
         return gradientLayer
     }()
+    
     private let bottomBorder: UIView = {
         let view = UIView()
-        view.backgroundColor = Theme.Background.Color.NavBottomBorderColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -93,7 +96,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
     
     private lazy var timerHighlight: UIView = {
         let view = UIView()
-        view.backgroundColor = Theme.View.RecipeCell.MainViewTimerCellHighlight
+//        view.backgroundColor = Theme.View.RecipeCell.MainViewTimerCellHighlight
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -113,13 +116,15 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
     }
     
     func prepareLabels(recipe: RecipeEntity) {
-        recipeNameLabel.attributedText = NSAttributedString(string: recipe.recipeName ?? "Unknown Recipe Name", attributes: Theme.Font.Recipe.NameAttribute)
-        stepNameLabel.attributedText = NSAttributedString(string: recipe.currStepName ?? "Unknown Step Name", attributes: Theme.Font.Recipe.StepSubTitle)
-        recipeTimeLabel.attributedText = NSAttributedString(string: recipe.timeRemainingForCurrentStepToString(), attributes: Theme.Font.Recipe.TimeAttribute)
+        guard let theme = theme else {
+            return
+        }
+        recipeNameLabel.attributedText = NSAttributedString(string: recipe.recipeName ?? "Unknown Recipe Name", attributes:  theme.currentTheme.tableView.mainViewRecipeName)
+        stepNameLabel.attributedText = NSAttributedString(string: recipe.currStepName ?? "Unknown Step Name", attributes: theme.currentTheme.tableView.mainViewStepName)
+        recipeTimeLabel.attributedText = NSAttributedString(string: recipe.timeRemainingForCurrentStepToString(), attributes: theme.currentTheme.tableView.mainViewRecipeTime)
         
-        recipeNameLabel.backgroundColor = Theme.Background.Color.Clear
-        stepNameLabel.backgroundColor = Theme.Background.Color.Clear
-        recipeTimeLabel.backgroundColor = Theme.Background.Color.Clear
+        bottomBorder.backgroundColor = theme.currentTheme.tableView.bottomBorderColor
+        timerHighlight.backgroundColor = theme.currentTheme.tableView.highlightColor
         
         addSubview(recipeNameLabel)
         addSubview(recipeTimeLabel)
@@ -140,10 +145,13 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
     
     override func setupView() {
         clipsToBounds = false
-        layer.backgroundColor = UIColor.clear.cgColor
-        layer.masksToBounds = true
+        
+
+        
+//        layer.backgroundColor = UIColor.clear.cgColor
+//        layer.masksToBounds = true
         addSubview(pauseButtonView)
-        backgroundColor = UIColor.clear//Theme.Background.Color.CellBackgroundColor
+//        backgroundColor = UIColor.clear//Theme.Background.Color.CellBackgroundColor
 
         pauseButton.addTarget(self, action: #selector(handlePauseButton), for: .touchUpInside)
         pauseButtonView.addSubview(pauseButton)
@@ -178,9 +186,13 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         
         //should be done in the model. let the VC's VM update the cell data
         if let r = entity {
+            guard let theme = theme else {
+                return
+            }
+            
             let bg = r.isPaused ? Theme.View.RecipeCell.RecipeCellPauseButtonActive : Theme.View.RecipeCell.RecipeCellPauseButtonInactive
-            let textColor = r.isPaused ? Theme.Font.Color.TextColour : Theme.Font.Color.TextColourDisabled
-            let highlightAlpha: CGFloat = r.isPaused ? 0.25 : 0.85
+            let textColor = !r.isPaused ? theme.currentTheme.tableView.pausedTextColor : theme.currentTheme.tableView.cellTextColor
+            let highlightAlpha: CGFloat = r.isPaused ? 0.25 : 0.95
 
             if (r.isPaused) {
                 //will unpause
@@ -217,23 +229,28 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
     }
     
     func updateStepLabel() {
-        guard let e = entity else {
+        guard let e = entity, let theme = theme else {
             return
         }
-        stepNameLabel.attributedText = NSAttributedString(string: e.currStepName ?? "No Step Name", attributes: Theme.Font.Recipe.StepSubTitle)
+        stepNameLabel.attributedText = NSAttributedString(string: e.currStepName ?? "No Step Name", attributes: theme.currentTheme.tableView.mainViewStepName)
     }
     
     func updateTimeLabel(timeRemaining: String) {
-        guard let e = entity else {
+        guard let e = entity, let theme = theme else {
             return
         }
+
         DispatchQueue.main.async {
-            self.stepNameLabel.attributedText = NSAttributedString(string: e.currStepName ?? "No Step Name", attributes: Theme.Font.Recipe.StepSubTitle)
+            var timeString = ""
             if self.entity != nil {
-                    self.recipeTimeLabel.attributedText = NSAttributedString(string: timeRemaining, attributes: Theme.Font.Recipe.TimeAttribute)
+                timeString = timeRemaining
             } else {
-                    self.recipeTimeLabel.attributedText = NSAttributedString(string: "No Time", attributes: Theme.Font.Recipe.TimeAttribute)
+                timeString = "No Time"
             }
+            
+            self.recipeTimeLabel.attributedText = NSAttributedString(string: timeString, attributes: theme.currentTheme.tableView.mainViewRecipeTime)
+            self.stepNameLabel.attributedText = NSAttributedString(string: e.currStepName ?? "No Step Name", attributes: theme.currentTheme.tableView.mainViewStepName)
+
         }
         
     }

@@ -14,8 +14,11 @@ class WhatsNewViewModel {
     
     var patchNotes: String
     
-    init(whatsNew: WhatsNewProtocol = WhatsNewFactory.getLatestWhatsNew()) {
+    var theme: ThemeManager?
+    
+    init(whatsNew: WhatsNewProtocol = WhatsNewFactory.getLatestWhatsNew(), theme: ThemeManager) {
         self.whatsNew = whatsNew
+        self.theme = theme
         self.patchNotes = whatsNew.patchNotes.reduce("") { (curr, next) -> String in
             return "• \(next)" + "\n\n\(curr)"
         }

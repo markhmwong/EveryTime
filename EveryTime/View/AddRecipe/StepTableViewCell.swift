@@ -19,14 +19,14 @@ struct TableViewStep {
 
 class StepTableViewCell: UITableViewCell {
     
-    private lazy var nameLabel: UILabel = {
+    lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Step.NameAttribute)
         return label
     }()
     
-    private lazy var timeLabel: UILabel = {
+    lazy var timeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Step.NameAttribute)
@@ -66,6 +66,8 @@ class StepTableViewCell: UITableViewCell {
     }
     
     weak var delegate: AddRecipeViewController?
+    
+    var theme: ThemeManager?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

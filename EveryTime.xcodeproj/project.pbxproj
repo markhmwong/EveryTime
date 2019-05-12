@@ -16,12 +16,28 @@
 		4D0C4B5F21AEC73D00153E76 /* EveryTimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4B5E21AEC73D00153E76 /* EveryTimeTests.swift */; };
 		4D0C4B6A21AEC73D00153E76 /* EveryTimeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4B6921AEC73D00153E76 /* EveryTimeUITests.swift */; };
 		4D205DB121FE8252008006BD /* StepTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D205DB021FE8252008006BD /* StepTableViewCell.swift */; };
+		4D507E73227FA0060074FBFB /* FontStandardLightTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E72227FA0060074FBFB /* FontStandardLightTheme.swift */; };
+		4D507E75227FA0250074FBFB /* FontThemeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E74227FA0250074FBFB /* FontThemeProtocol.swift */; };
+		4D507E77227FB9E20074FBFB /* AttributedTextLightTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E76227FB9E20074FBFB /* AttributedTextLightTheme.swift */; };
+		4D507E79227FBA0B0074FBFB /* AttributedTextProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E78227FBA0B0074FBFB /* AttributedTextProtocol.swift */; };
+		4D507E7C22802B300074FBFB /* StandardDarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E7B22802B300074FBFB /* StandardDarkTheme.swift */; };
+		4D507E7E22802B520074FBFB /* NavigationStandardDarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E7D22802B520074FBFB /* NavigationStandardDarkTheme.swift */; };
+		4D507E8022802B760074FBFB /* FontStandardDarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E7F22802B760074FBFB /* FontStandardDarkTheme.swift */; };
+		4D507E8222802B950074FBFB /* AttributedTextDarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E8122802B950074FBFB /* AttributedTextDarkTheme.swift */; };
+		4D507E86228039C00074FBFB /* ThemeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E85228039C00074FBFB /* ThemeViewController.swift */; };
+		4D507E88228071120074FBFB /* ThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E87228071120074FBFB /* ThemeView.swift */; };
+		4D507E8B228074A20074FBFB /* ThemeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E8A228074A20074FBFB /* ThemeViewModel.swift */; };
+		4D507E8E22811A760074FBFB /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E8D22811A760074FBFB /* UIColor+Extension.swift */; };
+		4D507E902281637C0074FBFB /* TableViewStandardDarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E8F2281637C0074FBFB /* TableViewStandardDarkTheme.swift */; };
+		4D507E92228163B50074FBFB /* TableViewThemeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E91228163B50074FBFB /* TableViewThemeProtocol.swift */; };
+		4D507E94228163FB0074FBFB /* ThemeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E93228163FB0074FBFB /* ThemeProtocol.swift */; };
+		4D507E97228164640074FBFB /* TableViewStandardLightTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E96228164640074FBFB /* TableViewStandardLightTheme.swift */; };
+		4D507E99228167040074FBFB /* ThemeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E98228167040074FBFB /* ThemeTableViewCell.swift */; };
 		4D53801E223FE1280051DD0F /* Update.md in Resources */ = {isa = PBXBuildFile; fileRef = 4D53801D223FE1280051DD0F /* Update.md */; };
 		4D538023224386D20051DD0F /* SettingsMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D538022224386D20051DD0F /* SettingsMainView.swift */; };
 		4D5380252243CACF0051DD0F /* MainViewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5380242243CACF0051DD0F /* MainViewView.swift */; };
 		4D5380282244BC750051DD0F /* MainViewController+UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5380272244BC750051DD0F /* MainViewController+UICollectionView.swift */; };
 		4D53802A2244C2D70051DD0F /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5380292244C2D70051DD0F /* Extension+UIView.swift */; };
-		4D53802C22458E410051DD0F /* MainViewController+Scroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53802B22458E410051DD0F /* MainViewController+Scroll.swift */; };
 		4D53802E2245909F0051DD0F /* MainViewController+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53802D2245909F0051DD0F /* MainViewController+Timer.swift */; };
 		4D5380302245F5C40051DD0F /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53802F2245F5C40051DD0F /* HeaderView.swift */; };
 		4D53803222468B140051DD0F /* SettingsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D53803122468B140051DD0F /* SettingsViewCell.swift */; };
@@ -52,6 +68,9 @@
 		4D563C30220D7FB70039B07F /* RecipeViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D563C2F220D7FB70039B07F /* RecipeViewCell.swift */; };
 		4D56D4882269F3B300E28376 /* AddStepViewControllerBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D56D4872269F3B300E28376 /* AddStepViewControllerBase.swift */; };
 		4D56D48A226B1A8800E28376 /* AddStepMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D56D489226B1A8800E28376 /* AddStepMainView.swift */; };
+		4D5DCB8C22856BE400393EF4 /* ButtonThemeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5DCB8B22856BE400393EF4 /* ButtonThemeProtocol.swift */; };
+		4D5DCB8E2285712500393EF4 /* ButtonStandardDarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5DCB8D2285712500393EF4 /* ButtonStandardDarkTheme.swift */; };
+		4D5DCB902285717B00393EF4 /* ButtonStandardLightTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5DCB8F2285717B00393EF4 /* ButtonStandardLightTheme.swift */; };
 		4D6DFCB82212508E009C3044 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6DFCB72212508E009C3044 /* SettingsViewController.swift */; };
 		4D6E35382215435900CBCC23 /* AddRecipeWizardError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6E35372215435900CBCC23 /* AddRecipeWizardError.swift */; };
 		4D6E7DB7226FF57000716FB5 /* EditStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6E7DB6226FF57000716FB5 /* EditStepViewController.swift */; };
@@ -65,6 +84,10 @@
 		4D7847AB227B296100160658 /* RecipeViewControllerWithTableView+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7847AA227B296100160658 /* RecipeViewControllerWithTableView+Timer.swift */; };
 		4D7847AD227B37F400160658 /* RecipeViewControllerWithTableView+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7847AC227B37F400160658 /* RecipeViewControllerWithTableView+TableView.swift */; };
 		4D7847AF227B3CF500160658 /* RecipeViewControllerWithTableView+ScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7847AE227B3CF500160658 /* RecipeViewControllerWithTableView+ScrollView.swift */; };
+		4D7847B4227EC16900160658 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7847B3227EC16900160658 /* Theme.swift */; };
+		4D7847B7227F242D00160658 /* StandardLightTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7847B6227F242D00160658 /* StandardLightTheme.swift */; };
+		4D7847BA227F24A200160658 /* NavigationStandardLightTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7847B9227F24A100160658 /* NavigationStandardLightTheme.swift */; };
+		4D7847BC227F2F4200160658 /* NavigationThemeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7847BB227F2F4200160658 /* NavigationThemeProtocol.swift */; };
 		4D94E5D5223E74DA0009F176 /* LocalNotificationsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D94E5D4223E74DA0009F176 /* LocalNotificationsService.swift */; };
 		4D9986C1223CA3080049D55C /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D9986BF223CA3080049D55C /* Interface.storyboard */; };
 		4D9986C3223CA3090049D55C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D9986C2223CA3090049D55C /* Assets.xcassets */; };
@@ -95,7 +118,7 @@
 		4DA78F1E225D648000C018CA /* MarqueeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F1D225D647F00C018CA /* MarqueeLabel.swift */; };
 		4DA78F21225D6A9500C018CA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DA78F20225D6A9500C018CA /* QuartzCore.framework */; };
 		4DA78F232260B99400C018CA /* AddRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F222260B99400C018CA /* AddRecipeViewController.swift */; };
-		4DA78F252262F30100C018CA /* AddRecipeOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F242262F30100C018CA /* AddRecipeOptionsViewController.swift */; };
+		4DA78F252262F30100C018CA /* AddRecipeSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F242262F30100C018CA /* AddRecipeSettingsViewController.swift */; };
 		4DA78F272262FF9800C018CA /* AddRecipeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F262262FF9800C018CA /* AddRecipeSettingsViewModel.swift */; };
 		4DA78F2922630FB700C018CA /* AddRecipeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F2822630FB700C018CA /* AddRecipeHeaderView.swift */; };
 		4DA78F2B22630FFB00C018CA /* AddRecipeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F2A22630FFB00C018CA /* AddRecipeMainView.swift */; };
@@ -175,13 +198,29 @@
 		4D0C4B6921AEC73D00153E76 /* EveryTimeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveryTimeUITests.swift; sourceTree = "<group>"; };
 		4D0C4B6B21AEC73D00153E76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D205DB021FE8252008006BD /* StepTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTableViewCell.swift; sourceTree = "<group>"; };
+		4D507E72227FA0060074FBFB /* FontStandardLightTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStandardLightTheme.swift; sourceTree = "<group>"; };
+		4D507E74227FA0250074FBFB /* FontThemeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontThemeProtocol.swift; sourceTree = "<group>"; };
+		4D507E76227FB9E20074FBFB /* AttributedTextLightTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextLightTheme.swift; sourceTree = "<group>"; };
+		4D507E78227FBA0B0074FBFB /* AttributedTextProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextProtocol.swift; sourceTree = "<group>"; };
+		4D507E7B22802B300074FBFB /* StandardDarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardDarkTheme.swift; sourceTree = "<group>"; };
+		4D507E7D22802B520074FBFB /* NavigationStandardDarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationStandardDarkTheme.swift; sourceTree = "<group>"; };
+		4D507E7F22802B760074FBFB /* FontStandardDarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStandardDarkTheme.swift; sourceTree = "<group>"; };
+		4D507E8122802B950074FBFB /* AttributedTextDarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextDarkTheme.swift; sourceTree = "<group>"; };
+		4D507E85228039C00074FBFB /* ThemeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeViewController.swift; sourceTree = "<group>"; };
+		4D507E87228071120074FBFB /* ThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeView.swift; sourceTree = "<group>"; };
+		4D507E8A228074A20074FBFB /* ThemeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeViewModel.swift; sourceTree = "<group>"; };
+		4D507E8D22811A760074FBFB /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		4D507E8F2281637C0074FBFB /* TableViewStandardDarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewStandardDarkTheme.swift; sourceTree = "<group>"; };
+		4D507E91228163B50074FBFB /* TableViewThemeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewThemeProtocol.swift; sourceTree = "<group>"; };
+		4D507E93228163FB0074FBFB /* ThemeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeProtocol.swift; sourceTree = "<group>"; };
+		4D507E96228164640074FBFB /* TableViewStandardLightTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewStandardLightTheme.swift; sourceTree = "<group>"; };
+		4D507E98228167040074FBFB /* ThemeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeTableViewCell.swift; sourceTree = "<group>"; };
 		4D53801D223FE1280051DD0F /* Update.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Update.md; sourceTree = "<group>"; };
 		4D53801F2240B9FA0051DD0F /* SimpleRecipeTimer v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SimpleRecipeTimer v2.xcdatamodel"; sourceTree = "<group>"; };
 		4D538022224386D20051DD0F /* SettingsMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMainView.swift; sourceTree = "<group>"; };
 		4D5380242243CACF0051DD0F /* MainViewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewView.swift; sourceTree = "<group>"; };
 		4D5380272244BC750051DD0F /* MainViewController+UICollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+UICollectionView.swift"; sourceTree = "<group>"; };
 		4D5380292244C2D70051DD0F /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
-		4D53802B22458E410051DD0F /* MainViewController+Scroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+Scroll.swift"; sourceTree = "<group>"; };
 		4D53802D2245909F0051DD0F /* MainViewController+Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+Timer.swift"; sourceTree = "<group>"; };
 		4D53802F2245F5C40051DD0F /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		4D53803122468B140051DD0F /* SettingsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewCell.swift; sourceTree = "<group>"; };
@@ -213,6 +252,9 @@
 		4D563C2F220D7FB70039B07F /* RecipeViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewCell.swift; sourceTree = "<group>"; };
 		4D56D4872269F3B300E28376 /* AddStepViewControllerBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepViewControllerBase.swift; sourceTree = "<group>"; };
 		4D56D489226B1A8800E28376 /* AddStepMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepMainView.swift; sourceTree = "<group>"; };
+		4D5DCB8B22856BE400393EF4 /* ButtonThemeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonThemeProtocol.swift; sourceTree = "<group>"; };
+		4D5DCB8D2285712500393EF4 /* ButtonStandardDarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStandardDarkTheme.swift; sourceTree = "<group>"; };
+		4D5DCB8F2285717B00393EF4 /* ButtonStandardLightTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStandardLightTheme.swift; sourceTree = "<group>"; };
 		4D6DFCB72212508E009C3044 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		4D6E35372215435900CBCC23 /* AddRecipeWizardError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeWizardError.swift; sourceTree = "<group>"; };
 		4D6E7DB6226FF57000716FB5 /* EditStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStepViewController.swift; sourceTree = "<group>"; };
@@ -227,6 +269,10 @@
 		4D7847AC227B37F400160658 /* RecipeViewControllerWithTableView+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecipeViewControllerWithTableView+TableView.swift"; sourceTree = "<group>"; };
 		4D7847AE227B3CF500160658 /* RecipeViewControllerWithTableView+ScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecipeViewControllerWithTableView+ScrollView.swift"; sourceTree = "<group>"; };
 		4D7847B1227C2B2400160658 /* SimpleRecipeTimer v4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SimpleRecipeTimer v4.xcdatamodel"; sourceTree = "<group>"; };
+		4D7847B3227EC16900160658 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		4D7847B6227F242D00160658 /* StandardLightTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardLightTheme.swift; sourceTree = "<group>"; };
+		4D7847B9227F24A100160658 /* NavigationStandardLightTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationStandardLightTheme.swift; sourceTree = "<group>"; };
+		4D7847BB227F2F4200160658 /* NavigationThemeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationThemeProtocol.swift; sourceTree = "<group>"; };
 		4D94E5D1223CC6430009F176 /* EveryTime.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EveryTime.entitlements; sourceTree = "<group>"; };
 		4D94E5D2223CC6570009F176 /* EveryTimeW.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EveryTimeW.entitlements; sourceTree = "<group>"; };
 		4D94E5D4223E74DA0009F176 /* LocalNotificationsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsService.swift; sourceTree = "<group>"; };
@@ -263,7 +309,7 @@
 		4DA78F1D225D647F00C018CA /* MarqueeLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarqueeLabel.swift; sourceTree = "<group>"; };
 		4DA78F20225D6A9500C018CA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4DA78F222260B99400C018CA /* AddRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeViewController.swift; sourceTree = "<group>"; };
-		4DA78F242262F30100C018CA /* AddRecipeOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeOptionsViewController.swift; sourceTree = "<group>"; };
+		4DA78F242262F30100C018CA /* AddRecipeSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeSettingsViewController.swift; sourceTree = "<group>"; };
 		4DA78F262262FF9800C018CA /* AddRecipeSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeSettingsViewModel.swift; sourceTree = "<group>"; };
 		4DA78F2822630FB700C018CA /* AddRecipeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeHeaderView.swift; sourceTree = "<group>"; };
 		4DA78F2A22630FFB00C018CA /* AddRecipeMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeMainView.swift; sourceTree = "<group>"; };
@@ -428,9 +474,57 @@
 			path = AddStep;
 			sourceTree = "<group>";
 		};
+		4D507E7A22802B0E0074FBFB /* DarkTheme */ = {
+			isa = PBXGroup;
+			children = (
+				4D507E8122802B950074FBFB /* AttributedTextDarkTheme.swift */,
+				4D507E7F22802B760074FBFB /* FontStandardDarkTheme.swift */,
+				4D507E7D22802B520074FBFB /* NavigationStandardDarkTheme.swift */,
+				4D507E7B22802B300074FBFB /* StandardDarkTheme.swift */,
+				4D507E8F2281637C0074FBFB /* TableViewStandardDarkTheme.swift */,
+				4D5DCB8D2285712500393EF4 /* ButtonStandardDarkTheme.swift */,
+			);
+			path = DarkTheme;
+			sourceTree = "<group>";
+		};
+		4D507E83228037B00074FBFB /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				4DA78F13225B884A00C018CA /* WhatsNewViewModel.swift */,
+				4DD542F32252284C003C6DEC /* SettingsViewModel.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		4D507E84228039A70074FBFB /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				4D507E85228039C00074FBFB /* ThemeViewController.swift */,
+				4D507E8A228074A20074FBFB /* ThemeViewModel.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		4D507E8C22810A5C0074FBFB /* DeepOcean */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DeepOcean;
+			sourceTree = "<group>";
+		};
+		4D507E9A228169790074FBFB /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				4D507E87228071120074FBFB /* ThemeView.swift */,
+				4D507E98228167040074FBFB /* ThemeTableViewCell.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
 		4D538021224386BB0051DD0F /* Settings View */ = {
 			isa = PBXGroup;
 			children = (
+				4D507E9A228169790074FBFB /* Theme */,
 				4DA78F11225B82A000C018CA /* WhatsNew */,
 				4D538022224386D20051DD0F /* SettingsMainView.swift */,
 				4D53803122468B140051DD0F /* SettingsViewCell.swift */,
@@ -445,7 +539,6 @@
 				4D0C4B4821AEC73A00153E76 /* MainViewController.swift */,
 				4D53802D2245909F0051DD0F /* MainViewController+Timer.swift */,
 				4D5380272244BC750051DD0F /* MainViewController+UICollectionView.swift */,
-				4D53802B22458E410051DD0F /* MainViewController+Scroll.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -453,6 +546,7 @@
 		4D53803322468BF40051DD0F /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				4D507E84228039A70074FBFB /* Theme */,
 				4D6DFCB72212508E009C3044 /* SettingsViewController.swift */,
 				4D53803422473FF40051DD0F /* AboutViewController.swift */,
 				4DA78F15225C137000C018CA /* SettingsWhatsNewViewController.swift */,
@@ -480,7 +574,13 @@
 		4D53C21822065FE300EED75C /* Theming */ = {
 			isa = PBXGroup;
 			children = (
+				4D7847B3227EC16900160658 /* Theme.swift */,
 				4D53F7CB21EC47E700C0AF31 /* ThemeConstants.swift */,
+				4D507E8D22811A760074FBFB /* UIColor+Extension.swift */,
+				4D7847B8227F247200160658 /* ThemeProtocol */,
+				4D507E8C22810A5C0074FBFB /* DeepOcean */,
+				4D507E7A22802B0E0074FBFB /* DarkTheme */,
+				4D7847B5227F241100160658 /* LightTheme */,
 			);
 			path = Theming;
 			sourceTree = "<group>";
@@ -533,6 +633,7 @@
 		4D563C2A220D4A550039B07F /* Recipe */ = {
 			isa = PBXGroup;
 			children = (
+				4D7847A9227B290200160658 /* Modal */,
 				4D7847B0227BE37D00160658 /* Animation */,
 				4D563C2B220D4ADC0039B07F /* RecipeViewControllerBase.swift */,
 				4D563C2D220D54280039B07F /* RecipeViewControllerWithTableView.swift */,
@@ -571,6 +672,7 @@
 		4D6E7DB3226D8D3C00716FB5 /* AddStep */ = {
 			isa = PBXGroup;
 			children = (
+				4DD542EF224E544C003C6DEC /* AddStepViewModel.swift */,
 			);
 			path = AddStep;
 			sourceTree = "<group>";
@@ -612,10 +714,35 @@
 		4D7847B0227BE37D00160658 /* Animation */ = {
 			isa = PBXGroup;
 			children = (
-				4D7847A9227B290200160658 /* Modal */,
 				4DD9683D2278866000C6D94B /* InstantPanGestureRecognizer.swift */,
 			);
 			path = Animation;
+			sourceTree = "<group>";
+		};
+		4D7847B5227F241100160658 /* LightTheme */ = {
+			isa = PBXGroup;
+			children = (
+				4D507E76227FB9E20074FBFB /* AttributedTextLightTheme.swift */,
+				4D507E72227FA0060074FBFB /* FontStandardLightTheme.swift */,
+				4D7847B9227F24A100160658 /* NavigationStandardLightTheme.swift */,
+				4D7847B6227F242D00160658 /* StandardLightTheme.swift */,
+				4D507E96228164640074FBFB /* TableViewStandardLightTheme.swift */,
+				4D5DCB8F2285717B00393EF4 /* ButtonStandardLightTheme.swift */,
+			);
+			path = LightTheme;
+			sourceTree = "<group>";
+		};
+		4D7847B8227F247200160658 /* ThemeProtocol */ = {
+			isa = PBXGroup;
+			children = (
+				4D507E93228163FB0074FBFB /* ThemeProtocol.swift */,
+				4D7847BB227F2F4200160658 /* NavigationThemeProtocol.swift */,
+				4D507E74227FA0250074FBFB /* FontThemeProtocol.swift */,
+				4D507E78227FBA0B0074FBFB /* AttributedTextProtocol.swift */,
+				4D507E91228163B50074FBFB /* TableViewThemeProtocol.swift */,
+				4D5DCB8B22856BE400393EF4 /* ButtonThemeProtocol.swift */,
+			);
+			path = ThemeProtocol;
 			sourceTree = "<group>";
 		};
 		4D94E5D3223E74C10009F176 /* Notifications */ = {
@@ -758,10 +885,8 @@
 				4D78479D227ABBAC00160658 /* Main */,
 				4D6E7DB3226D8D3C00716FB5 /* AddStep */,
 				4D6E7DB2226D8D3600716FB5 /* AddRecipe */,
-				4DD542F32252284C003C6DEC /* SettingsViewModel.swift */,
-				4DD542EF224E544C003C6DEC /* AddStepViewModel.swift */,
+				4D507E83228037B00074FBFB /* Settings */,
 				4DA78E2E22559E9C00C018CA /* LargeDisplayViewModel.swift */,
-				4DA78F13225B884A00C018CA /* WhatsNewViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -789,7 +914,7 @@
 			isa = PBXGroup;
 			children = (
 				4DA78F222260B99400C018CA /* AddRecipeViewController.swift */,
-				4DA78F242262F30100C018CA /* AddRecipeOptionsViewController.swift */,
+				4DA78F242262F30100C018CA /* AddRecipeSettingsViewController.swift */,
 			);
 			path = AddRecipe;
 			sourceTree = "<group>";
@@ -1006,6 +1131,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D507E8B228074A20074FBFB /* ThemeViewModel.swift in Sources */,
 				4D6E7DBC22746A5000716FB5 /* RecipeOptionsModalTransistionDelegate.swift in Sources */,
 				4D53F7DA21EF0D7700C0AF31 /* OverlayPresentationController.swift in Sources */,
 				4D53C2172203F8C900EED75C /* HorizontalPresentationController.swift in Sources */,
@@ -1015,13 +1141,19 @@
 				4D7847A8227AFB1500160658 /* RecipeView.swift in Sources */,
 				4DA78E2F22559E9C00C018CA /* LargeDisplayViewModel.swift in Sources */,
 				4DA78F18225C17F500C018CA /* AppMetaData.swift in Sources */,
+				4D507E86228039C00074FBFB /* ThemeViewController.swift in Sources */,
 				4DA78F062259D98800C018CA /* BasicMarqueeLabel.swift in Sources */,
 				4DA78F232260B99400C018CA /* AddRecipeViewController.swift in Sources */,
 				4D53803222468B140051DD0F /* SettingsViewCell.swift in Sources */,
 				4D53F8A921F36E1B00C0AF31 /* HorizontalTransitionInteractor.swift in Sources */,
+				4D507E94228163FB0074FBFB /* ThemeProtocol.swift in Sources */,
 				4DA78E2D225571AA00C018CA /* LargeDisplayMainView.swift in Sources */,
+				4D5DCB902285717B00393EF4 /* ButtonStandardLightTheme.swift in Sources */,
+				4D507E8022802B760074FBFB /* FontStandardDarkTheme.swift in Sources */,
+				4D7847BA227F24A200160658 /* NavigationStandardLightTheme.swift in Sources */,
 				4DA78F16225C137000C018CA /* SettingsWhatsNewViewController.swift in Sources */,
 				4DF13D62221A1BAB009BE812 /* StandardButton.swift in Sources */,
+				4D7847BC227F2F4200160658 /* NavigationThemeProtocol.swift in Sources */,
 				4D7847AD227B37F400160658 /* RecipeViewControllerWithTableView+TableView.swift in Sources */,
 				4DA78F312263746800C018CA /* AddStepViewController+UIPickerView.swift in Sources */,
 				4D53F89E21F1CBF800C0AF31 /* ShowOverlayAnimator.swift in Sources */,
@@ -1031,17 +1163,20 @@
 				4D205DB121FE8252008006BD /* StepTableViewCell.swift in Sources */,
 				4D0C4B4921AEC73A00153E76 /* MainViewController.swift in Sources */,
 				4D5380252243CACF0051DD0F /* MainViewView.swift in Sources */,
+				4D507E7C22802B300074FBFB /* StandardDarkTheme.swift in Sources */,
 				4D563C2E220D54280039B07F /* RecipeViewControllerWithTableView.swift in Sources */,
 				4D53802E2245909F0051DD0F /* MainViewController+Timer.swift in Sources */,
 				4DA12F7A21B606A20049CD75 /* AddStepViewController.swift in Sources */,
-				4D53802C22458E410051DD0F /* MainViewController+Scroll.swift in Sources */,
 				4D53F7CE21ED6CB200C0AF31 /* NavView.swift in Sources */,
+				4D507E7E22802B520074FBFB /* NavigationStandardDarkTheme.swift in Sources */,
 				4D53F8AB21F36F5500C0AF31 /* HorizontalTransitionDelegate.swift in Sources */,
 				4DA78F2922630FB700C018CA /* AddRecipeHeaderView.swift in Sources */,
 				4D5380302245F5C40051DD0F /* HeaderView.swift in Sources */,
 				4DA78F1E225D648000C018CA /* MarqueeLabel.swift in Sources */,
 				4DA78F272262FF9800C018CA /* AddRecipeSettingsViewModel.swift in Sources */,
+				4D507E92228163B50074FBFB /* TableViewThemeProtocol.swift in Sources */,
 				4D94E5D5223E74DA0009F176 /* LocalNotificationsService.swift in Sources */,
+				4D507E902281637C0074FBFB /* TableViewStandardDarkTheme.swift in Sources */,
 				4D0C4B4F21AEC73A00153E76 /* SimpleRecipeTimer.xcdatamodeld in Sources */,
 				4DA78E2A2254CD2D00C018CA /* LargeDisplayViewController.swift in Sources */,
 				4DA12F7621B358AB0049CD75 /* MainViewCell.swift in Sources */,
@@ -1049,36 +1184,49 @@
 				4D53F7BE21E735CD00C0AF31 /* StepEntity.swift in Sources */,
 				4D56D48A226B1A8800E28376 /* AddStepMainView.swift in Sources */,
 				4DA78F1A225C1C8000C018CA /* SettingsDataSource.swift in Sources */,
+				4D507E75227FA0250074FBFB /* FontThemeProtocol.swift in Sources */,
 				4D0C4B4721AEC73A00153E76 /* AppDelegate.swift in Sources */,
 				4D53F7D821EF0C6500C0AF31 /* ViewControllerOverlayAnimator.swift in Sources */,
 				4DA78F0E225B813D00C018CA /* WhatsNewViewController.swift in Sources */,
-				4DA78F252262F30100C018CA /* AddRecipeOptionsViewController.swift in Sources */,
+				4DA78F252262F30100C018CA /* AddRecipeSettingsViewController.swift in Sources */,
 				4D53803D2249FCC80051DD0F /* Extentions+UIDevice.swift in Sources */,
 				4DA78F14225B884A00C018CA /* WhatsNewViewModel.swift in Sources */,
+				4D5DCB8C22856BE400393EF4 /* ButtonThemeProtocol.swift in Sources */,
 				4D6E7DC02274729100716FB5 /* RecipeModalPresentationController.swift in Sources */,
 				4D53803A224911140051DD0F /* TapticService.swift in Sources */,
 				4D53802A2244C2D70051DD0F /* Extension+UIView.swift in Sources */,
+				4D507E97228164640074FBFB /* TableViewStandardLightTheme.swift in Sources */,
 				4D6E35382215435900CBCC23 /* AddRecipeWizardError.swift in Sources */,
+				4D507E8222802B950074FBFB /* AttributedTextDarkTheme.swift in Sources */,
 				4D78479F227ABBD100160658 /* MainViewModel.swift in Sources */,
 				4D53F7D521EF0C2400C0AF31 /* OverlayTransitionDelegate.swift in Sources */,
+				4D7847B4227EC16900160658 /* Theme.swift in Sources */,
+				4D5DCB8E2285712500393EF4 /* ButtonStandardDarkTheme.swift in Sources */,
+				4D507E73227FA0060074FBFB /* FontStandardLightTheme.swift in Sources */,
 				4D53F75B21E2E38100C0AF31 /* CoreDataHandler.swift in Sources */,
 				4D53F8A721F36DDA00C0AF31 /* HideHorizontalAnimator.swift in Sources */,
 				4DA12F7321B2D3DD0049CD75 /* EntityBaseCell.swift in Sources */,
 				4DA78F35226417A600C018CA /* AddRecipeViewModel.swift in Sources */,
+				4D507E77227FB9E20074FBFB /* AttributedTextLightTheme.swift in Sources */,
 				4D538023224386D20051DD0F /* SettingsMainView.swift in Sources */,
+				4D7847B7227F242D00160658 /* StandardLightTheme.swift in Sources */,
 				4D56D4882269F3B300E28376 /* AddStepViewControllerBase.swift in Sources */,
 				4D563C2C220D4ADC0039B07F /* RecipeViewControllerBase.swift in Sources */,
 				4D6E7DB7226FF57000716FB5 /* EditStepViewController.swift in Sources */,
 				4D53F8A521F36D9100C0AF31 /* ShowHorizontalAnimator.swift in Sources */,
+				4D507E79227FBA0B0074FBFB /* AttributedTextProtocol.swift in Sources */,
 				4DA78F2B22630FFB00C018CA /* AddRecipeMainView.swift in Sources */,
 				4D7847A6227AF18F00160658 /* RecipeViewModel.swift in Sources */,
+				4D507E88228071120074FBFB /* ThemeView.swift in Sources */,
 				4DA12F8721B8A3A20049CD75 /* Protocols.swift in Sources */,
+				4D507E99228167040074FBFB /* ThemeTableViewCell.swift in Sources */,
 				4DF13D5D2217EECF009BE812 /* ViewControllerBase.swift in Sources */,
 				4D7847AF227B3CF500160658 /* RecipeViewControllerWithTableView+ScrollView.swift in Sources */,
 				4D53F7BC21E72B7E00C0AF31 /* RecipeEntity.swift in Sources */,
 				4D538037224744BD0051DD0F /* AboutView.swift in Sources */,
 				4D563C30220D7FB70039B07F /* RecipeViewCell.swift in Sources */,
 				4DD542F42252284C003C6DEC /* SettingsViewModel.swift in Sources */,
+				4D507E8E22811A760074FBFB /* UIColor+Extension.swift in Sources */,
 				4D53803522473FF40051DD0F /* AboutViewController.swift in Sources */,
 				4DA78F1C225C25AC00C018CA /* WhatsNewView.swift in Sources */,
 				4D6E7DBE2274728100716FB5 /* RecipeModalAnimatedTransitioning.swift in Sources */,

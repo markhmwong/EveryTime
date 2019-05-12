@@ -10,7 +10,11 @@ import UIKit
 
 class NavView: UIView {
     var leftNavItem: UIButton?
+    
     var rightNavItem: UIButton?
+    
+    var titleLabel: UILabel?
+    
     private lazy var bottomBorder: UIView = {
         let view = UIView()
         view.backgroundColor = Theme.Background.Color.NavBottomBorderColor
@@ -22,12 +26,12 @@ class NavView: UIView {
         super.init(frame: frame)
     }
     
-    convenience init(frame: CGRect, leftNavItem: UIButton? = nil, rightNavItem: UIButton? = nil) {
+    convenience init(frame: CGRect, leftNavItem: UIButton? = nil, rightNavItem: UIButton? = nil, titleLabel: UILabel? = nil) {
         self.init(frame: frame)
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.backgroundColor = Theme.Background.Color.NavBackgroundColor
         self.leftNavItem = leftNavItem
         self.rightNavItem = rightNavItem
+        self.titleLabel = titleLabel
         self.setupView()
         self.setupAutoLayout()
     }
@@ -36,7 +40,7 @@ class NavView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    fileprivate func setupView() {
+    private func setupView() {
         if let left = leftNavItem {
             left.translatesAutoresizingMaskIntoConstraints = false
             addSubview(left)
@@ -51,11 +55,15 @@ class NavView: UIView {
             right.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         }
         
+        if let title = titleLabel {
+            title.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(title)
+            title.anchorView(top: nil, bottom: nil, leading: nil, trailing: nil, centerY: centerYAnchor, centerX: centerXAnchor, padding: .zero, size: .zero)
+        }
         addSubview(bottomBorder)
-        
     }
     
-    fileprivate func setupAutoLayout() {
+    private func setupAutoLayout() {
         let borderThickness: CGFloat = 1.0
         bottomBorder.heightAnchor.constraint(equalToConstant: borderThickness).isActive = true
         bottomBorder.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true

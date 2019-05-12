@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 struct Theme {
+    
     struct View {
         private struct Style {
             static var Medium: String { return "Avenir-Medium" }
@@ -36,7 +37,7 @@ struct Theme {
         }
     }
     struct Font {
-        fileprivate typealias tf = Theme.Font
+        private typealias tf = Theme.Font
         static let standardTextSize: CGFloat = 12.0
         
         struct Error {

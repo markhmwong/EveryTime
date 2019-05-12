@@ -8,6 +8,7 @@
 
 import UIKit
 
+///This is for the new modal popup to show new features
 class WhatsNewViewController: ViewControllerBase {
     
     var viewModel: WhatsNewViewModel?

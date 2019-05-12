@@ -24,6 +24,7 @@ class LargeDisplayViewController: ViewControllerBase {
         super.init(nibName: nil, bundle: nil)
         self.delegate = delegate
         self.viewModel = viewModel
+        self.viewModel?.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -76,7 +77,10 @@ class LargeDisplayViewController: ViewControllerBase {
     
     override func prepareViewController() {
         super.prepareViewController()
-        view.backgroundColor = UIColor.white
+        guard let vm = viewModel else {
+            return
+        }
+        view.backgroundColor = vm.theme?.currentTheme.generalBackgroundColour
 //        let value = UIInterfaceOrientation.landscapeLeft.rawValue
 //        UIDevice.current.setValue(value, forKey: "orientation")
     }

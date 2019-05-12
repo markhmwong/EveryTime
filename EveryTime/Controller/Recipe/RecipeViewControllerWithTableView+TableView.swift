@@ -86,6 +86,8 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: mainView.stepCellId, for: indexPath) as! RecipeViewCell
         if let vm = viewModel {
+            cell.theme = vm.theme
+            cell.selectedBackgroundView?.backgroundColor = vm.theme?.currentTheme.tableView.selectedCellColor
             cell.entity = vm.dataSource[indexPath.item]
         }
         return cell
@@ -126,7 +128,7 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
         }
         
         vm.stepSelected = indexPath.row
-        recipeOptionsViewController.isEditOptionEnabled()
+        recipeOptionsViewController?.isEditOptionEnabled()
         vm.setStep()
     }
     
@@ -135,11 +137,13 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
     }
     
     func heightForRecipeModal() -> CGFloat {
-        let heightOfRecipeOptionsModal = heightForCell() * CGFloat(self.recipeOptionsViewController.dataSource.count)
+        guard let recipeOptions = recipeOptionsViewController else { return 0.0 }
+        let heightOfRecipeOptionsModal = heightForCell() * CGFloat( recipeOptions.dataSource.count)
         return heightOfRecipeOptionsModal
     }
     
     func heightForCell() -> CGFloat {
-        return self.recipeOptionsViewController.tableView.rowHeight
+        guard let recipeOptions = recipeOptionsViewController else { return 0.0 }
+        return recipeOptions.tableView.rowHeight
     }
 }

@@ -15,13 +15,17 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         cell.animateCellForSelection()
         
         if let vm = viewModel {
-            let vc = RecipeViewControllerWithTableView(recipe: vm.dataSource[indexPath.item], delegate: self, indexPath: indexPath, viewModel: RecipeViewModel())
-            //        horizontalDelegate.dismissInteractor  = HorizontalTransitionInteractor(viewController: vc) // to be worked on. issue with timer when swiping to dismiss
-            vc.transitioningDelegate = horizontalDelegate
-            vc.modalPresentationStyle = .custom
-            
-            stopTimer()
-            self.present(vc, animated: true, completion: nil)
+            if let theme = vm.theme {
+                let vc = RecipeViewControllerWithTableView(recipe: vm.dataSource[indexPath.item], delegate: self, indexPath: indexPath, viewModel: RecipeViewModel(theme: theme))
+                
+                //        horizontalDelegate.dismissInteractor  = HorizontalTransitionInteractor(viewController: vc) // to be worked on. issue with timer when swiping to dismiss
+                vc.transitioningDelegate = horizontalDelegate
+                vc.modalPresentationStyle = .custom
+                
+                stopTimer()
+                self.present(vc, animated: true, completion: nil)
+            }
+
         }
     }
     
@@ -36,6 +40,8 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     //MARK: UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionCellIds.RecipeCell.rawValue, for: indexPath) as! MainViewCell
+        cell.theme = viewModel?.theme
+        cell.backgroundColor = viewModel?.theme?.currentTheme.tableView.cellBackgroundColor
         cell.mainViewController = self
         cell.entity = viewModel?.dataSource[indexPath.row]
         cell.cellForIndexPath = indexPath

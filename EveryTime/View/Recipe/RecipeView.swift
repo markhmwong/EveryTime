@@ -16,8 +16,8 @@ class RecipeView: UIView {
     
     private lazy var navView: NavView? = nil
 
-    var headerView: HeaderView = {
-        let view = HeaderView()
+    lazy var headerView: HeaderView = {
+        let view = HeaderView(theme: delegate?.viewModel?.theme)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -25,7 +25,7 @@ class RecipeView: UIView {
     private lazy var dismissButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(Theme.Font.Color.TextColour, for: .normal)
-        button.setAttributedTitle(NSAttributedString(string: "Back", attributes: Theme.Font.Nav.Item), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Back", attributes: delegate?.viewModel?.theme?.currentTheme.navigation.item), for: .normal)
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -34,14 +34,14 @@ class RecipeView: UIView {
     private lazy var settingsButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(Theme.Font.Color.TextColour, for: .normal)
-        button.setAttributedTitle(NSAttributedString(string: "Settings", attributes: Theme.Font.Nav.Item), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Settings", attributes: delegate?.viewModel?.theme?.currentTheme.navigation.item), for: .normal)
         button.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     private lazy var pauseRecipeButton: StandardButton = {
-        let button = StandardButton(title: "Pause")
+        let button = StandardButton(title: "Pause", theme: delegate?.viewModel?.theme)
         button.addTarget(self, action: #selector(handlePauseRecipe), for: .touchUpInside)
         return button
     }()
@@ -53,7 +53,7 @@ class RecipeView: UIView {
 //        view.dataSource = self
         view.translatesAutoresizingMaskIntoConstraints = false
         view.separatorStyle = .none
-        view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
+//        view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
         return view
     }()
     
@@ -73,15 +73,17 @@ class RecipeView: UIView {
     }
     
     func setupView() {
-        self.backgroundColor = .white
-        
         navView = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: settingsButton)
-        guard let nav = navView else {
+        guard let nav = navView, let vm = delegate?.viewModel else {
             return
         }
+        
+        tableView.backgroundColor = vm.theme?.currentTheme.tableView.backgroundColor
+        
         tableView.delegate = delegate
         tableView.dataSource = delegate
         headerView.delegate = delegate
+        headerView.theme = vm.theme
         tableView.tableHeaderView = headerView
         tableView.setNeedsLayout()
         tableView.layoutIfNeeded()

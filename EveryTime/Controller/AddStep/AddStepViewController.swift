@@ -30,6 +30,12 @@ class AddStepViewController: AddStepViewControllerBase {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard let theme = viewModel.theme else {
+            return
+        }
+        view.backgroundColor = theme.currentTheme.generalBackgroundColour
+        mainView.backgroundColor = theme.currentTheme.generalBackgroundColour
+        
         if let rvc = delegate {
             
             guard let step = viewModel.grabStepValues() else {
@@ -38,7 +44,8 @@ class AddStepViewController: AddStepViewControllerBase {
             
             let stepName = "\(step.name) \(rvc.stepCount())"
             viewModel.updateStepValues(name: stepName)
-            mainView.labelTextField.attributedText = NSAttributedString(string: stepName, attributes: Theme.Font.Recipe.TextFieldAttribute)
+            mainView.labelTextField.attributedText = NSAttributedString(string: stepName, attributes: theme.currentTheme.font.stepName)
+
         }
     }
     

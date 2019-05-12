@@ -76,14 +76,14 @@ extension RecipeViewControllerWithTableView: TimerProtocol {
                         self.mainView.headerView.updateHeaderStepTitleLabel(title: step.stepName ?? "Unknown")
                     }
                     
-                    /// Updates full screen labels
-                    if (largeDisplay != nil) {
-                        largeDisplay?.viewModel?.currTimeStr = step.timeRemainingToString()
-                        largeDisplay?.viewModel?.currStepStr = step.stepName ?? "Unknown"
-                        largeDisplay?.viewModel?.currRecipeStr = recipe.recipeName ?? "Unknown"
-                        largeDisplay?.viewModel?.stepsComplete = recipe.stepsComplete() // remove sort
-                        
+                    /// Updates full screen labels                    
+                    if let largeDisplay = largeDisplay {
+                        largeDisplay.viewModel?.currTimeStr = step.timeRemainingToString()
+                        largeDisplay.viewModel?.currStepStr = step.stepName ?? "Unknown"
+                        largeDisplay.viewModel?.currRecipeStr = recipe.recipeName ?? "Unknown"
+                        largeDisplay.viewModel?.stepsComplete = recipe.stepsComplete() // remove sort
                     }
+                    
                     let priorityIndexPath = IndexPath(item: Int(step.priority), section: 0)
                     if (visibleCell.contains(priorityIndexPath)) {
                         let stepCell = mainView.tableView.cellForRow(at: priorityIndexPath) as! RecipeViewCell

@@ -75,13 +75,16 @@ class AddStepViewModel {
     
     private let minCharacterLimitForNameLabel = 1
     
+    var theme: ThemeManager?
     
-    init(userSelectedValues stepValues: StepValues) {
+    init(userSelectedValues stepValues: StepValues, theme: ThemeManager?) {
         self.stepValues = stepValues
+        self.theme = theme
     }
     
-    init(userSelectedValues stepEntity: StepEntity) {
+    init(userSelectedValues stepEntity: StepEntity, theme: ThemeManager?) {
         self.sEntity = stepEntity
+        self.theme = theme
     }
     
     func grabStepValues() -> StepValues? {

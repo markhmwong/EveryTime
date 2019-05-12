@@ -29,11 +29,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
         window?.makeKeyAndVisible()
+//        UIFont.overrideInitialize() // to be determined
         
-        let main = MainViewController()
-        main.viewModel = MainViewModel(delegate: main)
+        var theme: ThemeManager? = nil
+        let main = MainViewController(viewModel: nil)
+
+        let option = UserDefaults.standard.integer(forKey: ThemeManager.userDefaultsKey)
+        if let savedTheme = ThemeManager.getSavedTheme(option: option) {
+            theme = ThemeManager.init(currentTheme: savedTheme)
+            main.viewModel = MainViewModel(delegate: main, theme: theme ?? ThemeManager.init(currentTheme: StandardLightTheme()))
+            window?.rootViewController = UINavigationController(rootViewController: main)
+            return true
+        }
+        print(option)
+
+        main.viewModel = MainViewModel(delegate: main, theme: ThemeManager.init(currentTheme: StandardLightTheme()))
         window?.rootViewController = UINavigationController(rootViewController: main)
-        
         return true
     }
     /* not running, active, inactive, suspended and background*/

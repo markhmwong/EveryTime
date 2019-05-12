@@ -16,11 +16,10 @@ class SettingsWhatsNewViewController: ViewControllerBase {
     
     private lazy var mainView: WhatsNewView = {
         let mainView = WhatsNewView(delegate: self)
-        mainView.backgroundColor = Theme.Background.Color.NavTopFillBackgroundColor
         return mainView
     }()
     
-    init(delegate: SettingsViewController, viewModel: WhatsNewViewModel = WhatsNewViewModel(whatsNew: WhatsNewFactory.getLatestWhatsNew())) {
+    init(delegate: SettingsViewController, viewModel: WhatsNewViewModel? = nil) {
         super.init(nibName: nil, bundle: nil)
         self.delegate = delegate
         self.viewModel = viewModel
@@ -40,7 +39,6 @@ class SettingsWhatsNewViewController: ViewControllerBase {
     
     override func prepareViewController() {
         super.prepareViewController()
-        view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
     }
     
     override func prepareView() {

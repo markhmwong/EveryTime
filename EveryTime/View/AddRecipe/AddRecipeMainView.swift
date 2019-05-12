@@ -96,27 +96,26 @@ class AddRecipeMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if let section = AddRecipeSections(rawValue: indexPath.section) {
+            guard let delegate = delegate else {
+                return
+            }
+            
             switch section {
             case AddRecipeSections.Name:
                 () //do nothing
             case AddRecipeSections.Settings:
-                guard let d = delegate else {
-                    return
-                }
-                let recipeEntity = d.viewModel?.recipeEntity
+                let recipeEntity = delegate.viewModel?.recipeEntity
                 
-                let vc = AddRecipeOptionsViewController(delegate: delegate!, recipeEntity: recipeEntity)
-                d.present(vc, animated: true, completion: nil)
+                let vc = AddRecipeSettingsViewController(delegate: delegate, recipeEntity: recipeEntity, viewModel: AddRecipeSettingsViewModel(options: [RecipeOptions.AutoStart : "Auto Start"], theme: delegate.viewModel?.theme))
+                delegate.present(vc, animated: true, completion: nil)
             case AddRecipeSections.Steps:
-                guard let d = delegate else {
-                    return
-                }
+
                 
-                guard let step = d.viewModel?.dataSource[indexPath.row] else {
+                guard let step = delegate.viewModel?.dataSource[indexPath.row] else {
                     return
                 }
-                let vc = EditStepViewController(delegate: d, selectedRow: indexPath.row, viewModel: AddStepViewModel(userSelectedValues: step))
-                d.present(vc, animated: true, completion: nil)
+                let vc = EditStepViewController(delegate: delegate, selectedRow: indexPath.row, viewModel: AddStepViewModel(userSelectedValues: step, theme: delegate.viewModel?.theme))
+                delegate.present(vc, animated: true, completion: nil)
             }
         }
         
@@ -132,8 +131,8 @@ class AddRecipeMainView: UIView, UITableViewDelegate, UITableViewDataSource {
                 case AddRecipeSections.Name:
                     let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
                     recipeNameTextField = UITextField()
-                    recipeNameTextField?.attributedPlaceholder = NSAttributedString(string: "An interesting name..", attributes: Theme.Font.Recipe.TextFieldAttribute)
-                    recipeNameTextField?.attributedText = NSAttributedString(string: "\(delegate?.viewModel?.recipeEntity.recipeName ?? "Recipe Name")", attributes: Theme.Font.Recipe.TextFieldAttribute)
+                    recipeNameTextField?.attributedPlaceholder = NSAttributedString(string: "An interesting name..", attributes: delegate?.viewModel?.theme?.currentTheme.tableView.mainViewStepName)
+                    recipeNameTextField?.attributedText = NSAttributedString(string: "\(delegate?.viewModel?.recipeEntity.recipeName ?? "Recipe Name")", attributes: delegate?.viewModel?.theme?.currentTheme.tableView.mainViewStepName)
                     recipeNameTextField?.textAlignment = .left
                     recipeNameTextField?.translatesAutoresizingMaskIntoConstraints = false
                     cell.contentView.addSubview(recipeNameTextField!)
@@ -141,12 +140,15 @@ class AddRecipeMainView: UIView, UITableViewDelegate, UITableViewDataSource {
                     return cell
                 case AddRecipeSections.Settings:
                     let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
-                    cell.textLabel!.text = "Options"
+                    cell.textLabel?.attributedText = NSAttributedString(string: "Options", attributes: delegate?.viewModel?.theme?.currentTheme.tableView.mainViewStepName)
                     return cell
                 case AddRecipeSections.Steps:
                     let cell = tableView.dequeueReusableCell(withIdentifier: stepCellId, for: indexPath) as! StepTableViewCell
                     cell.delegate = delegate
-                    cell.step = delegate?.viewModel?.dataSource[indexPath.row]
+                    let step = delegate?.viewModel?.dataSource[indexPath.row]
+                    cell.nameLabel.attributedText = NSAttributedString(string: "\(step?.stepName ?? "Unknown")", attributes: delegate?.viewModel?.theme?.currentTheme.tableView.mainViewStepName)
+                    cell.timeLabel.attributedText = NSAttributedString(string: "\(step?.timeRemainingToString() ?? "Unknown")", attributes: delegate?.viewModel?.theme?.currentTheme.tableView.mainViewStepName)
+                    cell.step = step
                     return cell
             }
         }
@@ -194,7 +196,7 @@ class AddRecipeMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         view.isEditing = true
         view.allowsSelectionDuringEditing = true
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
+        view.backgroundColor = delegate?.viewModel?.theme?.currentTheme.tableView.backgroundColor
         return view
     }()
     
@@ -211,16 +213,16 @@ class AddRecipeMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         return view
     }()
     
-    private var titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.attributedText = NSAttributedString(string: "New Recipe", attributes: Theme.Font.Nav.Title)
+        label.attributedText = NSAttributedString(string: "New Recipe", attributes: delegate?.viewModel?.theme?.currentTheme.navigation.title)
         return label
     }()
     
     private lazy var dismissButton: UIButton = {
         let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "Finish", attributes: Theme.Font.Nav.Item), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Finish", attributes: delegate?.viewModel?.theme?.currentTheme.navigation.item), for: .normal)
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -228,7 +230,7 @@ class AddRecipeMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     private lazy var addStepButton: UIButton = {
         let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "Add Step", attributes: Theme.Font.Nav.Item), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Add Step", attributes: delegate?.viewModel?.theme?.currentTheme.navigation.item), for: .normal)
         button.addTarget(self, action: #selector(handleAddStep), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -240,9 +242,12 @@ class AddRecipeMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     var recipeNameTextField: UITextField?
     
-    init(delegate: AddRecipeViewController) {
+    var theme: ThemeManager?
+    
+    init(delegate: AddRecipeViewController, theme: ThemeManager?) {
         super.init(frame: .zero)
         self.delegate = delegate
+        self.theme = theme
         self.setupView()
     }
     
@@ -289,7 +294,7 @@ class AddRecipeMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     @objc func handleAddStep() {
         let priority = Int16((delegate?.viewModel?.dataSource.count)!)
-        let vc = AddRecipeAddStepViewController(delegate: delegate, viewModel: AddStepViewModel(userSelectedValues: StepEntity(name: "Step \(priority)", hours: 0, minutes: 0, seconds: 0, priority: priority - 1)))
+        let vc = AddRecipeAddStepViewController(delegate: delegate, viewModel: AddStepViewModel(userSelectedValues: StepEntity(name: "Step \(priority)", hours: 0, minutes: 0, seconds: 0, priority: priority - 1), theme: delegate?.viewModel?.theme))
 //        delegate?.modalPresentationStyle = .overCurrentContext
         delegate?.present(vc, animated: true, completion: nil)
     }
