@@ -13,7 +13,13 @@ struct FontStandardDarkTheme: FontThemeProtocol {
     
     var Bold: String { return FontStyle.Bold.rawValue }
     
-    var TextColour: UIColor { return UIColor.OceanColourPalette.white }
+    var TextColour: UIColor { return UIColor.DarkMintColourPalette.white }
+    
+    var recipeName: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardDarkTheme.FontStyle.Regular.rawValue, size: FontStandardDarkTheme.FontSize.Standard(.b0).value)!, NSAttributedString.Key.foregroundColor: TableViewStandardDarkTheme.TextColor, NSAttributedString.Key.kern: FontStandardDarkTheme.FontKern.General.floatValue]
+    
+    var stepName: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardDarkTheme.FontStyle.Regular.rawValue, size: FontStandardDarkTheme.FontSize.Standard(.b0).value)!, NSAttributedString.Key.foregroundColor: TableViewStandardDarkTheme.TextColor, NSAttributedString.Key.kern: FontStandardDarkTheme.FontKern.General.floatValue]
+    
+    var stepTime: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardDarkTheme.FontStyle.Bold.rawValue, size: FontStandardDarkTheme.FontSize.Standard(.h0).value)!, NSAttributedString.Key.foregroundColor: TableViewStandardDarkTheme.TextColor, NSAttributedString.Key.kern: FontStandardDarkTheme.FontKern.General.floatValue]
     
     enum FontStyle: String {
         case Regular = "Avenir-Medium"
@@ -32,16 +38,17 @@ struct FontStandardDarkTheme: FontThemeProtocol {
     
     enum StandardSizes: CGFloat {
         //title sizes
-        case h0 = 50.0
+        case h0 = 59.0
         case h1 = 40.0
         case h2 = 30.0
-        
+        case h3 = 28.0
+        case h4 = 20.0
         //body sizes
-        case b0 = 26.0
-        case b1 = 20.0
-        case b2 = 16.0
-        case b3 = 14.0
-        case b4 = 12.0
+        case b0 = 18.0
+        case b1 = 16.0
+        case b2 = 14.0
+        case b3 = 12.0
+
     }
     
     enum FontSize {

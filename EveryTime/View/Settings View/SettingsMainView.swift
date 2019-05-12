@@ -39,7 +39,7 @@ class SettingsMainView: UIView {
     
     private lazy var dismissButton: UIButton = {
         let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "Back", attributes: delegate?.viewModel?.theme?.currentTheme.navigation.navigationItem), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Back", attributes: delegate?.viewModel?.theme?.currentTheme.navigation.item), for: .normal)
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -57,7 +57,7 @@ class SettingsMainView: UIView {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.attributedText = NSAttributedString(string: "Settings", attributes: delegate?.viewModel?.theme?.currentTheme.navigation.navigationTitle)
+        label.attributedText = NSAttributedString(string: "Settings", attributes: delegate?.viewModel?.theme?.currentTheme.navigation.title)
         return label
     }()
     
@@ -66,9 +66,7 @@ class SettingsMainView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
 
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -89,7 +87,7 @@ class SettingsMainView: UIView {
             return
         }
         
-        backgroundColor = vm.theme?.currentTheme.navigation.backgroundColor
+        tableView.backgroundColor = vm.theme?.currentTheme.tableView.backgroundColor
         addSubview(tableView)
         addSubview(navView)
         tableView.register(SettingsViewCell.self, forCellReuseIdentifier: settingsCellId)
@@ -133,7 +131,10 @@ extension SettingsMainView: UITableViewDelegate, UITableViewDataSource {
         
         switch support {
             case .About:
-                let vc = AboutViewController()
+                guard let theme = svc.viewModel?.theme else {
+                    return
+                }
+                let vc = AboutViewController(viewModel: AboutViewModel(theme: theme))
                 DispatchQueue.main.async {
                     svc.present(vc, animated: true, completion: nil)
                 }
@@ -156,6 +157,9 @@ extension SettingsMainView: UITableViewDelegate, UITableViewDataSource {
         guard let settingsSections = SettingsSections(rawValue: indexPath.section) else {
             return
         }
+        guard let theme = delegate.viewModel?.theme else {
+            return
+        }
         
         switch settingsSections {
             case .Data:
@@ -163,7 +167,7 @@ extension SettingsMainView: UITableViewDelegate, UITableViewDataSource {
                     delegate.deleteAllAction()
                 }
             case .Appearance:
-                let theme = delegate.viewModel?.theme
+                
                 let vc = ThemeViewController(delegate: delegate, viewModel: ThemeViewModel(theme: theme))
                 vc.viewModel?.delegate = vc
                 DispatchQueue.main.async {
@@ -172,7 +176,7 @@ extension SettingsMainView: UITableViewDelegate, UITableViewDataSource {
             case .Support:
                 about(row: indexPath.row)
             case .ChangeLog:
-                let vc = SettingsWhatsNewViewController(delegate: delegate)
+                let vc = SettingsWhatsNewViewController(delegate: delegate, viewModel: WhatsNewViewModel(whatsNew: WhatsNewFactory.getLatestWhatsNew(), theme: theme))
                 DispatchQueue.main.async {
                     delegate.present(vc, animated: true, completion: nil)
                 }

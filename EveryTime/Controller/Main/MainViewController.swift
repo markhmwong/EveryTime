@@ -31,8 +31,8 @@ class MainViewController: ViewControllerBase {
     var viewModel: MainViewModel?
     
     lazy var mainView: MainViewView = {
-        let view = MainViewView(delegate: self, theme: viewModel?.theme)
-        view.backgroundColor = UIColor.white
+        let view = MainViewView(delegate: self)
+        view.backgroundColor = viewModel?.theme?.currentTheme.generalBackgroundColour
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -96,14 +96,12 @@ class MainViewController: ViewControllerBase {
             return
         }
         
-        mainView.theme = vm.theme
         view.addSubview(mainView)
         viewModel?.loadDataFromCoreData()
     }
 
     override func prepareAutoLayout() {
         super.prepareAutoLayout()
-        
         mainView.anchorView(top: view.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), size: CGSize(width: 0, height: 0))
     }
     
@@ -138,10 +136,16 @@ class MainViewController: ViewControllerBase {
         vm.dataSource.append(r)
     }
 
+    // MARK: - Uupdates the recipe time label when returning from the Recipe View
     func updateCellPauseState(indexPath: IndexPath, recipe: RecipeEntity) {
+        guard let theme = viewModel?.theme else {
+            return
+        }
+        
+        
         let bg = !recipe.isPaused ? Theme.View.RecipeCell.RecipeCellPauseButtonActive : Theme.View.RecipeCell.RecipeCellPauseButtonInactive
-        let textColor = !recipe.isPaused ? Theme.Font.Color.TextColour : Theme.Font.Color.TextColourDisabled
-        let highlightAlpha: CGFloat = !recipe.isPaused ? 0.25 : 0.85
+        let textColor = !recipe.isPaused ? theme.currentTheme.tableView.cellTextColor : theme.currentTheme.tableView.pausedTextColor
+        let highlightAlpha: CGFloat = !recipe.isPaused ? 0.25 : 0.95
         
         let cell = mainView.collView.cellForItem(at: indexPath) as! MainViewCell
         DispatchQueue.main.async {
@@ -151,13 +155,22 @@ class MainViewController: ViewControllerBase {
         }
     }
     
-
+    func reloadMainViewIfThemeChanges() {
+        guard let theme = viewModel?.theme else {
+            return
+        }
+        mainView.refreshNavView()
+        
+        mainView.collView.backgroundColor = theme.currentTheme.tableView.backgroundColor
+        DispatchQueue.main.async {
+            self.mainView.collView.reloadItems(at: self.mainView.collView.indexPathsForVisibleItems)
+        }
+    }
     
-    func showWhatsNew() {
+//    func showWhatsNew() {
 //        let model = WhatsNew(version: <#T##String#>, build: <#T##String#>, patchNotes: <#T##[String]#>)
 //        let whatsNew = WhatsNewFactory.getWhatsNew(whatsNew: <#T##WhatsNew#>)
-        
-    }
+//    }
 }
 
 //MARK: - UI
@@ -167,7 +180,10 @@ extension MainViewController {
     }
     
     func handleAddRecipe() {
-        let vc = AddRecipeViewController(delegate:self)
+        
+        guard let theme = viewModel?.theme else { return }
+        let addRecipeViewModel = AddRecipeViewModel(dataSource: [], mainDelegate: self, delegate: nil, theme: theme)
+        let vc = AddRecipeViewController(delegate:self, viewModel: addRecipeViewModel)
 //        vc.modalPresentationStyle = .overCurrentContext
         present(vc, animated: true, completion: nil)
         

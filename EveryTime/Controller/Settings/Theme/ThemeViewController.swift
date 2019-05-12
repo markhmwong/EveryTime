@@ -36,7 +36,6 @@ class ThemeViewController: ViewControllerBase {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
     }
     
     override func prepareViewController() {
@@ -46,7 +45,7 @@ class ThemeViewController: ViewControllerBase {
     override func prepareView() {
         super.prepareView()
         view.addSubview(mainView)
-        
+        view.backgroundColor = viewModel?.theme?.currentTheme.generalBackgroundColour
     }
     
     override func prepareAutoLayout() {

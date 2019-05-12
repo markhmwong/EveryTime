@@ -12,5 +12,10 @@ protocol FontThemeProtocol {
     var Regular: String { get }
     var Bold: String { get }
     var TextColour: UIColor { get }
-//    static var TextColor: UIColor { get }
+    
+    // MARK: - Large Display
+    var recipeName: [NSAttributedString.Key : Any] { get }
+    var stepName: [NSAttributedString.Key : Any] { get }
+    var stepTime: [NSAttributedString.Key : Any] { get }
+
 }

@@ -16,7 +16,7 @@ class ThemeView: UIView {
     
     private lazy var dismissButton: UIButton = {
         let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "Back", attributes: delegate?.viewModel?.theme?.currentTheme.navigation.navigationItem), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Back", attributes: delegate?.viewModel?.theme?.currentTheme.navigation.item), for: .normal)
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -25,7 +25,7 @@ class ThemeView: UIView {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.attributedText = NSAttributedString(string: "Theme", attributes: delegate?.viewModel?.theme?.currentTheme.navigation.navigationTitle)
+        label.attributedText = NSAttributedString(string: "Theme", attributes: delegate?.viewModel?.theme?.currentTheme.navigation.title)
         return label
     }()
     
@@ -59,7 +59,8 @@ class ThemeView: UIView {
         guard let vm = delegate?.viewModel else {
             return
         }
-        backgroundColor = vm.theme?.currentTheme.navigation.backgroundColor
+
+        backgroundColor = vm.theme?.currentTheme.generalBackgroundColour
         addSubview(tableView)
         addSubview(navView)
         tableView.register(ThemeTableViewCell.self, forCellReuseIdentifier: vm.themeCellId)
@@ -71,7 +72,6 @@ class ThemeView: UIView {
         
         navView.anchorView(top: navTopConstraint, bottom: tableView.topAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
         navView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: heightByNotch).isActive = true
-        
         tableView.anchorView(top: navView.bottomAnchor, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
     }
     
@@ -99,7 +99,7 @@ extension ThemeView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: (delegate?.viewModel?.themeCellId)!, for: indexPath) as! ThemeTableViewCell
         if let vm = delegate?.viewModel {
-            cell.textLabel?.attributedText = NSAttributedString(string: vm.dataSource[indexPath.row], attributes: vm.theme?.currentTheme.tableView.cellAttributedText)
+            cell.textLabel?.attributedText = NSAttributedString(string: vm.dataSource[indexPath.row], attributes: vm.theme?.currentTheme.tableView.settingsCell)
             cell.textLabel?.textColor = vm.theme?.currentTheme.tableView.cellTextColor
         }
         

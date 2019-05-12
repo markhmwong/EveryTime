@@ -18,22 +18,23 @@ struct StandardLightTheme: ThemeProtocol {
     
     var tableView: TableViewThemeProtocol = TableViewStandardLightTheme()
     
+    var button: ButtonThemeProtocol = ButtonStandardLightTheme()
+    
+    var generalBackgroundColour: UIColor = UIColor.LightMintColourPalette.white
+
+    
     func applyTheme() {
         updateNavView()
-        
         updateSettingsView()
+        updateTableView()
+        UILabel.appearance(whenContainedInInstancesOf: [AboutView.self]).textColor = font.TextColour
+
     }
     
     func updateNavView() {
         NavView.appearance().backgroundColor = navigation.backgroundColor
         UILabel.appearance(whenContainedInInstancesOf: [NavView.self]).textColor = NavigationStandardLightTheme.textColour
         UILabel.appearance().textColor = font.TextColour
-        
-        UITableView.appearance().backgroundColor = tableView.backgroundColor
-        UITableViewCell.appearance().backgroundColor = tableView.cellBackgroundColor
-        UILabel.appearance(whenContainedInInstancesOf: [UITableViewCell.self]).textColor = font.TextColour
-        UILabel.appearance(whenContainedInInstancesOf: [ThemeTableViewCell.self]).textColor = font.TextColour
-
     }
     
     func updateThemeView() {
@@ -43,6 +44,17 @@ struct StandardLightTheme: ThemeProtocol {
     
     func updateSettingsView() {
         UILabel.appearance(whenContainedInInstancesOf: [SettingsViewCell.self]).textColor = font.TextColour
+    }
+    
+    func updateTableView() {
+        UILabel.appearance(whenContainedInInstancesOf: [UITableViewCell.self]).textColor = font.TextColour
+        UILabel.appearance(whenContainedInInstancesOf: [ThemeTableViewCell.self]).textColor = font.TextColour
+        UITableView.appearance().backgroundColor = tableView.backgroundColor
+        UITableViewCell.appearance().backgroundColor = tableView.cellBackgroundColor
+        
+        UICollectionView.appearance().backgroundColor = tableView.backgroundColor
+        UILabel.appearance(whenContainedInInstancesOf: [RecipeViewCell.self]).textColor = font.TextColour
+
     }
 }
 

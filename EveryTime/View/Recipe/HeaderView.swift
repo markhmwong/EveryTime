@@ -10,11 +10,10 @@ import UIKit
 
 class HeaderView: UIView {
     var delegate: RecipeViewControllerWithTableView?
+    var theme: ThemeManager?
     
     private lazy var innerPaddedView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.white
-        view.layer.cornerRadius = 8.0
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -55,32 +54,42 @@ class HeaderView: UIView {
     }()
 
     private lazy var additionalTimeButton: StandardButton = {
-        let button = StandardButton(title: "+15")
+        let button = StandardButton(title: "+15", theme: theme)
         button.addTarget(self, action: #selector(handleAdditionalTime), for: .touchUpInside)
         return button
     }()
     
     private lazy var subtractTimeButton: StandardButton = {
-        let button = StandardButton(title: "-15")
+        let button = StandardButton(title: "-15", theme: theme)
         button.addTarget(self, action: #selector(handleMinusTime), for: .touchUpInside)
         return button
     }()
     
     private lazy var resetTimeButton: StandardButton = {
-        let button = StandardButton(title: "Reset")
+        let button = StandardButton(title: "Reset", theme: theme)
         button.addTarget(self, action: #selector(handleResetStepTime), for: .touchUpInside)
         return button
     }()
     
     private lazy var fullScreenButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "FullScreen.png"), for: .normal)
+        let theme = ThemeManager.getCurrentTheme()
+        switch theme {
+            case Themes.LightMint:
+                button.setImage(UIImage(named: "FullScreenLight.png"), for: .normal)
+            case Themes.DarkMint:
+                button.setImage(UIImage(named: "FullScreenDark.png"), for: .normal)
+        default:
+            button.setImage(UIImage(named: "FullScreenLight.png"), for: .normal)
+
+        }
+//        button.setImage(UIImage(named: "FullScreenLight.png"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     private lazy var saveButton: StandardButton = {
-        let button = StandardButton(title:"Save")
+        let button = StandardButton(title:"Save", theme: theme)
         button.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.alpha = 0.0
@@ -88,11 +97,15 @@ class HeaderView: UIView {
         return button
     }()
 
+    convenience init(theme: ThemeManager?) {
+        self.init()
+        self.theme = theme
+        self.setupView()
+        self.setupAutoLayout()
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupView()
-        self.setupAutoLayout()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -102,17 +115,20 @@ class HeaderView: UIView {
     private func setupView() {
         backgroundColor = UIColor.clear
         addSubview(innerPaddedView)
-
+        guard let theme = theme else {
+            return
+        }
+        
         fullScreenButton.addTarget(self, action: #selector(handleFullScreen), for: .touchUpInside)
         innerPaddedView.addSubview(fullScreenButton)
         
-        headerTitleLabel.attributedText = NSAttributedString(string: "No name", attributes: Theme.Font.Recipe.HeaderTableView)
+        headerTitleLabel.attributedText = NSAttributedString(string: "No name", attributes: theme.currentTheme.tableView.recipeCellHeaderRecipe)
         innerPaddedView.addSubview(headerTitleLabel)
         innerPaddedView.addSubview(headerStepTimeLabel)
         innerPaddedView.addSubview(headerStepTitleLabel)
         innerPaddedView.addSubview(headerNextStepTitleLabel)
         innerPaddedView.addSubview(headerNextStepTimeLabel)
-        headerNextStepLabel.attributedText = NSAttributedString(string: "Next Step", attributes: Theme.Font.Recipe.HeaderTableViewContentSubTitle)
+        headerNextStepLabel.attributedText = NSAttributedString(string: "Next Step", attributes: theme.currentTheme.tableView.recipeSubtitle)
         innerPaddedView.addSubview(headerNextStepLabel)
         
         additionalTimeButton.isEnabled = false
@@ -183,23 +199,38 @@ class HeaderView: UIView {
     
 
     func updateHeaderTitleLabel(title: String) {
-        headerTitleLabel.attributedText = NSAttributedString(string: title, attributes: Theme.Font.Recipe.HeaderTableView)
+        guard let theme = theme else {
+            return
+        }
+        headerTitleLabel.attributedText = NSAttributedString(string: title, attributes: theme.currentTheme.tableView.recipeCellHeaderRecipe)
     }
     
     func updateHeaderNextStepTimeLabel(time: String) {
-        headerNextStepTimeLabel.attributedText = NSAttributedString(string: time, attributes: Theme.Font.Recipe.HeaderTableViewContentTime)
+        guard let theme = theme else {
+            return
+        }
+        headerNextStepTimeLabel.attributedText = NSAttributedString(string: time, attributes: theme.currentTheme.tableView.recipeCellHeaderTime)
     }
     
     func updateHeaderNextStepTitleLabel(title: String) {
-        headerNextStepTitleLabel.attributedText = NSAttributedString(string: title, attributes: Theme.Font.Recipe.HeaderTableViewContentTitle)
+        guard let theme = theme else {
+            return
+        }
+        headerNextStepTitleLabel.attributedText = NSAttributedString(string: title, attributes: theme.currentTheme.tableView.recipeCellStepName)
     }
     
     func updateHeaderStepTimeLabel(time: String) {
-        headerStepTimeLabel.attributedText = NSAttributedString(string: time, attributes: Theme.Font.Recipe.HeaderTableViewContentTime)
+        guard let theme = theme else {
+            return
+        }
+        headerStepTimeLabel.attributedText = NSAttributedString(string: time, attributes: theme.currentTheme.tableView.recipeCellHeaderTime)
     }
     
     func updateHeaderStepTitleLabel(title: String) {
-        headerStepTitleLabel.attributedText = NSAttributedString(string: title, attributes: Theme.Font.Recipe.HeaderTableViewContentTitle)
+        guard let theme = theme else {
+            return
+        }
+        headerStepTitleLabel.attributedText = NSAttributedString(string: title, attributes: theme.currentTheme.tableView.recipeCellStepName)
     }
     
     func enableStepOptions() {

@@ -13,7 +13,13 @@ struct FontStandardLightTheme: FontThemeProtocol {
     
     var Bold: String { return FontStyle.Bold.rawValue }
     
-    var TextColour: UIColor { return UIColor.HoneydewColourPalette.darkTeal }
+    var TextColour: UIColor { return UIColor.LightMintColourPalette.darkTeal }
+    
+    var recipeName: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardLightTheme.FontStyle.Regular.rawValue, size: FontStandardLightTheme.FontSize.Standard(.b0).value)!, NSAttributedString.Key.foregroundColor: TableViewStandardLightTheme.TextColor, NSAttributedString.Key.kern: FontStandardLightTheme.FontKern.General.floatValue]
+    
+    var stepName: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardLightTheme.FontStyle.Regular.rawValue, size: FontStandardLightTheme.FontSize.Standard(.b0).value)!, NSAttributedString.Key.foregroundColor: TableViewStandardLightTheme.TextColor, NSAttributedString.Key.kern: FontStandardLightTheme.FontKern.General.floatValue]
+    
+    var stepTime: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardLightTheme.FontStyle.Bold.rawValue, size: FontStandardLightTheme.FontSize.Standard(.h0).value)!, NSAttributedString.Key.foregroundColor: TableViewStandardLightTheme.TextColor, NSAttributedString.Key.kern: FontStandardLightTheme.FontKern.General.floatValue]
     
     enum FontStyle: String {
         case Regular = "Avenir-Medium"
@@ -32,16 +38,16 @@ struct FontStandardLightTheme: FontThemeProtocol {
     
     enum StandardSizes: CGFloat {
         //title sizes
-        case h0 = 50.0
+        case h0 = 59.0
         case h1 = 40.0
         case h2 = 30.0
-        
+        case h3 = 28.0
+        case h4 = 22.0
         //body sizes
-        case b0 = 26.0
-        case b1 = 20.0
-        case b2 = 16.0
-        case b3 = 14.0
-        case b4 = 12.0
+        case b0 = 20.0
+        case b1 = 16.0
+        case b2 = 14.0
+        case b3 = 12.0
     }
     
     enum FontSize {

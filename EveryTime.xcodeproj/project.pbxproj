@@ -68,6 +68,9 @@
 		4D563C30220D7FB70039B07F /* RecipeViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D563C2F220D7FB70039B07F /* RecipeViewCell.swift */; };
 		4D56D4882269F3B300E28376 /* AddStepViewControllerBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D56D4872269F3B300E28376 /* AddStepViewControllerBase.swift */; };
 		4D56D48A226B1A8800E28376 /* AddStepMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D56D489226B1A8800E28376 /* AddStepMainView.swift */; };
+		4D5DCB8C22856BE400393EF4 /* ButtonThemeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5DCB8B22856BE400393EF4 /* ButtonThemeProtocol.swift */; };
+		4D5DCB8E2285712500393EF4 /* ButtonStandardDarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5DCB8D2285712500393EF4 /* ButtonStandardDarkTheme.swift */; };
+		4D5DCB902285717B00393EF4 /* ButtonStandardLightTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5DCB8F2285717B00393EF4 /* ButtonStandardLightTheme.swift */; };
 		4D6DFCB82212508E009C3044 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6DFCB72212508E009C3044 /* SettingsViewController.swift */; };
 		4D6E35382215435900CBCC23 /* AddRecipeWizardError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6E35372215435900CBCC23 /* AddRecipeWizardError.swift */; };
 		4D6E7DB7226FF57000716FB5 /* EditStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6E7DB6226FF57000716FB5 /* EditStepViewController.swift */; };
@@ -115,7 +118,7 @@
 		4DA78F1E225D648000C018CA /* MarqueeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F1D225D647F00C018CA /* MarqueeLabel.swift */; };
 		4DA78F21225D6A9500C018CA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DA78F20225D6A9500C018CA /* QuartzCore.framework */; };
 		4DA78F232260B99400C018CA /* AddRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F222260B99400C018CA /* AddRecipeViewController.swift */; };
-		4DA78F252262F30100C018CA /* AddRecipeOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F242262F30100C018CA /* AddRecipeOptionsViewController.swift */; };
+		4DA78F252262F30100C018CA /* AddRecipeSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F242262F30100C018CA /* AddRecipeSettingsViewController.swift */; };
 		4DA78F272262FF9800C018CA /* AddRecipeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F262262FF9800C018CA /* AddRecipeSettingsViewModel.swift */; };
 		4DA78F2922630FB700C018CA /* AddRecipeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F2822630FB700C018CA /* AddRecipeHeaderView.swift */; };
 		4DA78F2B22630FFB00C018CA /* AddRecipeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA78F2A22630FFB00C018CA /* AddRecipeMainView.swift */; };
@@ -249,6 +252,9 @@
 		4D563C2F220D7FB70039B07F /* RecipeViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewCell.swift; sourceTree = "<group>"; };
 		4D56D4872269F3B300E28376 /* AddStepViewControllerBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepViewControllerBase.swift; sourceTree = "<group>"; };
 		4D56D489226B1A8800E28376 /* AddStepMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStepMainView.swift; sourceTree = "<group>"; };
+		4D5DCB8B22856BE400393EF4 /* ButtonThemeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonThemeProtocol.swift; sourceTree = "<group>"; };
+		4D5DCB8D2285712500393EF4 /* ButtonStandardDarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStandardDarkTheme.swift; sourceTree = "<group>"; };
+		4D5DCB8F2285717B00393EF4 /* ButtonStandardLightTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStandardLightTheme.swift; sourceTree = "<group>"; };
 		4D6DFCB72212508E009C3044 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		4D6E35372215435900CBCC23 /* AddRecipeWizardError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeWizardError.swift; sourceTree = "<group>"; };
 		4D6E7DB6226FF57000716FB5 /* EditStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStepViewController.swift; sourceTree = "<group>"; };
@@ -303,7 +309,7 @@
 		4DA78F1D225D647F00C018CA /* MarqueeLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarqueeLabel.swift; sourceTree = "<group>"; };
 		4DA78F20225D6A9500C018CA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4DA78F222260B99400C018CA /* AddRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeViewController.swift; sourceTree = "<group>"; };
-		4DA78F242262F30100C018CA /* AddRecipeOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeOptionsViewController.swift; sourceTree = "<group>"; };
+		4DA78F242262F30100C018CA /* AddRecipeSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeSettingsViewController.swift; sourceTree = "<group>"; };
 		4DA78F262262FF9800C018CA /* AddRecipeSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeSettingsViewModel.swift; sourceTree = "<group>"; };
 		4DA78F2822630FB700C018CA /* AddRecipeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeHeaderView.swift; sourceTree = "<group>"; };
 		4DA78F2A22630FFB00C018CA /* AddRecipeMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeMainView.swift; sourceTree = "<group>"; };
@@ -468,7 +474,7 @@
 			path = AddStep;
 			sourceTree = "<group>";
 		};
-		4D507E7A22802B0E0074FBFB /* Ocean */ = {
+		4D507E7A22802B0E0074FBFB /* DarkTheme */ = {
 			isa = PBXGroup;
 			children = (
 				4D507E8122802B950074FBFB /* AttributedTextDarkTheme.swift */,
@@ -476,13 +482,15 @@
 				4D507E7D22802B520074FBFB /* NavigationStandardDarkTheme.swift */,
 				4D507E7B22802B300074FBFB /* StandardDarkTheme.swift */,
 				4D507E8F2281637C0074FBFB /* TableViewStandardDarkTheme.swift */,
+				4D5DCB8D2285712500393EF4 /* ButtonStandardDarkTheme.swift */,
 			);
-			path = Ocean;
+			path = DarkTheme;
 			sourceTree = "<group>";
 		};
 		4D507E83228037B00074FBFB /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				4DA78F13225B884A00C018CA /* WhatsNewViewModel.swift */,
 				4DD542F32252284C003C6DEC /* SettingsViewModel.swift */,
 			);
 			path = Settings;
@@ -571,7 +579,7 @@
 				4D507E8D22811A760074FBFB /* UIColor+Extension.swift */,
 				4D7847B8227F247200160658 /* ThemeProtocol */,
 				4D507E8C22810A5C0074FBFB /* DeepOcean */,
-				4D507E7A22802B0E0074FBFB /* Ocean */,
+				4D507E7A22802B0E0074FBFB /* DarkTheme */,
 				4D7847B5227F241100160658 /* LightTheme */,
 			);
 			path = Theming;
@@ -625,6 +633,7 @@
 		4D563C2A220D4A550039B07F /* Recipe */ = {
 			isa = PBXGroup;
 			children = (
+				4D7847A9227B290200160658 /* Modal */,
 				4D7847B0227BE37D00160658 /* Animation */,
 				4D563C2B220D4ADC0039B07F /* RecipeViewControllerBase.swift */,
 				4D563C2D220D54280039B07F /* RecipeViewControllerWithTableView.swift */,
@@ -663,6 +672,7 @@
 		4D6E7DB3226D8D3C00716FB5 /* AddStep */ = {
 			isa = PBXGroup;
 			children = (
+				4DD542EF224E544C003C6DEC /* AddStepViewModel.swift */,
 			);
 			path = AddStep;
 			sourceTree = "<group>";
@@ -704,7 +714,6 @@
 		4D7847B0227BE37D00160658 /* Animation */ = {
 			isa = PBXGroup;
 			children = (
-				4D7847A9227B290200160658 /* Modal */,
 				4DD9683D2278866000C6D94B /* InstantPanGestureRecognizer.swift */,
 			);
 			path = Animation;
@@ -718,6 +727,7 @@
 				4D7847B9227F24A100160658 /* NavigationStandardLightTheme.swift */,
 				4D7847B6227F242D00160658 /* StandardLightTheme.swift */,
 				4D507E96228164640074FBFB /* TableViewStandardLightTheme.swift */,
+				4D5DCB8F2285717B00393EF4 /* ButtonStandardLightTheme.swift */,
 			);
 			path = LightTheme;
 			sourceTree = "<group>";
@@ -730,6 +740,7 @@
 				4D507E74227FA0250074FBFB /* FontThemeProtocol.swift */,
 				4D507E78227FBA0B0074FBFB /* AttributedTextProtocol.swift */,
 				4D507E91228163B50074FBFB /* TableViewThemeProtocol.swift */,
+				4D5DCB8B22856BE400393EF4 /* ButtonThemeProtocol.swift */,
 			);
 			path = ThemeProtocol;
 			sourceTree = "<group>";
@@ -875,9 +886,7 @@
 				4D6E7DB3226D8D3C00716FB5 /* AddStep */,
 				4D6E7DB2226D8D3600716FB5 /* AddRecipe */,
 				4D507E83228037B00074FBFB /* Settings */,
-				4DD542EF224E544C003C6DEC /* AddStepViewModel.swift */,
 				4DA78E2E22559E9C00C018CA /* LargeDisplayViewModel.swift */,
-				4DA78F13225B884A00C018CA /* WhatsNewViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -905,7 +914,7 @@
 			isa = PBXGroup;
 			children = (
 				4DA78F222260B99400C018CA /* AddRecipeViewController.swift */,
-				4DA78F242262F30100C018CA /* AddRecipeOptionsViewController.swift */,
+				4DA78F242262F30100C018CA /* AddRecipeSettingsViewController.swift */,
 			);
 			path = AddRecipe;
 			sourceTree = "<group>";
@@ -1139,6 +1148,7 @@
 				4D53F8A921F36E1B00C0AF31 /* HorizontalTransitionInteractor.swift in Sources */,
 				4D507E94228163FB0074FBFB /* ThemeProtocol.swift in Sources */,
 				4DA78E2D225571AA00C018CA /* LargeDisplayMainView.swift in Sources */,
+				4D5DCB902285717B00393EF4 /* ButtonStandardLightTheme.swift in Sources */,
 				4D507E8022802B760074FBFB /* FontStandardDarkTheme.swift in Sources */,
 				4D7847BA227F24A200160658 /* NavigationStandardLightTheme.swift in Sources */,
 				4DA78F16225C137000C018CA /* SettingsWhatsNewViewController.swift in Sources */,
@@ -1178,9 +1188,10 @@
 				4D0C4B4721AEC73A00153E76 /* AppDelegate.swift in Sources */,
 				4D53F7D821EF0C6500C0AF31 /* ViewControllerOverlayAnimator.swift in Sources */,
 				4DA78F0E225B813D00C018CA /* WhatsNewViewController.swift in Sources */,
-				4DA78F252262F30100C018CA /* AddRecipeOptionsViewController.swift in Sources */,
+				4DA78F252262F30100C018CA /* AddRecipeSettingsViewController.swift in Sources */,
 				4D53803D2249FCC80051DD0F /* Extentions+UIDevice.swift in Sources */,
 				4DA78F14225B884A00C018CA /* WhatsNewViewModel.swift in Sources */,
+				4D5DCB8C22856BE400393EF4 /* ButtonThemeProtocol.swift in Sources */,
 				4D6E7DC02274729100716FB5 /* RecipeModalPresentationController.swift in Sources */,
 				4D53803A224911140051DD0F /* TapticService.swift in Sources */,
 				4D53802A2244C2D70051DD0F /* Extension+UIView.swift in Sources */,
@@ -1190,6 +1201,7 @@
 				4D78479F227ABBD100160658 /* MainViewModel.swift in Sources */,
 				4D53F7D521EF0C2400C0AF31 /* OverlayTransitionDelegate.swift in Sources */,
 				4D7847B4227EC16900160658 /* Theme.swift in Sources */,
+				4D5DCB8E2285712500393EF4 /* ButtonStandardDarkTheme.swift in Sources */,
 				4D507E73227FA0060074FBFB /* FontStandardLightTheme.swift in Sources */,
 				4D53F75B21E2E38100C0AF31 /* CoreDataHandler.swift in Sources */,
 				4D53F8A721F36DDA00C0AF31 /* HideHorizontalAnimator.swift in Sources */,

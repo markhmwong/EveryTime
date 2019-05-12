@@ -17,7 +17,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     
     lazy var mainView: RecipeView = {
         let view = RecipeView(delegate: self)
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = viewModel?.theme?.currentTheme.generalBackgroundColour
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -41,7 +41,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     var largeDisplay: LargeDisplayViewController?
     
     //animations uiviewpropertyanimator
-    lazy var recipeOptionsViewController: RecipeOptionsModalViewController = RecipeOptionsModalViewController(delegate:self)
+    var recipeOptionsViewController: RecipeOptionsModalViewController?
     
     var runningAnimations = [UIViewPropertyAnimator]()
     
@@ -69,7 +69,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     init(recipe: RecipeEntity, delegate: MainViewController, indexPath: IndexPath, viewModel: RecipeViewModel?) {
         super.init(nibName: nil, bundle: nil)
         self.mainViewControllerDelegate = delegate
-        self.recipe = recipe
+        self.recipe = recipe //move to viewModel
         self.viewModel = viewModel
         self.viewModel?.dataSource = recipe.sortStepsByPriority()
         self.viewModel?.indexPathSelectedFromMainView = indexPath
@@ -84,8 +84,11 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         startTimer()
         
         //will need to move
+        
         view.addSubview(overlayView)
         overlayView.fillSuperView()
+        recipeOptionsViewController = RecipeOptionsModalViewController(delegate:self, viewModel: RecipeOptionsModalViewModel(theme: viewModel?.theme))
+        guard let recipeOptionsViewController = recipeOptionsViewController else { return }
         recipeOptionsViewController.view.translatesAutoresizingMaskIntoConstraints = false
         addChild(recipeOptionsViewController)
         view.addSubview(recipeOptionsViewController.view)
@@ -113,12 +116,11 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         vm.sortedStepSet = recipe.sortStepsByPriority()
     }
 
-
     override func prepareView() {
         super.prepareView()
         view.addSubview(mainView)
 
-
+        mainView.headerView.backgroundColor = viewModel?.theme?.currentTheme.generalBackgroundColour
         mainView.headerView.updateHeaderTitleLabel(title: recipe.recipeName ?? "Unknown Name")
         mainView.headerView.updateHeaderStepTimeLabel(time: "\(recipe.timeRemainingForCurrentStepToString())")
         mainView.headerView.updateHeaderStepTitleLabel(title: recipe.currStepName ?? "Unknown Name")
@@ -364,11 +366,11 @@ extension RecipeViewControllerWithTableView {
             switch state {
                 case RecipeOptionsState.open:
                     
-                    self.bottomConstraint.constant = -self.heightForRecipeModal() - 10.0 //+ self.heightForCell()
-                    self.recipeOptionsViewController.view.layer.cornerRadius = 8.0
+                    self.bottomConstraint.constant = -self.heightForRecipeModal() - 15.0 //+ self.heightForCell()
+                    self.recipeOptionsViewController?.view.layer.cornerRadius = 8.0
                 case RecipeOptionsState.closed:
                     
-                    self.recipeOptionsViewController.view.layer.cornerRadius = 0.0
+                    self.recipeOptionsViewController?.view.layer.cornerRadius = 0.0
                     self.bottomConstraint.constant = 25.0
                 
             }
@@ -420,7 +422,7 @@ extension RecipeViewControllerWithTableView {
     }
 
     @objc func handleCardPan(recognizer: UIPanGestureRecognizer) {
-        let translation = recognizer.translation(in: recipeOptionsViewController.view)
+        let translation = recognizer.translation(in: recipeOptionsViewController?.view)
         
         switch recognizer.state {
             case .began:
@@ -495,7 +497,7 @@ extension RecipeViewControllerWithTableView {
             guard let step = viewModel?.dataSource[selectedRow] else {
                 return
             }
-            let vc = EditStepViewControllerInExistingRecipe(delegate: self, selectedRow: selectedRow, viewModel: AddStepViewModel(userSelectedValues: step))
+            let vc = EditStepViewControllerInExistingRecipe(delegate: self, selectedRow: selectedRow, viewModel: AddStepViewModel(userSelectedValues: step, theme: viewModel?.theme))
             present(vc, animated: true, completion: nil)
         } else {
             print("to be compeleted - select a cell warning")
@@ -503,12 +505,13 @@ extension RecipeViewControllerWithTableView {
     }
     
     func handleLargeDisplay() {
-        largeDisplay = LargeDisplayViewController(delegate: self)
-
-        guard let ld = largeDisplay, let vm = viewModel else {
+        largeDisplay = LargeDisplayViewController(delegate: self, viewModel: LargeDisplayViewModel(time: recipe.timeRemainingForCurrentStepToString(), stepName: recipe.currStepName ?? "Unknown Name", recipeName: recipe.recipeName ?? "Unknown Name", recipeEntity: recipe, sortedSet: viewModel?.sortedStepSet, theme: viewModel?.theme))
+        largeDisplay?.viewModel?.updateFullScreen(sortedSet: viewModel?.sortedStepSet)
+        largeDisplay?.updateViewControls(pauseState: recipe.isPaused)
+        
+        guard let ld = largeDisplay else {
             return
         }
-        ld.viewModel = LargeDisplayViewModel(delegate: largeDisplay, time: recipe.timeRemainingForCurrentStepToString(), stepName: recipe.currStepName ?? "Unknown Name", recipeName: recipe.recipeName ?? "Unknown Name", recipeEntity: recipe, sortedSet: vm.sortedStepSet)
         present(ld, animated: true, completion: nil)
     }
     
@@ -554,8 +557,8 @@ extension RecipeViewControllerWithTableView {
         recipeOptionsVisible = false
         animateTransitionIfNeeded(state: recipeOptionsCurrentState)
         
-        let viewModel = AddStepViewModel(userSelectedValues: StepValues(name: "Step", hour: 0, min: 0, sec: 0))
-        let vc = AddStepViewController(delegate: self, viewModel: viewModel)
+        let vm = AddStepViewModel(userSelectedValues: StepValues(name: "Step", hour: 0, min: 0, sec: 0), theme: viewModel?.theme)
+        let vc = AddStepViewController(delegate: self, viewModel: vm)
         vc.modalPresentationStyle = .overCurrentContext
         self.present(vc, animated: true, completion: nil)
     }

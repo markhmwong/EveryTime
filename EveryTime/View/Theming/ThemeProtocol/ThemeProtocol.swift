@@ -18,5 +18,9 @@ protocol ThemeProtocol {
     
     var tableView: TableViewThemeProtocol { get }
     
+    var button: ButtonThemeProtocol { get }
+
+    var generalBackgroundColour: UIColor { get }
+    
     func applyTheme()
 }

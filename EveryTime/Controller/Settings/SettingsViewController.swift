@@ -1,5 +1,5 @@
 //
-//  AboutViewController.swift
+//  SettingsViewController.swift
 //  SimpleRecipeTimer
 //
 //  Created by Mark Wong on 12/2/19.
@@ -23,7 +23,6 @@ class SettingsViewController: ViewControllerBase  {
     
     lazy var mainView: SettingsMainView = {
         let view = SettingsMainView(delegate: self)
-//        view.backgroundColor = Theme.Background.Color.NavTopFillBackgroundColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -45,24 +44,18 @@ class SettingsViewController: ViewControllerBase  {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        view.backgroundColor = viewModel?.theme?.currentTheme.generalBackgroundColour
         mainView.removeFromSuperview()
         mainView = SettingsMainView(delegate: self)
         mainView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(mainView)
         mainView.fillSuperView()
         view.layoutIfNeeded()
-//        let windows = UIApplication.shared.windows
-//        print("will appear")
-//        for window in windows {
-//            for view in window.subviews {
-//                view.removeFromSuperview()
-//                window.addSubview(view)
-//            }
-//        }
     }
     
     override func prepareView() {
         super.prepareView()
+
         view.addSubview(mainView)
     }
     
@@ -73,14 +66,14 @@ class SettingsViewController: ViewControllerBase  {
     
     override func prepareViewController() {
         super.prepareViewController()
-//        view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
     }
     
     func handleDismiss() {
         guard let mvc = delegate else {
             return
         }
-        
+        //if the theme has changed
+        mvc.reloadMainViewIfThemeChanges()
         mvc.startTimer()
         
         dismiss(animated: true, completion: nil)

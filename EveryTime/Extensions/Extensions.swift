@@ -11,7 +11,7 @@ import UIKit
 //https://medium.com/@luisfmachado/uipickerview-fixed-labels-66f947ded0a8
 extension UIPickerView {
     
-    func setPickerLabels(labels: [Int:UILabel], containedView: UIView) { // [component number:label]
+    func setPickerLabels(labels: [Int:UILabel], containedView: UIView, theme: ThemeManager) { // [component number:label]
         
         let fontSize:CGFloat = 20
         let labelWidth:CGFloat = containedView.bounds.width / CGFloat(self.numberOfComponents)
@@ -30,7 +30,7 @@ extension UIPickerView {
                 label.font = UIFont.boldSystemFont(ofSize: fontSize)
                 label.backgroundColor = .clear
                 label.textAlignment = NSTextAlignment.center
-                
+                label.textColor = theme.currentTheme.font.TextColour
                 self.addSubview(label)
             }
         }

@@ -17,6 +17,6 @@ protocol NavigationThemeProtocol {
     static var titleColour: UIColor { get set }
     
     // MARK: - Attributed Texts
-    var navigationItem: [NSAttributedString.Key: Any] { get }
-    var navigationTitle: [NSAttributedString.Key: Any] { get }
+    var item: [NSAttributedString.Key: Any] { get }
+    var title: [NSAttributedString.Key: Any] { get }
 }

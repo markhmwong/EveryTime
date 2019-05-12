@@ -36,6 +36,6 @@ class SettingsViewCell: UITableViewCell {
     }
     
     func updateLabel(text: String) {
-        label.attributedText = NSAttributedString(string: text, attributes: theme?.currentTheme.tableView.cellAttributedText)
+        label.attributedText = NSAttributedString(string: text, attributes: theme?.currentTheme.tableView.settingsCell)
     }
 }

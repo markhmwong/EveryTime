@@ -40,7 +40,7 @@ class NavView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    fileprivate func setupView() {
+    private func setupView() {
         if let left = leftNavItem {
             left.translatesAutoresizingMaskIntoConstraints = false
             addSubview(left)
@@ -63,7 +63,7 @@ class NavView: UIView {
         addSubview(bottomBorder)
     }
     
-    fileprivate func setupAutoLayout() {
+    private func setupAutoLayout() {
         let borderThickness: CGFloat = 1.0
         bottomBorder.heightAnchor.constraint(equalToConstant: borderThickness).isActive = true
         bottomBorder.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true

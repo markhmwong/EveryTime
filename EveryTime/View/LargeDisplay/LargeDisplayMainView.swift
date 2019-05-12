@@ -16,7 +16,7 @@ class LargeDisplayMainView: UIView {
 
     private lazy var closeButton: UIButton = {
         let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "close", attributes: Theme.Font.LargeDisplay.CloseButton), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "close", attributes: delegate?.viewModel?.theme?.currentTheme.font.recipeName), for: .normal)
         button.contentEdgeInsets = UIEdgeInsets(top: 0.01, left: 0.0, bottom: 0.0, right: -0.01)
         button.addTarget(self, action: #selector(handleClose), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -25,21 +25,21 @@ class LargeDisplayMainView: UIView {
     
     lazy var timeLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "Time Loading..", attributes: Theme.Font.LargeDisplay.LargeTimerLabel)
+        label.attributedText = NSAttributedString(string: "Time Loading..", attributes: delegate?.viewModel?.theme?.currentTheme.font.recipeName)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     lazy var recipeLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "Current Recipe", attributes: Theme.Font.LargeDisplay.LargeRecipeTitleLabel)
+        label.attributedText = NSAttributedString(string: "Current Recipe", attributes: delegate?.viewModel?.theme?.currentTheme.font.recipeName)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     lazy var stepLabel: MarqueeLabel = {
         let label = MarqueeLabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50.0), rate: 30.0, fadeLength: 10.0)
-        label.attributedText = NSAttributedString(string: "Unknown step", attributes: Theme.Font.LargeDisplay.LargeRecipeSubTitleLabel)
+        label.attributedText = NSAttributedString(string: "Unknown step", attributes: delegate?.viewModel?.theme?.currentTheme.font.recipeName)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         return label
@@ -47,7 +47,7 @@ class LargeDisplayMainView: UIView {
     
     lazy var stepsCompleteLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "0/0", attributes: Theme.Font.LargeDisplay.LargeStepLabel)
+        label.attributedText = NSAttributedString(string: "0/0", attributes: delegate?.viewModel?.theme?.currentTheme.font.recipeName)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         return label
@@ -55,7 +55,7 @@ class LargeDisplayMainView: UIView {
     
     lazy var upNextStepLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "Up Next", attributes: Theme.Font.LargeDisplay.LargeRecipeTitleLabel)
+        label.attributedText = NSAttributedString(string: "Up Next", attributes: delegate?.viewModel?.theme?.currentTheme.font.recipeName)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         return label
@@ -63,7 +63,7 @@ class LargeDisplayMainView: UIView {
     
     lazy var upNextStepNameLabel: MarqueeLabel = {
         let label = MarqueeLabel()
-        label.attributedText = NSAttributedString(string: "Next Step", attributes: Theme.Font.LargeDisplay.UpNextStepNameLabel)
+        label.attributedText = NSAttributedString(string: "Next Step", attributes: delegate?.viewModel?.theme?.currentTheme.font.recipeName)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         label.type = .continuous
@@ -74,21 +74,21 @@ class LargeDisplayMainView: UIView {
     }()
     
     lazy var nextStepButton: StandardButton = {
-        let button = StandardButton(title: "Next")
+        let button = StandardButton(title: "Next", theme: delegate?.viewModel?.theme)
         button.addTarget(self, action: #selector(handleNextStep), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     lazy var prevStepButton: StandardButton = {
-        let button = StandardButton(title: "Prev")
+        let button = StandardButton(title: "Prev", theme: delegate?.viewModel?.theme)
         button.addTarget(self, action: #selector(handlePrevStep), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     lazy var pauseButton: StandardButton = {
-        let button = StandardButton(title: "Start")
+        let button = StandardButton(title: "Start", theme: delegate?.viewModel?.theme)
         button.addTarget(self, action: #selector(handlePauseButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -96,13 +96,13 @@ class LargeDisplayMainView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupView()
-        self.setupConstraints()
     }
     
     convenience init(delegate: LargeDisplayViewController?) {
         self.init(frame: .zero)
         self.delegate = delegate
+        self.setupView()
+        self.setupConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -117,10 +117,10 @@ class LargeDisplayMainView: UIView {
     }
     
     func setupView() {
+
         addSubview(timeLabel)
         addSubview(recipeLabel)
         addSubview(closeButton)
-        
         stepLabel.attributedText = NSAttributedString(string: "Step Loading..", attributes: Theme.Font.LargeDisplay.LargeStepLabel)
         stepLabel.translatesAutoresizingMaskIntoConstraints = false
         stepLabel.type = .continuous
@@ -133,7 +133,6 @@ class LargeDisplayMainView: UIView {
         addSubview(prevStepButton)
         addSubview(pauseButton)
         upNextStepNameLabel.restartLabel()
-                
     }
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -174,33 +173,50 @@ class LargeDisplayMainView: UIView {
     
     /// The completionHandler is used for UITesting with the main thread. So we are aware of when the main thread has completed executing.
     func updateRecipeLabel(currRecipe: String = "Unknown Recipe",_ completionHandler: (() -> ())? = nil) {
+        guard let vm = delegate?.viewModel else {
+            return
+        }
+        
         DispatchQueue.main.async {
-            self.recipeLabel.attributedText = NSAttributedString(string: currRecipe, attributes: Theme.Font.LargeDisplay.LargeRecipeTitleLabel)
+            self.recipeLabel.attributedText = NSAttributedString(string: currRecipe, attributes: vm.theme?.currentTheme.font.recipeName)
             completionHandler?()
         }
     }
     
     func updateTimeLabel(currTime: String = "Unknown Time", _ completionHandler: (() -> ())? = nil) {
+        guard let vm = delegate?.viewModel else {
+            return
+        }
         DispatchQueue.main.async {
-            self.timeLabel.attributedText = NSAttributedString(string: currTime, attributes: Theme.Font.LargeDisplay.LargeTimerLabel)
+            self.timeLabel.attributedText = NSAttributedString(string: currTime, attributes: vm.theme?.currentTheme.font.stepTime)
         }
     }
     
     func updateNextStepLabel(nextStep: String = "Unknown Next Step", _ completionHandler: (() -> ())? = nil) {
+        guard let vm = delegate?.viewModel else {
+            return
+        }
         DispatchQueue.main.async {
-            self.upNextStepNameLabel.attributedText = NSAttributedString(string: nextStep, attributes: Theme.Font.LargeDisplay.UpNextStepNameLabel)
+            self.upNextStepNameLabel.attributedText = NSAttributedString(string: nextStep, attributes: vm.theme?.currentTheme.font.stepName)
         }
     }
     
     func updateStepLabel(currStep: String = "Unknown Step", _ completionHandler: (() -> ())? = nil) {
+        guard let vm = delegate?.viewModel else {
+            return
+        }
         DispatchQueue.main.async {
-            self.stepLabel.attributedText = NSAttributedString(string: currStep, attributes: Theme.Font.LargeDisplay.LargeRecipeTitleLabel)
+            self.stepLabel.attributedText = NSAttributedString(string: currStep, attributes: vm.theme?.currentTheme.font.stepName)
         }
     }
     
+    /// Number of step complete
     func updateViewStepsCompleteLabel(stepComplete: String = "Unknown Step", _ completionHandler: (() -> ())? = nil) {
+        guard let vm = delegate?.viewModel else {
+            return
+        }
         DispatchQueue.main.async {
-            self.stepsCompleteLabel.attributedText = NSAttributedString(string: stepComplete, attributes: Theme.Font.LargeDisplay.LargeStepLabel)
+            self.stepsCompleteLabel.attributedText = NSAttributedString(string: stepComplete, attributes: vm.theme?.currentTheme.font.stepName)
         }
     }
     

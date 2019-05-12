@@ -11,12 +11,12 @@ import UIKit
 class ThemeViewModel {
     
     enum Themes: Int {
-        case Honeydew
-        case Ocean
-        case DeepOcean
+        case LightMint
+        case DarkMint
+        case DeepMint
     }
     
-    let dataSource = ["Honeydew", "Ocean", "Deep Ocean"]
+    let dataSource = ["Light Mint", "Dark Mint"] // Deep Mint
     
     var delegate: ThemeViewController?
     
@@ -26,7 +26,7 @@ class ThemeViewModel {
 
     let themeCellId = "ThemeCellId"
 
-    init( theme: ThemeManager?) {
+    init(theme: ThemeManager?) {
         self.theme = theme
     }
     
@@ -37,22 +37,22 @@ class ThemeViewModel {
         }
         
         switch themeOption {
-            case .Honeydew:
+            case .LightMint:
                 if let theme = theme {
                     theme.currentTheme = StandardLightTheme()
                     theme.currentTheme.applyTheme()
                     delegate?.refreshView()
                 }
 
-            case .Ocean:
+            case .DarkMint:
                 if let theme = theme {
                     theme.currentTheme = StandardDarkTheme()
                     theme.currentTheme.applyTheme()
                     delegate?.refreshView()
                 }
-            case .DeepOcean:
+            case .DeepMint:
                 ()
         }
-        
+        UserDefaults.standard.set(themeOption.rawValue, forKey: "theme")
     }
 }
