@@ -139,7 +139,8 @@ extension SettingsMainView: UITableViewDelegate, UITableViewDataSource {
                     svc.present(vc, animated: true, completion: nil)
                 }
             case .Review:
-                SKStoreReviewController.requestReview()
+                writeReview()
+//                SKStoreReviewController.requestReview()
             case .Share:
                 svc.share()
             case .Feedback:
@@ -149,6 +150,25 @@ extension SettingsMainView: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    func writeReview() {
+        let productURL = URL(string: "https://itunes.apple.com/app/id1454444680?mt=8")!
+        var components = URLComponents(url: productURL, resolvingAgainstBaseURL: false)
+        
+        // 2.
+        components?.queryItems = [
+            URLQueryItem(name: "action", value: "write-review")
+        ]
+        
+        // 3.
+        guard let writeReviewURL = components?.url else {
+            return
+        }
+        
+        // 4.
+        UIApplication.shared.open(writeReviewURL)
+    }
+    
+    //https://itunes.apple.com/app/id1454444680?mt=8
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let delegate = delegate else {
             return

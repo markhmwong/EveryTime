@@ -16,7 +16,7 @@ class ThemeViewModel {
         case DeepMint
     }
     
-    let dataSource = ["Light Mint", "Dark Mint"] // Deep Mint
+    let dataSource = ["Light Mint", "Dark Mint", "Deep Mint"] // Deep Mint
     
     var delegate: ThemeViewController?
     
@@ -51,7 +51,11 @@ class ThemeViewModel {
                     delegate?.refreshView()
                 }
             case .DeepMint:
-                ()
+                if let theme = theme {
+                    theme.currentTheme = DeepMint()
+                    theme.currentTheme.applyTheme()
+                    delegate?.refreshView()
+            }
         }
         UserDefaults.standard.set(themeOption.rawValue, forKey: "theme")
     }

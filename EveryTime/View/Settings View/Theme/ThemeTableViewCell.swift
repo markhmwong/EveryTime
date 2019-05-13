@@ -24,7 +24,7 @@ class ThemeTableViewCell: UITableViewCell {
     }
     
     func setupCell() {
-        
+
     }
     
 }

@@ -15,11 +15,13 @@ struct FontStandardDeepMintTheme: FontThemeProtocol {
     
     var TextColour: UIColor { return UIColor.DarkMintColourPalette.white }
     
-    var recipeName: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardDeepMintTheme.FontStyle.Regular.rawValue, size: FontStandardDeepMintTheme.FontSize.Standard(.b0).value)!, NSAttributedString.Key.foregroundColor: TableViewStandardDeepMintTheme.TextColor, NSAttributedString.Key.kern: FontStandardDarkTheme.FontKern.General.floatValue]
+    var recipeName: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardDeepMintTheme.FontStyle.Regular.rawValue, size: FontStandardDeepMintTheme.FontSize.Standard(.b0).value)!, NSAttributedString.Key.foregroundColor: TableViewStandardDeepMintTheme.TextColor, NSAttributedString.Key.kern: FontStandardDeepMintTheme.FontKern.General.floatValue]
     
     var stepName: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardDeepMintTheme.FontStyle.Regular.rawValue, size: FontStandardDeepMintTheme.FontSize.Standard(.b0).value)!, NSAttributedString.Key.foregroundColor: TableViewStandardDeepMintTheme.TextColor, NSAttributedString.Key.kern: FontStandardDeepMintTheme.FontKern.General.floatValue]
     
     var stepTime: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardDeepMintTheme.FontStyle.Bold.rawValue, size: FontStandardDeepMintTheme.FontSize.Standard(.h0).value)!, NSAttributedString.Key.foregroundColor: TableViewStandardDeepMintTheme.TextColor, NSAttributedString.Key.kern: FontStandardDeepMintTheme.FontKern.General.floatValue]
+    
+    var bodyText: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardDeepMintTheme.FontStyle.Bold.rawValue, size: FontStandardDeepMintTheme.FontSize.Standard(.b3).value)!, NSAttributedString.Key.foregroundColor: TableViewStandardDeepMintTheme.TextColor, NSAttributedString.Key.kern: FontStandardDeepMintTheme.FontKern.General.floatValue]
     
     enum FontStyle: String {
         case Regular = "Avenir-Medium"

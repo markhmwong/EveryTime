@@ -122,7 +122,7 @@ class HeaderView: UIView {
         fullScreenButton.addTarget(self, action: #selector(handleFullScreen), for: .touchUpInside)
         innerPaddedView.addSubview(fullScreenButton)
         
-        headerTitleLabel.attributedText = NSAttributedString(string: "No name", attributes: theme.currentTheme.tableView.recipeCellHeaderRecipe)
+        headerTitleLabel.attributedText = NSAttributedString(string: "No name", attributes: theme.currentTheme.tableView.recipeHeaderRecipe)
         innerPaddedView.addSubview(headerTitleLabel)
         innerPaddedView.addSubview(headerStepTimeLabel)
         innerPaddedView.addSubview(headerStepTitleLabel)
@@ -202,35 +202,35 @@ class HeaderView: UIView {
         guard let theme = theme else {
             return
         }
-        headerTitleLabel.attributedText = NSAttributedString(string: title, attributes: theme.currentTheme.tableView.recipeCellHeaderRecipe)
+        headerTitleLabel.attributedText = NSAttributedString(string: title, attributes: theme.currentTheme.tableView.recipeHeaderRecipe)
     }
     
     func updateHeaderNextStepTimeLabel(time: String) {
         guard let theme = theme else {
             return
         }
-        headerNextStepTimeLabel.attributedText = NSAttributedString(string: time, attributes: theme.currentTheme.tableView.recipeCellHeaderTime)
+        headerNextStepTimeLabel.attributedText = NSAttributedString(string: time, attributes: theme.currentTheme.tableView.recipeHeaderTime)
     }
     
     func updateHeaderNextStepTitleLabel(title: String) {
         guard let theme = theme else {
             return
         }
-        headerNextStepTitleLabel.attributedText = NSAttributedString(string: title, attributes: theme.currentTheme.tableView.recipeCellStepName)
+        headerNextStepTitleLabel.attributedText = NSAttributedString(string: title, attributes: theme.currentTheme.tableView.recipeHeaderStepName)
     }
     
     func updateHeaderStepTimeLabel(time: String) {
         guard let theme = theme else {
             return
         }
-        headerStepTimeLabel.attributedText = NSAttributedString(string: time, attributes: theme.currentTheme.tableView.recipeCellHeaderTime)
+        headerStepTimeLabel.attributedText = NSAttributedString(string: time, attributes: theme.currentTheme.tableView.recipeHeaderTime)
     }
     
     func updateHeaderStepTitleLabel(title: String) {
         guard let theme = theme else {
             return
         }
-        headerStepTitleLabel.attributedText = NSAttributedString(string: title, attributes: theme.currentTheme.tableView.recipeCellStepName)
+        headerStepTitleLabel.attributedText = NSAttributedString(string: title, attributes: theme.currentTheme.tableView.recipeHeaderStepName)
     }
     
     func enableStepOptions() {

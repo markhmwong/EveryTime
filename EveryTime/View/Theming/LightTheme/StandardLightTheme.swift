@@ -14,7 +14,7 @@ struct StandardLightTheme: ThemeProtocol {
     
     var font: FontThemeProtocol = FontStandardLightTheme()
     
-    var attributedText: AttributedTextProtocol = AttributedTextLightTheme()
+//    var attributedText: AttributedTextProtocol = AttributedTextLightTheme()
     
     var tableView: TableViewThemeProtocol = TableViewStandardLightTheme()
     

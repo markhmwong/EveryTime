@@ -6,8 +6,6 @@
 //  Copyright © 2019 Mark Wong. All rights reserved.
 //
 
-import Foundation
-
 import UIKit
 
 struct NavigationStandardDarkTheme: NavigationThemeProtocol {

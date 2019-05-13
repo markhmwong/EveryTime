@@ -19,11 +19,11 @@ class RecipeViewCell: EntityBaseTableViewCell<StepEntity> {
         let color = e.isComplete ? Theme.View.StepCell.CellIndicatorComplete : Theme.View.StepCell.CellIndicatorIncomplete
 
         super.setSelected(selected, animated: animated)
-        if selected {
-            DispatchQueue.main.async {
-                self.completeIndicatorView.backgroundColor = color
-            }
-        }
+//        if selected {
+//            DispatchQueue.main.async {
+////                self.completeIndicatorView.backgroundColor = color
+//            }
+//        }
     }
     
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
@@ -33,11 +33,11 @@ class RecipeViewCell: EntityBaseTableViewCell<StepEntity> {
         let color = e.isComplete ? Theme.View.StepCell.CellIndicatorComplete : Theme.View.StepCell.CellIndicatorIncomplete
         super.setHighlighted(highlighted, animated: animated)
         
-        if highlighted {
-            DispatchQueue.main.async {
-                self.completeIndicatorView.backgroundColor = color
-            }
-        }
+//        if highlighted {
+//            DispatchQueue.main.async {
+////                self.completeIndicatorView.backgroundColor = color
+//            }
+//        }
     }
     
     override var entity: StepEntity? {
@@ -64,12 +64,12 @@ class RecipeViewCell: EntityBaseTableViewCell<StepEntity> {
         return label
     }()
 
-    private lazy var completeIndicatorView: UIView = {
-       let view = UIView()
-        view.layer.cornerRadius = 8.0
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+//    private lazy var completeIndicatorView: UIView = {
+//       let view = UIView()
+//        view.layer.cornerRadius = 8.0
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        return view
+//    }()
     var gl = CAGradientLayer()
     
     private lazy var selectedBg: UIView = {
@@ -97,19 +97,20 @@ class RecipeViewCell: EntityBaseTableViewCell<StepEntity> {
         nameLabel.attributedText = NSAttributedString(string: stepEntity.stepName ?? "No Name", attributes: theme?.currentTheme.tableView.recipeCellStepName)
         updateCompletionStatusLabel()
 
-        contentView.addSubview(completeIndicatorView)
+//        contentView.addSubview(completeIndicatorView)
         contentView.addSubview(timeLabel)
         contentView.addSubview(nameLabel)
     }
     
     func prepareAutoLayout() {
-        completeIndicatorView.anchorView(top: nil, bottom: nil, leading: nil, trailing: contentView.trailingAnchor, centerY: contentView.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: -25.0), size: CGSize(width: 35.0, height: 18.0))
+//        completeIndicatorView.anchorView(top: nil, bottom: nil, leading: nil, trailing: contentView.trailingAnchor, centerY: contentView.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: -25.0), size: CGSize(width: 35.0, height: 18.0))
         
-        timeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 25.0).isActive = true
-        timeLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor).isActive = true
+        timeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10.0).isActive = true
+        timeLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         
-        nameLabel.leadingAnchor.constraint(equalTo: timeLabel.leadingAnchor, constant: 0.0).isActive = true
-        nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10).isActive = true
+        nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10.0).isActive = true
+        nameLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        nameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 0.0).isActive = true
     }
     
     func updateNameLabel(name: String) {
@@ -125,9 +126,18 @@ class RecipeViewCell: EntityBaseTableViewCell<StepEntity> {
             return
         }
         if (e.isComplete) {
-            completeIndicatorView.backgroundColor = Theme.View.StepCell.CellIndicatorComplete
+            DispatchQueue.main.async {
+                self.nameLabel.alpha = 0.5
+                self.timeLabel.alpha = 0.5
+            }
+
+//            completeIndicatorView.backgroundColor = Theme.View.StepCell.CellIndicatorComplete
         } else {
-            completeIndicatorView.backgroundColor = Theme.View.StepCell.CellIndicatorIncomplete
+//            completeIndicatorView.backgroundColor = Theme.View.StepCell.CellIndicatorIncomplete
+            DispatchQueue.main.async {
+                self.nameLabel.alpha = 1.0
+                self.timeLabel.alpha = 1.0
+            }
         }
     }
     
@@ -135,6 +145,6 @@ class RecipeViewCell: EntityBaseTableViewCell<StepEntity> {
         super.prepareForReuse()
         nameLabel.removeFromSuperview()
         timeLabel.removeFromSuperview()
-        completeIndicatorView.removeFromSuperview()
+//        completeIndicatorView.removeFromSuperview()
     }
 }

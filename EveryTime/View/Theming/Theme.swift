@@ -33,13 +33,13 @@ class ThemeManager {
         
         switch themeOption {
         case .LightMint:
-                return StandardLightTheme()
+            return StandardLightTheme()
         case .DarkMint:
-                return StandardDarkTheme()
+            return StandardDarkTheme()
         case .DeepMint:
-            ()
+            return DeepMint()
         }
-        return nil
+        return StandardLightTheme()
     }
     
     class func getCurrentTheme() -> Themes {
@@ -52,7 +52,7 @@ class ThemeManager {
             case .DarkMint:
                 return .DarkMint
             case .DeepMint:
-                ()
+                return .DeepMint
             }
         }
         

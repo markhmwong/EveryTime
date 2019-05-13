@@ -14,7 +14,7 @@ protocol ThemeProtocol {
     
     var font: FontThemeProtocol { get }
     
-    var attributedText: AttributedTextProtocol { get }
+//    var attributedText: AttributedTextProtocol { get }
     
     var tableView: TableViewThemeProtocol { get }
     

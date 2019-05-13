@@ -136,7 +136,7 @@ extension RecipeEntity {
     
     func timeRemainingForCurrentStepToString() -> String {
         let (h,m,s) = currStepTimeRemaining.secondsToHoursMinutesSeconds()
-        return "\(h.prefixZeroToInteger())h \(m.prefixZeroToInteger())m \(s.prefixZeroToInteger())s"
+        return "\(h.prefixZeroToInteger()) : \(m.prefixZeroToInteger()) : \(s.prefixZeroToInteger())"
     }
     
     func sumStepsForExpectedElapsedTime() {

@@ -1,3 +1,6 @@
+## Version 1.1.16
+- All new theming feature beginning with Dark Mint as our first new theme. Dark Mint brings a darker colour palette bringing easier viewing at night and less eye strain. This update will begin a series of new themes for the future.
+
 ## Version 1.1.15
 - Add Start/Pause Button to fullscreen mode
 - Internal house keeping that you won't see

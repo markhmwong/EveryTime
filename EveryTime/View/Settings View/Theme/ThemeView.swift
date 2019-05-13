@@ -101,6 +101,7 @@ extension ThemeView: UITableViewDelegate, UITableViewDataSource {
         if let vm = delegate?.viewModel {
             cell.textLabel?.attributedText = NSAttributedString(string: vm.dataSource[indexPath.row], attributes: vm.theme?.currentTheme.tableView.settingsCell)
             cell.textLabel?.textColor = vm.theme?.currentTheme.tableView.cellTextColor
+            cell.tintColor = .white
         }
         
         return cell

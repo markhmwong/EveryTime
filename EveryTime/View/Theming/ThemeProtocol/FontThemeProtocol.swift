@@ -17,5 +17,5 @@ protocol FontThemeProtocol {
     var recipeName: [NSAttributedString.Key : Any] { get }
     var stepName: [NSAttributedString.Key : Any] { get }
     var stepTime: [NSAttributedString.Key : Any] { get }
-
+    var bodyText: [NSAttributedString.Key : Any] { get }
 }

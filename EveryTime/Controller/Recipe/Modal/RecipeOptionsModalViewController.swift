@@ -79,7 +79,7 @@ class RecipeOptionsModalViewController: ViewControllerBase, UIGestureRecognizerD
         view.clipsToBounds = true
         
         tableView.allowsSelection = true
-        tableView.rowHeight = UIScreen.main.bounds.height / 20.0
+        tableView.rowHeight = calculateRowHeightByDevice()
         tableView.separatorStyle = .none
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
         view.addSubview(tableView)
@@ -101,6 +101,19 @@ class RecipeOptionsModalViewController: ViewControllerBase, UIGestureRecognizerD
             self.tableView.reloadRows(at: [IndexPath(item: OptionsMenu.Edit.rawValue, section: 0)], with: .none)
         }
     }
+    
+    func calculateRowHeightByDevice() -> CGFloat {
+        switch UIDevice.current.screenType.rawValue {
+            case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
+                return UIScreen.main.bounds.height / 14.0
+            case UIDevice.ScreenType.iPhones_6_6s_7_8.rawValue:
+                return UIScreen.main.bounds.height / 14.0
+            case UIDevice.ScreenType.iPhoneXSMax.rawValue, UIDevice.ScreenType.iPhoneXR.rawValue, UIDevice.ScreenType.iPhoneX_iPhoneXS.rawValue:
+                return UIScreen.main.bounds.height / 18.0
+            default:
+                return view.bounds.height / 14.0
+        }
+    }
 }
 
 extension RecipeOptionsModalViewController: UITableViewDelegate, UITableViewDataSource {
@@ -112,7 +125,7 @@ extension RecipeOptionsModalViewController: UITableViewDelegate, UITableViewData
         
         if (indexPath.row == OptionsMenu.Edit.rawValue && !isEditRowEnabled) {
             dataSource[OptionsMenu.Edit.rawValue] = "Edit Step - Select A Step"
-            cell.textLabel?.attributedText = NSAttributedString(string: dataSource[OptionsMenu.Edit.rawValue], attributes: viewModel?.theme?.currentTheme.tableView.recipeCellStepName)
+            cell.textLabel?.attributedText = NSAttributedString(string: dataSource[OptionsMenu.Edit.rawValue], attributes: viewModel?.theme?.currentTheme.tableView.recipeModalOption)
             cell.textLabel?.alpha = 0.5
             cell.isUserInteractionEnabled = false
         }
@@ -120,7 +133,7 @@ extension RecipeOptionsModalViewController: UITableViewDelegate, UITableViewData
         if (dataSource.count - 1 == indexPath.row) {
             cell.selectionStyle = .none
             cell.textLabel?.textAlignment = .center
-            cell.textLabel?.alpha = 0.7
+            cell.textLabel?.alpha = 0.6
             let backgroundView = UIView()
             let subview = UIView()
             subview.backgroundColor = viewModel?.theme?.currentTheme.button.backgroundColor
@@ -137,7 +150,7 @@ extension RecipeOptionsModalViewController: UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
-        cell.textLabel?.attributedText = NSAttributedString(string: dataSource[indexPath.row], attributes: viewModel?.theme?.currentTheme.tableView.recipeCellStepName)
+        cell.textLabel?.attributedText = NSAttributedString(string: dataSource[indexPath.row], attributes: viewModel?.theme?.currentTheme.tableView.recipeModalOption)
         return cell
     }
     

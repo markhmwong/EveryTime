@@ -1,24 +1,43 @@
 #  Feature Scratch pad
 
-## Version 1.1.16 [Current]
-- IAP
-- Tutorial
-- Customisable Sounds
-- Notifications in settings
-- Colour for recipe
-- Sorting
+## Version 1.1.17 [Current]
+- Reviews can now be written without leaving the application
+- Time formats changed with colons to express hours, minutes, seconds
+- Removed completion indicators. Completed steps are now show in faded text. This leaves the step name and time in a larger and clear font. 
 
+
+# Features to be done in this version
+IAP
+    - theme
+    - unlimited timers
+header to advertise unlimited timers
+- Recipe Colours
+- Media Player controls
+
+- IAP
+    - unlimited timers
+- customisable sounds
+- Theme (paid)
+    - oled theme (done)
+    - another coloured theme
+- count down (apply to unlimited steps)
+- recipe colours (apply to unlimited steps)
 
 ## Possible Feature List
 Major releases
+    media player
+    gamify (stop watch not a count down timer)
     Apple Watch
     Whats New Page / Welcome Page
         whats new pop up asks for notifications
-    Theming
     iap
     share Recipes
 
 Minor
+    verbal countdown
+    Customisable Sounds
+    Notifications
+    Sorting
     Pinning
     recipes colors
     start timer when I leave a location

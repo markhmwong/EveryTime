@@ -27,10 +27,15 @@ protocol TableViewThemeProtocol {
     var mainViewRecipeName: [NSAttributedString.Key : Any] { get }
     var mainViewRecipeTime: [NSAttributedString.Key : Any] { get }
     
+    var recipeHeaderRecipe: [NSAttributedString.Key : Any] { get }
+    var recipeHeaderTime: [NSAttributedString.Key : Any] { get }
+    var recipeHeaderStep: [NSAttributedString.Key : Any] { get }
+    var recipeHeaderStepName: [NSAttributedString.Key : Any] { get }
+    
     var recipeCellRecipeTime: [NSAttributedString.Key : Any] { get }
     var recipeCellStepName: [NSAttributedString.Key : Any] { get }
-    var recipeCellHeaderRecipe: [NSAttributedString.Key : Any] { get }
-    var recipeCellHeaderTime: [NSAttributedString.Key : Any] { get }
-    var recipeCellHeaderStep: [NSAttributedString.Key : Any] { get }
+
     var recipeSubtitle: [NSAttributedString.Key : Any] { get }
+    
+    var recipeModalOption: [NSAttributedString.Key : Any] { get }
 }

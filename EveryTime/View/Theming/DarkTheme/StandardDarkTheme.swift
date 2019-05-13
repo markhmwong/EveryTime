@@ -15,7 +15,7 @@ struct StandardDarkTheme: ThemeProtocol {
     
     var font: FontThemeProtocol = FontStandardDarkTheme()
     
-    var attributedText: AttributedTextProtocol = AttributedTextDarkTheme()
+//    var attributedText: AttributedTextProtocol = AttributedTextDarkTheme()
     
     var button: ButtonThemeProtocol = ButtonStandardDarkTheme()
     
@@ -54,6 +54,7 @@ struct StandardDarkTheme: ThemeProtocol {
         UITableViewCell.appearance().backgroundColor = tableView.cellBackgroundColor
         UILabel.appearance(whenContainedInInstancesOf: [RecipeViewCell.self]).textColor = font.TextColour
         UILabel.appearance(whenContainedInInstancesOf: [StepTableViewCell.self]).textColor = font.TextColour
+        UIImageView.appearance(whenContainedInInstancesOf: [UITableViewCell.self]).tintColor = .white
     }
     
     func updateButton() {

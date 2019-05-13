@@ -93,7 +93,7 @@ class WhatsNewView: UIView {
         addSubview(dateLabel)
         navView.addSubview(titleLabel)
         textContainer.addSubview(patchNotesTextView)
-        patchNotesHeader.attributedText = NSAttributedString(string: "The Highlights of \(AppMetaData.version!)", attributes: vm.theme?.currentTheme.attributedText.bodyText)
+        patchNotesHeader.attributedText = NSAttributedString(string: "The Highlights of \(AppMetaData.version!)", attributes: vm.theme?.currentTheme.font.bodyText)
     }
     
     private func setupAutoLayout() {
@@ -122,14 +122,14 @@ class WhatsNewView: UIView {
         guard let vm = delegate?.viewModel else {
             return
         }
-        patchNotesTextView.attributedText = NSAttributedString(string: patchNotes, attributes: vm.theme?.currentTheme.attributedText.bodyText)
+        patchNotesTextView.attributedText = NSAttributedString(string: patchNotes, attributes: vm.theme?.currentTheme.font.bodyText)
     }
     
     func updateDateLabel(date: String) {
         guard let vm = delegate?.viewModel else {
             return
         }
-        dateLabel.attributedText = NSAttributedString(string: date, attributes: vm.theme?.currentTheme.attributedText.bodyText)
+        dateLabel.attributedText = NSAttributedString(string: date, attributes: vm.theme?.currentTheme.font.bodyText)
     }
     
     @objc func handleDismiss() {

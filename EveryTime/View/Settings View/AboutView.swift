@@ -66,7 +66,7 @@ class AboutView: UIView {
         }
         backgroundColor = vm.theme?.currentTheme.generalBackgroundColour
         addSubview(navView)
-        textView.attributedText = NSAttributedString(string: vm.details, attributes: vm.theme?.currentTheme.attributedText.bodyText)
+        textView.attributedText = NSAttributedString(string: vm.details, attributes: vm.theme?.currentTheme.font.bodyText)
         addSubview(textView)
     }
     
