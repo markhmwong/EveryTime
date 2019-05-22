@@ -13,7 +13,7 @@ struct FontStandardDeepMintTheme: FontThemeProtocol {
     
     var Bold: String { return FontStyle.Bold.rawValue }
     
-    var TextColour: UIColor { return UIColor.DarkMintColourPalette.white }
+    var TextColour: UIColor { return UIColor.DeepMintColourPalette.white }
     
     var recipeName: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardDeepMintTheme.FontStyle.Regular.rawValue, size: FontStandardDeepMintTheme.FontSize.Standard(.b0).value)!, NSAttributedString.Key.foregroundColor: TableViewStandardDeepMintTheme.TextColor, NSAttributedString.Key.kern: FontStandardDeepMintTheme.FontKern.General.floatValue]
     

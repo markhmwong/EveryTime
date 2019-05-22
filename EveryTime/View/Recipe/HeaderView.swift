@@ -73,17 +73,16 @@ class HeaderView: UIView {
     
     private lazy var fullScreenButton: UIButton = {
         let button = UIButton()
-        let theme = ThemeManager.getCurrentTheme()
-        switch theme {
-            case Themes.LightMint:
-                button.setImage(UIImage(named: "FullScreenLight.png"), for: .normal)
-            case Themes.DarkMint:
-                button.setImage(UIImage(named: "FullScreenDark.png"), for: .normal)
-        default:
-            button.setImage(UIImage(named: "FullScreenLight.png"), for: .normal)
+        let appliedTheme = theme?.currentTheme.productIdentifier()
 
+        switch appliedTheme {
+            case StandardDarkTheme.productIdentifier, DeepMintTheme.productIdentifier:
+                button.setImage(UIImage(named: "FullScreenDark.png"), for: .normal)
+            case StandardLightTheme.productIdentifier, NeutralTheme.productIdentifier:
+                button.setImage(UIImage(named: "FullScreenLight.png"), for: .normal)
+            default:
+                button.setImage(UIImage(named: "FullScreenLight.png"), for: .normal)
         }
-//        button.setImage(UIImage(named: "FullScreenLight.png"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -193,8 +192,8 @@ class HeaderView: UIView {
 
         fullScreenButton.topAnchor.constraint(equalTo: innerPaddedView.topAnchor, constant: 10.0).isActive = true
         fullScreenButton.trailingAnchor.constraint(equalTo: innerPaddedView.trailingAnchor, constant: -10.0).isActive = true
-        fullScreenButton.widthAnchor.constraint(equalToConstant: 15.0).isActive = true
-        fullScreenButton.heightAnchor.constraint(equalToConstant: 15.0).isActive = true
+        fullScreenButton.widthAnchor.constraint(equalToConstant: 18.0).isActive = true
+        fullScreenButton.heightAnchor.constraint(equalToConstant: 18.0).isActive = true
     }
     
 

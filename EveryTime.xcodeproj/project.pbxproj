@@ -7,6 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D01B8B6228C259800E5C7AD /* KeychainItemAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D01B8B4228C259800E5C7AD /* KeychainItemAccessibility.swift */; };
+		4D01B8B7228C259800E5C7AD /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D01B8B5228C259800E5C7AD /* KeychainWrapper.swift */; };
+		4D01B8BC228EAE6800E5C7AD /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D01B8BB228EAE6800E5C7AD /* PreviewViewController.swift */; };
+		4D01B8C82291420500E5C7AD /* NeutralTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D01B8C22291420500E5C7AD /* NeutralTheme.swift */; };
+		4D01B8CB229143D900E5C7AD /* OrangeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D01B8CA229143D900E5C7AD /* OrangeTheme.swift */; };
+		4D01B8CD22928C2900E5C7AD /* NavigationNeutralTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D01B8CC22928C2900E5C7AD /* NavigationNeutralTheme.swift */; };
+		4D01B8CF22928C4B00E5C7AD /* FontNeutralTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D01B8CE22928C4B00E5C7AD /* FontNeutralTheme.swift */; };
+		4D01B8D122928C8600E5C7AD /* TableViewNeutralTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D01B8D022928C8600E5C7AD /* TableViewNeutralTheme.swift */; };
+		4D01B8D322928CBB00E5C7AD /* ButtonStandardNeutralTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D01B8D222928CBB00E5C7AD /* ButtonStandardNeutralTheme.swift */; };
+		4D01B8DB2293D00000E5C7AD /* FontStandardWhiteTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D01B8D52293D00000E5C7AD /* FontStandardWhiteTheme.swift */; };
+		4D01B8DC2293D00000E5C7AD /* NavigationStandardWhiteTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D01B8D62293D00000E5C7AD /* NavigationStandardWhiteTheme.swift */; };
+		4D01B8DD2293D00000E5C7AD /* ButtonStandardWhiteTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D01B8D72293D00000E5C7AD /* ButtonStandardWhiteTheme.swift */; };
+		4D01B8DF2293D00000E5C7AD /* TableViewStandardWhiteTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D01B8D92293D00000E5C7AD /* TableViewStandardWhiteTheme.swift */; };
+		4D01B8E02293D00000E5C7AD /* WhiteTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D01B8DA2293D00000E5C7AD /* WhiteTheme.swift */; };
+		4D01B8E5229416B400E5C7AD /* NavigationStandardOrangeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D01B8E1229416B300E5C7AD /* NavigationStandardOrangeTheme.swift */; };
+		4D01B8E6229416B400E5C7AD /* ButtonStandardOrangeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D01B8E2229416B300E5C7AD /* ButtonStandardOrangeTheme.swift */; };
+		4D01B8E7229416B400E5C7AD /* FontStandardOrangeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D01B8E3229416B400E5C7AD /* FontStandardOrangeTheme.swift */; };
+		4D01B8E8229416B400E5C7AD /* TableViewStandardOrangeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D01B8E4229416B400E5C7AD /* TableViewStandardOrangeTheme.swift */; };
 		4D0C4B4721AEC73A00153E76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4B4621AEC73A00153E76 /* AppDelegate.swift */; };
 		4D0C4B4921AEC73A00153E76 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4B4821AEC73A00153E76 /* MainViewController.swift */; };
 		4D0C4B4C21AEC73A00153E76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D0C4B4A21AEC73A00153E76 /* Main.storyboard */; };
@@ -74,9 +92,13 @@
 		4D5DCB9622885AA800393EF4 /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5DCB9322885AA800393EF4 /* Extension+UIView.swift */; };
 		4D5DCB9822885B3500393EF4 /* FontStandardDeepMintTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5DCB9722885B3500393EF4 /* FontStandardDeepMintTheme.swift */; };
 		4D5DCB9A22885B6D00393EF4 /* NavigationStandardDeepMintTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5DCB9922885B6D00393EF4 /* NavigationStandardDeepMintTheme.swift */; };
-		4D5DCB9C22885B9300393EF4 /* DeepMint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5DCB9B22885B9300393EF4 /* DeepMint.swift */; };
+		4D5DCB9C22885B9300393EF4 /* DeepMintTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5DCB9B22885B9300393EF4 /* DeepMintTheme.swift */; };
 		4D5DCB9E22885BE400393EF4 /* TableViewDeepMintTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5DCB9D22885BE400393EF4 /* TableViewDeepMintTheme.swift */; };
 		4D5DCBA022885BFE00393EF4 /* ButtonStandardDeepMint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5DCB9F22885BFE00393EF4 /* ButtonStandardDeepMint.swift */; };
+		4D5DCBA2228972D000393EF4 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D5DCBA1228972D000393EF4 /* StoreKit.framework */; };
+		4D5DCBA6228A7A4D00393EF4 /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5DCBA5228A7A4D00393EF4 /* IAPHelper.swift */; };
+		4D5DCBA8228A7AC500393EF4 /* IAPProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5DCBA7228A7AC500393EF4 /* IAPProducts.swift */; };
+		4D5DCBAA228A929600393EF4 /* Keywords.md in Resources */ = {isa = PBXBuildFile; fileRef = 4D5DCBA9228A929600393EF4 /* Keywords.md */; };
 		4D6DFCB82212508E009C3044 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6DFCB72212508E009C3044 /* SettingsViewController.swift */; };
 		4D6E35382215435900CBCC23 /* AddRecipeWizardError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6E35372215435900CBCC23 /* AddRecipeWizardError.swift */; };
 		4D6E7DB7226FF57000716FB5 /* EditStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6E7DB6226FF57000716FB5 /* EditStepViewController.swift */; };
@@ -90,7 +112,7 @@
 		4D7847AB227B296100160658 /* RecipeViewControllerWithTableView+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7847AA227B296100160658 /* RecipeViewControllerWithTableView+Timer.swift */; };
 		4D7847AD227B37F400160658 /* RecipeViewControllerWithTableView+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7847AC227B37F400160658 /* RecipeViewControllerWithTableView+TableView.swift */; };
 		4D7847AF227B3CF500160658 /* RecipeViewControllerWithTableView+ScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7847AE227B3CF500160658 /* RecipeViewControllerWithTableView+ScrollView.swift */; };
-		4D7847B4227EC16900160658 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7847B3227EC16900160658 /* Theme.swift */; };
+		4D7847B4227EC16900160658 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7847B3227EC16900160658 /* ThemeManager.swift */; };
 		4D7847B7227F242D00160658 /* StandardLightTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7847B6227F242D00160658 /* StandardLightTheme.swift */; };
 		4D7847BA227F24A200160658 /* NavigationStandardLightTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7847B9227F24A100160658 /* NavigationStandardLightTheme.swift */; };
 		4D7847BC227F2F4200160658 /* NavigationThemeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7847BB227F2F4200160658 /* NavigationThemeProtocol.swift */; };
@@ -188,6 +210,24 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4D01B8B4228C259800E5C7AD /* KeychainItemAccessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemAccessibility.swift; sourceTree = "<group>"; };
+		4D01B8B5228C259800E5C7AD /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
+		4D01B8BB228EAE6800E5C7AD /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
+		4D01B8C22291420500E5C7AD /* NeutralTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeutralTheme.swift; sourceTree = "<group>"; };
+		4D01B8CA229143D900E5C7AD /* OrangeTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrangeTheme.swift; sourceTree = "<group>"; };
+		4D01B8CC22928C2900E5C7AD /* NavigationNeutralTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationNeutralTheme.swift; sourceTree = "<group>"; };
+		4D01B8CE22928C4B00E5C7AD /* FontNeutralTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontNeutralTheme.swift; sourceTree = "<group>"; };
+		4D01B8D022928C8600E5C7AD /* TableViewNeutralTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewNeutralTheme.swift; sourceTree = "<group>"; };
+		4D01B8D222928CBB00E5C7AD /* ButtonStandardNeutralTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStandardNeutralTheme.swift; sourceTree = "<group>"; };
+		4D01B8D52293D00000E5C7AD /* FontStandardWhiteTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontStandardWhiteTheme.swift; sourceTree = "<group>"; };
+		4D01B8D62293D00000E5C7AD /* NavigationStandardWhiteTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationStandardWhiteTheme.swift; sourceTree = "<group>"; };
+		4D01B8D72293D00000E5C7AD /* ButtonStandardWhiteTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonStandardWhiteTheme.swift; sourceTree = "<group>"; };
+		4D01B8D92293D00000E5C7AD /* TableViewStandardWhiteTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewStandardWhiteTheme.swift; sourceTree = "<group>"; };
+		4D01B8DA2293D00000E5C7AD /* WhiteTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiteTheme.swift; sourceTree = "<group>"; };
+		4D01B8E1229416B300E5C7AD /* NavigationStandardOrangeTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationStandardOrangeTheme.swift; sourceTree = "<group>"; };
+		4D01B8E2229416B300E5C7AD /* ButtonStandardOrangeTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonStandardOrangeTheme.swift; sourceTree = "<group>"; };
+		4D01B8E3229416B400E5C7AD /* FontStandardOrangeTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontStandardOrangeTheme.swift; sourceTree = "<group>"; };
+		4D01B8E4229416B400E5C7AD /* TableViewStandardOrangeTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewStandardOrangeTheme.swift; sourceTree = "<group>"; };
 		4D0C4B4321AEC73A00153E76 /* EveryTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EveryTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D0C4B4621AEC73A00153E76 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D0C4B4821AEC73A00153E76 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -263,9 +303,13 @@
 		4D5DCB9322885AA800393EF4 /* Extension+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Extension+UIView.swift"; path = "EveryTime/Extensions.swift/Extension+UIView.swift"; sourceTree = SOURCE_ROOT; };
 		4D5DCB9722885B3500393EF4 /* FontStandardDeepMintTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStandardDeepMintTheme.swift; sourceTree = "<group>"; };
 		4D5DCB9922885B6D00393EF4 /* NavigationStandardDeepMintTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationStandardDeepMintTheme.swift; sourceTree = "<group>"; };
-		4D5DCB9B22885B9300393EF4 /* DeepMint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepMint.swift; sourceTree = "<group>"; };
+		4D5DCB9B22885B9300393EF4 /* DeepMintTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepMintTheme.swift; sourceTree = "<group>"; };
 		4D5DCB9D22885BE400393EF4 /* TableViewDeepMintTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDeepMintTheme.swift; sourceTree = "<group>"; };
 		4D5DCB9F22885BFE00393EF4 /* ButtonStandardDeepMint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStandardDeepMint.swift; sourceTree = "<group>"; };
+		4D5DCBA1228972D000393EF4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		4D5DCBA5228A7A4D00393EF4 /* IAPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
+		4D5DCBA7228A7AC500393EF4 /* IAPProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPProducts.swift; sourceTree = "<group>"; };
+		4D5DCBA9228A929600393EF4 /* Keywords.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Keywords.md; sourceTree = "<group>"; };
 		4D6DFCB72212508E009C3044 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		4D6E35372215435900CBCC23 /* AddRecipeWizardError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeWizardError.swift; sourceTree = "<group>"; };
 		4D6E7DB6226FF57000716FB5 /* EditStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStepViewController.swift; sourceTree = "<group>"; };
@@ -280,7 +324,7 @@
 		4D7847AC227B37F400160658 /* RecipeViewControllerWithTableView+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecipeViewControllerWithTableView+TableView.swift"; sourceTree = "<group>"; };
 		4D7847AE227B3CF500160658 /* RecipeViewControllerWithTableView+ScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecipeViewControllerWithTableView+ScrollView.swift"; sourceTree = "<group>"; };
 		4D7847B1227C2B2400160658 /* SimpleRecipeTimer v4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SimpleRecipeTimer v4.xcdatamodel"; sourceTree = "<group>"; };
-		4D7847B3227EC16900160658 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		4D7847B3227EC16900160658 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		4D7847B6227F242D00160658 /* StandardLightTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardLightTheme.swift; sourceTree = "<group>"; };
 		4D7847B9227F24A100160658 /* NavigationStandardLightTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationStandardLightTheme.swift; sourceTree = "<group>"; };
 		4D7847BB227F2F4200160658 /* NavigationThemeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationThemeProtocol.swift; sourceTree = "<group>"; };
@@ -342,6 +386,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DA78F21225D6A9500C018CA /* QuartzCore.framework in Frameworks */,
+				4D5DCBA2228972D000393EF4 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,12 +414,58 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D01B8B3228C257E00E5C7AD /* KeyChainHelper */ = {
+			isa = PBXGroup;
+			children = (
+				4D01B8B4228C259800E5C7AD /* KeychainItemAccessibility.swift */,
+				4D01B8B5228C259800E5C7AD /* KeychainWrapper.swift */,
+			);
+			path = KeyChainHelper;
+			sourceTree = "<group>";
+		};
+		4D01B8B8228DA36800E5C7AD /* NeutralTheme */ = {
+			isa = PBXGroup;
+			children = (
+				4D01B8C22291420500E5C7AD /* NeutralTheme.swift */,
+				4D01B8CC22928C2900E5C7AD /* NavigationNeutralTheme.swift */,
+				4D01B8CE22928C4B00E5C7AD /* FontNeutralTheme.swift */,
+				4D01B8D022928C8600E5C7AD /* TableViewNeutralTheme.swift */,
+				4D01B8D222928CBB00E5C7AD /* ButtonStandardNeutralTheme.swift */,
+			);
+			path = NeutralTheme;
+			sourceTree = "<group>";
+		};
+		4D01B8C9229143C700E5C7AD /* OrangeTheme */ = {
+			isa = PBXGroup;
+			children = (
+				4D01B8E2229416B300E5C7AD /* ButtonStandardOrangeTheme.swift */,
+				4D01B8E3229416B400E5C7AD /* FontStandardOrangeTheme.swift */,
+				4D01B8E1229416B300E5C7AD /* NavigationStandardOrangeTheme.swift */,
+				4D01B8E4229416B400E5C7AD /* TableViewStandardOrangeTheme.swift */,
+				4D01B8CA229143D900E5C7AD /* OrangeTheme.swift */,
+			);
+			path = OrangeTheme;
+			sourceTree = "<group>";
+		};
+		4D01B8D42293CF6A00E5C7AD /* White */ = {
+			isa = PBXGroup;
+			children = (
+				4D01B8D72293D00000E5C7AD /* ButtonStandardWhiteTheme.swift */,
+				4D01B8D52293D00000E5C7AD /* FontStandardWhiteTheme.swift */,
+				4D01B8D62293D00000E5C7AD /* NavigationStandardWhiteTheme.swift */,
+				4D01B8D92293D00000E5C7AD /* TableViewStandardWhiteTheme.swift */,
+				4D01B8DA2293D00000E5C7AD /* WhiteTheme.swift */,
+			);
+			path = White;
+			sourceTree = "<group>";
+		};
 		4D0C4B3A21AEC73A00153E76 = {
 			isa = PBXGroup;
 			children = (
 				4D53803E224A223A0051DD0F /* PromoText.md */,
 				4D53801D223FE1280051DD0F /* Update.md */,
 				4D538038224867B70051DD0F /* WhatsNew.md */,
+				4D5DCBA9228A929600393EF4 /* Keywords.md */,
 				4D54E29E2266C16C00BB8336 /* WhatsNewHistory.md */,
 				4D0C4B4521AEC73A00153E76 /* EveryTime */,
 				4D0C4B5D21AEC73D00153E76 /* EveryTimeTests */,
@@ -401,16 +492,17 @@
 		4D0C4B4521AEC73A00153E76 /* EveryTime */ = {
 			isa = PBXGroup;
 			children = (
+				4D01B8B3228C257E00E5C7AD /* KeyChainHelper */,
 				4D94E5D1223CC6430009F176 /* EveryTime.entitlements */,
 				4D0C4B5521AEC73C00153E76 /* Info.plist */,
 				4D0C4B4621AEC73A00153E76 /* AppDelegate.swift */,
 				4DA78F17225C17F500C018CA /* AppMetaData.swift */,
 				4DA78F1D225D647F00C018CA /* MarqueeLabel.swift */,
 				4D0C4B5021AEC73C00153E76 /* Assets.xcassets */,
-				4DA12F6921B108690049CD75 /* Controller */,
-				4DA12F7B21B611A10049CD75 /* Extensions */,
 				4D0C4B5221AEC73C00153E76 /* LaunchScreen.storyboard */,
 				4D0C4B4A21AEC73A00153E76 /* Main.storyboard */,
+				4DA12F6921B108690049CD75 /* Controller */,
+				4DA12F7B21B611A10049CD75 /* Extensions */,
 				4D0C4B7921AFEE2000153E76 /* Model */,
 				4D53803B2249FC450051DD0F /* Services */,
 				4DA12F7421B352440049CD75 /* View */,
@@ -449,6 +541,8 @@
 				4D53F7BD21E735CD00C0AF31 /* StepEntity.swift */,
 				4DA78F052259D98800C018CA /* BasicMarqueeLabel.swift */,
 				4DA78F19225C1C8000C018CA /* SettingsDataSource.swift */,
+				4D5DCBA5228A7A4D00393EF4 /* IAPHelper.swift */,
+				4D5DCBA7228A7AC500393EF4 /* IAPProducts.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -511,6 +605,7 @@
 			isa = PBXGroup;
 			children = (
 				4D507E85228039C00074FBFB /* ThemeViewController.swift */,
+				4D01B8BB228EAE6800E5C7AD /* PreviewViewController.swift */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -520,7 +615,7 @@
 			children = (
 				4D5DCB9722885B3500393EF4 /* FontStandardDeepMintTheme.swift */,
 				4D5DCB9922885B6D00393EF4 /* NavigationStandardDeepMintTheme.swift */,
-				4D5DCB9B22885B9300393EF4 /* DeepMint.swift */,
+				4D5DCB9B22885B9300393EF4 /* DeepMintTheme.swift */,
 				4D5DCB9D22885BE400393EF4 /* TableViewDeepMintTheme.swift */,
 				4D5DCB9F22885BFE00393EF4 /* ButtonStandardDeepMint.swift */,
 			);
@@ -589,9 +684,12 @@
 		4D53C21822065FE300EED75C /* Theming */ = {
 			isa = PBXGroup;
 			children = (
-				4D7847B3227EC16900160658 /* Theme.swift */,
 				4D53F7CB21EC47E700C0AF31 /* ThemeConstants.swift */,
+				4D7847B3227EC16900160658 /* ThemeManager.swift */,
 				4D507E8D22811A760074FBFB /* UIColor+Extension.swift */,
+				4D01B8D42293CF6A00E5C7AD /* White */,
+				4D01B8C9229143C700E5C7AD /* OrangeTheme */,
+				4D01B8B8228DA36800E5C7AD /* NeutralTheme */,
 				4D7847B8227F247200160658 /* ThemeProtocol */,
 				4D507E8C22810A5C0074FBFB /* DeepMint */,
 				4D507E7A22802B0E0074FBFB /* DarkTheme */,
@@ -812,8 +910,8 @@
 		4DA12F7421B352440049CD75 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				4D6E7DB1226D8CF900716FB5 /* AddStep */,
 				4DA12F7221B2D3DD0049CD75 /* EntityBaseCell.swift */,
+				4D6E7DB1226D8CF900716FB5 /* AddStep */,
 				4D205DB221FE82B5008006BD /* AddRecipe */,
 				4DF13D60221A1B9B009BE812 /* Button */,
 				4D6E35362215434600CBCC23 /* Error */,
@@ -888,6 +986,7 @@
 		4DA78F1F225D6A9500C018CA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4D5DCBA1228972D000393EF4 /* StoreKit.framework */,
 				4DA78F20225D6A9500C018CA /* QuartzCore.framework */,
 			);
 			name = Frameworks;
@@ -1049,6 +1148,9 @@
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
 							};
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
 						};
 					};
 					4D0C4B5921AEC73D00153E76 = {
@@ -1102,6 +1204,7 @@
 				4D53803F224A223A0051DD0F /* PromoText.md in Resources */,
 				4D0C4B5421AEC73C00153E76 /* LaunchScreen.storyboard in Resources */,
 				4D54E29F2266C16C00BB8336 /* WhatsNewHistory.md in Resources */,
+				4D5DCBAA228A929600393EF4 /* Keywords.md in Resources */,
 				4D0C4B5121AEC73C00153E76 /* Assets.xcassets in Resources */,
 				4D53801E223FE1280051DD0F /* Update.md in Resources */,
 				4D0C4B4C21AEC73A00153E76 /* Main.storyboard in Resources */,
@@ -1146,6 +1249,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D01B8D122928C8600E5C7AD /* TableViewNeutralTheme.swift in Sources */,
 				4D507E8B228074A20074FBFB /* ThemeViewModel.swift in Sources */,
 				4D6E7DBC22746A5000716FB5 /* RecipeOptionsModalTransistionDelegate.swift in Sources */,
 				4D53F7DA21EF0D7700C0AF31 /* OverlayPresentationController.swift in Sources */,
@@ -1160,7 +1264,9 @@
 				4DA78F062259D98800C018CA /* BasicMarqueeLabel.swift in Sources */,
 				4DA78F232260B99400C018CA /* AddRecipeViewController.swift in Sources */,
 				4D53803222468B140051DD0F /* SettingsViewCell.swift in Sources */,
+				4D01B8CD22928C2900E5C7AD /* NavigationNeutralTheme.swift in Sources */,
 				4D53F8A921F36E1B00C0AF31 /* HorizontalTransitionInteractor.swift in Sources */,
+				4D01B8CB229143D900E5C7AD /* OrangeTheme.swift in Sources */,
 				4D507E94228163FB0074FBFB /* ThemeProtocol.swift in Sources */,
 				4DA78E2D225571AA00C018CA /* LargeDisplayMainView.swift in Sources */,
 				4D5DCB902285717B00393EF4 /* ButtonStandardLightTheme.swift in Sources */,
@@ -1173,9 +1279,11 @@
 				4D7847AD227B37F400160658 /* RecipeViewControllerWithTableView+TableView.swift in Sources */,
 				4DA78F312263746800C018CA /* AddStepViewController+UIPickerView.swift in Sources */,
 				4D53F89E21F1CBF800C0AF31 /* ShowOverlayAnimator.swift in Sources */,
-				4D5DCB9C22885B9300393EF4 /* DeepMint.swift in Sources */,
+				4D01B8B7228C259800E5C7AD /* KeychainWrapper.swift in Sources */,
+				4D5DCB9C22885B9300393EF4 /* DeepMintTheme.swift in Sources */,
 				4DD542F0224E544C003C6DEC /* AddStepViewModel.swift in Sources */,
 				4DA78F2F22634BF200C018CA /* AddRecipeAddStepViewController.swift in Sources */,
+				4D01B8CF22928C4B00E5C7AD /* FontNeutralTheme.swift in Sources */,
 				4D53F8A021F1CC0800C0AF31 /* DismissOverlayAnimator.swift in Sources */,
 				4D205DB121FE8252008006BD /* StepTableViewCell.swift in Sources */,
 				4D0C4B4921AEC73A00153E76 /* MainViewController.swift in Sources */,
@@ -1192,18 +1300,24 @@
 				4D5380302245F5C40051DD0F /* HeaderView.swift in Sources */,
 				4DA78F1E225D648000C018CA /* MarqueeLabel.swift in Sources */,
 				4DA78F272262FF9800C018CA /* AddRecipeSettingsViewModel.swift in Sources */,
+				4D01B8E7229416B400E5C7AD /* FontStandardOrangeTheme.swift in Sources */,
 				4D5DCB9522885AA800393EF4 /* Extentions+UIDevice.swift in Sources */,
 				4D507E92228163B50074FBFB /* TableViewThemeProtocol.swift in Sources */,
 				4D94E5D5223E74DA0009F176 /* LocalNotificationsService.swift in Sources */,
 				4D507E902281637C0074FBFB /* TableViewStandardDarkTheme.swift in Sources */,
 				4D0C4B4F21AEC73A00153E76 /* SimpleRecipeTimer.xcdatamodeld in Sources */,
+				4D01B8E5229416B400E5C7AD /* NavigationStandardOrangeTheme.swift in Sources */,
 				4DA78E2A2254CD2D00C018CA /* LargeDisplayViewController.swift in Sources */,
+				4D01B8C82291420500E5C7AD /* NeutralTheme.swift in Sources */,
 				4DA12F7621B358AB0049CD75 /* MainViewCell.swift in Sources */,
 				4D53F89C21F1A42200C0AF31 /* OverlayInteractor.swift in Sources */,
+				4D01B8DD2293D00000E5C7AD /* ButtonStandardWhiteTheme.swift in Sources */,
 				4D53F7BE21E735CD00C0AF31 /* StepEntity.swift in Sources */,
 				4D56D48A226B1A8800E28376 /* AddStepMainView.swift in Sources */,
 				4DA78F1A225C1C8000C018CA /* SettingsDataSource.swift in Sources */,
+				4D01B8BC228EAE6800E5C7AD /* PreviewViewController.swift in Sources */,
 				4D507E75227FA0250074FBFB /* FontThemeProtocol.swift in Sources */,
+				4D5DCBA8228A7AC500393EF4 /* IAPProducts.swift in Sources */,
 				4D0C4B4721AEC73A00153E76 /* AppDelegate.swift in Sources */,
 				4D5DCB9E22885BE400393EF4 /* TableViewDeepMintTheme.swift in Sources */,
 				4D53F7D821EF0C6500C0AF31 /* ViewControllerOverlayAnimator.swift in Sources */,
@@ -1211,14 +1325,17 @@
 				4DA78F252262F30100C018CA /* AddRecipeSettingsViewController.swift in Sources */,
 				4DA78F14225B884A00C018CA /* WhatsNewViewModel.swift in Sources */,
 				4D5DCB8C22856BE400393EF4 /* ButtonThemeProtocol.swift in Sources */,
+				4D01B8E8229416B400E5C7AD /* TableViewStandardOrangeTheme.swift in Sources */,
 				4D6E7DC02274729100716FB5 /* RecipeModalPresentationController.swift in Sources */,
 				4D53803A224911140051DD0F /* TapticService.swift in Sources */,
 				4D507E97228164640074FBFB /* TableViewStandardLightTheme.swift in Sources */,
 				4D6E35382215435900CBCC23 /* AddRecipeWizardError.swift in Sources */,
+				4D01B8B6228C259800E5C7AD /* KeychainItemAccessibility.swift in Sources */,
 				4D507E8222802B950074FBFB /* AttributedTextDarkTheme.swift in Sources */,
 				4D78479F227ABBD100160658 /* MainViewModel.swift in Sources */,
 				4D53F7D521EF0C2400C0AF31 /* OverlayTransitionDelegate.swift in Sources */,
-				4D7847B4227EC16900160658 /* Theme.swift in Sources */,
+				4D01B8D322928CBB00E5C7AD /* ButtonStandardNeutralTheme.swift in Sources */,
+				4D7847B4227EC16900160658 /* ThemeManager.swift in Sources */,
 				4D5DCB8E2285712500393EF4 /* ButtonStandardDarkTheme.swift in Sources */,
 				4D507E73227FA0060074FBFB /* FontStandardLightTheme.swift in Sources */,
 				4D53F75B21E2E38100C0AF31 /* CoreDataHandler.swift in Sources */,
@@ -1233,6 +1350,10 @@
 				4D563C2C220D4ADC0039B07F /* RecipeViewControllerBase.swift in Sources */,
 				4D6E7DB7226FF57000716FB5 /* EditStepViewController.swift in Sources */,
 				4D53F8A521F36D9100C0AF31 /* ShowHorizontalAnimator.swift in Sources */,
+				4D01B8E6229416B400E5C7AD /* ButtonStandardOrangeTheme.swift in Sources */,
+				4D5DCBA6228A7A4D00393EF4 /* IAPHelper.swift in Sources */,
+				4D01B8DC2293D00000E5C7AD /* NavigationStandardWhiteTheme.swift in Sources */,
+				4D01B8DF2293D00000E5C7AD /* TableViewStandardWhiteTheme.swift in Sources */,
 				4D507E79227FBA0B0074FBFB /* AttributedTextProtocol.swift in Sources */,
 				4DA78F2B22630FFB00C018CA /* AddRecipeMainView.swift in Sources */,
 				4D7847A6227AF18F00160658 /* RecipeViewModel.swift in Sources */,
@@ -1252,9 +1373,11 @@
 				4DA78F1C225C25AC00C018CA /* WhatsNewView.swift in Sources */,
 				4D6E7DBE2274728100716FB5 /* RecipeModalAnimatedTransitioning.swift in Sources */,
 				4D6DFCB82212508E009C3044 /* SettingsViewController.swift in Sources */,
+				4D01B8E02293D00000E5C7AD /* WhiteTheme.swift in Sources */,
 				4D7847AB227B296100160658 /* RecipeViewControllerWithTableView+Timer.swift in Sources */,
 				4D53F7CC21EC47E700C0AF31 /* ThemeConstants.swift in Sources */,
 				4DD9683E2278866000C6D94B /* InstantPanGestureRecognizer.swift in Sources */,
+				4D01B8DB2293D00000E5C7AD /* FontStandardWhiteTheme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -31,17 +31,23 @@ class AddStepMainView: UIView {
     
     lazy var labelTextField: UITextField = {
         let input = UITextField()
-        input.defaultTextAttributes = (delegate?.viewModel.theme?.currentTheme.font.stepName)!
-        input.attributedPlaceholder = NSAttributedString(string: "Step Name", attributes: delegate?.viewModel.theme?.currentTheme.font.stepName)
-        input.attributedText = NSAttributedString(string: "", attributes: delegate?.viewModel.theme?.currentTheme.font.stepName)
         input.returnKeyType = UIReturnKeyType.done
         input.clearButtonMode = .never
         input.autocorrectionType = .no
         input.enablesReturnKeyAutomatically = true
         input.backgroundColor = UIColor.clear
         input.becomeFirstResponder()
-        input.textAlignment = .center
         input.translatesAutoresizingMaskIntoConstraints = false
+
+        guard let theme = delegate?.viewModel.theme else {
+            input.text = "An interesting name.."
+            return input
+        }
+        input.defaultTextAttributes = theme.currentTheme.font.stepName
+        input.attributedPlaceholder = NSAttributedString(string: "Step Name", attributes: theme.currentTheme.font.stepName)
+        input.attributedText = NSAttributedString(string: "", attributes: theme.currentTheme.font.stepName)
+        input.textAlignment = .center
+
         return input
     }()
     
@@ -69,7 +75,8 @@ class AddStepMainView: UIView {
     }()
     
     private lazy var navView: NavView = {
-        let view = NavView(frame: .zero, leftNavItem: backButton, rightNavItem: addButton, titleLabel: titleLabel)
+        let view = NavView(frame: .zero, leftNavItem: backButton, rightNavItem: addButton, titleLabel: titleLabel, topScreenAnchor: self.topAnchor)
+        view.backgroundFillerColor(color: delegate?.viewModel?.theme?.currentTheme.navigation.backgroundColor)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()

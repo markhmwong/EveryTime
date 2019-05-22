@@ -29,23 +29,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
         window?.makeKeyAndVisible()
-//        UIFont.overrideInitialize() // to be determined
         
-        var theme: ThemeManager? = nil
+        let themeManager: ThemeManager? = nil
+        var theme: ThemeProtocol? = nil
         let main = MainViewController(viewModel: nil)
-
         let option = UserDefaults.standard.integer(forKey: ThemeManager.userDefaultsKey)
-        if let savedTheme = ThemeManager.getSavedTheme(option: option) {
-            theme = ThemeManager.init(currentTheme: savedTheme)
-            main.viewModel = MainViewModel(delegate: main, theme: theme ?? ThemeManager.init(currentTheme: StandardLightTheme()))
+        
+        initialiseFreeThemesToKeyChain()
+        initialisePaidThemesToKeyChain()
+        
+        if (option != 0) {
+            UserDefaults.standard.set(0, forKey: ThemeManager.userDefaultsKey) //moving from userdefaults to keychain
+            main.viewModel = MainViewModel(delegate: main, theme: themeManager ?? ThemeManager.init(currentTheme: StandardDarkTheme()))
             window?.rootViewController = UINavigationController(rootViewController: main)
             return true
         }
-        print(option)
+        
+        guard let themeName = KeychainWrapper.standard.string(forKey: "theme") else {
+            implementStandardThemeOnFailure(window, main)
+            return true
+        }
 
-        main.viewModel = MainViewModel(delegate: main, theme: ThemeManager.init(currentTheme: StandardLightTheme()))
+        theme = ThemeManager.themeFactory(themeName)
+        main.viewModel = MainViewModel(delegate: main, theme: ThemeManager.init(currentTheme: theme ?? StandardLightTheme()))
         window?.rootViewController = UINavigationController(rootViewController: main)
         return true
+    }
+    
+    func implementStandardThemeOnFailure(_ window: UIWindow?, _ main: MainViewController) {
+        main.viewModel = MainViewModel(delegate: main, theme: ThemeManager.init(currentTheme: StandardLightTheme()))
+        window?.rootViewController = UINavigationController(rootViewController: main)
     }
     /* not running, active, inactive, suspended and background*/
 
@@ -71,5 +84,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return myOrientation
     }
 
+    // Updates the button to show Apply / Purchase in the preview view under Themes
+    func initialiseFreeThemesToKeyChain() {
+        ThemeManager.restorePurchasesToKeyChain(productIdentifier: StandardLightTheme.productIdentifier)
+        ThemeManager.restorePurchasesToKeyChain(productIdentifier: StandardDarkTheme.productIdentifier)
+        ThemeManager.restorePurchasesToKeyChain(productIdentifier: WhiteTheme.productIdentifier)
+
+    }
+    
+    func initialisePaidThemesToKeyChain() {
+    
+        if KeychainWrapper.standard.bool(forKey: DeepMintTheme.productIdentifier) == nil {
+            KeychainWrapper.standard.set(false, forKey: DeepMintTheme.productIdentifier)
+        }
+
+        let orangeId = OrangeTheme.productIdentifier
+        if KeychainWrapper.standard.bool(forKey: orangeId) == nil {
+            KeychainWrapper.standard.set(false, forKey: orangeId)
+        }
+
+        if KeychainWrapper.standard.bool(forKey: NeutralTheme.productIdentifier) == nil {
+            KeychainWrapper.standard.set(false, forKey: NeutralTheme.productIdentifier)
+        }
+        
+        if KeychainWrapper.standard.bool(forKey: OrangeTheme.productIdentifier) == nil {
+            KeychainWrapper.standard.set(false, forKey: OrangeTheme.productIdentifier)
+        }
+
+    }
 }
 

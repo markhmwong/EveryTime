@@ -36,6 +36,8 @@ class SettingsViewCell: UITableViewCell {
     }
     
     func updateLabel(text: String) {
-        label.attributedText = NSAttributedString(string: text, attributes: theme?.currentTheme.tableView.settingsCell)
+        DispatchQueue.main.async {
+            self.label.attributedText = NSAttributedString(string: text, attributes: self.theme?.currentTheme.tableView.settingsCell)
+        }
     }
 }

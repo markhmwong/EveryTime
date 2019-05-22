@@ -10,6 +10,14 @@ import UIKit
 
 struct StandardLightTheme: ThemeProtocol {
     
+    static var productIdentifier: String = "com.whizbang.Everytime.lightmint"
+    
+    static var resource: String = "lightmint"
+    
+    var name: String = "Light Mint"
+    
+    var description: String = "A little like mouthwash"
+    
     var navigation: NavigationThemeProtocol = NavigationStandardLightTheme()
     
     var font: FontThemeProtocol = FontStandardLightTheme()
@@ -22,7 +30,6 @@ struct StandardLightTheme: ThemeProtocol {
     
     var generalBackgroundColour: UIColor = UIColor.LightMintColourPalette.white
 
-    
     func applyTheme() {
         updateNavView()
         updateSettingsView()
@@ -54,84 +61,17 @@ struct StandardLightTheme: ThemeProtocol {
         
         UICollectionView.appearance().backgroundColor = tableView.backgroundColor
         UILabel.appearance(whenContainedInInstancesOf: [RecipeViewCell.self]).textColor = font.TextColour
-
-    }
-}
-
-//[NSAttributedString.Key.font: UIFont(name: tf.Style.Medium, size: tf.Size.About)!, NSAttributedString.Key.foregroundColor: tf.Color.TextColour, NSAttributedString.Key.kern: tf.Kern.GeneralKernValue]
-
-
-
-
-
-/// To be determined for fonts
-/// https://stackoverflow.com/questions/8707082/set-a-default-font-for-whole-ios-app/40484460#40484460
-struct AppFontName {
-    static let regular = "AmericanTypewriter"
-    static let bold = "Avenir-Black"
-    static let italic = ""
-}
-
-extension UIFontDescriptor.AttributeName {
-    static let nsctFontUIUsage = UIFontDescriptor.AttributeName(rawValue: "NSCTFontUIUsageAttribute")
-}
-
-extension UIFont {
-    
-    @objc class func mySystemFont(ofSize size: CGFloat) -> UIFont {
-        return UIFont(name: AppFontName.regular, size: size)!
     }
     
-    @objc class func myBoldSystemFont(ofSize size: CGFloat) -> UIFont {
-        return UIFont(name: AppFontName.bold, size: size)!
-    }
-    
-    @objc class func myItalicSystemFont(ofSize size: CGFloat) -> UIFont {
-        return UIFont(name: AppFontName.italic, size: size)!
-    }
-    
-    @objc convenience init(myCoder aDecoder: NSCoder) {
-        guard
-            let fontDescriptor = aDecoder.decodeObject(forKey: "UIFontDescriptor") as? UIFontDescriptor,
-            let fontAttribute = fontDescriptor.fontAttributes[.nsctFontUIUsage] as? String else {
-                self.init(myCoder: aDecoder)
-                return
-        }
-        var fontName = ""
-        switch fontAttribute {
-        case "CTFontRegularUsage":
-            fontName = AppFontName.regular
-        case "CTFontEmphasizedUsage", "CTFontBoldUsage":
-            fontName = AppFontName.bold
-        case "CTFontObliqueUsage":
-            fontName = AppFontName.italic
-        default:
-            fontName = AppFontName.regular
-        }
-        self.init(name: fontName, size: fontDescriptor.pointSize)!
-    }
-    
-    class func overrideInitialize() {
-        guard self == UIFont.self else { return }
+    func updateButton() {
         
-        if let systemFontMethod = class_getClassMethod(self, #selector(systemFont(ofSize:))),
-            let mySystemFontMethod = class_getClassMethod(self, #selector(mySystemFont(ofSize:))) {
-            method_exchangeImplementations(systemFontMethod, mySystemFontMethod)
-        }
-        
-        if let boldSystemFontMethod = class_getClassMethod(self, #selector(boldSystemFont(ofSize:))),
-            let myBoldSystemFontMethod = class_getClassMethod(self, #selector(myBoldSystemFont(ofSize:))) {
-            method_exchangeImplementations(boldSystemFontMethod, myBoldSystemFontMethod)
-        }
-        
-        if let italicSystemFontMethod = class_getClassMethod(self, #selector(italicSystemFont(ofSize:))),
-            let myItalicSystemFontMethod = class_getClassMethod(self, #selector(myItalicSystemFont(ofSize:))) {
-            method_exchangeImplementations(italicSystemFontMethod, myItalicSystemFontMethod)
-        }
-        
-        if let initCoderMethod = class_getInstanceMethod(self, #selector(UIFontDescriptor.init(coder:))), // Trick to get over the lack of UIFont.init(coder:))
-            let myInitCoderMethod = class_getInstanceMethod(self, #selector(UIFont.init(myCoder:))) {
-            method_exchangeImplementations(initCoderMethod, myInitCoderMethod)
-        }
+    }
+    
+    func resourceName() -> String {
+        return type(of: self).resource
+    }
+    
+    func productIdentifier() -> String {
+        return type(of: self).productIdentifier
     }
 }

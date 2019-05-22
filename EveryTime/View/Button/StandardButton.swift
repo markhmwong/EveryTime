@@ -35,4 +35,9 @@ class StandardButton: UIButton {
             self.setAttributedTitle(NSAttributedString(string: title, attributes: self.theme?.currentTheme.button.text), for: .normal)
         }
     }
+    
+    func updateLabel(string: String) {
+        setAttributedTitle(NSAttributedString(string: string, attributes: theme?.currentTheme.button.text), for: .normal)
+    }
+    
 }

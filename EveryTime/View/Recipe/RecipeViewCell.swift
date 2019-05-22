@@ -13,31 +13,12 @@ class RecipeViewCell: EntityBaseTableViewCell<StepEntity> {
     var theme: ThemeManager?
     
     override func setSelected(_ selected: Bool, animated: Bool) {
-        guard let e = entity else {
-            return
-        }
-        let color = e.isComplete ? Theme.View.StepCell.CellIndicatorComplete : Theme.View.StepCell.CellIndicatorIncomplete
-
         super.setSelected(selected, animated: animated)
-//        if selected {
-//            DispatchQueue.main.async {
-////                self.completeIndicatorView.backgroundColor = color
-//            }
-//        }
     }
     
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
-        guard let e = entity else {
-            return
-        }
-        let color = e.isComplete ? Theme.View.StepCell.CellIndicatorComplete : Theme.View.StepCell.CellIndicatorIncomplete
         super.setHighlighted(highlighted, animated: animated)
-        
-//        if highlighted {
-//            DispatchQueue.main.async {
-////                self.completeIndicatorView.backgroundColor = color
-//            }
-//        }
+
     }
     
     override var entity: StepEntity? {
@@ -64,12 +45,6 @@ class RecipeViewCell: EntityBaseTableViewCell<StepEntity> {
         return label
     }()
 
-//    private lazy var completeIndicatorView: UIView = {
-//       let view = UIView()
-//        view.layer.cornerRadius = 8.0
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        return view
-//    }()
     var gl = CAGradientLayer()
     
     private lazy var selectedBg: UIView = {
@@ -93,24 +68,25 @@ class RecipeViewCell: EntityBaseTableViewCell<StepEntity> {
     }
     
     func prepareLabel(_ stepEntity: StepEntity) {
+
         timeLabel.attributedText = NSAttributedString(string: "\(stepEntity.timeRemainingToString())", attributes: theme?.currentTheme.tableView.recipeCellRecipeTime)
         nameLabel.attributedText = NSAttributedString(string: stepEntity.stepName ?? "No Name", attributes: theme?.currentTheme.tableView.recipeCellStepName)
         updateCompletionStatusLabel()
 
-//        contentView.addSubview(completeIndicatorView)
         contentView.addSubview(timeLabel)
         contentView.addSubview(nameLabel)
     }
     
     func prepareAutoLayout() {
-//        completeIndicatorView.anchorView(top: nil, bottom: nil, leading: nil, trailing: contentView.trailingAnchor, centerY: contentView.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: -25.0), size: CGSize(width: 35.0, height: 18.0))
-        
         timeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10.0).isActive = true
+        timeLabel.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 10.0).isActive = true
         timeLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         
         nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10.0).isActive = true
-        nameLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         nameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 0.0).isActive = true
+
+        timeLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
     }
     
     func updateNameLabel(name: String) {
@@ -131,9 +107,7 @@ class RecipeViewCell: EntityBaseTableViewCell<StepEntity> {
                 self.timeLabel.alpha = 0.5
             }
 
-//            completeIndicatorView.backgroundColor = Theme.View.StepCell.CellIndicatorComplete
         } else {
-//            completeIndicatorView.backgroundColor = Theme.View.StepCell.CellIndicatorIncomplete
             DispatchQueue.main.async {
                 self.nameLabel.alpha = 1.0
                 self.timeLabel.alpha = 1.0
@@ -145,6 +119,5 @@ class RecipeViewCell: EntityBaseTableViewCell<StepEntity> {
         super.prepareForReuse()
         nameLabel.removeFromSuperview()
         timeLabel.removeFromSuperview()
-//        completeIndicatorView.removeFromSuperview()
     }
 }

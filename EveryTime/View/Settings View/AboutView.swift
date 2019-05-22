@@ -9,9 +9,6 @@
 import UIKit
 
 class AboutView: UIView {
-    
-
-    
     private weak var delegate: AboutViewController?
 
     private lazy var dismissButton: UIButton = {
@@ -30,7 +27,8 @@ class AboutView: UIView {
     }()
     
     lazy var navView: NavView = {
-        let view = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: nil, titleLabel: titleLabel)
+        let view = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: nil, titleLabel: titleLabel, topScreenAnchor: self.topAnchor)
+        view.backgroundFillerColor(color: delegate?.viewModel?.theme?.currentTheme.navigation.backgroundColor)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()

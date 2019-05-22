@@ -60,6 +60,6 @@ class SettingsWhatsNewViewController: ViewControllerBase {
     }
     
     deinit {
-        print("settings vc - deinitialised")
+//        print("settings vc - deinitialised")
     }
 }

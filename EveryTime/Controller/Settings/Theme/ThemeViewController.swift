@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import StoreKit
 
 class ThemeViewController: ViewControllerBase {
     
@@ -14,11 +15,33 @@ class ThemeViewController: ViewControllerBase {
     
     var viewModel: ThemeViewModel?
     
-    private lazy var mainView: ThemeView = {
+    var applyTheme: ThemeProtocol?
+    
+    enum PreviewViewState {
+        case closed
+        case open
+    }
+    var runningAnimations = [UIViewPropertyAnimator]()
+    private var bottomConstraint = NSLayoutConstraint()
+    var previewVisible: Bool = false
+    var previewCurrentState: PreviewViewState {
+        return previewVisible ? PreviewViewState.open : PreviewViewState.closed
+    }
+    
+    lazy var mainView: ThemeView = {
         let view = ThemeView(delegate: self)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    lazy var overlayView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .black
+        view.alpha = 0.0
+        return view
+    }()
+    
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -45,7 +68,15 @@ class ThemeViewController: ViewControllerBase {
     override func prepareView() {
         super.prepareView()
         view.addSubview(mainView)
-        view.backgroundColor = viewModel?.theme?.currentTheme.generalBackgroundColour
+
+        mainView.backgroundColor = viewModel?.theme?.currentTheme.generalBackgroundColour
+        mainView.tableView.reloadData()
+        
+        viewModel?.grabThemeProducts()
+    }
+    
+    @objc func restorePurchases() {
+        
     }
     
     override func prepareAutoLayout() {
@@ -54,25 +85,84 @@ class ThemeViewController: ViewControllerBase {
     }
     
     func handleDismiss() {
+
         delegate?.mainView.tableView.reloadData()
         dismiss(animated: true, completion: nil)
     }
     
-    func changeTheme(indexPath: IndexPath) {
+    func changeTheme(themeProtocol: ThemeProtocol) {
         guard let vm = viewModel else {
             return
         }
-        vm.applyNewTheme(indexPath: indexPath)
+        vm.applyNewTheme(chosenTheme: themeProtocol)
     }
     
-    /// Other views do refresh beecause UIAppearance only affects views that are about to appear,
-    /// this current view must be refreshed in order to reflect the updated theme
     func refreshView() {
-        mainView.removeFromSuperview()
-        mainView = ThemeView(delegate: self)
-        mainView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(mainView)
-        mainView.fillSuperView()
+        mainView.navView.backgroundColor = viewModel?.theme?.currentTheme.navigation.backgroundColor
+        mainView.navView.backgroundFillerColor(color: viewModel?.theme?.currentTheme.navigation.backgroundColor)
+        mainView.navView.leftNavItem?.setAttributedTitle(NSAttributedString(string: "Back", attributes: viewModel?.theme?.currentTheme.navigation.item), for: .normal)
+        mainView.navView.rightNavItem?.setAttributedTitle(NSAttributedString(string: "Restore", attributes: viewModel?.theme?.currentTheme.navigation.item), for: .normal)
+        mainView.navView.titleLabel?.attributedText = NSAttributedString(string: "Theme", attributes: viewModel?.theme?.currentTheme.navigation.title)
+        
+        mainView.backgroundColor = viewModel?.theme?.currentTheme.generalBackgroundColour
+        mainView.tableView.backgroundColor = viewModel?.theme?.currentTheme.tableView.backgroundColor
+        mainView.tableView.reloadData()
         view.layoutIfNeeded()
     }
+    
+    var previewViewController: PreviewViewController?
+    
+    func showPreview(_ selectedTheme: ThemeProtocol, _ product: SKProduct?) {
+        if (previewViewController == nil) {
+            let hasBought = KeychainWrapper.standard.bool(forKey: selectedTheme.productIdentifier())
+            previewViewController = PreviewViewController(delegate: self, theme: selectedTheme, purchaseState: hasBought)
+            guard let previewViewController = previewViewController else { return }
+            addChild(previewViewController)
+            view.addSubview(previewViewController.view)
+            previewViewController.view.fillSuperView()
+            previewViewController.view.alpha = 0.0
+            previewVisible = true
+            animateTransitionIfNeeded(state: previewCurrentState)
+        }
+        previewViewController?.mainView.updateActionButton(product)
+    }
+
+    
+    func animateTransitionIfNeeded(state: PreviewViewState) {
+        let duration = 0.2
+        guard runningAnimations.isEmpty else {
+            return
+        }
+        
+        let popOverAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 0.75) {
+            switch state {
+            case PreviewViewState.open:
+                self.previewViewController?.view.alpha = 1.0
+            case PreviewViewState.closed:
+                self.previewViewController?.view.alpha = 0.0
+                self.previewViewController = nil
+            }
+        }
+        popOverAnimator.addCompletion { (position) in
+            switch position {
+            case .start:
+                self.previewVisible = true
+            case .end:
+                self.previewVisible = !self.previewVisible
+            case .current:
+                ()
+            }
+            self.runningAnimations.removeAll()
+            
+        }
+        popOverAnimator.startAnimation()
+        runningAnimations.append(popOverAnimator)
+    }
+
+    func dismissPreviewModal() {
+        previewVisible = false
+        animateTransitionIfNeeded(state: previewCurrentState)
+
+    }
 }
+

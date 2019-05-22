@@ -17,6 +17,8 @@ protocol TableViewThemeProtocol {
     var pausedTextColor: UIColor { get }
     var highlightColor: UIColor { get }
     var selectedCellColor: UIColor { get }
+    var pauseButtonBackgroundActive: UIColor { get }
+    var pauseButtonBackgroundInactive: UIColor { get }
 
     static var TextColor: UIColor { get }
     static var TextColorFaded: UIColor { get }
@@ -38,4 +40,7 @@ protocol TableViewThemeProtocol {
     var recipeSubtitle: [NSAttributedString.Key : Any] { get }
     
     var recipeModalOption: [NSAttributedString.Key : Any] { get }
+    
+    
+
 }

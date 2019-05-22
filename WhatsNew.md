@@ -1,10 +1,19 @@
 #  Feature Scratch pad
 
-## Version 1.1.17 [Current]
-- Reviews can now be written without leaving the application
-- Time formats changed with colons to express hours, minutes, seconds
-- Removed completion indicators. Completed steps are now show in faded text. This leaves the step name and time in a larger and clear font. 
+## Version 1.1.18 [Current] control feature update and new theme
 
+enlarge header of recipe screen
+forward and back controls on main view and recipe view
+reset recipe on main view
+loop
+
+code cleaning
+
+free themes
+white - cleaner than your bathroom (done)
+
+paid
+orange - ginger like your cat (done)
 
 # Features to be done in this version
 IAP
@@ -12,7 +21,8 @@ IAP
     - unlimited timers
 header to advertise unlimited timers
 - Recipe Colours
-- Media Player controls
+
+
 
 - IAP
     - unlimited timers
@@ -32,11 +42,14 @@ Major releases
         whats new pop up asks for notifications
     iap
     share Recipes
-
+    flip phone to start recipe?
+    geolocation for running - periodic snapshots
 Minor
+    usage - use it more, unlock more features
+    edit recipe name
     verbal countdown
     Customisable Sounds
-    Notifications
+    Notifications for steps
     Sorting
     Pinning
     recipes colors
@@ -45,7 +58,6 @@ Minor
     separate the header view and tableview (recipe detail view)
         up next title in between the header and tableview will need to create a new uiview for hte header instead of using the existing tableview header
     get ready count down
-    forward and back controls on main view and recipe view
     truncate leading time if it is 0 e.g. 00h 00m 01s now becomes 01s 
     store existing popular steps
 

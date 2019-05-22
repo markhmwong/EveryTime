@@ -16,11 +16,13 @@ struct TableViewStandardDeepMintTheme: TableViewThemeProtocol {
     var pausedTextColor: UIColor = UIColor.DeepMintColourPalette.darkGray
     var highlightColor: UIColor = UIColor.DeepMintColourPalette.green
     var selectedCellColor: UIColor = UIColor.DeepMintColourPalette.green
+    var pauseButtonBackgroundActive: UIColor = UIColor.DeepMintColourPalette.green
+    var pauseButtonBackgroundInactive: UIColor = UIColor.DeepMintColourPalette.greenFaded
     
     static var TextColor: UIColor = UIColor.DeepMintColourPalette.white
     static var TextColorFaded: UIColor = UIColor.DeepMintColourPalette.whiteFaded
     
-    var settingsCell: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardDeepMintTheme.FontStyle.Bold.rawValue, size: FontStandardDeepMintTheme.FontSize.Standard(.b3).value)!, NSAttributedString.Key.foregroundColor: TableViewStandardDeepMintTheme.TextColor, NSAttributedString.Key.kern: FontStandardDeepMintTheme.FontKern.General.floatValue]
+    var settingsCell: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardDeepMintTheme.FontStyle.Bold.rawValue, size: FontStandardDeepMintTheme.FontSize.Standard(.b2).value)!, NSAttributedString.Key.foregroundColor: TableViewStandardDeepMintTheme.TextColor, NSAttributedString.Key.kern: FontStandardDeepMintTheme.FontKern.General.floatValue]
     
     var mainViewStepName: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardDeepMintTheme.FontStyle.Bold.rawValue, size: FontStandardDeepMintTheme.FontSize.Standard(.b3).value)!, NSAttributedString.Key.foregroundColor: TableViewStandardDeepMintTheme.TextColor, NSAttributedString.Key.kern: FontStandardDeepMintTheme.FontKern.General.floatValue]
     var mainViewRecipeName: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardDeepMintTheme.FontStyle.Regular.rawValue, size: FontStandardDeepMintTheme.FontSize.Standard(.b0).value)!, NSAttributedString.Key.foregroundColor: TableViewStandardDeepMintTheme.TextColor, NSAttributedString.Key.kern: FontStandardDeepMintTheme.FontKern.General.floatValue]

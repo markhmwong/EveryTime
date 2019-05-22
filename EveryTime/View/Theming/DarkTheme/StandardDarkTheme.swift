@@ -9,6 +9,15 @@
 import UIKit
 
 struct StandardDarkTheme: ThemeProtocol {
+    
+    var name: String = "Dark Mint"
+    
+    var description: String = "Dark gray with splashes of royal green"
+    
+    static var productIdentifier: String = "com.whizbang.Everytime.darkmint"
+    
+    static var resource: String = "darkmint"
+    
     var tableView: TableViewThemeProtocol = TableViewStandardDarkTheme()
     
     var navigation: NavigationThemeProtocol = NavigationStandardDarkTheme()
@@ -29,6 +38,7 @@ struct StandardDarkTheme: ThemeProtocol {
         updateTableView() // including the main collection view
         UILabel.appearance(whenContainedInInstancesOf: [AboutView.self]).textColor = font.TextColour
         UILabel.appearance(whenContainedInInstancesOf: [UIPickerView.self]).textColor = font.TextColour
+        
         
     }
     
@@ -59,5 +69,13 @@ struct StandardDarkTheme: ThemeProtocol {
     
     func updateButton() {
         
+    }
+    
+    func resourceName() -> String {
+        return type(of: self).resource
+    }
+    
+    func productIdentifier() -> String {
+        return type(of: self).productIdentifier
     }
 }

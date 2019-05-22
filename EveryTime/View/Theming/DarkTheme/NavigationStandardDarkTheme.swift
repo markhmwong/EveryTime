@@ -9,9 +9,9 @@
 import UIKit
 
 struct NavigationStandardDarkTheme: NavigationThemeProtocol {
-    var backgroundColor: UIColor = UIColor.DarkMintColourPalette.lightBlack
+    var backgroundColor: UIColor = UIColor.DarkMintColourPalette.green
     static var textColour: UIColor = UIColor.DarkMintColourPalette.white
-    static var titleColour: UIColor = UIColor.DarkMintColourPalette.green
+    static var titleColour: UIColor = UIColor.DarkMintColourPalette.white
 //    var bottomBorderColor: UIColor { return UIColor(red: 220.0 / 255.0, green: 220.0 / 255.0, blue: 220.0 / 255.0, alpha: 0.5) }
     
     

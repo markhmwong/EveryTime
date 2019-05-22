@@ -258,7 +258,7 @@ class LargeDisplayMainView: UIView {
         do {
             try delegate.triggerPrevStep()
         } catch ControlsError.LimitReached(let message) {
-            print("\(message)")
+//            print("\(message)")
         } catch {
             print("control error")
         }

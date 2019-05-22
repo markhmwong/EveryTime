@@ -12,7 +12,7 @@ class ButtonStandardLightTheme: ButtonThemeProtocol {
     var text: [NSAttributedString.Key : Any] = [
         NSAttributedString.Key.font: UIFont(name: FontStandardLightTheme.FontStyle.Bold.rawValue, size: FontStandardLightTheme.FontSize.Standard(.b3).value)!,
         NSAttributedString.Key.foregroundColor: NavigationStandardLightTheme.textColour,
-        NSAttributedString.Key.kern: FontStandardLightTheme.FontKern.General.floatValue
+        NSAttributedString.Key.kern: FontStandardLightTheme.FontKern.General.floatValue,
     ]
     var backgroundColor: UIColor = UIColor.LightMintColourPalette.teal
 }

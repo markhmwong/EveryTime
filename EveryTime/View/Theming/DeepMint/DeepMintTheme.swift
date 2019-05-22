@@ -8,7 +8,16 @@
 
 import UIKit
 
-struct DeepMint: ThemeProtocol {
+struct DeepMintTheme: ThemeProtocol {
+    
+    var name: String = "Deep Mint"
+    
+    var description: String = "Deeper than Jame Cameron's expedition"
+    
+    static var productIdentifier: String = "com.whizbang.Everytime.deepminttheme"
+    
+    static var resource: String = "deepminttheme"
+    
     var tableView: TableViewThemeProtocol = TableViewStandardDeepMintTheme()
     
     var navigation: NavigationThemeProtocol = NavigationStandardDeepMintTheme()
@@ -18,6 +27,7 @@ struct DeepMint: ThemeProtocol {
     var button: ButtonThemeProtocol = ButtonStandardDeepMintTheme()
     
     var generalBackgroundColour: UIColor = UIColor.DeepMintColourPalette.lightBlack
+
     
     func applyTheme() {
         updateNavView()
@@ -32,8 +42,8 @@ struct DeepMint: ThemeProtocol {
     
     func updateNavView() {
         NavView.appearance().backgroundColor = navigation.backgroundColor
-        UILabel.appearance(whenContainedInInstancesOf: [NavView.self]).textColor = NavigationStandardDarkTheme.textColour
-        UILabel.appearance().textColor = NavigationStandardDarkTheme.textColour
+        UILabel.appearance(whenContainedInInstancesOf: [NavView.self]).textColor = NavigationStandardDeepMintTheme.textColour
+        UILabel.appearance().textColor = NavigationStandardDeepMintTheme.textColour
     }
     
     func updateThemeView() {
@@ -57,5 +67,17 @@ struct DeepMint: ThemeProtocol {
     
     func updateButton() {
         
+    }
+    
+    func resourceName() -> String {
+        return type(of: self).resource
+    }
+    
+    func productIdentifier() -> String {
+        return type(of: self).productIdentifier
+    }
+    
+    func themeDescription() -> String {
+        return description
     }
 }

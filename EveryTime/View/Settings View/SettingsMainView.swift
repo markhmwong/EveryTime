@@ -21,6 +21,11 @@ class SettingsMainView: UIView {
         case ChangeLog
     }
     
+    enum Appearance: Int {
+        case themes
+        case purchasableThemes
+    }
+    
     enum Support: Int {
         case About
         case Review
@@ -62,7 +67,8 @@ class SettingsMainView: UIView {
     }()
     
     private lazy var navView: NavView = {
-       let view = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: nil, titleLabel: titleLabel)
+        let view = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: nil, titleLabel: titleLabel, topScreenAnchor: self.topAnchor)
+        view.backgroundFillerColor(color: delegate?.viewModel?.theme?.currentTheme.navigation.backgroundColor)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -116,9 +122,27 @@ class SettingsMainView: UIView {
 }
 
 extension SettingsMainView: UITableViewDelegate, UITableViewDataSource {
-    /// Rows for Theme section
-    
-    /// Rows for the about section
+    func appearance(row: Int) {
+        
+        guard let delegate = delegate else {
+            return
+        }
+
+        
+        guard let appearance = Appearance(rawValue: row) else { return }
+        
+        switch appearance {
+        case .themes:
+            let vc = ThemeViewController(delegate: delegate, viewModel: ThemeViewModel(theme: delegate.viewModel?.theme))
+            vc.viewModel?.delegate = vc
+            DispatchQueue.main.async {
+                delegate.present(vc, animated: true, completion: nil)
+            }
+        case .purchasableThemes:
+            () //to be done
+        }
+        
+    }
     func about(row: Int) {
         
         guard let svc = delegate else {
@@ -140,7 +164,6 @@ extension SettingsMainView: UITableViewDelegate, UITableViewDataSource {
                 }
             case .Review:
                 writeReview()
-//                SKStoreReviewController.requestReview()
             case .Share:
                 svc.share()
             case .Feedback:
@@ -187,12 +210,8 @@ extension SettingsMainView: UITableViewDelegate, UITableViewDataSource {
                     delegate.deleteAllAction()
                 }
             case .Appearance:
-                
-                let vc = ThemeViewController(delegate: delegate, viewModel: ThemeViewModel(theme: theme))
-                vc.viewModel?.delegate = vc
-                DispatchQueue.main.async {
-                    delegate.present(vc, animated: true, completion: nil)
-                }
+                appearance(row: indexPath.row)
+
             case .Support:
                 about(row: indexPath.row)
             case .ChangeLog:
@@ -247,6 +266,4 @@ extension SettingsMainView: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return delegate?.viewModel?.dataSource.count ?? 0
     }
-    
-
 }

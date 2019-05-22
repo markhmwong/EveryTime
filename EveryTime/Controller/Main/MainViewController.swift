@@ -60,7 +60,7 @@ class MainViewController: ViewControllerBase {
 
     func testData() {
         if (CoreDataHandler.deleteAllRecordsIn(entity: RecipeEntity.self)) {
-            print("Successfully deleted all records")
+//            print("Successfully deleted all records")
         }
     }
 
@@ -81,10 +81,6 @@ class MainViewController: ViewControllerBase {
     override func prepareViewController() {
         super.prepareViewController()
         CoreDataHandler.loadContext()
-        view.layer.backgroundColor = UIColor.clear.cgColor
-        view.layer.masksToBounds = true
-        view.backgroundColor = UIColor.white//Theme.Background.Color.NavBackgroundColor
-        view.layer.cornerRadius = Theme.View.CornerRadius
         navigationController?.navigationBar.isHidden = true
         startTimer()
     }
@@ -97,20 +93,13 @@ class MainViewController: ViewControllerBase {
         }
         
         view.addSubview(mainView)
-        viewModel?.loadDataFromCoreData()
+        vm.loadDataFromCoreData()
     }
 
     override func prepareAutoLayout() {
         super.prepareAutoLayout()
         mainView.anchorView(top: view.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), size: CGSize(width: 0, height: 0))
     }
-    
-//    func prepareWhatsNew() {
-//        let whatsNewViewModel = WhatsNewViewModel()
-//        let whatsNewVC = WhatsNewViewController(viewModel: whatsNewViewModel)
-//
-//        addChild(whatsNewVC)
-//    }
     
     // must be paused at all layers - recipe, step
     func pauseEntireRecipe(recipe: RecipeEntity) {
@@ -143,15 +132,13 @@ class MainViewController: ViewControllerBase {
         }
         
         
-        let bg = !recipe.isPaused ? Theme.View.RecipeCell.RecipeCellPauseButtonActive : Theme.View.RecipeCell.RecipeCellPauseButtonInactive
+        let pauseBackground = recipe.isPaused ? theme.currentTheme.tableView.pauseButtonBackgroundActive : theme.currentTheme.tableView.pauseButtonBackgroundInactive
         let textColor = !recipe.isPaused ? theme.currentTheme.tableView.cellTextColor : theme.currentTheme.tableView.pausedTextColor
-        let highlightAlpha: CGFloat = !recipe.isPaused ? 0.25 : 0.95
         
         let cell = mainView.collView.cellForItem(at: indexPath) as! MainViewCell
         DispatchQueue.main.async {
             cell.updateStepLabel()
-            cell.updatePauseHighlight()
-            cell.updatePauseButtonView(textColor, highlightAlpha, bg)
+            cell.updatePauseButtonView(textColor, pauseBackground)
         }
     }
     
@@ -166,11 +153,6 @@ class MainViewController: ViewControllerBase {
             self.mainView.collView.reloadItems(at: self.mainView.collView.indexPathsForVisibleItems)
         }
     }
-    
-//    func showWhatsNew() {
-//        let model = WhatsNew(version: <#T##String#>, build: <#T##String#>, patchNotes: <#T##[String]#>)
-//        let whatsNew = WhatsNewFactory.getWhatsNew(whatsNew: <#T##WhatsNew#>)
-//    }
 }
 
 //MARK: - UI
@@ -184,7 +166,7 @@ extension MainViewController {
         guard let theme = viewModel?.theme else { return }
         let addRecipeViewModel = AddRecipeViewModel(dataSource: [], mainDelegate: self, delegate: nil, theme: theme)
         let vc = AddRecipeViewController(delegate:self, viewModel: addRecipeViewModel)
-//        vc.modalPresentationStyle = .overCurrentContext
+        addRecipeViewModel.delegate = vc
         present(vc, animated: true, completion: nil)
         
 //        let vc = AddRecipeViewController(delegate:self)
@@ -234,7 +216,7 @@ extension MainViewController {
                     self.mainView.collView.deleteItems(at: [IndexPath(item: index, section: 0)])
                 }
                 if (CoreDataHandler.deleteEntity(entity: RecipeEntity.self, createdDate: date)) {
-                    print("could not delete")
+//                    print("could not delete")
                 }
             }
             

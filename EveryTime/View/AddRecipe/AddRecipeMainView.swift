@@ -130,9 +130,12 @@ class AddRecipeMainView: UIView, UITableViewDelegate, UITableViewDataSource {
             switch section {
                 case AddRecipeSections.Name:
                     let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+                    guard let theme = delegate?.viewModel?.theme else { return cell }
+
                     recipeNameTextField = UITextField()
                     recipeNameTextField?.attributedPlaceholder = NSAttributedString(string: "An interesting name..", attributes: delegate?.viewModel?.theme?.currentTheme.tableView.mainViewStepName)
                     recipeNameTextField?.attributedText = NSAttributedString(string: "\(delegate?.viewModel?.recipeEntity.recipeName ?? "Recipe Name")", attributes: delegate?.viewModel?.theme?.currentTheme.tableView.mainViewStepName)
+                    recipeNameTextField?.defaultTextAttributes = theme.currentTheme.tableView.mainViewStepName
                     recipeNameTextField?.textAlignment = .left
                     recipeNameTextField?.translatesAutoresizingMaskIntoConstraints = false
                     cell.contentView.addSubview(recipeNameTextField!)
@@ -208,7 +211,8 @@ class AddRecipeMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     }()
     
     private lazy var navView: NavView = {
-        let view = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: addStepButton)
+        let view = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: addStepButton, topScreenAnchor: self.topAnchor)
+        view.backgroundFillerColor(color: delegate?.viewModel?.theme?.currentTheme.navigation.backgroundColor)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -299,8 +303,9 @@ class AddRecipeMainView: UIView, UITableViewDelegate, UITableViewDataSource {
         delegate?.present(vc, animated: true, completion: nil)
     }
     
+
+    
     func reloadTableSteps() {
-//        tableView.reloadSections(IndexSet(arrayLiteral: AddRecipeSections.Steps.rawValue), with: .right)
         guard let vm = delegate?.viewModel else {
             return
         }

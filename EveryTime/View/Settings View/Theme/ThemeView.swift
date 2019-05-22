@@ -22,6 +22,14 @@ class ThemeView: UIView {
         return button
     }()
     
+    private lazy var restoreButton: UIButton = {
+        let button = UIButton()
+        button.setAttributedTitle(NSAttributedString(string: "Restore", attributes: delegate?.viewModel?.theme?.currentTheme.navigation.item), for: .normal)
+        button.addTarget(self, action: #selector(handleRestore), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -29,12 +37,13 @@ class ThemeView: UIView {
         return label
     }()
     
-    private lazy var navView: NavView = {
-        let view = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: nil, titleLabel: titleLabel)
+    lazy var navView: NavView = {
+        let view = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: restoreButton, titleLabel: titleLabel, topScreenAnchor: self.topAnchor)
+        view.backgroundFillerColor(color: delegate?.viewModel?.theme?.currentTheme.navigation.backgroundColor)
         return view
     }()
     
-    private lazy var tableView: UITableView = {
+    lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
@@ -53,6 +62,23 @@ class ThemeView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func headerView() -> UIView {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.fillSuperView()
+
+        
+        let label = UILabel()
+        label.text = "Touch for preview"
+        label.textColor = .red
+        label.backgroundColor = .blue
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.fillSuperView()
+        
+        view.addSubview(label)
+        return view
     }
     
     func setupView() {
@@ -86,41 +112,108 @@ class ThemeView: UIView {
     @objc func handleDismiss() {
         delegate?.handleDismiss()
     }
+    
+    @objc func handleRestore() {
+        IAPProducts.store.restorePurchases()
+    }
 }
 
 extension ThemeView: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let vm = delegate?.viewModel else {
-            return 0
+        
+        if (section == 0) {
+            guard let sectionArr = delegate?.viewModel?.dataSource[section] else {
+                return 0
+            }
+            return sectionArr.count
         }
-        return vm.dataSource.count
+        
+        if (section == 1) {
+            guard let vm = delegate?.viewModel else {
+                return 0
+            }
+            
+            return vm.availablePaidThemes.count
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: (delegate?.viewModel?.themeCellId)!, for: indexPath) as! ThemeTableViewCell
-        if let vm = delegate?.viewModel {
-            cell.textLabel?.attributedText = NSAttributedString(string: vm.dataSource[indexPath.row], attributes: vm.theme?.currentTheme.tableView.settingsCell)
-            cell.textLabel?.textColor = vm.theme?.currentTheme.tableView.cellTextColor
-            cell.tintColor = .white
+        guard let vm = delegate?.viewModel else {
+            cell.textLabel?.text = "No Theme"
+            return cell
         }
         
+        cell.theme = vm.theme
+        let currentAppliedTheme: String = "com.whizbang.Everytime.\(KeychainWrapper.standard.string(forKey: ThemeManager.currentAppliedThemeKey) ?? "lightmint")"
+
+        cell.backgroundColor = vm.theme?.currentTheme.tableView.cellBackgroundColor
+
+        if (indexPath.section == 0) {
+            let fullId = vm.dataSource[indexPath.section][indexPath.row]
+            let themeProtocol = ThemeManager.themeFactory(resourceNameForProductIdentifier(fullId)!)
+
+            cell.textLabel?.attributedText = NSAttributedString(string: themeProtocol.name, attributes: vm.theme?.currentTheme.tableView.settingsCell)
+
+            if (currentAppliedTheme == fullId) {
+                if let cellAttributedText = cell.textLabel?.attributedText {
+                    cell.textLabel?.attributedText = NSAttributedString(string: "\(cellAttributedText.string) Applied", attributes: vm.theme?.currentTheme.tableView.settingsCell)
+                }
+            }
+        }
+        
+        if (indexPath.section == 1) {
+            cell.availableThemes = vm.availablePaidThemes[indexPath.row]
+            if (!vm.paidProductsArr.isEmpty) {
+                cell.product = vm.paidProductsArr[indexPath.row]
+                cell.buyButtonHandler = { product in
+                    IAPProducts.store.buyProduct(product)
+                }
+            }
+            if (currentAppliedTheme == vm.availablePaidThemes[indexPath.row]) {
+                if let cellAttributedText = cell.textLabel?.attributedText {
+                    cell.textLabel?.attributedText = NSAttributedString(string: "\(cellAttributedText.string) Applied", attributes: vm.theme?.currentTheme.tableView.settingsCell)
+                }
+            }
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let lastSelection = delegate?.viewModel?.lastSelection  {
-            tableView.cellForRow(at: lastSelection)?.accessoryType = .none
-        }
-        tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        guard let vm = delegate?.viewModel else { return }
         delegate?.viewModel?.lastSelection = indexPath
         tableView.deselectRow(at: indexPath, animated: true)
         
-        //load new theme
-        guard let delegate = delegate else {
-            return
+        //present new viewcontroller
+        var themeProtocol: ThemeProtocol?
+        
+        if (indexPath.section == 0) {
+            if let theme = delegate?.viewModel!.themeKeyForRow(indexPath: indexPath) {
+                themeProtocol = theme
+                guard let selectedTheme = themeProtocol else { return }
+
+                delegate?.showPreview(selectedTheme, nil)
+            }
         }
         
-        delegate.changeTheme(indexPath: indexPath)
+        if (indexPath.section == 1) {
+            if let theme = delegate?.viewModel!.themeKeyForRow(indexPath: indexPath) {
+                themeProtocol = theme
+                guard let selectedTheme = themeProtocol else { return }
+                if (vm.paidProductsArr.count == 0) {
+                    delegate?.showPreview(selectedTheme, nil)
+                } else {
+                    delegate?.showPreview(selectedTheme, vm.paidProductsArr[indexPath.row])
+                }
+
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {

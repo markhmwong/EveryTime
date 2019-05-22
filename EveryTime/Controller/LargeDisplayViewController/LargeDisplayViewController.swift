@@ -152,7 +152,7 @@ class LargeDisplayViewController: ViewControllerBase {
             do {
                 try recipe.adjustTime(by: time, selectedStep: Int(priority))
             } catch StepOptionsError.StepAlreadyComplete(let message) {
-                print(message)
+//                print(message)
                 ()//show alert box
             } catch {
                 ()

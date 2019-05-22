@@ -7,56 +7,121 @@
 //
 
 import UIKit
+import StoreKit
 
 class ThemeViewModel {
-    
-    enum Themes: Int {
-        case LightMint
-        case DarkMint
-        case DeepMint
+    typealias ProductIdentifier = String
+    // References the sections in the theme table view
+    enum ThemeType: Int {
+        case FreeThemes
+        case PaidThemes
     }
     
-    let dataSource = ["Light Mint", "Dark Mint", "Deep Mint"] // Deep Mint
+    enum FreeThemes: Int {
+        case LightMint = 0
+        case DarkMint
+        case White
+    }
+    
+    enum PaidThemes: String {
+        case DeepMint = "deepminttheme"
+        case Orange = "orangetheme"
+        case Neutral = "neutraltheme"
+    }
+    
+    var dataSource: [[String]] = [[StandardLightTheme.productIdentifier, StandardDarkTheme.productIdentifier, WhiteTheme.productIdentifier], ["Loading themes..."]]
+    
+    var paidProductsArr: [SKProduct] = []
+    
+    // Mark: - May need to be in the same order as the app store connect
+    var availablePaidThemes: [ProductIdentifier] = [DeepMintTheme.productIdentifier , NeutralTheme.productIdentifier, OrangeTheme.productIdentifier]
     
     var delegate: ThemeViewController?
     
     var theme: ThemeManager?
     
+    var selectedTheme: ThemeProtocol?
+    
     var lastSelection: IndexPath?
 
     let themeCellId = "ThemeCellId"
-
+    
     init(theme: ThemeManager?) {
         self.theme = theme
     }
     
-    func applyNewTheme(indexPath: IndexPath) {
-        
-        guard let themeOption = Themes.init(rawValue: indexPath.row) else {
-            return
+    func applyNewTheme(chosenTheme: ThemeProtocol) {
+        if let theme = theme {
+            ThemeManager.saveTheme(theme: resourceNameForProductIdentifier(chosenTheme.productIdentifier()) ?? "lightmint")
+            theme.currentTheme = chosenTheme
+            theme.currentTheme.applyTheme()
+            delegate?.refreshView()
         }
+    }
+    
+    func grabThemeProducts() {
+        IAPProducts.store.requestProducts { [weak self](success, products) in
+            guard let self = self else { return }
+            if (success) {
+                
+                guard let products = products else { return }
+                self.paidProductsArr = products
+                self.dataSource[ThemeType.PaidThemes.rawValue].remove(at: 0) //remove loading cell
+                for product in products {
+                    self.dataSource[ThemeType.PaidThemes.rawValue].append(product.localizedTitle)
+                }
+                
+                self.delegate?.mainView.tableView.reloadData()
+            } else {
+                self.dataSource[ThemeType.PaidThemes.rawValue].remove(at: 0) //remove loading cell
+                self.dataSource[ThemeType.PaidThemes.rawValue].append("Trouble loading, please refresh")
+                self.delegate?.mainView.tableView.reloadData()
+            }
+            self.delegate?.mainView.tableView.refreshControl?.endRefreshing()
+        }
+    }
+    
+    func themeKeyForRow(indexPath: IndexPath) -> ThemeProtocol {
         
-        switch themeOption {
-            case .LightMint:
-                if let theme = theme {
-                    theme.currentTheme = StandardLightTheme()
-                    theme.currentTheme.applyTheme()
-                    delegate?.refreshView()
-                }
-
-            case .DarkMint:
-                if let theme = theme {
-                    theme.currentTheme = StandardDarkTheme()
-                    theme.currentTheme.applyTheme()
-                    delegate?.refreshView()
-                }
-            case .DeepMint:
-                if let theme = theme {
-                    theme.currentTheme = DeepMint()
-                    theme.currentTheme.applyTheme()
-                    delegate?.refreshView()
+        if let type = ThemeType.init(rawValue: indexPath.section) {
+            switch type {
+            case .FreeThemes:
+                return freeThemeKey(row: indexPath.row)
+            case .PaidThemes:
+                return paidThemeKey(row: indexPath.row)
             }
         }
-        UserDefaults.standard.set(themeOption.rawValue, forKey: "theme")
+        return StandardLightTheme()
+    }
+    
+    func freeThemeKey(row: Int) -> ThemeProtocol {
+        
+        if let theme = FreeThemes.init(rawValue: row) {
+            switch theme {
+                case .LightMint:
+                    return StandardLightTheme()
+                case .DarkMint:
+                    return StandardDarkTheme()
+                case .White:
+                    return WhiteTheme()
+            }
+        }
+        return StandardLightTheme()
+    }
+    
+    func paidThemeKey(row: Int) -> ThemeProtocol {
+        
+        let productFullId = availablePaidThemes[row]
+        
+        switch productFullId {
+            case IAPProducts.DeepMintThemeId:
+                return DeepMintTheme()
+            case IAPProducts.NeutralId:
+                return NeutralTheme()
+            case IAPProducts.OrangeId:
+                return OrangeTheme()
+            default:
+                return StandardLightTheme()
+        }
     }
 }

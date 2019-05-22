@@ -22,8 +22,9 @@ class RecipeOptionsModalViewController: ViewControllerBase, UIGestureRecognizerD
     
     enum OptionsMenu: Int {
         case Add
-        case Edit
+        case EditStep
         case Shuffle
+        //case EditRecipe
         case Reset
         case Delete
         case Close
@@ -92,13 +93,13 @@ class RecipeOptionsModalViewController: ViewControllerBase, UIGestureRecognizerD
     
     func isEditOptionEnabled() {
         isEditRowEnabled = true
-        let cell = tableView.cellForRow(at: IndexPath(item: OptionsMenu.Edit.rawValue, section: 0))
+        let cell = tableView.cellForRow(at: IndexPath(item: OptionsMenu.EditStep.rawValue, section: 0))
 
         cell?.isUserInteractionEnabled = isEditRowEnabled
-        dataSource[OptionsMenu.Edit.rawValue] = "Edit Step"
+        dataSource[OptionsMenu.EditStep.rawValue] = "Edit Step"
         DispatchQueue.main.async {
-            cell?.textLabel?.attributedText = NSAttributedString(string: self.dataSource[OptionsMenu.Edit.rawValue], attributes: self.viewModel?.theme?.currentTheme.tableView.recipeCellStepName)
-            self.tableView.reloadRows(at: [IndexPath(item: OptionsMenu.Edit.rawValue, section: 0)], with: .none)
+            cell?.textLabel?.attributedText = NSAttributedString(string: self.dataSource[OptionsMenu.EditStep.rawValue], attributes: self.viewModel?.theme?.currentTheme.tableView.recipeCellStepName)
+            self.tableView.reloadRows(at: [IndexPath(item: OptionsMenu.EditStep.rawValue, section: 0)], with: .none)
         }
     }
     
@@ -123,9 +124,9 @@ extension RecipeOptionsModalViewController: UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
-        if (indexPath.row == OptionsMenu.Edit.rawValue && !isEditRowEnabled) {
-            dataSource[OptionsMenu.Edit.rawValue] = "Edit Step - Select A Step"
-            cell.textLabel?.attributedText = NSAttributedString(string: dataSource[OptionsMenu.Edit.rawValue], attributes: viewModel?.theme?.currentTheme.tableView.recipeModalOption)
+        if (indexPath.row == OptionsMenu.EditStep.rawValue && !isEditRowEnabled) {
+            dataSource[OptionsMenu.EditStep.rawValue] = "Edit Step - Select A Step"
+            cell.textLabel?.attributedText = NSAttributedString(string: dataSource[OptionsMenu.EditStep.rawValue], attributes: viewModel?.theme?.currentTheme.tableView.recipeModalOption)
             cell.textLabel?.alpha = 0.5
             cell.isUserInteractionEnabled = false
         }
@@ -161,13 +162,15 @@ extension RecipeOptionsModalViewController: UITableViewDelegate, UITableViewData
         switch option {
         case .Add:
             delegate?.handleAddStep()
+//        case .EditRecipe:
+//            delegate?.handleEditRecipe()
         case .Delete:
             delegate?.handleDelete()
         case .Reset:
             delegate?.handleReset()
         case .Shuffle:
             delegate?.handleShuffle()
-        case .Edit:
+        case .EditStep:
             delegate?.handleEditStep()
         case .Close:
             delegate?.handleClose()

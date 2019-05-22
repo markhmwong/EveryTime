@@ -30,8 +30,8 @@ class WhatsNewView: UIView {
     }()
     
     lazy var navView: NavView = {
-        let view = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: nil, titleLabel: titleLabel)
-        view.translatesAutoresizingMaskIntoConstraints = false
+        let view = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: nil, titleLabel: titleLabel, topScreenAnchor: self.topAnchor)
+        view.backgroundFillerColor(color: delegate?.viewModel?.theme?.currentTheme.navigation.backgroundColor)
         return view
     }()
     

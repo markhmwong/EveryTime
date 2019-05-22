@@ -23,22 +23,19 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
     
     private var stepName: String? = nil
 
+    
+    
     override var entity: RecipeEntity? {
         didSet {
             guard let r = entity, let theme = theme else {
                 return
             }
             prepareLabels(recipe: r)
-            let bg = r.isPaused ? Theme.View.RecipeCell.RecipeCellPauseButtonInactive : Theme.View.RecipeCell.RecipeCellPauseButtonActive
+            let bg = !r.isPaused ? theme.currentTheme.tableView.pauseButtonBackgroundInactive : theme.currentTheme.tableView.pauseButtonBackgroundActive
             let textColor: UIColor = r.isPaused ? theme.currentTheme.tableView.pausedTextColor : theme.currentTheme.tableView.cellTextColor
-            let highlightAlpha: CGFloat = r.isPaused ? 0.85 : 0.25
-            updatePauseButtonView(textColor, highlightAlpha, bg)
-            
-            if (r.isPaused) {
-                bringSubviewToFront(timerHighlight)
-            } else {
-                bringSubviewToFront(recipeTimeLabel)
-            }
+//            let highlightAlpha: CGFloat = r.isPaused ? 0.85 : 0.25
+            updatePauseButtonView(textColor, bg)
+
         }
     }
     
@@ -63,10 +60,20 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         return label
     }()
 
-    private var pauseButton: UIButton = {
+    private lazy var pauseButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = Theme.View.RecipeCell.RecipeCellPauseButtonActive
+        button.backgroundColor = theme?.currentTheme.tableView.pauseButtonBackgroundActive
         button.titleEdgeInsets = UIEdgeInsets(top: -10,left: 0,bottom: -10,right: 0)
+        button.layer.cornerRadius = 8.0
+        button.contentEdgeInsets = UIEdgeInsets(top: 5.0, left: 12.0, bottom: 5.0, right: 12.0)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private lazy var resetButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = theme?.currentTheme.tableView.pauseButtonBackgroundActive
+        button.setTitle("reset", for: .normal)
         button.layer.cornerRadius = 8.0
         button.contentEdgeInsets = UIEdgeInsets(top: 5.0, left: 12.0, bottom: 5.0, right: 12.0)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -93,13 +100,6 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
-    private lazy var timerHighlight: UIView = {
-        let view = UIView()
-//        view.backgroundColor = Theme.View.RecipeCell.MainViewTimerCellHighlight
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
 
     private var textLabelPadding: CGFloat {
         switch UIDevice.current.screenType {
@@ -113,6 +113,17 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
     override func layoutSubviews() {
         super.layoutSubviews()
         gl.frame = bounds
+        let leftSidePadding: CGFloat = 25.0
+        recipeNameLabel.anchorView(top: contentView.topAnchor, bottom: nil, leading: contentView.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 10.0, left: leftSidePadding, bottom: 0.0, right: 0.0), size: .zero)
+        recipeTimeLabel.anchorView(top: contentView.centerYAnchor, bottom: nil, leading: recipeNameLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0), size: .zero)
+        stepNameLabel.anchorView(top: nil, bottom: contentView.centerYAnchor, leading: recipeTimeLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0), size: .zero)
+        bottomBorder.anchorView(top: nil, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: CGSize(width: 0.0, height: 1.0))
+
+        pauseButtonView.anchorView(top: contentView.topAnchor, bottom: contentView.bottomAnchor, leading: nil, trailing: contentView.trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: CGSize(width: 80.0, height: 0.0))
+        let pauseButtonSize = CGSize(width: 35.0, height: 30.0)
+        pauseButton.anchorView(top: nil, bottom: nil, leading: nil, trailing: contentView.trailingAnchor, centerY: pauseButtonView.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: -25.0), size: pauseButtonSize)
+        
+        resetButton.anchorView(top: nil, bottom: contentView.bottomAnchor, leading: nil, trailing: nil, centerY: nil, centerX: contentView.centerXAnchor, padding: .zero, size: .zero)
     }
     
     func prepareLabels(recipe: RecipeEntity) {
@@ -124,54 +135,56 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         recipeTimeLabel.attributedText = NSAttributedString(string: recipe.timeRemainingForCurrentStepToString(), attributes: theme.currentTheme.tableView.mainViewRecipeTime)
         
         bottomBorder.backgroundColor = theme.currentTheme.tableView.bottomBorderColor
-        timerHighlight.backgroundColor = theme.currentTheme.tableView.highlightColor
         
         addSubview(recipeNameLabel)
         addSubview(recipeTimeLabel)
         addSubview(stepNameLabel)
         addSubview(bottomBorder)
-        addSubview(timerHighlight)
         labelAutoLayout()
     }
     
+    // to remove
     func labelAutoLayout() {
-        let leftSidePadding: CGFloat = 25.0
-        recipeNameLabel.anchorView(top: contentView.topAnchor, bottom: nil, leading: contentView.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 10.0, left: leftSidePadding, bottom: 0.0, right: 0.0), size: .zero)
-        recipeTimeLabel.anchorView(top: contentView.centerYAnchor, bottom: nil, leading: recipeNameLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0), size: .zero)
-        stepNameLabel.anchorView(top: nil, bottom: contentView.centerYAnchor, leading: recipeTimeLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0), size: .zero)
-        timerHighlight.anchorView(top: nil, bottom: nil, leading: recipeTimeLabel.leadingAnchor, trailing: recipeTimeLabel.trailingAnchor, centerY: recipeTimeLabel.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0), size: CGSize(width: 0.0, height: 10.0))
-        bottomBorder.anchorView(top: nil, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: CGSize(width: 0.0, height: 1.0))
+//        let leftSidePadding: CGFloat = 25.0
+//        recipeNameLabel.anchorView(top: contentView.topAnchor, bottom: nil, leading: contentView.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 10.0, left: leftSidePadding, bottom: 0.0, right: 0.0), size: .zero)
+//        recipeTimeLabel.anchorView(top: contentView.centerYAnchor, bottom: nil, leading: recipeNameLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0), size: .zero)
+//        stepNameLabel.anchorView(top: nil, bottom: contentView.centerYAnchor, leading: recipeTimeLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0), size: .zero)
+//        bottomBorder.anchorView(top: nil, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: CGSize(width: 0.0, height: 1.0))
     }
     
     override func setupView() {
         clipsToBounds = false
-        
-
-        
-//        layer.backgroundColor = UIColor.clear.cgColor
-//        layer.masksToBounds = true
         addSubview(pauseButtonView)
-//        backgroundColor = UIColor.clear//Theme.Background.Color.CellBackgroundColor
-
         pauseButton.addTarget(self, action: #selector(handlePauseButton), for: .touchUpInside)
         pauseButtonView.addSubview(pauseButton)
+        resetButton.addTarget(self, action: #selector(handleResetButton), for: .touchUpInside)
+        addSubview(resetButton)
 
-        pauseButtonView.anchorView(top: contentView.topAnchor, bottom: contentView.bottomAnchor, leading: nil, trailing: contentView.trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: CGSize(width: 80.0, height: 0.0))
-        pauseButton.anchorView(top: nil, bottom: nil, leading: nil, trailing: contentView.trailingAnchor, centerY: pauseButtonView.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: -25.0), size: CGSize(width: 35.0, height: 18.0))
-        
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         recipeNameLabel.removeFromSuperview()
         recipeTimeLabel.removeFromSuperview()
-        timerHighlight.removeFromSuperview()
         stepNameLabel.removeFromSuperview()
     }
     
     @objc func handlePauseButton() {
         updatePauseState()
         CoreDataHandler.saveContext()
+    }
+    
+    @objc func handleResetButton() {
+        guard let mvc = mainViewController else {
+            //TODO: - error
+            return
+        }
+        
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.prepare()
+        generator.impactOccurred()
+        
+        
     }
     
     func updatePauseState() {
@@ -190,20 +203,20 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
                 return
             }
             
-            let bg = r.isPaused ? Theme.View.RecipeCell.RecipeCellPauseButtonActive : Theme.View.RecipeCell.RecipeCellPauseButtonInactive
+            let pauseBackground = r.isPaused ? theme.currentTheme.tableView.pauseButtonBackgroundInactive : theme.currentTheme.tableView.pauseButtonBackgroundActive
             let textColor = !r.isPaused ? theme.currentTheme.tableView.pausedTextColor : theme.currentTheme.tableView.cellTextColor
-            let highlightAlpha: CGFloat = r.isPaused ? 0.25 : 0.95
+//            let timeAlpha: CGFloat = r.isPaused ? 0.25 : 0.95
 
             if (r.isPaused) {
                 //will unpause
                 mvc.unpauseEntireRecipe(recipe: r)
-                bringSubviewToFront(recipeTimeLabel)
-                self.updatePauseButtonView(textColor, highlightAlpha, bg)
+//                bringSubviewToFront(recipeTimeLabel)
+                self.updatePauseButtonView(textColor, pauseBackground)
             } else {
                 mvc.pauseEntireRecipe(recipe: r)
-                bringSubviewToFront(timerHighlight)
+//                bringSubviewToFront(timerHighlight)
                 let id = "\(r.recipeName!).\(r.createdDate!)"
-                self.updatePauseButtonView(textColor, highlightAlpha, bg)
+                self.updatePauseButtonView(textColor, pauseBackground)
                 
                 LocalNotificationsService.shared.notificationCenterInstance().removePendingNotificationRequests(withIdentifiers: [id])
             }
@@ -213,18 +226,17 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
     func updatePauseHighlight() {
         if let r = entity {
             if (r.isPaused) {
-                bringSubviewToFront(timerHighlight)
+//                bringSubviewToFront(timerHighlight)
             } else {
-                bringSubviewToFront(recipeTimeLabel)
+//                bringSubviewToFront(recipeTimeLabel)
             }
         }
     }
     
-    func updatePauseButtonView(_ color: UIColor, _ alpha: CGFloat, _ bg: UIColor) {
+    func updatePauseButtonView(_ color: UIColor,_ bg: UIColor) {
         DispatchQueue.main.async {
             self.pauseButton.backgroundColor = bg
             self.recipeTimeLabel.textColor = color
-            self.timerHighlight.alpha = alpha
         }
     }
     
@@ -273,7 +285,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         selectionFadeAnimation.duration = 0.15
         selectionFadeAnimation.autoreverses = true
         selectionFadeAnimation.toValue = [
-            UIColor(red: 0.5, green: 0.55, blue: 0.5, alpha: 1.0).cgColor,
+            UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0).cgColor,
             UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0).cgColor
         ]
         selectionFadeAnimation.fillMode = CAMediaTimingFillMode.forwards

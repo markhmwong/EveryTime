@@ -79,7 +79,7 @@ class AddRecipeViewController: UIViewController {
             vm.recipeEntity.recipeName = mainView.recipeNameTextField?.text
             
             let firstStep = vm.dataSource[0]
-            vm.recipeEntity.currStepName = firstStep.stepName ?? "Step Name"
+            vm.recipeEntity.updateStepInRecipe(firstStep)
             vm.recipeEntity.addToStep(NSSet(array: vm.dataSource))
             vm.recipeEntity.startDate = Date()
             vm.recipeEntity.pauseStartDate = vm.recipeEntity.startDate

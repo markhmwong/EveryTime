@@ -33,7 +33,7 @@ struct FontStandardDarkTheme: FontThemeProtocol {
         
         var floatValue: Float {
             switch self {
-            case .General: return 0.5
+                case .General: return 0.5
             }
         }
     }

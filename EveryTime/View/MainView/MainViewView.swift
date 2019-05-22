@@ -45,7 +45,8 @@ class MainViewView: UIView {
     }()
     
     lazy var navView: NavView = {
-        let view = NavView(frame: .zero, leftNavItem: leftNavItemButton, rightNavItem: rightNavItemButton, titleLabel: appNameLabel)
+        let view = NavView(frame: .zero, leftNavItem: leftNavItemButton, rightNavItem: rightNavItemButton, titleLabel: appNameLabel, topScreenAnchor: self.topAnchor)
+        view.backgroundFillerColor(color: delegate?.viewModel?.theme?.currentTheme.navigation.backgroundColor)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -66,7 +67,7 @@ class MainViewView: UIView {
         view.dataSource = delegate
         view.delegate = delegate
         view.dragInteractionEnabled = true
-        view.backgroundColor = .clear
+        view.backgroundColor = delegate?.viewModel?.theme?.currentTheme.tableView.backgroundColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -87,6 +88,7 @@ class MainViewView: UIView {
             return
         }
         theme.currentTheme.applyTheme()
+        backgroundColor = theme.currentTheme.generalBackgroundColour
         addSubview(collView)
         addSubview(navView)
         collView.register(MainViewCell.self, forCellWithReuseIdentifier: CollectionCellIds.RecipeCell.rawValue)
@@ -118,6 +120,7 @@ class MainViewView: UIView {
     func refreshNavView() {
         guard let theme = delegate.viewModel?.theme else { return }
         backgroundColor = theme.currentTheme.generalBackgroundColour
+        navView.backgroundFillerColor(color: theme.currentTheme.navigation.backgroundColor)
         navView.rightNavItem?.setAttributedTitle(NSAttributedString(string: "Add", attributes: theme.currentTheme.navigation.item), for: .normal)
         navView.leftNavItem?.setAttributedTitle(NSAttributedString(string: "Settings", attributes: theme.currentTheme.navigation.item), for: .normal)
         navView.titleLabel?.attributedText = NSAttributedString(string: Bundle.appName(), attributes: theme.currentTheme.navigation.title)
@@ -157,7 +160,7 @@ class MainViewView: UIView {
         if (index != -1) {
             let cell = collView.cellForItem(at: IndexPath(row: index, section: 0)) as! MainViewCell
             //animate bg colour
-            cell.animateCellForCompleteStep()
+//            cell.animateCellForCompleteStep()
         }
     }
     

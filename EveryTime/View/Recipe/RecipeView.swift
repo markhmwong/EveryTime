@@ -73,11 +73,12 @@ class RecipeView: UIView {
     }
     
     func setupView() {
-        navView = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: settingsButton)
+        navView = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: settingsButton, titleLabel: nil, topScreenAnchor: self.topAnchor)
         guard let nav = navView, let vm = delegate?.viewModel else {
             return
         }
-        
+        nav.backgroundFillerColor(color: vm.theme?.currentTheme.navigation.backgroundColor)
+
         tableView.backgroundColor = vm.theme?.currentTheme.tableView.backgroundColor
         
         tableView.delegate = delegate

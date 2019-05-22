@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import MediaPlayer
 
 
 
@@ -82,23 +83,21 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     override func viewDidLoad() {
         super.viewDidLoad()
         startTimer()
-        
-        //will need to move
-        
         view.addSubview(overlayView)
         overlayView.fillSuperView()
+        
         recipeOptionsViewController = RecipeOptionsModalViewController(delegate:self, viewModel: RecipeOptionsModalViewModel(theme: viewModel?.theme))
         guard let recipeOptionsViewController = recipeOptionsViewController else { return }
         recipeOptionsViewController.view.translatesAutoresizingMaskIntoConstraints = false
         addChild(recipeOptionsViewController)
         view.addSubview(recipeOptionsViewController.view)
-
         let heightOfRecipeOptionsModal = heightForRecipeModal()
         
         recipeOptionsViewController.view.anchorView(top: nil, bottom: nil, leading: view.leadingAnchor, trailing: nil, centerY: nil, centerX: view.centerXAnchor, padding: UIEdgeInsets(top: 0.0, left: 10.0, bottom: -10.0, right: -10.0), size: CGSize(width: 0.0, height: heightOfRecipeOptionsModal))
         
-        bottomConstraint = recipeOptionsViewController.view.topAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0)
+        bottomConstraint = (recipeOptionsViewController.view.topAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0))
         bottomConstraint.isActive = true
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -146,6 +145,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     override func prepareAutoLayout() {
         super.prepareAutoLayout()
         mainView.fillSuperView()
+
     }
 
     override func viewDidLayoutSubviews() {
@@ -464,7 +464,7 @@ extension RecipeViewControllerWithTableView {
             overlayView.addGestureRecognizer(tapGesture)
         }
         
-        // to be looked at
+        // to be looked at (incomplete)
         if (panGestureRecognizer == nil) {
             panGestureRecognizer = UIPanGestureRecognizer()
             guard let panGesture = panGestureRecognizer else {
@@ -500,7 +500,7 @@ extension RecipeViewControllerWithTableView {
             let vc = EditStepViewControllerInExistingRecipe(delegate: self, selectedRow: selectedRow, viewModel: AddStepViewModel(userSelectedValues: step, theme: viewModel?.theme))
             present(vc, animated: true, completion: nil)
         } else {
-            print("to be compeleted - select a cell warning")
+//            print("to be compeleted - select a cell warning")
         }
     }
     
@@ -561,6 +561,13 @@ extension RecipeViewControllerWithTableView {
         let vc = AddStepViewController(delegate: self, viewModel: vm)
         vc.modalPresentationStyle = .overCurrentContext
         self.present(vc, animated: true, completion: nil)
+    }
+    
+    func handleEditRecipe() {
+        recipeOptionsVisible = false
+        animateTransitionIfNeeded(state: recipeOptionsCurrentState)
+
+        
     }
 
     func handlePauseRecipe() {
