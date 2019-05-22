@@ -236,6 +236,7 @@ extension SettingsMainView: UITableViewDelegate, UITableViewDataSource {
             cell.label.textColor = UIColor.red
         } else {
             cell.label.textColor = delegate?.viewModel?.theme?.currentTheme.font.TextColour
+            cell.imageView.image = UIImage(named: "Reset_Dark")
         }
         
         return cell

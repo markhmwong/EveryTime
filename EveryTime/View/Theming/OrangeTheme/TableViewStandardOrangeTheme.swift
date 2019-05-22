@@ -11,7 +11,7 @@ import UIKit
 class TableViewStandardOrangeTheme: TableViewThemeProtocol {
     var backgroundColor: UIColor = UIColor.OrangeColourPalette.white
     var cellBackgroundColor: UIColor = UIColor.OrangeColourPalette.white
-    var cellTextColor: UIColor = UIColor.OrangeColourPalette.white
+    var cellTextColor: UIColor = UIColor.OrangeColourPalette.darkOrange
     var bottomBorderColor: UIColor = UIColor.OrangeColourPalette.white
     var pausedTextColor: UIColor = UIColor.OrangeColourPalette.orangeFaded
     var highlightColor: UIColor = UIColor.OrangeColourPalette.white //not in use
@@ -22,7 +22,7 @@ class TableViewStandardOrangeTheme: TableViewThemeProtocol {
     static var TextColor: UIColor = UIColor.OrangeColourPalette.darkOrange
     static var TextColorFaded: UIColor = UIColor.OrangeColourPalette.orangeFaded
 
-    var settingsCell: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardOrangeTheme.FontStyle.Bold.rawValue, size: FontStandardOrangeTheme.FontSize.Standard(.b2).value)!, NSAttributedString.Key.foregroundColor: NavigationStandardLightTheme.textColour, NSAttributedString.Key.kern: FontStandardOrangeTheme.FontKern.General.floatValue]
+    var settingsCell: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardOrangeTheme.FontStyle.Regular.rawValue, size: FontStandardOrangeTheme.FontSize.Standard(.b2).value)!, NSAttributedString.Key.foregroundColor: TableViewStandardOrangeTheme.TextColor, NSAttributedString.Key.kern: FontStandardOrangeTheme.FontKern.General.floatValue]
     
     var mainViewStepName: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardOrangeTheme.FontStyle.Bold.rawValue, size: FontStandardOrangeTheme.FontSize.Standard(.b3).value)!, NSAttributedString.Key.foregroundColor: TableViewStandardOrangeTheme.TextColor, NSAttributedString.Key.kern: FontStandardOrangeTheme.FontKern.General.floatValue]
     var mainViewRecipeName: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardOrangeTheme.FontStyle.Regular.rawValue, size: FontStandardOrangeTheme.FontSize.Standard(.b0).value)!, NSAttributedString.Key.foregroundColor: TableViewStandardOrangeTheme.TextColor, NSAttributedString.Key.kern: FontStandardOrangeTheme.FontKern.General.floatValue]

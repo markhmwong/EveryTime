@@ -153,6 +153,11 @@ class MainViewController: ViewControllerBase {
             self.mainView.collView.reloadItems(at: self.mainView.collView.indexPathsForVisibleItems)
         }
     }
+    
+    func resetCurrentStep(rEntity: RecipeEntity) {
+        guard let vm = viewModel else { return }
+        vm.resetCurrentStepFor(recipeEntity: rEntity)
+    }
 }
 
 //MARK: - UI
@@ -216,7 +221,6 @@ extension MainViewController {
                     self.mainView.collView.deleteItems(at: [IndexPath(item: index, section: 0)])
                 }
                 if (CoreDataHandler.deleteEntity(entity: RecipeEntity.self, createdDate: date)) {
-//                    print("could not delete")
                 }
             }
             

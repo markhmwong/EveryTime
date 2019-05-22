@@ -1,19 +1,18 @@
 #  Feature Scratch pad
 
-## Version 1.1.18 [Current] control feature update and new theme
+## Version 1.1.1 [Current] tipjar
+tip jar and loop
 
-enlarge header of recipe screen
+
+
+
 forward and back controls on main view and recipe view
-reset recipe on main view
 loop
 
 code cleaning
 
-free themes
-white - cleaner than your bathroom (done)
-
-paid
-orange - ginger like your cat (done)
+tron theme (blue/orange)
+80s theme (blue/purple)
 
 # Features to be done in this version
 IAP

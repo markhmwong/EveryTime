@@ -162,9 +162,11 @@ extension RecipeEntity {
     /**
         Reset entire recipe
      
-        Returns indexPaths to reload
+        Returns IndexPaths to reload. The IndexPaths to reload are needed in the recipe view
+        when the steps are reset, the specific cells in the tableview must all be reloaded to reflect
+        the new data.
      
-        Doubles as a full reset and a partial reset
+        Doubles as a recipe reset and a partial recipe reset
      */
     func resetEntireRecipeTo(toStep: Int = 0) -> [IndexPath] {
         let sortedSet = sortStepsByPriority()
@@ -180,9 +182,7 @@ extension RecipeEntity {
             
             if (index >= toStep) {
                 step.resetStep()
-
-                totalTimeRemaining += step.timeRemaining
-                
+                totalTimeRemaining += step.timeRemaining                
                 if (step.priority == toStep) {
                     currStepPriority = step.priority
                     currStepTimeRemaining = step.timeRemaining

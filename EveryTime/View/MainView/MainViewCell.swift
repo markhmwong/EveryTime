@@ -62,7 +62,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
 
     private lazy var pauseButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = theme?.currentTheme.tableView.pauseButtonBackgroundActive
+//        button.backgroundColor = theme?.currentTheme.tableView.cellTextColor
         button.titleEdgeInsets = UIEdgeInsets(top: -10,left: 0,bottom: -10,right: 0)
         button.layer.cornerRadius = 8.0
         button.contentEdgeInsets = UIEdgeInsets(top: 5.0, left: 12.0, bottom: 5.0, right: 12.0)
@@ -70,12 +70,11 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         return button
     }()
     
-    private lazy var resetButton: UIButton = {
+    lazy var resetButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = theme?.currentTheme.tableView.pauseButtonBackgroundActive
-        button.setTitle("reset", for: .normal)
+        let image = UIImage(named: "Reset_Light_One")?.withRenderingMode(.alwaysTemplate)
+        button.setImage(image, for: .normal)
         button.layer.cornerRadius = 8.0
-        button.contentEdgeInsets = UIEdgeInsets(top: 5.0, left: 12.0, bottom: 5.0, right: 12.0)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -123,7 +122,8 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         let pauseButtonSize = CGSize(width: 35.0, height: 30.0)
         pauseButton.anchorView(top: nil, bottom: nil, leading: nil, trailing: contentView.trailingAnchor, centerY: pauseButtonView.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: -25.0), size: pauseButtonSize)
         
-        resetButton.anchorView(top: nil, bottom: contentView.bottomAnchor, leading: nil, trailing: nil, centerY: nil, centerX: contentView.centerXAnchor, padding: .zero, size: .zero)
+        resetButton.anchorView(top: nil, bottom: contentView.bottomAnchor, leading: nil, trailing: nil, centerY: nil, centerX: contentView.centerXAnchor, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: -7.0, right: 0.0), size: CGSize(width: 20.0, height: 20.0))
+        
     }
     
     func prepareLabels(recipe: RecipeEntity) {
@@ -140,7 +140,6 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         addSubview(recipeTimeLabel)
         addSubview(stepNameLabel)
         addSubview(bottomBorder)
-        labelAutoLayout()
     }
     
     // to remove
@@ -184,7 +183,12 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         generator.prepare()
         generator.impactOccurred()
         
-        
+        guard let rEntity = entity else { return }
+        mvc.resetCurrentStep(rEntity: rEntity)
+        rEntity.wasReset = true
+//        handle localnotifications
+        let id = LocalNotificationsService.shared.locationNotificationIdentifierFor(recipe: rEntity)
+        LocalNotificationsService.shared.addRecipeWideNotification(identifier: id, notificationContent: [NotificationDictionaryKeys.Title.rawValue : rEntity.recipeName!], timeRemaining: rEntity.totalTimeRemaining)
     }
     
     func updatePauseState() {
@@ -199,9 +203,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         
         //should be done in the model. let the VC's VM update the cell data
         if let r = entity {
-            guard let theme = theme else {
-                return
-            }
+            guard let theme = theme else { return }
             
             let pauseBackground = r.isPaused ? theme.currentTheme.tableView.pauseButtonBackgroundInactive : theme.currentTheme.tableView.pauseButtonBackgroundActive
             let textColor = !r.isPaused ? theme.currentTheme.tableView.pausedTextColor : theme.currentTheme.tableView.cellTextColor

@@ -11,8 +11,8 @@ import UIKit
 class ButtonStandardOrangeTheme: ButtonThemeProtocol {
     var text: [NSAttributedString.Key : Any] = [
         NSAttributedString.Key.font: UIFont(name: FontStandardOrangeTheme.FontStyle.Bold.rawValue, size: FontStandardOrangeTheme.FontSize.Standard(.b3).value)!,
-        NSAttributedString.Key.foregroundColor: NavigationStandardWhiteTheme.textColour,
+        NSAttributedString.Key.foregroundColor: NavigationStandardOrangeTheme.textColour,
         NSAttributedString.Key.kern: FontStandardOrangeTheme.FontKern.General.floatValue,
     ]
-    var backgroundColor: UIColor = UIColor.OrangeColourPalette.white
+    var backgroundColor: UIColor = UIColor.OrangeColourPalette.orange
 }

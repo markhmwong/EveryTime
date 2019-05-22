@@ -16,6 +16,8 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
     
     var viewModel: RecipeViewModel?
     
+    lazy var recipeControlsView = RecipeControlsView(delegate: self, theme: viewModel?.theme)
+    
     lazy var mainView: RecipeView = {
         let view = RecipeView(delegate: self)
         view.backgroundColor = viewModel?.theme?.currentTheme.generalBackgroundColour
@@ -305,11 +307,11 @@ extension RecipeViewControllerWithTableView {
         alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
             var indexPathsToReloadArr: [IndexPath] = []
             indexPathsToReloadArr = self.recipe.resetEntireRecipeTo()
-            self.recipe.wasReset = true
+            self.recipe.wasReset = true //important for resets
 
-            let id = "\(self.recipe.recipeName!).\(self.recipe.createdDate!)"
+            let id = LocalNotificationsService.shared.locationNotificationIdentifierFor(recipe: self.recipe)
             if (self.recipe.isPaused) {
-                //remove the notification because the recipe is paused, we don't need the notification to be pending to be delivered.
+                //remove the notification because the recipe is paused, we don't need the notification to be pending.
                 LocalNotificationsService.shared.notificationCenterInstance().removePendingNotificationRequests(withIdentifiers: [id])
             } else {
                 //reset localnotification
@@ -318,6 +320,7 @@ extension RecipeViewControllerWithTableView {
             
             self.startTimer()
             CoreDataHandler.saveContext()
+            
             DispatchQueue.main.async {
                 self.mainView.tableView.reloadRows(at: indexPathsToReloadArr, with: .none)
                 self.executeBottomViewState(.ShowAddStep)

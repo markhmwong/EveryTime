@@ -41,6 +41,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionCellIds.RecipeCell.rawValue, for: indexPath) as! MainViewCell
         cell.theme = viewModel?.theme
+        cell.resetButton.tintColor = viewModel?.theme?.currentTheme.tableView.cellTextColor
         cell.backgroundColor = viewModel?.theme?.currentTheme.tableView.cellBackgroundColor
         cell.mainViewController = self
         cell.entity = viewModel?.dataSource[indexPath.row]
@@ -61,7 +62,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         let width = UIScreen.main.bounds.size.width - itemSpacing * CGFloat(itemsPerRow)
         
         guard let vm = viewModel else {
-            return CGSize(width: width, height: width / 2.8)
+            return CGSize(width: width, height: width / 2.6)
         }
         
         return CGSize(width: width, height: width / vm.cellSize)

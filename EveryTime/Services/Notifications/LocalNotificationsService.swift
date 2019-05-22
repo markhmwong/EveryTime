@@ -82,4 +82,9 @@ class LocalNotificationsService: NSObject {
         c.sound = UNNotificationSound.default
         return c
     }
+    
+    func locationNotificationIdentifierFor(recipe: RecipeEntity) -> String {
+        guard let name = recipe.recipeName, let createdDate = recipe.createdDate else { return "name or date incorrect" }
+        return "\(name).\(createdDate)"
+    }
 }

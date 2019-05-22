@@ -77,6 +77,14 @@ class MainViewModel {
         recipe.unpauseStepArr()
     }
     
+    func resetCurrentStepFor(recipeEntity: RecipeEntity) {
+        recipeEntity.resetEntireRecipeTo(toStep: Int(recipeEntity.currStepPriority))
+    }
+    
+    func loopRecipe(recipe: RecipeEntity) {
+        
+    }
+    
     func handleDeleteAllRecipe() {
         let alert = UIAlertController(title: "Are you sure?", message: "This will delete every recipes", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))

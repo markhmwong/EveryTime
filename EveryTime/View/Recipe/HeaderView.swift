@@ -9,7 +9,9 @@
 import UIKit
 
 class HeaderView: UIView {
+    
     var delegate: RecipeViewControllerWithTableView?
+    
     var theme: ThemeManager?
     
     private lazy var innerPaddedView: UIView = {
@@ -74,12 +76,13 @@ class HeaderView: UIView {
     private lazy var fullScreenButton: UIButton = {
         let button = UIButton()
         let appliedTheme = theme?.currentTheme.productIdentifier()
-
+        
+        //needs to be updated, maybe create a light/dark theme classifier and tint it like mainview cell
         switch appliedTheme {
             case StandardDarkTheme.productIdentifier, DeepMintTheme.productIdentifier:
-                button.setImage(UIImage(named: "FullScreenDark.png"), for: .normal)
-            case StandardLightTheme.productIdentifier, NeutralTheme.productIdentifier:
                 button.setImage(UIImage(named: "FullScreenLight.png"), for: .normal)
+            case StandardLightTheme.productIdentifier, NeutralTheme.productIdentifier, OrangeTheme.productIdentifier, WhiteTheme.productIdentifier:
+                button.setImage(UIImage(named: "FullScreenDark.png"), for: .normal)
             default:
                 button.setImage(UIImage(named: "FullScreenLight.png"), for: .normal)
         }
@@ -138,9 +141,9 @@ class HeaderView: UIView {
         subtractTimeButton.alpha = 0.4
         
         innerPaddedView.addSubview(saveButton)
-        innerPaddedView.addSubview(additionalTimeButton)
-        innerPaddedView.addSubview(subtractTimeButton)
-        innerPaddedView.addSubview(resetTimeButton)
+//        innerPaddedView.addSubview(additionalTimeButton)
+//        innerPaddedView.addSubview(subtractTimeButton)
+//        innerPaddedView.addSubview(resetTimeButton)
     }
     
     private func setupAutoLayout() {
@@ -174,17 +177,17 @@ class HeaderView: UIView {
         headerNextStepTitleLabel.topAnchor.constraint(equalTo: headerNextStepTimeLabel.bottomAnchor, constant: 0.0).isActive = true
         
         let screenSize = UIScreen.main.bounds.size
-        additionalTimeButton.trailingAnchor.constraint(equalTo: innerPaddedView.leadingAnchor, constant: (screenSize.width / 8) * 2).isActive = true
-        additionalTimeButton.bottomAnchor.constraint(equalTo: innerPaddedView.bottomAnchor, constant: -10).isActive = true
-        additionalTimeButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.18).isActive = true
-
-        resetTimeButton.centerXAnchor.constraint(equalTo: innerPaddedView.centerXAnchor, constant: 0).isActive = true
-        resetTimeButton.bottomAnchor.constraint(equalTo: innerPaddedView.bottomAnchor, constant: -10).isActive = true
-        resetTimeButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.18).isActive = true
-
-        subtractTimeButton.leadingAnchor.constraint(equalTo: innerPaddedView.trailingAnchor, constant: -(screenSize.width / 8) * 2).isActive = true
-        subtractTimeButton.bottomAnchor.constraint(equalTo: innerPaddedView.bottomAnchor, constant: -10.0).isActive = true
-        subtractTimeButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.18).isActive = true
+//        additionalTimeButton.trailingAnchor.constraint(equalTo: innerPaddedView.leadingAnchor, constant: (screenSize.width / 8) * 2).isActive = true
+//        additionalTimeButton.bottomAnchor.constraint(equalTo: innerPaddedView.bottomAnchor, constant: -10).isActive = true
+//        additionalTimeButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.18).isActive = true
+//
+//        resetTimeButton.centerXAnchor.constraint(equalTo: innerPaddedView.centerXAnchor, constant: 0).isActive = true
+//        resetTimeButton.bottomAnchor.constraint(equalTo: innerPaddedView.bottomAnchor, constant: -10).isActive = true
+//        resetTimeButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.18).isActive = true
+//
+//        subtractTimeButton.leadingAnchor.constraint(equalTo: innerPaddedView.trailingAnchor, constant: -(screenSize.width / 8) * 2).isActive = true
+//        subtractTimeButton.bottomAnchor.constraint(equalTo: innerPaddedView.bottomAnchor, constant: -10.0).isActive = true
+//        subtractTimeButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.18).isActive = true
         
         saveButton.trailingAnchor.constraint(equalTo: innerPaddedView.trailingAnchor, constant: -10.0).isActive = true
         saveButton.topAnchor.constraint(equalTo: innerPaddedView.topAnchor, constant: 10.0).isActive = true

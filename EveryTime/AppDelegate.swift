@@ -92,6 +92,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     }
     
+    /**
+        KeychainWrapper.standard.set(true, forKey: OrangeTheme.productIdentifier) to temporarily enable theme
+
+    */
     func initialisePaidThemesToKeyChain() {
     
         if KeychainWrapper.standard.bool(forKey: DeepMintTheme.productIdentifier) == nil {

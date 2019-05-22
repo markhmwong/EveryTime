@@ -116,7 +116,5 @@ class SettingsViewController: ViewControllerBase  {
         }))
         present(alert, animated: true, completion: nil)
     }
-    
-
 }
 

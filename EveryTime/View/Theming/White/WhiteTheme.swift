@@ -16,7 +16,7 @@ struct WhiteTheme: ThemeProtocol {
     
     var name: String = "White"
     
-    var description: String = "Cleaner than your bathroom"
+    var description: String = "About as white as your teeth"
     
     var navigation: NavigationThemeProtocol = NavigationStandardWhiteTheme()
     

@@ -83,6 +83,14 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
         return viewModel?.dataSource.count ?? 0
     }
     
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if (section == 0) {
+            recipeControlsView = RecipeControlsView(delegate: self, theme: viewModel?.theme)
+            return recipeControlsView
+        }
+        return nil
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: mainView.stepCellId, for: indexPath) as! RecipeViewCell
         if let vm = viewModel {
@@ -124,7 +132,8 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
         
         DispatchQueue.main.async {
             tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
-            self.mainView.headerView.enableStepOptions()
+//            self.mainView.headerView.enableStepOptions()
+            self.recipeControlsView.enableStepOptions()
         }
         
         vm.stepSelected = indexPath.row
@@ -147,3 +156,5 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
         return recipeOptions.tableView.rowHeight
     }
 }
+
+
