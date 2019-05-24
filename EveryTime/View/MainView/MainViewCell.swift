@@ -70,8 +70,8 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         return button
     }()
     
-    lazy var resetButton: UIButton = {
-        let button = UIButton()
+    lazy var resetButton: StandardButton = {
+        let button = StandardButton(title: "", theme: theme)
         let image = UIImage(named: "Reset_Light_One")?.withRenderingMode(.alwaysTemplate)
         button.setImage(image, for: .normal)
         button.layer.cornerRadius = 8.0
@@ -122,7 +122,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         let pauseButtonSize = CGSize(width: 35.0, height: 30.0)
         pauseButton.anchorView(top: nil, bottom: nil, leading: nil, trailing: contentView.trailingAnchor, centerY: pauseButtonView.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: -25.0), size: pauseButtonSize)
         
-        resetButton.anchorView(top: nil, bottom: contentView.bottomAnchor, leading: nil, trailing: nil, centerY: nil, centerX: contentView.centerXAnchor, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: -7.0, right: 0.0), size: CGSize(width: 20.0, height: 20.0))
+        resetButton.anchorView(top: nil, bottom: contentView.bottomAnchor, leading: nil, trailing: nil, centerY: nil, centerX: contentView.centerXAnchor, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: -7.0, right: 0.0), size: CGSize(width: 18.0, height: 18.0))
         
     }
     
@@ -140,15 +140,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         addSubview(recipeTimeLabel)
         addSubview(stepNameLabel)
         addSubview(bottomBorder)
-    }
-    
-    // to remove
-    func labelAutoLayout() {
-//        let leftSidePadding: CGFloat = 25.0
-//        recipeNameLabel.anchorView(top: contentView.topAnchor, bottom: nil, leading: contentView.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 10.0, left: leftSidePadding, bottom: 0.0, right: 0.0), size: .zero)
-//        recipeTimeLabel.anchorView(top: contentView.centerYAnchor, bottom: nil, leading: recipeNameLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0), size: .zero)
-//        stepNameLabel.anchorView(top: nil, bottom: contentView.centerYAnchor, leading: recipeTimeLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0), size: .zero)
-//        bottomBorder.anchorView(top: nil, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: CGSize(width: 0.0, height: 1.0))
+
     }
     
     override func setupView() {
@@ -156,9 +148,15 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         addSubview(pauseButtonView)
         pauseButton.addTarget(self, action: #selector(handlePauseButton), for: .touchUpInside)
         pauseButtonView.addSubview(pauseButton)
-        resetButton.addTarget(self, action: #selector(handleResetButton), for: .touchUpInside)
-        addSubview(resetButton)
 
+
+    }
+    
+    func addResetButton() {
+        resetButton.addTarget(self, action: #selector(handleResetButton), for: .touchUpInside)
+        resetButton.theme = theme
+        resetButton.setupView("")
+        addSubview(resetButton)
     }
     
     override func prepareForReuse() {
@@ -166,6 +164,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         recipeNameLabel.removeFromSuperview()
         recipeTimeLabel.removeFromSuperview()
         stepNameLabel.removeFromSuperview()
+        resetButton.removeFromSuperview()
     }
     
     @objc func handlePauseButton() {

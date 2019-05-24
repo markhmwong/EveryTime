@@ -23,9 +23,7 @@ struct StandardDarkTheme: ThemeProtocol {
     var navigation: NavigationThemeProtocol = NavigationStandardDarkTheme()
     
     var font: FontThemeProtocol = FontStandardDarkTheme()
-    
-//    var attributedText: AttributedTextProtocol = AttributedTextDarkTheme()
-    
+        
     var button: ButtonThemeProtocol = ButtonStandardDarkTheme()
     
     var generalBackgroundColour: UIColor = UIColor.DarkMintColourPalette.lightBlack

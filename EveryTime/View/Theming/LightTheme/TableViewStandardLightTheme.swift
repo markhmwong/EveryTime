@@ -22,7 +22,7 @@ class TableViewStandardLightTheme: TableViewThemeProtocol {
     static var TextColor: UIColor = UIColor.LightMintColourPalette.darkTeal
     static var TextColorFaded: UIColor = UIColor.LightMintColourPalette.darkTealFaded
 
-    var settingsCell: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardLightTheme.FontStyle.Bold.rawValue, size: FontStandardLightTheme.FontSize.Standard(.b2).value)!, NSAttributedString.Key.foregroundColor: NavigationStandardLightTheme.textColour, NSAttributedString.Key.kern: FontStandardLightTheme.FontKern.General.floatValue]
+    var settingsCell: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardLightTheme.FontStyle.Regular.rawValue, size: FontStandardLightTheme.FontSize.Standard(.b2).value)!, NSAttributedString.Key.foregroundColor: NavigationStandardLightTheme.textColour, NSAttributedString.Key.kern: FontStandardLightTheme.FontKern.General.floatValue]
     
     var mainViewStepName: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardLightTheme.FontStyle.Bold.rawValue, size: FontStandardLightTheme.FontSize.Standard(.b3).value)!, NSAttributedString.Key.foregroundColor: TableViewStandardLightTheme.TextColor, NSAttributedString.Key.kern: FontStandardLightTheme.FontKern.General.floatValue]
     var mainViewRecipeName: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardLightTheme.FontStyle.Regular.rawValue, size: FontStandardLightTheme.FontSize.Standard(.b0).value)!, NSAttributedString.Key.foregroundColor: TableViewStandardLightTheme.TextColor, NSAttributedString.Key.kern: FontStandardLightTheme.FontKern.General.floatValue]

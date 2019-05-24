@@ -13,7 +13,7 @@ struct FontStandardWhiteTheme: FontThemeProtocol {
     
     var Bold: String { return FontStyle.Bold.rawValue }
     
-    var TextColour: UIColor { return UIColor.WhiteColourPalette.black }
+    var TextColour: UIColor { return UIColor.WhiteColourPalette.darkPurple }
     
     var recipeName: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardWhiteTheme.FontStyle.Regular.rawValue, size: FontStandardWhiteTheme.FontSize.Standard(.b0).value)!, NSAttributedString.Key.foregroundColor: TableViewStandardWhiteTheme.TextColor, NSAttributedString.Key.kern: FontStandardWhiteTheme.FontKern.General.floatValue]
     
@@ -62,6 +62,8 @@ struct FontStandardWhiteTheme: FontThemeProtocol {
                 switch UIDevice.current.screenType.rawValue {
                 case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
                     return size.rawValue * 0.8
+                case UIDevice.ScreenType.iPhoneXSMax.rawValue, UIDevice.ScreenType.iPhoneXR.rawValue:
+                    return size.rawValue * 1.2
                 default:
                     return size.rawValue
                 }

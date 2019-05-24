@@ -15,15 +15,18 @@ class SettingsMainView: UIView {
     }
     
     enum SettingsSections: Int {
-        case Data
         case Appearance
-        case Support
         case ChangeLog
+        case Support
+        case Data
+    }
+
+    enum ChangeLog: Int {
+        case Whatsnew
     }
     
     enum Appearance: Int {
-        case themes
-        case purchasableThemes
+        case Themes
     }
     
     enum Support: Int {
@@ -92,11 +95,14 @@ class SettingsMainView: UIView {
         guard let vm = delegate?.viewModel else {
             return
         }
-        
+        let promotionalHeader = SettingsPromotionalHeader(delegate: self, theme: delegate?.viewModel?.theme)
+
+        tableView.tableHeaderView = promotionalHeader
         tableView.backgroundColor = vm.theme?.currentTheme.tableView.backgroundColor
         addSubview(tableView)
         addSubview(navView)
         tableView.register(SettingsViewCell.self, forCellReuseIdentifier: settingsCellId)
+        promotionalHeader.grabTipsProducts()
     }
     
     func setupAutoLayout() {
@@ -122,24 +128,22 @@ class SettingsMainView: UIView {
 }
 
 extension SettingsMainView: UITableViewDelegate, UITableViewDataSource {
+    
     func appearance(row: Int) {
         
         guard let delegate = delegate else {
             return
         }
 
-        
         guard let appearance = Appearance(rawValue: row) else { return }
         
         switch appearance {
-        case .themes:
+        case .Themes:
             let vc = ThemeViewController(delegate: delegate, viewModel: ThemeViewModel(theme: delegate.viewModel?.theme))
             vc.viewModel?.delegate = vc
             DispatchQueue.main.async {
                 delegate.present(vc, animated: true, completion: nil)
             }
-        case .purchasableThemes:
-            () //to be done
         }
         
     }
@@ -231,14 +235,41 @@ extension SettingsMainView: UITableViewDelegate, UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: settingsCellId, for: indexPath) as! SettingsViewCell
         cell.theme = delegate?.viewModel?.theme
+        cell.backgroundColor = .clear
         cell.updateLabel(text: delegate?.viewModel?.dataSource[indexPath.section][indexPath.row] ?? "Unknown Setting")
         if (indexPath.section == SettingsSections.Data.rawValue && indexPath.item == Data.Clear.rawValue) {
-            cell.label.textColor = UIColor.red
+            cell.imageView?.image = UIImage(named: "delete_icon")?.withRenderingMode(.alwaysTemplate)
+
         } else {
-            cell.label.textColor = delegate?.viewModel?.theme?.currentTheme.font.TextColour
-            cell.imageView.image = UIImage(named: "Reset_Dark")
+            
+            if (indexPath.section == SettingsSections.Appearance.rawValue && indexPath.item == Appearance.Themes.rawValue) {
+                cell.imageView?.image = UIImage(named: "theme_small_icon")?.withRenderingMode(.alwaysTemplate)
+            }
+            
+            if (indexPath.section == SettingsSections.ChangeLog.rawValue && indexPath.item == ChangeLog.Whatsnew.rawValue) {
+                cell.imageView?.image = UIImage(named: "whatsnew_icon")?.withRenderingMode(.alwaysTemplate)
+            }
+            
+            if (indexPath.section == SettingsSections.Support.rawValue && indexPath.item == Support.About.rawValue) {
+                cell.imageView?.image = UIImage(named: "about_icon")?.withRenderingMode(.alwaysTemplate)
+            }
+            
+            if (indexPath.section == SettingsSections.Support.rawValue && indexPath.item == Support.Feedback.rawValue) {
+                cell.imageView?.image = UIImage(named: "email_icon")?.withRenderingMode(.alwaysTemplate)
+            }
+            
+            if (indexPath.section == SettingsSections.Support.rawValue && indexPath.item == Support.Share.rawValue) {
+                cell.imageView?.image = UIImage(named: "share_icon")?.withRenderingMode(.alwaysTemplate)
+            }
+            
+            if (indexPath.section == SettingsSections.Support.rawValue && indexPath.item == Support.Review.rawValue) {
+                cell.imageView?.image = UIImage(named: "review_icon")?.withRenderingMode(.alwaysTemplate)
+            }
+            
+
         }
-        
+        cell.imageView?.tintColor = delegate?.viewModel?.theme?.currentTheme.font.TextColour
+
         return cell
     }
     

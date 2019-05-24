@@ -11,7 +11,7 @@ import UIKit
 class TableViewStandardWhiteTheme: TableViewThemeProtocol {
     var backgroundColor: UIColor = UIColor.WhiteColourPalette.white
     var cellBackgroundColor: UIColor = UIColor.WhiteColourPalette.white
-    var cellTextColor: UIColor = UIColor.WhiteColourPalette.black
+    var cellTextColor: UIColor = UIColor.WhiteColourPalette.darkPurple
     var bottomBorderColor: UIColor = UIColor.WhiteColourPalette.white
     var pausedTextColor: UIColor = UIColor.WhiteColourPalette.lightGray
     var highlightColor: UIColor = UIColor.WhiteColourPalette.white //not in use
@@ -19,7 +19,7 @@ class TableViewStandardWhiteTheme: TableViewThemeProtocol {
     var pauseButtonBackgroundActive: UIColor = UIColor.WhiteColourPalette.lightGray
     var pauseButtonBackgroundInactive: UIColor = UIColor.WhiteColourPalette.gray
 
-    static var TextColor: UIColor = UIColor.WhiteColourPalette.black
+    static var TextColor: UIColor = UIColor.WhiteColourPalette.darkPurple
     static var TextColorFaded: UIColor = UIColor.WhiteColourPalette.blackFaded
 
     var settingsCell: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardWhiteTheme.FontStyle.Regular.rawValue, size: FontStandardWhiteTheme.FontSize.Standard(.b2).value)!, NSAttributedString.Key.foregroundColor: TableViewStandardWhiteTheme.TextColor, NSAttributedString.Key.kern: FontStandardWhiteTheme.FontKern.General.floatValue]

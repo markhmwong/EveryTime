@@ -41,7 +41,6 @@
 		4D507E7C22802B300074FBFB /* StandardDarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E7B22802B300074FBFB /* StandardDarkTheme.swift */; };
 		4D507E7E22802B520074FBFB /* NavigationStandardDarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E7D22802B520074FBFB /* NavigationStandardDarkTheme.swift */; };
 		4D507E8022802B760074FBFB /* FontStandardDarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E7F22802B760074FBFB /* FontStandardDarkTheme.swift */; };
-		4D507E8222802B950074FBFB /* AttributedTextDarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E8122802B950074FBFB /* AttributedTextDarkTheme.swift */; };
 		4D507E86228039C00074FBFB /* ThemeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E85228039C00074FBFB /* ThemeViewController.swift */; };
 		4D507E88228071120074FBFB /* ThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E87228071120074FBFB /* ThemeView.swift */; };
 		4D507E8B228074A20074FBFB /* ThemeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E8A228074A20074FBFB /* ThemeViewModel.swift */; };
@@ -100,7 +99,14 @@
 		4D5DCBA8228A7AC500393EF4 /* IAPProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5DCBA7228A7AC500393EF4 /* IAPProducts.swift */; };
 		4D5DCBAA228A929600393EF4 /* Keywords.md in Resources */ = {isa = PBXBuildFile; fileRef = 4D5DCBA9228A929600393EF4 /* Keywords.md */; };
 		4D6879122295029100955A9B /* RecipeControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6879112295029100955A9B /* RecipeControlsView.swift */; };
-		4D6879142295468800955A9B /* TipJarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6879132295468800955A9B /* TipJarViewController.swift */; };
+		4D68791722955BCF00955A9B /* SettingsPromotionalHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D68791622955BCF00955A9B /* SettingsPromotionalHeader.swift */; };
+		4D68791922966EAE00955A9B /* PromoHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D68791822966EAE00955A9B /* PromoHeaderViewModel.swift */; };
+		4D68791B22968B9D00955A9B /* StandardImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D68791A22968B9D00955A9B /* StandardImage.swift */; };
+		4D6879222296DBA400955A9B /* NavigationStandardGrapeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D68791D2296DBA400955A9B /* NavigationStandardGrapeTheme.swift */; };
+		4D6879232296DBA400955A9B /* FontStandardGrapeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D68791E2296DBA400955A9B /* FontStandardGrapeTheme.swift */; };
+		4D6879242296DBA400955A9B /* TableViewStandardGrapeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D68791F2296DBA400955A9B /* TableViewStandardGrapeTheme.swift */; };
+		4D6879252296DBA400955A9B /* GrapeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6879202296DBA400955A9B /* GrapeTheme.swift */; };
+		4D6879262296DBA400955A9B /* ButtonStandardGrapeTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6879212296DBA400955A9B /* ButtonStandardGrapeTheme.swift */; };
 		4D6DFCB82212508E009C3044 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6DFCB72212508E009C3044 /* SettingsViewController.swift */; };
 		4D6E35382215435900CBCC23 /* AddRecipeWizardError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6E35372215435900CBCC23 /* AddRecipeWizardError.swift */; };
 		4D6E7DB7226FF57000716FB5 /* EditStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6E7DB6226FF57000716FB5 /* EditStepViewController.swift */; };
@@ -252,7 +258,6 @@
 		4D507E7B22802B300074FBFB /* StandardDarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardDarkTheme.swift; sourceTree = "<group>"; };
 		4D507E7D22802B520074FBFB /* NavigationStandardDarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationStandardDarkTheme.swift; sourceTree = "<group>"; };
 		4D507E7F22802B760074FBFB /* FontStandardDarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStandardDarkTheme.swift; sourceTree = "<group>"; };
-		4D507E8122802B950074FBFB /* AttributedTextDarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextDarkTheme.swift; sourceTree = "<group>"; };
 		4D507E85228039C00074FBFB /* ThemeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeViewController.swift; sourceTree = "<group>"; };
 		4D507E87228071120074FBFB /* ThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeView.swift; sourceTree = "<group>"; };
 		4D507E8A228074A20074FBFB /* ThemeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeViewModel.swift; sourceTree = "<group>"; };
@@ -313,7 +318,14 @@
 		4D5DCBA7228A7AC500393EF4 /* IAPProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPProducts.swift; sourceTree = "<group>"; };
 		4D5DCBA9228A929600393EF4 /* Keywords.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Keywords.md; sourceTree = "<group>"; };
 		4D6879112295029100955A9B /* RecipeControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeControlsView.swift; sourceTree = "<group>"; };
-		4D6879132295468800955A9B /* TipJarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipJarViewController.swift; sourceTree = "<group>"; };
+		4D68791622955BCF00955A9B /* SettingsPromotionalHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPromotionalHeader.swift; sourceTree = "<group>"; };
+		4D68791822966EAE00955A9B /* PromoHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoHeaderViewModel.swift; sourceTree = "<group>"; };
+		4D68791A22968B9D00955A9B /* StandardImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardImage.swift; sourceTree = "<group>"; };
+		4D68791D2296DBA400955A9B /* NavigationStandardGrapeTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationStandardGrapeTheme.swift; sourceTree = "<group>"; };
+		4D68791E2296DBA400955A9B /* FontStandardGrapeTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontStandardGrapeTheme.swift; sourceTree = "<group>"; };
+		4D68791F2296DBA400955A9B /* TableViewStandardGrapeTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewStandardGrapeTheme.swift; sourceTree = "<group>"; };
+		4D6879202296DBA400955A9B /* GrapeTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GrapeTheme.swift; sourceTree = "<group>"; };
+		4D6879212296DBA400955A9B /* ButtonStandardGrapeTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonStandardGrapeTheme.swift; sourceTree = "<group>"; };
 		4D6DFCB72212508E009C3044 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		4D6E35372215435900CBCC23 /* AddRecipeWizardError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeWizardError.swift; sourceTree = "<group>"; };
 		4D6E7DB6226FF57000716FB5 /* EditStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStepViewController.swift; sourceTree = "<group>"; };
@@ -496,13 +508,12 @@
 		4D0C4B4521AEC73A00153E76 /* EveryTime */ = {
 			isa = PBXGroup;
 			children = (
-				4D01B8B3228C257E00E5C7AD /* KeyChainHelper */,
+				4D0C4B5021AEC73C00153E76 /* Assets.xcassets */,
 				4D94E5D1223CC6430009F176 /* EveryTime.entitlements */,
 				4D0C4B5521AEC73C00153E76 /* Info.plist */,
 				4D0C4B4621AEC73A00153E76 /* AppDelegate.swift */,
 				4DA78F17225C17F500C018CA /* AppMetaData.swift */,
 				4DA78F1D225D647F00C018CA /* MarqueeLabel.swift */,
-				4D0C4B5021AEC73C00153E76 /* Assets.xcassets */,
 				4D0C4B5221AEC73C00153E76 /* LaunchScreen.storyboard */,
 				4D0C4B4A21AEC73A00153E76 /* Main.storyboard */,
 				4DA12F6921B108690049CD75 /* Controller */,
@@ -538,7 +549,6 @@
 		4D0C4B7921AFEE2000153E76 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4D6879152295470B00955A9B /* IAP */,
 				4D0C4B4D21AEC73A00153E76 /* SimpleRecipeTimer.xcdatamodeld */,
 				4DA78F12225B82AB00C018CA /* WhatsNew */,
 				4D53F75A21E2E38100C0AF31 /* CoreDataHandler.swift */,
@@ -584,7 +594,6 @@
 		4D507E7A22802B0E0074FBFB /* DarkTheme */ = {
 			isa = PBXGroup;
 			children = (
-				4D507E8122802B950074FBFB /* AttributedTextDarkTheme.swift */,
 				4D507E7F22802B760074FBFB /* FontStandardDarkTheme.swift */,
 				4D507E7D22802B520074FBFB /* NavigationStandardDarkTheme.swift */,
 				4D507E7B22802B300074FBFB /* StandardDarkTheme.swift */,
@@ -600,6 +609,7 @@
 				4D507E8A228074A20074FBFB /* ThemeViewModel.swift */,
 				4DA78F13225B884A00C018CA /* WhatsNewViewModel.swift */,
 				4DD542F32252284C003C6DEC /* SettingsViewModel.swift */,
+				4D68791822966EAE00955A9B /* PromoHeaderViewModel.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -640,6 +650,7 @@
 				4D507E9A228169790074FBFB /* Theme */,
 				4DA78F11225B82A000C018CA /* WhatsNew */,
 				4D538022224386D20051DD0F /* SettingsMainView.swift */,
+				4D68791622955BCF00955A9B /* SettingsPromotionalHeader.swift */,
 				4D53803122468B140051DD0F /* SettingsViewCell.swift */,
 				4D538036224744BD0051DD0F /* AboutView.swift */,
 			);
@@ -663,7 +674,6 @@
 				4D6DFCB72212508E009C3044 /* SettingsViewController.swift */,
 				4D53803422473FF40051DD0F /* AboutViewController.swift */,
 				4DA78F15225C137000C018CA /* SettingsWhatsNewViewController.swift */,
-				4D6879132295468800955A9B /* TipJarViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -671,6 +681,8 @@
 		4D53803B2249FC450051DD0F /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				4D01B8B3228C257E00E5C7AD /* KeyChainHelper */,
+				4D6879152295470B00955A9B /* IAP */,
 				4D94E5D3223E74C10009F176 /* Notifications */,
 				4D538039224911140051DD0F /* TapticService.swift */,
 			);
@@ -691,6 +703,7 @@
 				4D53F7CB21EC47E700C0AF31 /* ThemeConstants.swift */,
 				4D7847B3227EC16900160658 /* ThemeManager.swift */,
 				4D507E8D22811A760074FBFB /* UIColor+Extension.swift */,
+				4D68791C2296DB6300955A9B /* Grape */,
 				4D01B8D42293CF6A00E5C7AD /* White */,
 				4D01B8C9229143C700E5C7AD /* OrangeTheme */,
 				4D01B8B8228DA36800E5C7AD /* NeutralTheme */,
@@ -769,6 +782,18 @@
 				4D5DCBA7228A7AC500393EF4 /* IAPProducts.swift */,
 			);
 			path = IAP;
+			sourceTree = "<group>";
+		};
+		4D68791C2296DB6300955A9B /* Grape */ = {
+			isa = PBXGroup;
+			children = (
+				4D6879212296DBA400955A9B /* ButtonStandardGrapeTheme.swift */,
+				4D68791E2296DBA400955A9B /* FontStandardGrapeTheme.swift */,
+				4D6879202296DBA400955A9B /* GrapeTheme.swift */,
+				4D68791D2296DBA400955A9B /* NavigationStandardGrapeTheme.swift */,
+				4D68791F2296DBA400955A9B /* TableViewStandardGrapeTheme.swift */,
+			);
+			path = Grape;
 			sourceTree = "<group>";
 		};
 		4D6E35362215434600CBCC23 /* Error */ = {
@@ -1051,6 +1076,7 @@
 			isa = PBXGroup;
 			children = (
 				4DF13D61221A1BAB009BE812 /* StandardButton.swift */,
+				4D68791A22968B9D00955A9B /* StandardImage.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -1275,6 +1301,7 @@
 				4DA78E2F22559E9C00C018CA /* LargeDisplayViewModel.swift in Sources */,
 				4DA78F18225C17F500C018CA /* AppMetaData.swift in Sources */,
 				4D507E86228039C00074FBFB /* ThemeViewController.swift in Sources */,
+				4D6879222296DBA400955A9B /* NavigationStandardGrapeTheme.swift in Sources */,
 				4DA78F062259D98800C018CA /* BasicMarqueeLabel.swift in Sources */,
 				4DA78F232260B99400C018CA /* AddRecipeViewController.swift in Sources */,
 				4D53803222468B140051DD0F /* SettingsViewCell.swift in Sources */,
@@ -1294,7 +1321,9 @@
 				4DA78F312263746800C018CA /* AddStepViewController+UIPickerView.swift in Sources */,
 				4D53F89E21F1CBF800C0AF31 /* ShowOverlayAnimator.swift in Sources */,
 				4D01B8B7228C259800E5C7AD /* KeychainWrapper.swift in Sources */,
+				4D68791922966EAE00955A9B /* PromoHeaderViewModel.swift in Sources */,
 				4D5DCB9C22885B9300393EF4 /* DeepMintTheme.swift in Sources */,
+				4D68791722955BCF00955A9B /* SettingsPromotionalHeader.swift in Sources */,
 				4DD542F0224E544C003C6DEC /* AddStepViewModel.swift in Sources */,
 				4DA78F2F22634BF200C018CA /* AddRecipeAddStepViewController.swift in Sources */,
 				4D01B8CF22928C4B00E5C7AD /* FontNeutralTheme.swift in Sources */,
@@ -1307,7 +1336,6 @@
 				4D563C2E220D54280039B07F /* RecipeViewControllerWithTableView.swift in Sources */,
 				4D53802E2245909F0051DD0F /* MainViewController+Timer.swift in Sources */,
 				4DA12F7A21B606A20049CD75 /* AddStepViewController.swift in Sources */,
-				4D6879142295468800955A9B /* TipJarViewController.swift in Sources */,
 				4D53F7CE21ED6CB200C0AF31 /* NavView.swift in Sources */,
 				4D507E7E22802B520074FBFB /* NavigationStandardDarkTheme.swift in Sources */,
 				4D53F8AB21F36F5500C0AF31 /* HorizontalTransitionDelegate.swift in Sources */,
@@ -1331,6 +1359,7 @@
 				4D56D48A226B1A8800E28376 /* AddStepMainView.swift in Sources */,
 				4DA78F1A225C1C8000C018CA /* SettingsDataSource.swift in Sources */,
 				4D01B8BC228EAE6800E5C7AD /* PreviewViewController.swift in Sources */,
+				4D6879232296DBA400955A9B /* FontStandardGrapeTheme.swift in Sources */,
 				4D507E75227FA0250074FBFB /* FontThemeProtocol.swift in Sources */,
 				4D5DCBA8228A7AC500393EF4 /* IAPProducts.swift in Sources */,
 				4D0C4B4721AEC73A00153E76 /* AppDelegate.swift in Sources */,
@@ -1346,9 +1375,9 @@
 				4D507E97228164640074FBFB /* TableViewStandardLightTheme.swift in Sources */,
 				4D6E35382215435900CBCC23 /* AddRecipeWizardError.swift in Sources */,
 				4D01B8B6228C259800E5C7AD /* KeychainItemAccessibility.swift in Sources */,
-				4D507E8222802B950074FBFB /* AttributedTextDarkTheme.swift in Sources */,
 				4D78479F227ABBD100160658 /* MainViewModel.swift in Sources */,
 				4D53F7D521EF0C2400C0AF31 /* OverlayTransitionDelegate.swift in Sources */,
+				4D6879252296DBA400955A9B /* GrapeTheme.swift in Sources */,
 				4D01B8D322928CBB00E5C7AD /* ButtonStandardNeutralTheme.swift in Sources */,
 				4D7847B4227EC16900160658 /* ThemeManager.swift in Sources */,
 				4D5DCB8E2285712500393EF4 /* ButtonStandardDarkTheme.swift in Sources */,
@@ -1362,6 +1391,7 @@
 				4D5DCB9822885B3500393EF4 /* FontStandardDeepMintTheme.swift in Sources */,
 				4D538023224386D20051DD0F /* SettingsMainView.swift in Sources */,
 				4D7847B7227F242D00160658 /* StandardLightTheme.swift in Sources */,
+				4D68791B22968B9D00955A9B /* StandardImage.swift in Sources */,
 				4D56D4882269F3B300E28376 /* AddStepViewControllerBase.swift in Sources */,
 				4D563C2C220D4ADC0039B07F /* RecipeViewControllerBase.swift in Sources */,
 				4D6E7DB7226FF57000716FB5 /* EditStepViewController.swift in Sources */,
@@ -1369,6 +1399,8 @@
 				4D01B8E6229416B400E5C7AD /* ButtonStandardOrangeTheme.swift in Sources */,
 				4D5DCBA6228A7A4D00393EF4 /* IAPHelper.swift in Sources */,
 				4D01B8DC2293D00000E5C7AD /* NavigationStandardWhiteTheme.swift in Sources */,
+				4D6879242296DBA400955A9B /* TableViewStandardGrapeTheme.swift in Sources */,
+				4D6879262296DBA400955A9B /* ButtonStandardGrapeTheme.swift in Sources */,
 				4D01B8DF2293D00000E5C7AD /* TableViewStandardWhiteTheme.swift in Sources */,
 				4D507E79227FBA0B0074FBFB /* AttributedTextProtocol.swift in Sources */,
 				4DA78F2B22630FFB00C018CA /* AddRecipeMainView.swift in Sources */,
@@ -1600,6 +1632,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GEKZN86RYS;
 				INFOPLIST_FILE = EveryTime/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1619,6 +1652,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GEKZN86RYS;
 				INFOPLIST_FILE = EveryTime/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

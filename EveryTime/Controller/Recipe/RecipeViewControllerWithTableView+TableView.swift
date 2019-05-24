@@ -132,7 +132,6 @@ extension RecipeViewControllerWithTableView: UITableViewDelegate, UITableViewDat
         
         DispatchQueue.main.async {
             tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
-//            self.mainView.headerView.enableStepOptions()
             self.recipeControlsView.enableStepOptions()
         }
         

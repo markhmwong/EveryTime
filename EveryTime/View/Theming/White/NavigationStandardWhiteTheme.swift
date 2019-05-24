@@ -10,8 +10,8 @@ import UIKit
 
 struct NavigationStandardWhiteTheme: NavigationThemeProtocol {
     var backgroundColor: UIColor = UIColor.WhiteColourPalette.white
-    static var textColour: UIColor = UIColor.WhiteColourPalette.black
-    static var titleColour: UIColor = UIColor.WhiteColourPalette.black
+    static var textColour: UIColor = UIColor.WhiteColourPalette.darkPurple
+    static var titleColour: UIColor = UIColor.WhiteColourPalette.darkPurple
 //    var bottomBorderColor: UIColor = UIColor(red: 220.0 / 255.0, green: 220.0 / 255.0, blue: 220.0 / 255.0, alpha: 0.5)
 
     

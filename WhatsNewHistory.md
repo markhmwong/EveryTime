@@ -1,3 +1,8 @@
+## Version 1.1.19 tipjar
+A tip jar was added.
+Grape theme
+Minor UI adjustments
+
 ## Version 1.1.18 control feature update and new theme
 Two new themes, White and Orange (Paid)
 Reset button now on the main screen. This resets the current Step the Recipe is running.

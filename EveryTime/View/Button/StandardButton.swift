@@ -7,16 +7,22 @@
 //
 
 import UIKit
+import StoreKit
 
 class StandardButton: UIButton {
     
     var theme: ThemeManager?
     
+    var buyButtonHandler: ((_ product: SKProduct) -> Void)?
+    
+    var product: SKProduct?
+    
     init(title: String, theme: ThemeManager?) {
-        super.init(frame: .zero)
         self.theme = theme
+        super.init(frame: .zero)
         self.setupView(title)
     }
+
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -40,4 +46,22 @@ class StandardButton: UIButton {
         setAttributedTitle(NSAttributedString(string: string, attributes: theme?.currentTheme.button.text), for: .normal)
     }
     
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        UIView.animate(withDuration: 0.6, delay: 0.0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.8, options: [.allowUserInteraction], animations: {
+            self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+        }) { (state) in
+            ()
+        }
+        super.touchesBegan(touches, with: event)
+    }
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        UIView.animate(withDuration: 0.6, delay: 0.0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.8, options: [.allowUserInteraction], animations: {
+            self.transform = .identity
+        }) { (state) in
+            ()
+        }
+        super.touchesEnded(touches, with: event)
+    }
 }

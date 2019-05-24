@@ -21,11 +21,12 @@ class SettingsViewController: ViewControllerBase  {
     
     private var delegate: MainViewController?
     
-    lazy var mainView: SettingsMainView = {
-        let view = SettingsMainView(delegate: self)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    var mainView: SettingsMainView?
+//        = {
+//        let view = SettingsMainView(delegate: self)
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        return view
+//    }()
     
     init(delegate: MainViewController, viewModel: SettingsViewModel) {
         super.init(nibName: nil, bundle: nil)
@@ -37,6 +38,11 @@ class SettingsViewController: ViewControllerBase  {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //The super will call prepare_ functions
@@ -45,23 +51,26 @@ class SettingsViewController: ViewControllerBase  {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         view.backgroundColor = viewModel?.theme?.currentTheme.generalBackgroundColour
-        mainView.removeFromSuperview()
-        mainView = SettingsMainView(delegate: self)
-        mainView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(mainView)
-        mainView.fillSuperView()
-        view.layoutIfNeeded()
+        mainView?.removeFromSuperview()
+        mainView = nil
+        guard let mainView = mainView else {
+            self.mainView = SettingsMainView(delegate: self)
+            self.mainView?.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(self.mainView!)
+            self.mainView?.fillSuperView()
+            view.layoutIfNeeded()
+            return
+        }
+        
+
     }
     
     override func prepareView() {
         super.prepareView()
-
-        view.addSubview(mainView)
     }
     
     override func prepareAutoLayout() {
         super.prepareAutoLayout()
-        mainView.fillSuperView()
     }
     
     override func prepareViewController() {

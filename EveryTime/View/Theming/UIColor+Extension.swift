@@ -9,6 +9,15 @@
 import UIKit.UIColor
 
 extension UIColor {
+    struct GrapeColourPalette {
+        static var purple: UIColor = UIColor(red:0.55, green:0.58, blue:0.84, alpha:1.0)
+        static var pastelGreen: UIColor = UIColor(red:0.73, green:0.89, blue:0.92, alpha:1.0)
+        static var white: UIColor = UIColor(red:1.0, green:1.0, blue:1.0, alpha:1.0)
+        static var blackFaded: UIColor = UIColor(red:0.27, green:0.27, blue:0.27, alpha:1.0)
+        static var darkPurple: UIColor = UIColor(red:0.13, green:0.13, blue:0.13, alpha:1.0)
+        
+    }
+    
     struct OrangeColourPalette {
         static var white: UIColor = UIColor(red:0.99, green:0.97, blue:0.92, alpha:1.0)
         static var orange: UIColor = UIColor(red:1.00, green:0.60, blue:0.00, alpha:1.0)
@@ -22,7 +31,7 @@ extension UIColor {
         static var lightGray: UIColor = UIColor(red:0.85, green:0.85, blue:0.85, alpha:1.0)
         static var gray: UIColor = UIColor(red:0.75, green:0.75, blue:0.75, alpha:1.0)
         static var blackFaded: UIColor = UIColor(red:0.27, green:0.27, blue:0.27, alpha:1.0)
-        static var black: UIColor = UIColor(red:0.13, green:0.13, blue:0.13, alpha:1.0)
+        static var darkPurple: UIColor = UIColor(red:0.13, green:0.13, blue:0.13, alpha:1.0)
     }
     
     struct LightMintColourPalette {

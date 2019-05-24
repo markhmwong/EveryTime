@@ -49,6 +49,8 @@ class ThemeManager {
             return OrangeTheme()
         case NeutralTheme.resource:
             return NeutralTheme()
+        case GrapeTheme.resource:
+            return GrapeTheme()
         default:
             return StandardLightTheme()
         }

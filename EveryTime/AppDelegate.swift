@@ -38,18 +38,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         initialiseFreeThemesToKeyChain()
         initialisePaidThemesToKeyChain()
         
+        /// The transition from UserDefaultsKey to KeyChain
         if (option != 0) {
             UserDefaults.standard.set(0, forKey: ThemeManager.userDefaultsKey) //moving from userdefaults to keychain
-            main.viewModel = MainViewModel(delegate: main, theme: themeManager ?? ThemeManager.init(currentTheme: StandardDarkTheme()))
-            window?.rootViewController = UINavigationController(rootViewController: main)
+            implementStandardThemeOnFailure(window, main)
             return true
         }
         
+        /// Initial load
         guard let themeName = KeychainWrapper.standard.string(forKey: "theme") else {
             implementStandardThemeOnFailure(window, main)
             return true
         }
 
+        /// Regular start
         theme = ThemeManager.themeFactory(themeName)
         main.viewModel = MainViewModel(delegate: main, theme: ThemeManager.init(currentTheme: theme ?? StandardLightTheme()))
         window?.rootViewController = UINavigationController(rootViewController: main)
@@ -89,7 +91,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ThemeManager.restorePurchasesToKeyChain(productIdentifier: StandardLightTheme.productIdentifier)
         ThemeManager.restorePurchasesToKeyChain(productIdentifier: StandardDarkTheme.productIdentifier)
         ThemeManager.restorePurchasesToKeyChain(productIdentifier: WhiteTheme.productIdentifier)
-
     }
     
     /**
@@ -113,6 +114,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if KeychainWrapper.standard.bool(forKey: OrangeTheme.productIdentifier) == nil {
             KeychainWrapper.standard.set(false, forKey: OrangeTheme.productIdentifier)
+        }
+        if KeychainWrapper.standard.bool(forKey: GrapeTheme.productIdentifier) == nil {
+            KeychainWrapper.standard.set(false, forKey: GrapeTheme.productIdentifier)
         }
 
     }

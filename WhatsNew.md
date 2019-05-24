@@ -1,13 +1,15 @@
 #  Feature Scratch pad
 
-## Version 1.1.1 [Current] tipjar
-tip jar and loop
+## Version 1.1.20 [Current] Text size adjustment for larger screens
+Font made larger on the XR/XS Max.
+The buttons in the Recipe View to add/subtract 15 seconds and reset a Step were peeking above it's container. It is now properly centered.
+Under the hood dusting.
 
-
+recipe colours
+recipe sounds
 
 
 forward and back controls on main view and recipe view
-loop
 
 code cleaning
 
@@ -16,24 +18,20 @@ tron theme (blue/orange)
 
 # Features to be done in this version
 IAP
-    - theme
     - unlimited timers
-header to advertise unlimited timers
-- Recipe Colours
+
 
 
 
 - IAP
     - unlimited timers
 - customisable sounds
-- Theme (paid)
-    - oled theme (done)
-    - another coloured theme
 - count down (apply to unlimited steps)
-- recipe colours (apply to unlimited steps)
+
 
 ## Possible Feature List
 Major releases
+    recipe view circle graphics - two graphics one to represent the full graphic and the other to represent the current step
     media player
     gamify (stop watch not a count down timer)
     Apple Watch
@@ -57,7 +55,6 @@ Minor
     separate the header view and tableview (recipe detail view)
         up next title in between the header and tableview will need to create a new uiview for hte header instead of using the existing tableview header
     get ready count down
-    truncate leading time if it is 0 e.g. 00h 00m 01s now becomes 01s 
     store existing popular steps
 
 

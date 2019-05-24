@@ -85,8 +85,7 @@ class ThemeViewController: ViewControllerBase {
     }
     
     func handleDismiss() {
-
-        delegate?.mainView.tableView.reloadData()
+        delegate?.mainView?.tableView.reloadData()
         dismiss(animated: true, completion: nil)
     }
     

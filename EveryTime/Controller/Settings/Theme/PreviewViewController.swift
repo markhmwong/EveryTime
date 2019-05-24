@@ -216,12 +216,10 @@ class PreviewView: UIView {
                 return product.productIdentifier == theme?.productIdentifier()
             })
             let product = arr?[0]
-
             IAPProducts.store.buyProduct(product!)
             DispatchQueue.main.async {
                 self.purchaseButton.updateLabel(string: "one moment...")
             }
-
 //            themeViewController.dismissPreviewModal()
         }
     }

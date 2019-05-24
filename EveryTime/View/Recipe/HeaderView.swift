@@ -54,24 +54,6 @@ class HeaderView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
-    private lazy var additionalTimeButton: StandardButton = {
-        let button = StandardButton(title: "+15", theme: theme)
-        button.addTarget(self, action: #selector(handleAdditionalTime), for: .touchUpInside)
-        return button
-    }()
-    
-    private lazy var subtractTimeButton: StandardButton = {
-        let button = StandardButton(title: "-15", theme: theme)
-        button.addTarget(self, action: #selector(handleMinusTime), for: .touchUpInside)
-        return button
-    }()
-    
-    private lazy var resetTimeButton: StandardButton = {
-        let button = StandardButton(title: "Reset", theme: theme)
-        button.addTarget(self, action: #selector(handleResetStepTime), for: .touchUpInside)
-        return button
-    }()
     
     private lazy var fullScreenButton: UIButton = {
         let button = UIButton()
@@ -81,7 +63,7 @@ class HeaderView: UIView {
         switch appliedTheme {
             case StandardDarkTheme.productIdentifier, DeepMintTheme.productIdentifier:
                 button.setImage(UIImage(named: "FullScreenLight.png"), for: .normal)
-            case StandardLightTheme.productIdentifier, NeutralTheme.productIdentifier, OrangeTheme.productIdentifier, WhiteTheme.productIdentifier:
+            case StandardLightTheme.productIdentifier, NeutralTheme.productIdentifier, OrangeTheme.productIdentifier, WhiteTheme.productIdentifier, GrapeTheme.productIdentifier:
                 button.setImage(UIImage(named: "FullScreenDark.png"), for: .normal)
             default:
                 button.setImage(UIImage(named: "FullScreenLight.png"), for: .normal)
@@ -133,17 +115,13 @@ class HeaderView: UIView {
         headerNextStepLabel.attributedText = NSAttributedString(string: "Next Step", attributes: theme.currentTheme.tableView.recipeSubtitle)
         innerPaddedView.addSubview(headerNextStepLabel)
         
-        additionalTimeButton.isEnabled = false
-        additionalTimeButton.alpha = 0.4
-        resetTimeButton.isEnabled = false
-        resetTimeButton.alpha = 0.4
-        subtractTimeButton.isEnabled = false
-        subtractTimeButton.alpha = 0.4
-        
         innerPaddedView.addSubview(saveButton)
-//        innerPaddedView.addSubview(additionalTimeButton)
-//        innerPaddedView.addSubview(subtractTimeButton)
-//        innerPaddedView.addSubview(resetTimeButton)
+
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
     }
     
     private func setupAutoLayout() {
@@ -176,23 +154,10 @@ class HeaderView: UIView {
         headerNextStepTitleLabel.leadingAnchor.constraint(equalTo: headerNextStepTimeLabel.leadingAnchor).isActive = true
         headerNextStepTitleLabel.topAnchor.constraint(equalTo: headerNextStepTimeLabel.bottomAnchor, constant: 0.0).isActive = true
         
-        let screenSize = UIScreen.main.bounds.size
-//        additionalTimeButton.trailingAnchor.constraint(equalTo: innerPaddedView.leadingAnchor, constant: (screenSize.width / 8) * 2).isActive = true
-//        additionalTimeButton.bottomAnchor.constraint(equalTo: innerPaddedView.bottomAnchor, constant: -10).isActive = true
-//        additionalTimeButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.18).isActive = true
-//
-//        resetTimeButton.centerXAnchor.constraint(equalTo: innerPaddedView.centerXAnchor, constant: 0).isActive = true
-//        resetTimeButton.bottomAnchor.constraint(equalTo: innerPaddedView.bottomAnchor, constant: -10).isActive = true
-//        resetTimeButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.18).isActive = true
-//
-//        subtractTimeButton.leadingAnchor.constraint(equalTo: innerPaddedView.trailingAnchor, constant: -(screenSize.width / 8) * 2).isActive = true
-//        subtractTimeButton.bottomAnchor.constraint(equalTo: innerPaddedView.bottomAnchor, constant: -10.0).isActive = true
-//        subtractTimeButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.18).isActive = true
-        
         saveButton.trailingAnchor.constraint(equalTo: innerPaddedView.trailingAnchor, constant: -10.0).isActive = true
         saveButton.topAnchor.constraint(equalTo: innerPaddedView.topAnchor, constant: 10.0).isActive = true
         saveButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.18).isActive = true
-
+        
         fullScreenButton.topAnchor.constraint(equalTo: innerPaddedView.topAnchor, constant: 10.0).isActive = true
         fullScreenButton.trailingAnchor.constraint(equalTo: innerPaddedView.trailingAnchor, constant: -10.0).isActive = true
         fullScreenButton.widthAnchor.constraint(equalToConstant: 18.0).isActive = true
@@ -233,15 +198,6 @@ class HeaderView: UIView {
             return
         }
         headerStepTitleLabel.attributedText = NSAttributedString(string: title, attributes: theme.currentTheme.tableView.recipeHeaderStepName)
-    }
-    
-    func enableStepOptions() {
-        additionalTimeButton.isEnabled = true
-        resetTimeButton.isEnabled = true
-        subtractTimeButton.isEnabled = true
-        additionalTimeButton.alpha = 1.0
-        resetTimeButton.alpha = 1.0
-        subtractTimeButton.alpha = 1.0
     }
     
     func saveButtonEnable() {

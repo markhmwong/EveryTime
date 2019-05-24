@@ -63,6 +63,8 @@ struct FontStandardDeepMintTheme: FontThemeProtocol {
                 switch UIDevice.current.screenType.rawValue {
                 case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
                     return size.rawValue * 0.8
+                case UIDevice.ScreenType.iPhoneXSMax.rawValue, UIDevice.ScreenType.iPhoneXR.rawValue:
+                    return size.rawValue * 1.4
                 default:
                     return size.rawValue
                 }

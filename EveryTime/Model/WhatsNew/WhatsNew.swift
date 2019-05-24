@@ -23,12 +23,13 @@ protocol WhatsNewProtocol {
 struct WhatsNewFactory {
     
     static let whatsNewDictionary: [ String : WhatsNewProtocol ] = [
+        "1.1.19" : WhatsNewDetails.WhatsNew1_1_19(),
         "1.1.18" : WhatsNewDetails.WhatsNew1_1_18(),
         "1.1.17" : WhatsNewDetails.WhatsNew1_1_17(),
         "1.1.16" : WhatsNewDetails.WhatsNew1_1_16(),
         "1.1.15" : WhatsNewDetails.WhatsNew1_1_15(),
         "1.1.14" : WhatsNewDetails.WhatsNew1_1_14(),
-        "1.1.13" : WhatsNewDetails.WhatsNew1_1_13()
+        "1.1.13" : WhatsNewDetails.WhatsNew1_1_13(),
     ]
     
     static func getLatestWhatsNew(version: String = AppMetaData.version!) -> WhatsNewProtocol {
@@ -39,6 +40,21 @@ struct WhatsNewFactory {
 
 /// List patch notes as least important to most important.
 struct WhatsNewDetails {
+    
+    struct WhatsNew1_1_19: WhatsNewProtocol {
+        
+        let date: String = "May 24, 2019"
+        
+        let version: String = "1.1.19"
+        
+        let build: String = "1.20"
+        
+        let patchNotes: [String] = [
+            "Minor UI adjustments",
+            "A tip jar was added",
+            "A new grape theme is now available",
+        ]
+    }
     
     struct WhatsNew1_1_18: WhatsNewProtocol {
         

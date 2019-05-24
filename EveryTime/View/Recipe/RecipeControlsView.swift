@@ -16,21 +16,21 @@ class RecipeControlsView: UIView {
     
     private lazy var additionalTimeButton: StandardButton = {
         let button = StandardButton(title: "+15", theme: theme)
-//        button.layer.cornerRadius = 0.0
+        button.backgroundColor = .clear
         button.addTarget(self, action: #selector(handleAdditionalTime), for: .touchUpInside)
         return button
     }()
     
     private lazy var subtractTimeButton: StandardButton = {
         let button = StandardButton(title: "-15", theme: theme)
-//        button.layer.cornerRadius = 0.0
+        button.backgroundColor = .clear
         button.addTarget(self, action: #selector(handleMinusTime), for: .touchUpInside)
         return button
     }()
     
     private lazy var resetTimeButton: StandardButton = {
         let button = StandardButton(title: "Reset", theme: theme)
-//        button.layer.cornerRadius = 0.0
+        button.backgroundColor = .clear
         button.addTarget(self, action: #selector(handleResetStepTime), for: .touchUpInside)
         return button
     }()
@@ -69,15 +69,15 @@ class RecipeControlsView: UIView {
         super.layoutSubviews()
         let screenSize = UIScreen.main.bounds.size
         additionalTimeButton.trailingAnchor.constraint(equalTo: leadingAnchor, constant: (screenSize.width / 8) * 2).isActive = true
-        additionalTimeButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0.0).isActive = true
+        additionalTimeButton.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 0.0).isActive = true
         additionalTimeButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.2).isActive = true
         
         resetTimeButton.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0.0).isActive = true
-        resetTimeButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0.0).isActive = true
+        resetTimeButton.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 0.0).isActive = true
         resetTimeButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.2).isActive = true
         
         subtractTimeButton.leadingAnchor.constraint(equalTo: trailingAnchor, constant: -(screenSize.width / 8) * 2).isActive = true
-        subtractTimeButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0.0).isActive = true
+        subtractTimeButton.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 0.0).isActive = true
         subtractTimeButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.2).isActive = true
     }
     

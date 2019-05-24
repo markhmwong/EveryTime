@@ -48,12 +48,9 @@ class RecipeView: UIView {
     
     lazy var tableView: UITableView = {
         let view: UITableView = UITableView()
-//        view.delegate = self
         view.isEditing = false
-//        view.dataSource = self
         view.translatesAutoresizingMaskIntoConstraints = false
         view.separatorStyle = .none
-//        view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
         return view
     }()
     

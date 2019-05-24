@@ -21,7 +21,7 @@ struct WhiteTheme: ThemeProtocol {
     var navigation: NavigationThemeProtocol = NavigationStandardWhiteTheme()
     
     var font: FontThemeProtocol = FontStandardWhiteTheme()
-        
+
     var tableView: TableViewThemeProtocol = TableViewStandardWhiteTheme()
     
     var button: ButtonThemeProtocol = ButtonStandardWhiteTheme()
@@ -33,7 +33,6 @@ struct WhiteTheme: ThemeProtocol {
         updateSettingsView()
         updateTableView()
         UILabel.appearance(whenContainedInInstancesOf: [AboutView.self]).textColor = font.TextColour
-
     }
     
     func updateNavView() {

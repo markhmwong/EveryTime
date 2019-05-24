@@ -27,6 +27,7 @@ class ThemeViewModel {
         case DeepMint = "deepminttheme"
         case Orange = "orangetheme"
         case Neutral = "neutraltheme"
+        case Grape = "grapetheme"
     }
     
     var dataSource: [[String]] = [[StandardLightTheme.productIdentifier, StandardDarkTheme.productIdentifier, WhiteTheme.productIdentifier], ["Loading themes..."]]
@@ -34,7 +35,12 @@ class ThemeViewModel {
     var paidProductsArr: [SKProduct] = []
     
     // Mark: - May need to be in the same order as the app store connect
-    var availablePaidThemes: [ProductIdentifier] = [DeepMintTheme.productIdentifier , NeutralTheme.productIdentifier, OrangeTheme.productIdentifier]
+    var availablePaidThemes: [ProductIdentifier] = [
+        DeepMintTheme.productIdentifier,
+        NeutralTheme.productIdentifier,
+        OrangeTheme.productIdentifier,
+        GrapeTheme.productIdentifier,
+    ].sorted()
     
     var delegate: ThemeViewController?
     
@@ -120,6 +126,8 @@ class ThemeViewModel {
                 return NeutralTheme()
             case IAPProducts.OrangeId:
                 return OrangeTheme()
+            case IAPProducts.GrapeId:
+                return GrapeTheme()
             default:
                 return StandardLightTheme()
         }

@@ -41,6 +41,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionCellIds.RecipeCell.rawValue, for: indexPath) as! MainViewCell
         cell.theme = viewModel?.theme
+        cell.addResetButton()
         cell.resetButton.tintColor = viewModel?.theme?.currentTheme.tableView.cellTextColor
         cell.backgroundColor = viewModel?.theme?.currentTheme.tableView.cellBackgroundColor
         cell.mainViewController = self
