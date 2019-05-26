@@ -30,6 +30,17 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let vm = viewModel else {
+//            collectionView.setEmptyMessage("Add a new Recipe by selecting the top right button!", theme: )
+            return 0
+        }
+        
+        if(vm.dataSource.count == 0) {
+            collectionView.setEmptyMessage("Add a new Recipe by selecting the top right button!", theme: vm.theme, delegate: self)
+        } else {
+            collectionView.restore()
+        }
+        
         return viewModel?.dataSource.count ?? 0
     }
     
@@ -44,7 +55,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         cell.addResetButton()
         cell.resetButton.tintColor = viewModel?.theme?.currentTheme.tableView.cellTextColor
         cell.backgroundColor = viewModel?.theme?.currentTheme.tableView.cellBackgroundColor
-        cell.mainViewController = self
+        cell.delegate = self
         cell.entity = viewModel?.dataSource[indexPath.row]
         cell.cellForIndexPath = indexPath
         return cell
@@ -77,3 +88,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         return 0.0
     }
 }
+
+
+

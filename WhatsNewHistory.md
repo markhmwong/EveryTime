@@ -1,7 +1,13 @@
+## Version 1.1.20 Text size adjustment for larger screens and start up crash fix
+A quick fix for those with initial start up crashes. Temp fixes include reinstalling the application or closing and opening the app again.
+Font made larger on the XR/XS Max.
+The buttons in the Recipe View to add/subtract 15 seconds and reset a Step were peeking above it's container. It is now properly centered.
+
 ## Version 1.1.19 tipjar
 A tip jar was added.
 Grape theme
 Minor UI adjustments
+(forgot to commit to git)
 
 ## Version 1.1.18 control feature update and new theme
 Two new themes, White and Orange (Paid)

@@ -34,10 +34,10 @@
 		4D0C4B5F21AEC73D00153E76 /* EveryTimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4B5E21AEC73D00153E76 /* EveryTimeTests.swift */; };
 		4D0C4B6A21AEC73D00153E76 /* EveryTimeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4B6921AEC73D00153E76 /* EveryTimeUITests.swift */; };
 		4D205DB121FE8252008006BD /* StepTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D205DB021FE8252008006BD /* StepTableViewCell.swift */; };
+		4D5063BD229A909C006483E6 /* EmptyCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5063BC229A909C006483E6 /* EmptyCollectionView.swift */; };
+		4D5063BF229A90C7006483E6 /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5063BE229A90C7006483E6 /* UICollectionView+Extension.swift */; };
 		4D507E73227FA0060074FBFB /* FontStandardLightTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E72227FA0060074FBFB /* FontStandardLightTheme.swift */; };
 		4D507E75227FA0250074FBFB /* FontThemeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E74227FA0250074FBFB /* FontThemeProtocol.swift */; };
-		4D507E77227FB9E20074FBFB /* AttributedTextLightTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E76227FB9E20074FBFB /* AttributedTextLightTheme.swift */; };
-		4D507E79227FBA0B0074FBFB /* AttributedTextProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E78227FBA0B0074FBFB /* AttributedTextProtocol.swift */; };
 		4D507E7C22802B300074FBFB /* StandardDarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E7B22802B300074FBFB /* StandardDarkTheme.swift */; };
 		4D507E7E22802B520074FBFB /* NavigationStandardDarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E7D22802B520074FBFB /* NavigationStandardDarkTheme.swift */; };
 		4D507E8022802B760074FBFB /* FontStandardDarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E7F22802B760074FBFB /* FontStandardDarkTheme.swift */; };
@@ -251,10 +251,10 @@
 		4D0C4B6921AEC73D00153E76 /* EveryTimeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveryTimeUITests.swift; sourceTree = "<group>"; };
 		4D0C4B6B21AEC73D00153E76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D205DB021FE8252008006BD /* StepTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTableViewCell.swift; sourceTree = "<group>"; };
+		4D5063BC229A909C006483E6 /* EmptyCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCollectionView.swift; sourceTree = "<group>"; };
+		4D5063BE229A90C7006483E6 /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UICollectionView+Extension.swift"; path = "EveryTime/View/MainView/UICollectionView+Extension.swift"; sourceTree = SOURCE_ROOT; };
 		4D507E72227FA0060074FBFB /* FontStandardLightTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStandardLightTheme.swift; sourceTree = "<group>"; };
 		4D507E74227FA0250074FBFB /* FontThemeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontThemeProtocol.swift; sourceTree = "<group>"; };
-		4D507E76227FB9E20074FBFB /* AttributedTextLightTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextLightTheme.swift; sourceTree = "<group>"; };
-		4D507E78227FBA0B0074FBFB /* AttributedTextProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextProtocol.swift; sourceTree = "<group>"; };
 		4D507E7B22802B300074FBFB /* StandardDarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardDarkTheme.swift; sourceTree = "<group>"; };
 		4D507E7D22802B520074FBFB /* NavigationStandardDarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationStandardDarkTheme.swift; sourceTree = "<group>"; };
 		4D507E7F22802B760074FBFB /* FontStandardDarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStandardDarkTheme.swift; sourceTree = "<group>"; };
@@ -575,6 +575,7 @@
 			children = (
 				4DA12F7521B358AB0049CD75 /* MainViewCell.swift */,
 				4D5380242243CACF0051DD0F /* MainViewView.swift */,
+				4D5063BC229A909C006483E6 /* EmptyCollectionView.swift */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
@@ -703,11 +704,11 @@
 				4D53F7CB21EC47E700C0AF31 /* ThemeConstants.swift */,
 				4D7847B3227EC16900160658 /* ThemeManager.swift */,
 				4D507E8D22811A760074FBFB /* UIColor+Extension.swift */,
+				4D7847B8227F247200160658 /* ThemeProtocol */,
 				4D68791C2296DB6300955A9B /* Grape */,
 				4D01B8D42293CF6A00E5C7AD /* White */,
 				4D01B8C9229143C700E5C7AD /* OrangeTheme */,
 				4D01B8B8228DA36800E5C7AD /* NeutralTheme */,
-				4D7847B8227F247200160658 /* ThemeProtocol */,
 				4D507E8C22810A5C0074FBFB /* DeepMint */,
 				4D507E7A22802B0E0074FBFB /* DarkTheme */,
 				4D7847B5227F241100160658 /* LightTheme */,
@@ -874,7 +875,6 @@
 		4D7847B5227F241100160658 /* LightTheme */ = {
 			isa = PBXGroup;
 			children = (
-				4D507E76227FB9E20074FBFB /* AttributedTextLightTheme.swift */,
 				4D507E72227FA0060074FBFB /* FontStandardLightTheme.swift */,
 				4D7847B9227F24A100160658 /* NavigationStandardLightTheme.swift */,
 				4D7847B6227F242D00160658 /* StandardLightTheme.swift */,
@@ -890,7 +890,6 @@
 				4D507E93228163FB0074FBFB /* ThemeProtocol.swift */,
 				4D7847BB227F2F4200160658 /* NavigationThemeProtocol.swift */,
 				4D507E74227FA0250074FBFB /* FontThemeProtocol.swift */,
-				4D507E78227FBA0B0074FBFB /* AttributedTextProtocol.swift */,
 				4D507E91228163B50074FBFB /* TableViewThemeProtocol.swift */,
 				4D5DCB8B22856BE400393EF4 /* ButtonThemeProtocol.swift */,
 			);
@@ -970,6 +969,7 @@
 				4D5DCB9322885AA800393EF4 /* Extension+UIView.swift */,
 				4D5DCB9122885AA800393EF4 /* Extensions.swift */,
 				4D5DCB9222885AA800393EF4 /* Extentions+UIDevice.swift */,
+				4D5063BE229A90C7006483E6 /* UICollectionView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1331,6 +1331,7 @@
 				4D205DB121FE8252008006BD /* StepTableViewCell.swift in Sources */,
 				4D0C4B4921AEC73A00153E76 /* MainViewController.swift in Sources */,
 				4D5DCB9422885AA800393EF4 /* Extensions.swift in Sources */,
+				4D5063BF229A90C7006483E6 /* UICollectionView+Extension.swift in Sources */,
 				4D5380252243CACF0051DD0F /* MainViewView.swift in Sources */,
 				4D507E7C22802B300074FBFB /* StandardDarkTheme.swift in Sources */,
 				4D563C2E220D54280039B07F /* RecipeViewControllerWithTableView.swift in Sources */,
@@ -1339,6 +1340,7 @@
 				4D53F7CE21ED6CB200C0AF31 /* NavView.swift in Sources */,
 				4D507E7E22802B520074FBFB /* NavigationStandardDarkTheme.swift in Sources */,
 				4D53F8AB21F36F5500C0AF31 /* HorizontalTransitionDelegate.swift in Sources */,
+				4D5063BD229A909C006483E6 /* EmptyCollectionView.swift in Sources */,
 				4DA78F2922630FB700C018CA /* AddRecipeHeaderView.swift in Sources */,
 				4D5380302245F5C40051DD0F /* HeaderView.swift in Sources */,
 				4DA78F1E225D648000C018CA /* MarqueeLabel.swift in Sources */,
@@ -1387,7 +1389,6 @@
 				4DA12F7321B2D3DD0049CD75 /* EntityBaseCell.swift in Sources */,
 				4D6879122295029100955A9B /* RecipeControlsView.swift in Sources */,
 				4DA78F35226417A600C018CA /* AddRecipeViewModel.swift in Sources */,
-				4D507E77227FB9E20074FBFB /* AttributedTextLightTheme.swift in Sources */,
 				4D5DCB9822885B3500393EF4 /* FontStandardDeepMintTheme.swift in Sources */,
 				4D538023224386D20051DD0F /* SettingsMainView.swift in Sources */,
 				4D7847B7227F242D00160658 /* StandardLightTheme.swift in Sources */,
@@ -1402,7 +1403,6 @@
 				4D6879242296DBA400955A9B /* TableViewStandardGrapeTheme.swift in Sources */,
 				4D6879262296DBA400955A9B /* ButtonStandardGrapeTheme.swift in Sources */,
 				4D01B8DF2293D00000E5C7AD /* TableViewStandardWhiteTheme.swift in Sources */,
-				4D507E79227FBA0B0074FBFB /* AttributedTextProtocol.swift in Sources */,
 				4DA78F2B22630FFB00C018CA /* AddRecipeMainView.swift in Sources */,
 				4D7847A6227AF18F00160658 /* RecipeViewModel.swift in Sources */,
 				4D507E88228071120074FBFB /* ThemeView.swift in Sources */,
@@ -1632,7 +1632,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GEKZN86RYS;
 				INFOPLIST_FILE = EveryTime/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1640,7 +1640,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.whizbang.EveryTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1652,7 +1652,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GEKZN86RYS;
 				INFOPLIST_FILE = EveryTime/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1660,7 +1660,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.whizbang.EveryTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

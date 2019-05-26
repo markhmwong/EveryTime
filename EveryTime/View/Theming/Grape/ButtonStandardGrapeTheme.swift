@@ -15,4 +15,13 @@ class ButtonStandardGrapeTheme: ButtonThemeProtocol {
         NSAttributedString.Key.kern: FontStandardGrapeTheme.FontKern.General.floatValue,
     ]
     var backgroundColor: UIColor = UIColor.GrapeColourPalette.purple
+    
+    //for reset button and pause button
+    var buttonSizeMultiplier: Double {
+        if (UIDevice.current.iPad) {
+            return 1.5
+        } else {
+            return 1.0
+        }
+    }
 }

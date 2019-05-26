@@ -23,6 +23,10 @@ struct FontStandardGrapeTheme: FontThemeProtocol {
     
     var bodyText: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardGrapeTheme.FontStyle.Bold.rawValue, size: FontStandardGrapeTheme.FontSize.Standard(.b3).value)!, NSAttributedString.Key.foregroundColor: TableViewStandardGrapeTheme.TextColor, NSAttributedString.Key.kern: FontStandardGrapeTheme.FontKern.General.floatValue]
     
+    var stepTimeIpad: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardWhiteTheme.FontStyle.Bold.rawValue, size: FontStandardWhiteTheme.FontSize.Standard(.h0).value * 2.0)!, NSAttributedString.Key.foregroundColor: TableViewStandardWhiteTheme.TextColor, NSAttributedString.Key.kern: FontStandardLightTheme.FontKern.General.floatValue]
+    
+    var stepNameIpad: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font: UIFont(name: FontStandardLightTheme.FontStyle.Regular.rawValue, size: FontStandardLightTheme.FontSize.Standard(.b0).value * 2.0)!, NSAttributedString.Key.foregroundColor: TableViewStandardLightTheme.TextColor, NSAttributedString.Key.kern: FontStandardLightTheme.FontKern.General.floatValue]
+    
     enum FontStyle: String {
         case Regular = "Avenir-Medium"
         case Bold = "Avenir-Black"
@@ -64,6 +68,10 @@ struct FontStandardGrapeTheme: FontThemeProtocol {
                     return size.rawValue * 0.8
                 case UIDevice.ScreenType.iPhoneXSMax.rawValue, UIDevice.ScreenType.iPhoneXR.rawValue:
                     return size.rawValue * 1.2
+                case UIDevice.ScreenType.iPad97.rawValue:
+                    return size.rawValue * 1.3
+                case UIDevice.ScreenType.iPadPro129.rawValue, UIDevice.ScreenType.iPadPro105.rawValue, UIDevice.ScreenType.iPadPro11.rawValue:
+                    return size.rawValue * 1.4
                 default:
                     return size.rawValue
                 }

@@ -13,7 +13,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
     
     var theme: ThemeManager?
     
-    var mainViewController: MainViewController? = nil
+    var delegate: MainViewController? = nil
     
     var cellForIndexPath: IndexPath?
     
@@ -22,8 +22,6 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
     private lazy var nameLabelAnimationYMovement: CGFloat = 0.0
     
     private var stepName: String? = nil
-
-    
     
     override var entity: RecipeEntity? {
         didSet {
@@ -118,11 +116,14 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         stepNameLabel.anchorView(top: nil, bottom: contentView.centerYAnchor, leading: recipeTimeLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0), size: .zero)
         bottomBorder.anchorView(top: nil, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: CGSize(width: 0.0, height: 1.0))
 
-        pauseButtonView.anchorView(top: contentView.topAnchor, bottom: contentView.bottomAnchor, leading: nil, trailing: contentView.trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: CGSize(width: 80.0, height: 0.0))
-        let pauseButtonSize = CGSize(width: 35.0, height: 30.0)
-        pauseButton.anchorView(top: nil, bottom: nil, leading: nil, trailing: contentView.trailingAnchor, centerY: pauseButtonView.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: -25.0), size: pauseButtonSize)
+        guard let vm = delegate?.viewModel else { return }
         
-        resetButton.anchorView(top: nil, bottom: contentView.bottomAnchor, leading: nil, trailing: nil, centerY: nil, centerX: contentView.centerXAnchor, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: -7.0, right: 0.0), size: CGSize(width: 18.0, height: 18.0))
+        pauseButtonView.anchorView(top: contentView.topAnchor, bottom: contentView.bottomAnchor, leading: nil, trailing: contentView.trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: CGSize(width: 80.0, height: 0.0))
+
+        pauseButton.anchorView(top: nil, bottom: nil, leading: nil, trailing: contentView.trailingAnchor, centerY: pauseButtonView.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: -25.0), size: vm.pauseButtonSize)
+        
+        
+        resetButton.anchorView(top: nil, bottom: contentView.bottomAnchor, leading: nil, trailing: nil, centerY: nil, centerX: contentView.centerXAnchor, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: -7.0, right: 0.0), size: vm.resetButtonSize)
         
     }
     
@@ -173,7 +174,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
     }
     
     @objc func handleResetButton() {
-        guard let mvc = mainViewController else {
+        guard let mvc = delegate else {
             //TODO: - error
             return
         }
@@ -191,7 +192,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
     }
     
     func updatePauseState() {
-        guard let mvc = mainViewController else {
+        guard let mvc = delegate else {
             //TODO: - error
             return
         }
@@ -206,30 +207,17 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
             
             let pauseBackground = r.isPaused ? theme.currentTheme.tableView.pauseButtonBackgroundInactive : theme.currentTheme.tableView.pauseButtonBackgroundActive
             let textColor = !r.isPaused ? theme.currentTheme.tableView.pausedTextColor : theme.currentTheme.tableView.cellTextColor
-//            let timeAlpha: CGFloat = r.isPaused ? 0.25 : 0.95
 
             if (r.isPaused) {
                 //will unpause
                 mvc.unpauseEntireRecipe(recipe: r)
-//                bringSubviewToFront(recipeTimeLabel)
                 self.updatePauseButtonView(textColor, pauseBackground)
             } else {
                 mvc.pauseEntireRecipe(recipe: r)
-//                bringSubviewToFront(timerHighlight)
                 let id = "\(r.recipeName!).\(r.createdDate!)"
                 self.updatePauseButtonView(textColor, pauseBackground)
                 
                 LocalNotificationsService.shared.notificationCenterInstance().removePendingNotificationRequests(withIdentifiers: [id])
-            }
-        }
-    }
-    
-    func updatePauseHighlight() {
-        if let r = entity {
-            if (r.isPaused) {
-//                bringSubviewToFront(timerHighlight)
-            } else {
-//                bringSubviewToFront(recipeTimeLabel)
             }
         }
     }

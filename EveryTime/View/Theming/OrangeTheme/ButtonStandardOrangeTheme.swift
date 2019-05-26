@@ -15,4 +15,13 @@ class ButtonStandardOrangeTheme: ButtonThemeProtocol {
         NSAttributedString.Key.kern: FontStandardOrangeTheme.FontKern.General.floatValue,
     ]
     var backgroundColor: UIColor = UIColor.OrangeColourPalette.orange
+    
+    //for reset button and pause button
+    var buttonSizeMultiplier: Double {
+        if (UIDevice.current.iPad) {
+            return 1.5
+        } else {
+            return 1.0
+        }
+    }
 }

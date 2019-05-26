@@ -121,24 +121,13 @@ class HeaderView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-    }
-    
-    private func setupAutoLayout() {
-        
-        /// Height for header
-        switch UIDevice.current.screenType.rawValue {
-        case UIDevice.ScreenType.iPhones_6Plus_6sPlus_7Plus_8Plus.rawValue, UIDevice.ScreenType.iPhones_6_6s_7_8.rawValue:
-            heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 2.8).isActive = true
-        case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
-            heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 2.3).isActive = true
-        case UIDevice.ScreenType.iPhoneXSMax.rawValue, UIDevice.ScreenType.iPhoneX_iPhoneXS.rawValue, UIDevice.ScreenType.iPhoneXR.rawValue:
-            heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 3.3).isActive = true
-        default:
-            heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 3.3).isActive = true
+
+        guard let vm = delegate?.viewModel else {
+            fullScreenButton.anchorView(top: innerPaddedView.topAnchor, bottom: nil, leading: nil, trailing: innerPaddedView.trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 10.0, left: 0.0, bottom: 0.0, right: -10.0), size: CGSize(width: 18.0, height: 18.0))
+            return
         }
         
-        widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
+        fullScreenButton.anchorView(top: innerPaddedView.topAnchor, bottom: nil, leading: nil, trailing: innerPaddedView.trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 10.0, left: 0.0, bottom: 0.0, right: -10.0), size: vm.fullScreenButtonSize)
         
         innerPaddedView.anchorView(top: topAnchor, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
         headerTitleLabel.anchorView(top: innerPaddedView.topAnchor, bottom: nil, leading: innerPaddedView.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 10.0, left: 30.0, bottom: 0, right: 0), size: .zero)
@@ -157,11 +146,22 @@ class HeaderView: UIView {
         saveButton.trailingAnchor.constraint(equalTo: innerPaddedView.trailingAnchor, constant: -10.0).isActive = true
         saveButton.topAnchor.constraint(equalTo: innerPaddedView.topAnchor, constant: 10.0).isActive = true
         saveButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.18).isActive = true
+    }
+    
+    private func setupAutoLayout() {        
+        /// Height for header
+        switch UIDevice.current.screenType.rawValue {
+        case UIDevice.ScreenType.iPhones_6Plus_6sPlus_7Plus_8Plus.rawValue, UIDevice.ScreenType.iPhones_6_6s_7_8.rawValue:
+            heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 2.8).isActive = true
+        case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
+            heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 2.3).isActive = true
+        case UIDevice.ScreenType.iPhoneXSMax.rawValue, UIDevice.ScreenType.iPhoneX_iPhoneXS.rawValue, UIDevice.ScreenType.iPhoneXR.rawValue:
+            heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 3.3).isActive = true
+        default:
+            heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 3.3).isActive = true
+        }
         
-        fullScreenButton.topAnchor.constraint(equalTo: innerPaddedView.topAnchor, constant: 10.0).isActive = true
-        fullScreenButton.trailingAnchor.constraint(equalTo: innerPaddedView.trailingAnchor, constant: -10.0).isActive = true
-        fullScreenButton.widthAnchor.constraint(equalToConstant: 18.0).isActive = true
-        fullScreenButton.heightAnchor.constraint(equalToConstant: 18.0).isActive = true
+        widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
     }
     
 

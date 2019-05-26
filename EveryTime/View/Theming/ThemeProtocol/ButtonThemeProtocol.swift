@@ -11,4 +11,5 @@ import UIKit.UIColor
 protocol ButtonThemeProtocol {
     var text: [NSAttributedString.Key : Any] { get }
     var backgroundColor: UIColor { get }
+    var buttonSizeMultiplier: Double { get }
 }

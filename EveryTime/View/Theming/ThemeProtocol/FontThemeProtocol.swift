@@ -14,6 +14,8 @@ protocol FontThemeProtocol {
     var TextColour: UIColor { get }
     
     // MARK: - Large Display
+    var stepTimeIpad: [NSAttributedString.Key : Any] { get }
+    var stepNameIpad: [NSAttributedString.Key : Any] { get }
     var recipeName: [NSAttributedString.Key : Any] { get }
     var stepName: [NSAttributedString.Key : Any] { get }
     var stepTime: [NSAttributedString.Key : Any] { get }

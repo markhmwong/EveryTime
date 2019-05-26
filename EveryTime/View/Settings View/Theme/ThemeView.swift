@@ -124,6 +124,13 @@ extension ThemeView: UITableViewDelegate, UITableViewDataSource {
         return 2
     }
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if (section == 0) {
+            return "Touch for a preview"
+        }
+        return nil
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if (section == 0) {

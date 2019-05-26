@@ -1,10 +1,7 @@
 #  Feature Scratch pad
 
-## Version 1.1.20 [Current] Text size adjustment for larger screens
-Font made larger on the XR/XS Max.
-The buttons in the Recipe View to add/subtract 15 seconds and reset a Step were peeking above it's container. It is now properly centered.
-Under the hood dusting.
-
+## Version 1.1.21 [Current] Recipe options - with sounds and maybe colours
+iPad support
 recipe colours
 recipe sounds
 

@@ -23,6 +23,7 @@ protocol WhatsNewProtocol {
 struct WhatsNewFactory {
     
     static let whatsNewDictionary: [ String : WhatsNewProtocol ] = [
+        "1.1.20" : WhatsNewDetails.WhatsNew1_1_20(),
         "1.1.19" : WhatsNewDetails.WhatsNew1_1_19(),
         "1.1.18" : WhatsNewDetails.WhatsNew1_1_18(),
         "1.1.17" : WhatsNewDetails.WhatsNew1_1_17(),
@@ -40,6 +41,22 @@ struct WhatsNewFactory {
 
 /// List patch notes as least important to most important.
 struct WhatsNewDetails {
+    
+    struct WhatsNew1_1_20: WhatsNewProtocol {
+        
+        let date: String = "May 25, 2019"
+        
+        let version: String = "1.1.20"
+        
+        let build: String = "1.22"
+        
+        let patchNotes: [String] = [
+            "iPad Support",
+            "A quick fix for those with initial start up crashes. Temp fixes include reinstalling the application or closing and opening the app again.",
+            "Font made larger on the XR/XS Max.",
+            "The buttons in the Recipe View to add/subtract 15 seconds and reset a Step were peeking above it's container. It is now properly centered.",
+        ]
+    }
     
     struct WhatsNew1_1_19: WhatsNewProtocol {
         

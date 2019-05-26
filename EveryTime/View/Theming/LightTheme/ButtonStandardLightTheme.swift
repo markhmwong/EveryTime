@@ -15,4 +15,13 @@ class ButtonStandardLightTheme: ButtonThemeProtocol {
         NSAttributedString.Key.kern: FontStandardLightTheme.FontKern.General.floatValue,
     ]
     var backgroundColor: UIColor = UIColor.LightMintColourPalette.teal
+    
+    //for reset button and pause button
+    var buttonSizeMultiplier: Double {
+        if (UIDevice.current.iPad) {
+            return 1.5
+        } else {
+            return 1.0
+        }
+    }
 }

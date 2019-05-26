@@ -10,12 +10,44 @@ import UIKit
 
 class MainViewModel {
     
+    var resetButtonSize: CGSize {
+        get {
+            guard let theme = theme else {
+                if (UIDevice.current.iPad) {
+                    return CGSize(width: 18.0, height: 18.0)
+                } else {
+                    return CGSize(width: 18.0 * 1.5, height: 18.0 * 1.5)
+                }
+            }
+            
+            return CGSize(width: 18.0 * theme.currentTheme.button.buttonSizeMultiplier, height: 18.0 * theme.currentTheme.button.buttonSizeMultiplier)
+        }
+    }
+
+    var pauseButtonSize: CGSize {
+        get {
+            guard let theme = theme else {
+                if (UIDevice.current.iPad) {
+                    return CGSize(width: 18.0, height: 18.0)
+                } else {
+                    return CGSize(width: 18.0 * 1.5, height: 18.0 * 1.5)
+                }
+            }
+            
+            return CGSize(width: 35.0 * theme.currentTheme.button.buttonSizeMultiplier, height: 30.0 * theme.currentTheme.button.buttonSizeMultiplier)
+        }
+    }
+    
     var cellSize: CGFloat {
-        switch UIDevice.current.screenType.rawValue {
-        case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
-            return 2.8
-        default:
-            return 3.0
+        if (UIDevice.current.iPad) {
+            return 5.2
+        } else {
+            switch UIDevice.current.screenType.rawValue {
+            case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
+                return 2.8
+            default:
+                return 3.0
+            }
         }
     }
     

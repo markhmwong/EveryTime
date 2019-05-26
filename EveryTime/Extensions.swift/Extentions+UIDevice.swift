@@ -15,6 +15,11 @@ extension UIDevice {
     var iPhone: Bool {
         return UIDevice.current.userInterfaceIdiom == .phone
     }
+    
+    var iPad: Bool {
+        return UIDevice.current.userInterfaceIdiom == .pad
+    }
+    
     enum ScreenType: String {
         case iPhone4_4S = "iPhone 4 or iPhone 4S"
         case iPhones_5_5s_5c_SE = "iPhone 5, iPhone 5s, iPhone 5c or iPhone SE"
@@ -23,6 +28,10 @@ extension UIDevice {
         case iPhoneXR = "iPhone XR"
         case iPhoneX_iPhoneXS = "iPhone X,iPhoneXS"
         case iPhoneXSMax = "iPhoneXS Max"
+        case iPad97 = "iPad9.7, iPad Air 2, iPad Mini 4"
+        case iPadPro129 = "iPadPro12.9"
+        case iPadPro105 = "iPadPro10.5"
+        case iPadPro11 = "iPadPro11"
         case unknown
     }
     var screenType: ScreenType {
@@ -41,6 +50,14 @@ extension UIDevice {
             return .iPhoneX_iPhoneXS
         case 2688:
             return .iPhoneXSMax
+        case 2388:
+            return .iPadPro11
+        case 1668:
+            return .iPadPro105
+        case 2048:
+            return .iPad97
+        case 2732:
+            return .iPadPro129
         default:
             return .unknown
         }

@@ -32,6 +32,24 @@ class RecipeViewModel {
     
     var theme: ThemeManager?
     
+    var fullScreenButtonSize: CGSize {
+        get {
+            let size = 18.0
+            guard let theme = theme else {
+                
+                if (UIDevice.current.iPad) {
+                    return CGSize(width: size * 1.5, height: size * 1.5)
+                }
+                
+                return CGSize(width: size, height: size)
+            }
+            
+            let multiplier = theme.currentTheme.button.buttonSizeMultiplier
+            
+            return CGSize(width: size * multiplier, height: size * multiplier)
+        }
+    }
+    
     func dataSourceForStep() -> StepEntity {
         return dataSource[stepSelected]
     }

@@ -16,7 +16,7 @@ class LargeDisplayMainView: UIView {
 
     private lazy var closeButton: UIButton = {
         let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "close", attributes: delegate?.viewModel?.theme?.currentTheme.font.recipeName), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Close", attributes: delegate?.viewModel?.theme?.currentTheme.navigation.item), for: .normal)
         button.contentEdgeInsets = UIEdgeInsets(top: 0.01, left: 0.0, bottom: 0.0, right: -0.01)
         button.addTarget(self, action: #selector(handleClose), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -39,7 +39,7 @@ class LargeDisplayMainView: UIView {
     
     lazy var stepLabel: MarqueeLabel = {
         let label = MarqueeLabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50.0), rate: 30.0, fadeLength: 10.0)
-        label.attributedText = NSAttributedString(string: "Unknown step", attributes: delegate?.viewModel?.theme?.currentTheme.font.recipeName)
+        label.attributedText = NSAttributedString(string: "Unknown step", attributes: delegate?.viewModel?.theme?.currentTheme.font.stepTime)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         return label
@@ -144,7 +144,7 @@ class LargeDisplayMainView: UIView {
         
         recipeLabel.anchorView(top: topConstraint, bottom: nil, leading: leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 40, left: 10, bottom: 0, right: -10), size: .zero)
         timeLabel.anchorView(top: nil, bottom: centerYAnchor, leading: nil, trailing: nil, centerY: nil, centerX: centerXAnchor, padding: .zero, size: .zero)
-        stepLabel.anchorView(top: nil, bottom: timeLabel.topAnchor, leading: recipeLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: .zero, size: CGSize(width: UIScreen.main.bounds.width - 20.0, height: 40.0))
+        stepLabel.anchorView(top: nil, bottom: timeLabel.topAnchor, leading: recipeLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: .zero, size: CGSize(width: UIScreen.main.bounds.width - 20.0, height: 50.0))
         closeButton.anchorView(top: topAnchor, bottom: nil, leading: nil, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0), size: CGSize(width: 80, height: 0))
         upNextStepLabel.anchorView(top: nil, bottom: upNextStepNameLabel.topAnchor, leading: recipeLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: .zero, size: .zero)
         upNextStepNameLabel.anchorView(top: nil, bottom: bottomAnchor, leading: recipeLabel.leadingAnchor, trailing: recipeLabel.trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: CGSize(width: UIScreen.main.bounds.width, height: 40.0))
@@ -187,27 +187,45 @@ class LargeDisplayMainView: UIView {
         guard let vm = delegate?.viewModel else {
             return
         }
-        DispatchQueue.main.async {
-            self.timeLabel.attributedText = NSAttributedString(string: currTime, attributes: vm.theme?.currentTheme.font.stepTime)
+        
+        if (UIDevice.current.iPad) {
+            DispatchQueue.main.async {
+                self.timeLabel.attributedText = NSAttributedString(string: currTime, attributes: vm.theme?.currentTheme.font.stepTimeIpad)
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.timeLabel.attributedText = NSAttributedString(string: currTime, attributes: vm.theme?.currentTheme.font.stepTime)
+            }
         }
+
     }
     
     func updateNextStepLabel(nextStep: String = "Unknown Next Step", _ completionHandler: (() -> ())? = nil) {
         guard let vm = delegate?.viewModel else {
             return
         }
+        
         DispatchQueue.main.async {
             self.upNextStepNameLabel.attributedText = NSAttributedString(string: nextStep, attributes: vm.theme?.currentTheme.font.stepName)
         }
+
     }
     
     func updateStepLabel(currStep: String = "Unknown Step", _ completionHandler: (() -> ())? = nil) {
         guard let vm = delegate?.viewModel else {
             return
         }
-        DispatchQueue.main.async {
-            self.stepLabel.attributedText = NSAttributedString(string: currStep, attributes: vm.theme?.currentTheme.font.stepName)
+        
+        if (UIDevice.current.iPad) {
+            DispatchQueue.main.async {
+                self.stepLabel.attributedText = NSAttributedString(string: currStep, attributes: vm.theme?.currentTheme.font.stepNameIpad)
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.stepLabel.attributedText = NSAttributedString(string: currStep, attributes: vm.theme?.currentTheme.font.stepName)
+            }
         }
+    
     }
     
     /// Number of step complete
@@ -272,7 +290,6 @@ class LargeDisplayMainView: UIView {
         
         delegate.handlePauseButton()
         
-        print("pause Button")
     }
     
     

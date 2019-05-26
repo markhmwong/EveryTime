@@ -15,4 +15,13 @@ struct ButtonStandardNeutralTheme: ButtonThemeProtocol {
         NSAttributedString.Key.kern: FontNeutralTheme.FontKern.General.floatValue
     ]
     var backgroundColor: UIColor = UIColor.NeutralColourPalette.gray
+    
+    //for reset button and pause button
+    var buttonSizeMultiplier: Double {
+        if (UIDevice.current.iPad) {
+            return 1.5
+        } else {
+            return 1.0
+        }
+    }
 }

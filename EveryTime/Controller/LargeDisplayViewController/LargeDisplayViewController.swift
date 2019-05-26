@@ -81,8 +81,6 @@ class LargeDisplayViewController: ViewControllerBase {
             return
         }
         view.backgroundColor = vm.theme?.currentTheme.generalBackgroundColour
-//        let value = UIInterfaceOrientation.landscapeLeft.rawValue
-//        UIDevice.current.setValue(value, forKey: "orientation")
     }
     
     override func prepareView() {
