@@ -149,7 +149,7 @@ class LargeDisplayViewController: ViewControllerBase {
         if (priority < stepSet.count) {
             do {
                 try recipe.adjustTime(by: time, selectedStep: Int(priority))
-            } catch StepOptionsError.StepAlreadyComplete(let message) {
+            } catch StepOptionsError.StepAlreadyComplete(let _) {
 //                print(message)
                 ()//show alert box
             } catch {
@@ -182,10 +182,6 @@ class LargeDisplayViewController: ViewControllerBase {
         generator.impactOccurred()
         
         guard let vm = viewModel else {
-            return
-        }
-        
-        guard let r = vm.recipeEntity else {
             return
         }
         

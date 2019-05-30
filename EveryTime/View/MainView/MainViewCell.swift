@@ -57,6 +57,19 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    private lazy var colorTag: UIView = {
+        let colorTagView = UIView()
+        colorTagView.clipsToBounds = true
+        
+        colorTagView.layer.cornerRadius = 5.0
+        
+        colorTagView.layer.backgroundColor = UIColor.black.cgColor
+        colorTagView.layer.borderColor = UIColor.orange.cgColor
+        colorTagView.layer.borderWidth = 2
+        colorTagView.translatesAutoresizingMaskIntoConstraints = false
+        return colorTagView
+    }()
 
     private lazy var pauseButton: UIButton = {
         let button = UIButton()
@@ -122,9 +135,9 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
 
         pauseButton.anchorView(top: nil, bottom: nil, leading: nil, trailing: contentView.trailingAnchor, centerY: pauseButtonView.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: -25.0), size: vm.pauseButtonSize)
         
-        
         resetButton.anchorView(top: nil, bottom: contentView.bottomAnchor, leading: nil, trailing: nil, centerY: nil, centerX: contentView.centerXAnchor, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: -7.0, right: 0.0), size: vm.resetButtonSize)
-        
+        colorTag.anchorView(top: nil, bottom: nil, leading: leadingAnchor, trailing: nil, centerY: centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 0.0), size: CGSize(width: 10.0, height: bounds.height / 6))
+
     }
     
     func prepareLabels(recipe: RecipeEntity) {
@@ -137,11 +150,13 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         
         bottomBorder.backgroundColor = theme.currentTheme.tableView.bottomBorderColor
         
+        colorTag.layer.backgroundColor = recipe.colorUnarchive().cgColor
+        colorTag.layer.borderColor = recipe.colorUnarchive().lighter(by: 30.0)?.cgColor
         addSubview(recipeNameLabel)
         addSubview(recipeTimeLabel)
         addSubview(stepNameLabel)
         addSubview(bottomBorder)
-
+        addSubview(colorTag)
     }
     
     override func setupView() {
@@ -149,7 +164,6 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         addSubview(pauseButtonView)
         pauseButton.addTarget(self, action: #selector(handlePauseButton), for: .touchUpInside)
         pauseButtonView.addSubview(pauseButton)
-
 
     }
     
@@ -166,6 +180,7 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         recipeTimeLabel.removeFromSuperview()
         stepNameLabel.removeFromSuperview()
         resetButton.removeFromSuperview()
+        colorTag.removeFromSuperview()
     }
     
     @objc func handlePauseButton() {
@@ -236,6 +251,13 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
         stepNameLabel.attributedText = NSAttributedString(string: e.currStepName ?? "No Step Name", attributes: theme.currentTheme.tableView.mainViewStepName)
     }
     
+    func updateRecipeLabel() {
+        guard let e = entity, let theme = theme else {
+            return
+        }
+        recipeNameLabel.attributedText = NSAttributedString(string: e.recipeName ?? "No Step Name", attributes: theme.currentTheme.tableView.mainViewRecipeName)
+    }
+    
     func updateTimeLabel(timeRemaining: String) {
         guard let e = entity, let theme = theme else {
             return
@@ -251,9 +273,15 @@ class MainViewCell: EntityBaseCell<RecipeEntity> {
             
             self.recipeTimeLabel.attributedText = NSAttributedString(string: timeString, attributes: theme.currentTheme.tableView.mainViewRecipeTime)
             self.stepNameLabel.attributedText = NSAttributedString(string: e.currStepName ?? "No Step Name", attributes: theme.currentTheme.tableView.mainViewStepName)
-
         }
-        
+    }
+    
+    func updateColorTag() {
+        guard let recipe = entity else { return }
+        DispatchQueue.main.async {
+            self.colorTag.layer.backgroundColor = recipe.colorUnarchive().cgColor
+            self.colorTag.layer.borderColor = recipe.colorUnarchive().lighter(by: 50.0)?.cgColor
+        }
     }
     
     func animateCellForCompleteStep() {

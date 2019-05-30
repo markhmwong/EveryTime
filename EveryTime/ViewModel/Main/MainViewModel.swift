@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import Network
 
 class MainViewModel {
+    
+    var isPro: Bool
     
     var resetButtonSize: CGSize {
         get {
@@ -62,6 +65,7 @@ class MainViewModel {
     init(delegate: MainViewController?, theme: ThemeManager) {
         self.delegate = delegate
         self.theme = theme
+        self.isPro = false
     }
     
     //binary search through all recipes
@@ -139,5 +143,10 @@ class MainViewModel {
         let deleteIndexPaths = Array(0..<dataSource.count).map { IndexPath(item: $0, section: 0) }
         dataSource.removeAll()
         return deleteIndexPaths
+    }
+    
+    func checkIfPro() {
+        isPro = IAPProducts.proStore.isProductPurchased(IAPProducts.proId)
+        KeychainWrapper.standard.set(isPro, forKey: IAPProducts.proId)
     }
 }

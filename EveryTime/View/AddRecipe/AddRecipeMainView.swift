@@ -13,14 +13,14 @@ class AddRecipeMainView: UIView, UITableViewDelegate, UITableViewDataSource {
     let cellId = "cellId"
     let stepCellId = "stepCellId"
     
-    enum AddRecipeSections: Int {
+    enum AddRecipeSections: Int, CaseIterable {
         case Name
         case Settings
         case Steps
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return AddRecipeSections.allCases.count
     }
     
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
@@ -139,7 +139,8 @@ class AddRecipeMainView: UIView, UITableViewDelegate, UITableViewDataSource {
                     recipeNameTextField?.textAlignment = .left
                     recipeNameTextField?.translatesAutoresizingMaskIntoConstraints = false
                     cell.contentView.addSubview(recipeNameTextField!)
-                    recipeNameTextField?.fillSuperView()
+                    recipeNameTextField?.anchorView(top: cell.topAnchor, bottom: cell.bottomAnchor, leading: cell.leadingAnchor, trailing: cell.trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 20.0, bottom: 0.0, right: 0.0), size: .zero)
+
                     return cell
                 case AddRecipeSections.Settings:
                     let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)

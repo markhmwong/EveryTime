@@ -18,6 +18,7 @@ enum ScrollingState {
 
 enum CollectionCellIds: String {
     case RecipeCell = "RecipeCellId"
+    case UpgradeHeader = "UpgradeHeaderId"
 }
 
 class MainViewController: ViewControllerBase {
@@ -91,7 +92,7 @@ class MainViewController: ViewControllerBase {
         guard let vm = viewModel else {
             return
         }
-        
+        vm.checkIfPro()
         view.addSubview(mainView)
         vm.loadDataFromCoreData()
     }
@@ -138,6 +139,8 @@ class MainViewController: ViewControllerBase {
         let cell = mainView.collView.cellForItem(at: indexPath) as! MainViewCell
         DispatchQueue.main.async {
             cell.updateStepLabel()
+            cell.updateRecipeLabel()
+            cell.updateColorTag()
             cell.updatePauseButtonView(textColor, pauseBackground)
         }
     }

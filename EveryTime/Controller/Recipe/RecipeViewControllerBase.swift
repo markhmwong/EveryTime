@@ -15,7 +15,7 @@ class RecipeViewControllerBase: ViewControllerBase {
 //    let stepCellId = "stepCellId"
 //    var stepSet: Set<StepEntity>!
 //    var stepArr: [StepEntity] = []
-    var recipe: RecipeEntity!
+    var recipe: RecipeEntity! //move to viewmodel
 
     var mainViewControllerDelegate: MainViewController?
     

@@ -20,12 +20,12 @@ class HeaderView: UIView {
         return view
     }()
     
-    private lazy var headerTitleLabel: UILabel = {
-        let label = UILabel()
-        label.attributedText = NSAttributedString(string: "Unknown Name", attributes: Theme.Font.Recipe.HeaderTableView)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+//    private lazy var headerTitleLabel: UILabel = {
+//        let label = UILabel()
+//        label.attributedText = NSAttributedString(string: "Unknown Name", attributes: Theme.Font.Recipe.HeaderTableView)
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        return label
+//    }()
     
     private lazy var headerStepTitleLabel: UILabel = {
         let label = UILabel()
@@ -106,8 +106,8 @@ class HeaderView: UIView {
         fullScreenButton.addTarget(self, action: #selector(handleFullScreen), for: .touchUpInside)
         innerPaddedView.addSubview(fullScreenButton)
         
-        headerTitleLabel.attributedText = NSAttributedString(string: "No name", attributes: theme.currentTheme.tableView.recipeHeaderRecipe)
-        innerPaddedView.addSubview(headerTitleLabel)
+//        headerTitleLabel.attributedText = NSAttributedString(string: "No name", attributes: theme.currentTheme.tableView.recipeHeaderRecipe)
+//        innerPaddedView.addSubview(headerTitleLabel)
         innerPaddedView.addSubview(headerStepTimeLabel)
         innerPaddedView.addSubview(headerStepTitleLabel)
         innerPaddedView.addSubview(headerNextStepTitleLabel)
@@ -130,8 +130,8 @@ class HeaderView: UIView {
         fullScreenButton.anchorView(top: innerPaddedView.topAnchor, bottom: nil, leading: nil, trailing: innerPaddedView.trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 10.0, left: 0.0, bottom: 0.0, right: -10.0), size: vm.fullScreenButtonSize)
         
         innerPaddedView.anchorView(top: topAnchor, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
-        headerTitleLabel.anchorView(top: innerPaddedView.topAnchor, bottom: nil, leading: innerPaddedView.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 10.0, left: 30.0, bottom: 0, right: 0), size: .zero)
-        headerStepTimeLabel.anchorView(top: headerTitleLabel.bottomAnchor, bottom: nil, leading: leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 20.0, left: 30.0, bottom: 0.0, right: 0.0), size: .zero)
+//        headerTitleLabel.anchorView(top: innerPaddedView.topAnchor, bottom: nil, leading: innerPaddedView.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 10.0, left: 30.0, bottom: 0, right: 0), size: .zero)
+        headerStepTimeLabel.anchorView(top: fullScreenButton.bottomAnchor, bottom: nil, leading: leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 20.0, left: 30.0, bottom: 0.0, right: 0.0), size: .zero)
         headerStepTitleLabel.anchorView(top: headerStepTimeLabel.bottomAnchor, bottom: nil, leading: headerStepTimeLabel.leadingAnchor, trailing: nil, centerY: nil, centerX: nil, padding: .zero, size: .zero)
         
         headerNextStepLabel.leadingAnchor.constraint(equalTo: headerStepTitleLabel.leadingAnchor).isActive = true
@@ -169,7 +169,7 @@ class HeaderView: UIView {
         guard let theme = theme else {
             return
         }
-        headerTitleLabel.attributedText = NSAttributedString(string: title, attributes: theme.currentTheme.tableView.recipeHeaderRecipe)
+//        headerTitleLabel.attributedText = NSAttributedString(string: title, attributes: theme.currentTheme.tableView.recipeHeaderRecipe)
     }
     
     func updateHeaderNextStepTimeLabel(time: String) {

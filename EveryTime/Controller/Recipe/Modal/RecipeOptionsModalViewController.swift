@@ -15,7 +15,6 @@ class RecipeOptionsModalViewModel {
     init(theme: ThemeManager?) {
         self.theme = theme
     }
-    
 }
 
 class RecipeOptionsModalViewController: ViewControllerBase, UIGestureRecognizerDelegate {
@@ -23,8 +22,8 @@ class RecipeOptionsModalViewController: ViewControllerBase, UIGestureRecognizerD
     enum OptionsMenu: Int {
         case Add
         case EditStep
+        case RecipeOptions
         case Shuffle
-        //case EditRecipe
         case Reset
         case Delete
         case Close
@@ -36,7 +35,7 @@ class RecipeOptionsModalViewController: ViewControllerBase, UIGestureRecognizerD
     
     let cellId = "recipeModalCellId"
     
-    var dataSource = ["Add Step", "Edit Step", "Shuffle", "Reset", "Delete", "Close"]
+    var dataSource = ["Add Step", "Edit Step", "Recipe Options", "Shuffle Recipe", "Reset Recipe", "Delete Recipe", "Close"]
     
     lazy var tableView: UITableView = {
         let tv = UITableView()
@@ -125,7 +124,7 @@ extension RecipeOptionsModalViewController: UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
         if (indexPath.row == OptionsMenu.EditStep.rawValue && !isEditRowEnabled) {
-            dataSource[OptionsMenu.EditStep.rawValue] = "Edit Step - Select A Step"
+            dataSource[OptionsMenu.EditStep.rawValue] = "Edit Step - Please select a Step"
             cell.textLabel?.attributedText = NSAttributedString(string: dataSource[OptionsMenu.EditStep.rawValue], attributes: viewModel?.theme?.currentTheme.tableView.recipeModalOption)
             cell.textLabel?.alpha = 0.5
             cell.isUserInteractionEnabled = false
@@ -162,8 +161,8 @@ extension RecipeOptionsModalViewController: UITableViewDelegate, UITableViewData
         switch option {
         case .Add:
             delegate?.handleAddStep()
-//        case .EditRecipe:
-//            delegate?.handleEditRecipe()
+        case .RecipeOptions:
+            delegate?.handleRecipeOptions()
         case .Delete:
             delegate?.handleDelete()
         case .Reset:

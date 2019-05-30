@@ -23,11 +23,17 @@ public struct IAPProducts {
         IAPProducts.grandeId,
     ]
     
+    public static let proProductArray: Set = [
+        IAPProducts.proId
+    ]
+    
     private static let productIdentifiers: Set<ProductIdentifier> = productArray
     private static let tipProductIdentifiers: Set<ProductIdentifier> = tipProductArray
-    
+    private static let proProductIdentifiers: Set<ProductIdentifier> = proProductArray
+
     public static let store = IAPHelper(productIds: IAPProducts.productIdentifiers)
     public static let tipStore = IAPHelper(productIds: IAPProducts.tipProductIdentifiers)
+    public static let proStore = IAPHelper(productIds: IAPProducts.proProductIdentifiers)
 }
 
 func resourceNameForProductIdentifier(_ productIdentifier: String) -> String? {
@@ -48,5 +54,6 @@ extension IAPProducts {
     public static let shortId = "com.whizbang.Everytime.tip.short"
     public static let tallId = "com.whizbang.Everytime.tip.tall"
     public static let grandeId = "com.whizbang.Everytime.tip.grande"
-
+    
+    public static let proId = "com.whizbang.Everytime.pro"
 }

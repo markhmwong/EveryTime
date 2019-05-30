@@ -92,6 +92,7 @@ class MainViewView: UIView {
         addSubview(collView)
         addSubview(navView)
         collView.register(MainViewCell.self, forCellWithReuseIdentifier: CollectionCellIds.RecipeCell.rawValue)
+        collView.register(UpgradeHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionCellIds.UpgradeHeader.rawValue)
     }
     
     override func updateConstraints() {

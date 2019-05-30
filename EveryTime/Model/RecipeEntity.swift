@@ -6,7 +6,7 @@
 //  Copyright © 2019 Mark Wong. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import CoreData
 import AVFoundation
 
@@ -334,5 +334,14 @@ extension RecipeEntity {
     
     func stepsComplete() -> Int {
         return Int(self.currStepPriority) + 1
+    }
+    
+    func colorArchive(color: UIColor) {
+        self.color = NSKeyedArchiver.archivedData(withRootObject: color)
+    }
+    
+    func colorUnarchive() -> UIColor {
+        guard let color = color else { return UIColor.clear }
+        return NSKeyedUnarchiver.unarchiveObject(with: color) as! UIColor
     }
 }

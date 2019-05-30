@@ -36,6 +36,10 @@
 		4D205DB121FE8252008006BD /* StepTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D205DB021FE8252008006BD /* StepTableViewCell.swift */; };
 		4D5063BD229A909C006483E6 /* EmptyCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5063BC229A909C006483E6 /* EmptyCollectionView.swift */; };
 		4D5063BF229A90C7006483E6 /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5063BE229A90C7006483E6 /* UICollectionView+Extension.swift */; };
+		4D5063C1229A9C98006483E6 /* RecipeEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5063C0229A9C98006483E6 /* RecipeEditViewController.swift */; };
+		4D5063C3229D726C006483E6 /* RecipeColorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5063C2229D726C006483E6 /* RecipeColorViewController.swift */; };
+		4D5063C5229FA7BE006483E6 /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5063C4229FA7BE006483E6 /* Extension+UIColor.swift */; };
+		4D5063C7229FD1A2006483E6 /* UpgradeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5063C6229FD1A2006483E6 /* UpgradeHeaderView.swift */; };
 		4D507E73227FA0060074FBFB /* FontStandardLightTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E72227FA0060074FBFB /* FontStandardLightTheme.swift */; };
 		4D507E75227FA0250074FBFB /* FontThemeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E74227FA0250074FBFB /* FontThemeProtocol.swift */; };
 		4D507E7C22802B300074FBFB /* StandardDarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D507E7B22802B300074FBFB /* StandardDarkTheme.swift */; };
@@ -253,6 +257,10 @@
 		4D205DB021FE8252008006BD /* StepTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTableViewCell.swift; sourceTree = "<group>"; };
 		4D5063BC229A909C006483E6 /* EmptyCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCollectionView.swift; sourceTree = "<group>"; };
 		4D5063BE229A90C7006483E6 /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UICollectionView+Extension.swift"; path = "EveryTime/View/MainView/UICollectionView+Extension.swift"; sourceTree = SOURCE_ROOT; };
+		4D5063C0229A9C98006483E6 /* RecipeEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeEditViewController.swift; sourceTree = "<group>"; };
+		4D5063C2229D726C006483E6 /* RecipeColorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeColorViewController.swift; sourceTree = "<group>"; };
+		4D5063C4229FA7BE006483E6 /* Extension+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Extension+UIColor.swift"; path = "EveryTime/Controller/Recipe/Extension+UIColor.swift"; sourceTree = SOURCE_ROOT; };
+		4D5063C6229FD1A2006483E6 /* UpgradeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeHeaderView.swift; sourceTree = "<group>"; };
 		4D507E72227FA0060074FBFB /* FontStandardLightTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStandardLightTheme.swift; sourceTree = "<group>"; };
 		4D507E74227FA0250074FBFB /* FontThemeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontThemeProtocol.swift; sourceTree = "<group>"; };
 		4D507E7B22802B300074FBFB /* StandardDarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardDarkTheme.swift; sourceTree = "<group>"; };
@@ -573,6 +581,7 @@
 		4D205DB3220122AA008006BD /* MainView */ = {
 			isa = PBXGroup;
 			children = (
+				4D5063C6229FD1A2006483E6 /* UpgradeHeaderView.swift */,
 				4DA12F7521B358AB0049CD75 /* MainViewCell.swift */,
 				4D5380242243CACF0051DD0F /* MainViewView.swift */,
 				4D5063BC229A909C006483E6 /* EmptyCollectionView.swift */,
@@ -772,6 +781,8 @@
 				4D7847AE227B3CF500160658 /* RecipeViewControllerWithTableView+ScrollView.swift */,
 				4D7847AC227B37F400160658 /* RecipeViewControllerWithTableView+TableView.swift */,
 				4D7847AA227B296100160658 /* RecipeViewControllerWithTableView+Timer.swift */,
+				4D5063C0229A9C98006483E6 /* RecipeEditViewController.swift */,
+				4D5063C2229D726C006483E6 /* RecipeColorViewController.swift */,
 			);
 			path = Recipe;
 			sourceTree = "<group>";
@@ -970,6 +981,7 @@
 				4D5DCB9122885AA800393EF4 /* Extensions.swift */,
 				4D5DCB9222885AA800393EF4 /* Extentions+UIDevice.swift */,
 				4D5063BE229A90C7006483E6 /* UICollectionView+Extension.swift */,
+				4D5063C4229FA7BE006483E6 /* Extension+UIColor.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1304,6 +1316,7 @@
 				4D6879222296DBA400955A9B /* NavigationStandardGrapeTheme.swift in Sources */,
 				4DA78F062259D98800C018CA /* BasicMarqueeLabel.swift in Sources */,
 				4DA78F232260B99400C018CA /* AddRecipeViewController.swift in Sources */,
+				4D5063C3229D726C006483E6 /* RecipeColorViewController.swift in Sources */,
 				4D53803222468B140051DD0F /* SettingsViewCell.swift in Sources */,
 				4D01B8CD22928C2900E5C7AD /* NavigationNeutralTheme.swift in Sources */,
 				4D53F8A921F36E1B00C0AF31 /* HorizontalTransitionInteractor.swift in Sources */,
@@ -1339,6 +1352,7 @@
 				4DA12F7A21B606A20049CD75 /* AddStepViewController.swift in Sources */,
 				4D53F7CE21ED6CB200C0AF31 /* NavView.swift in Sources */,
 				4D507E7E22802B520074FBFB /* NavigationStandardDarkTheme.swift in Sources */,
+				4D5063C5229FA7BE006483E6 /* Extension+UIColor.swift in Sources */,
 				4D53F8AB21F36F5500C0AF31 /* HorizontalTransitionDelegate.swift in Sources */,
 				4D5063BD229A909C006483E6 /* EmptyCollectionView.swift in Sources */,
 				4DA78F2922630FB700C018CA /* AddRecipeHeaderView.swift in Sources */,
@@ -1353,6 +1367,7 @@
 				4D0C4B4F21AEC73A00153E76 /* SimpleRecipeTimer.xcdatamodeld in Sources */,
 				4D01B8E5229416B400E5C7AD /* NavigationStandardOrangeTheme.swift in Sources */,
 				4DA78E2A2254CD2D00C018CA /* LargeDisplayViewController.swift in Sources */,
+				4D5063C7229FD1A2006483E6 /* UpgradeHeaderView.swift in Sources */,
 				4D01B8C82291420500E5C7AD /* NeutralTheme.swift in Sources */,
 				4DA12F7621B358AB0049CD75 /* MainViewCell.swift in Sources */,
 				4D53F89C21F1A42200C0AF31 /* OverlayInteractor.swift in Sources */,
@@ -1365,6 +1380,7 @@
 				4D507E75227FA0250074FBFB /* FontThemeProtocol.swift in Sources */,
 				4D5DCBA8228A7AC500393EF4 /* IAPProducts.swift in Sources */,
 				4D0C4B4721AEC73A00153E76 /* AppDelegate.swift in Sources */,
+				4D5063C1229A9C98006483E6 /* RecipeEditViewController.swift in Sources */,
 				4D5DCB9E22885BE400393EF4 /* TableViewDeepMintTheme.swift in Sources */,
 				4D53F7D821EF0C6500C0AF31 /* ViewControllerOverlayAnimator.swift in Sources */,
 				4DA78F0E225B813D00C018CA /* WhatsNewViewController.swift in Sources */,

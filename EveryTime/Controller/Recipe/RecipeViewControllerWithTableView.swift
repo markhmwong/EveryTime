@@ -99,7 +99,6 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         
         bottomConstraint = (recipeOptionsViewController.view.topAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0))
         bottomConstraint.isActive = true
-
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -122,7 +121,7 @@ class RecipeViewControllerWithTableView: RecipeViewControllerBase, RecipeViewCon
         view.addSubview(mainView)
 
         mainView.headerView.backgroundColor = viewModel?.theme?.currentTheme.generalBackgroundColour
-        mainView.headerView.updateHeaderTitleLabel(title: recipe.recipeName ?? "Unknown Name")
+//        mainView.headerView.updateHeaderTitleLabel(title: recipe.recipeName ?? "Unknown Name")
         mainView.headerView.updateHeaderStepTimeLabel(time: "\(recipe.timeRemainingForCurrentStepToString())")
         mainView.headerView.updateHeaderStepTitleLabel(title: recipe.currStepName ?? "Unknown Name")
         
@@ -530,6 +529,13 @@ extension RecipeViewControllerWithTableView {
         CoreDataHandler.saveContext()
     }
     
+    func handleDismiss() {
+//        DispatchQueue.main.async {
+//            self.mainView.headerView.updateHeaderTitleLabel(title: self.recipe.recipeName ?? "Unknown Name")
+//        }
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     @objc func handleDelete() {
         recipeOptionsVisible = false
         animateTransitionIfNeeded(state: recipeOptionsCurrentState)
@@ -538,7 +544,7 @@ extension RecipeViewControllerWithTableView {
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action) in
             self.dismiss(animated: true) {
-                //
+                
                 guard let mvc = self.mainViewControllerDelegate else {
                     return
                 }
@@ -566,11 +572,15 @@ extension RecipeViewControllerWithTableView {
         self.present(vc, animated: true, completion: nil)
     }
     
-    func handleEditRecipe() {
+    func handleRecipeOptions() {
         recipeOptionsVisible = false
         animateTransitionIfNeeded(state: recipeOptionsCurrentState)
-
-        
+        guard let theme = viewModel?.theme else { return }
+        let vc = RecipeEditViewController(delegate: self, viewModel: RecipeEditViewModel(recipe: recipe, theme: theme))
+        vc.modalPresentationStyle = .overCurrentContext
+        present(vc, animated: true) {
+            //
+        }
     }
 
     func handlePauseRecipe() {
@@ -598,3 +608,5 @@ extension RecipeViewControllerWithTableView {
         modifyTime(seconds)
     }
 }
+
+

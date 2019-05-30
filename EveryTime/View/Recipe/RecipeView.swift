@@ -31,6 +31,13 @@ class RecipeView: UIView {
         return button
     }()
     
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.attributedText = NSAttributedString(string: delegate?.recipe.recipeName ?? "unknown name", attributes: delegate?.viewModel?.theme?.currentTheme.navigation.item)
+        return label
+    }()
+    
     private lazy var settingsButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(Theme.Font.Color.TextColour, for: .normal)
@@ -70,7 +77,7 @@ class RecipeView: UIView {
     }
     
     func setupView() {
-        navView = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: settingsButton, titleLabel: nil, topScreenAnchor: self.topAnchor)
+        navView = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: settingsButton, titleLabel: titleLabel, topScreenAnchor: self.topAnchor)
         guard let nav = navView, let vm = delegate?.viewModel else {
             return
         }

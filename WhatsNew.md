@@ -1,7 +1,12 @@
 #  Feature Scratch pad
 
-## Version 1.1.21 [Current] Recipe options - with sounds and maybe colours
-iPad support
+## Version 1.1.21 Recipe options - with sounds and maybe colours
+Upgrade IAP (allow 3 Recipes)
+restore
+recipe options edit name
+empty view updated with instructions
+Option to upgrade in header
+recipe colours are now available to mark your recipe with a selected colour
 recipe colours
 recipe sounds
 
