@@ -30,18 +30,22 @@ extension AddStepViewControllerBase: UIPickerViewDelegate, UIPickerViewDataSourc
         return pickerView.frame.size.width / 6
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        switch component {
-        case PickerColumn.hour.rawValue:
-            return "\(row)"
-        case PickerColumn.min.rawValue:
-            return "\(row)"
-        case PickerColumn.sec.rawValue:
-            return "\(row)"
-        default:
-            return ""
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        let theme = viewModel.theme
+        if let col = PickerColumn(rawValue: component) {
+            switch col {
+            case PickerColumn.hour:
+                return NSAttributedString(string: "\(row)", attributes: theme?.currentTheme.font.stepName)
+            case PickerColumn.min:
+                return NSAttributedString(string: "\(row)", attributes: theme?.currentTheme.font.stepName)
+            case PickerColumn.sec:
+                return NSAttributedString(string: "\(row)", attributes: theme?.currentTheme.font.stepName)
+            }
         }
+
+        return NSAttributedString(string: "", attributes: [:])
     }
+
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch component {
         case PickerColumn.hour.rawValue:

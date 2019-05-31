@@ -29,7 +29,7 @@ class AddStepViewControllerBase: ViewControllerBase, UITextFieldDelegate {
     
     lazy var mainView: AddStepMainView = {
         let view = AddStepMainView(delegate: self)
-        view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
+        view.backgroundColor = viewModel?.theme?.currentTheme.generalBackgroundColour
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -75,8 +75,11 @@ class AddStepViewControllerBase: ViewControllerBase, UITextFieldDelegate {
     
     override func prepareViewController() {
         super.prepareViewController()
+        guard let theme = viewModel.theme?.currentTheme else {
+            return
+        }
         view.layer.cornerRadius = Theme.View.CornerRadius
-        view.backgroundColor = Theme.Background.Color.NavTopFillBackgroundColor
+        view.backgroundColor = theme.generalBackgroundColour
     }
     
     override func prepareView() {

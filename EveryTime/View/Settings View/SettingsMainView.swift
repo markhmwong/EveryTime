@@ -15,9 +15,18 @@ class SettingsMainView: UIView {
     }
     
     enum SettingsSections: Int {
-        case Data
-        case Support
+        case Appearance
         case ChangeLog
+        case Support
+        case Data
+    }
+
+    enum ChangeLog: Int {
+        case Whatsnew
+    }
+    
+    enum Appearance: Int {
+        case Themes
     }
     
     enum Support: Int {
@@ -30,7 +39,7 @@ class SettingsMainView: UIView {
     
     let settingsCellId = "settingsCellId"
     
-    var settingsViewControllerDelegate: SettingsViewController?
+    var delegate: SettingsViewController?
     
     private var mainViewControllerDelegate: MainViewController?
     
@@ -38,13 +47,13 @@ class SettingsMainView: UIView {
     
     private lazy var dismissButton: UIButton = {
         let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "Back", attributes: Theme.Font.Nav.Item), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Back", attributes: delegate?.viewModel?.theme?.currentTheme.navigation.item), for: .normal)
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    private lazy var tableView: UITableView = {
+    lazy var tableView: UITableView = {
        let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
@@ -53,26 +62,27 @@ class SettingsMainView: UIView {
         return tableView
     }()
     
-    private lazy var navView: NavView = {
-       let view = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: nil)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.attributedText = NSAttributedString(string: "Settings", attributes: Theme.Font.Nav.Title)
+        label.attributedText = NSAttributedString(string: "Settings", attributes: delegate?.viewModel?.theme?.currentTheme.navigation.title)
         return label
     }()
     
+    private lazy var navView: NavView = {
+        let view = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: nil, titleLabel: titleLabel, topScreenAnchor: self.topAnchor)
+        view.backgroundFillerColor(color: delegate?.viewModel?.theme?.currentTheme.navigation.backgroundColor)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
     convenience init(delegate: SettingsViewController) {
         self.init(frame: .zero)
-        self.settingsViewControllerDelegate = delegate
+        self.delegate = delegate
         self.setupView()
         self.setupAutoLayout()
     }
@@ -82,10 +92,17 @@ class SettingsMainView: UIView {
     }
     
     func setupView() {
+        guard let vm = delegate?.viewModel else {
+            return
+        }
+        let promotionalHeader = SettingsPromotionalHeader(delegate: self, theme: delegate?.viewModel?.theme)
+
+        tableView.tableHeaderView = promotionalHeader
+        tableView.backgroundColor = vm.theme?.currentTheme.tableView.backgroundColor
         addSubview(tableView)
         addSubview(navView)
-        navView.addSubview(titleLabel)
         tableView.register(SettingsViewCell.self, forCellReuseIdentifier: settingsCellId)
+        promotionalHeader.grabTipsProducts()
     }
     
     func setupAutoLayout() {
@@ -94,9 +111,6 @@ class SettingsMainView: UIView {
         
         navView.anchorView(top: navTopConstraint, bottom: tableView.topAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
         navView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: heightByNotch).isActive = true
-
-        titleLabel.anchorView(top: nil, bottom: nil, leading: nil, trailing: nil, centerY: navView.centerYAnchor, centerX: centerXAnchor, padding: .zero, size: .zero)
-        
         tableView.anchorView(top: navView.bottomAnchor, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
     }
     
@@ -109,15 +123,33 @@ class SettingsMainView: UIView {
     }
     
     @objc func handleDismiss() {
-        settingsViewControllerDelegate?.handleDismiss()
+        delegate?.handleDismiss()
     }
 }
 
 extension SettingsMainView: UITableViewDelegate, UITableViewDataSource {
-    /// Rows for the about section
+    
+    func appearance(row: Int) {
+        
+        guard let delegate = delegate else {
+            return
+        }
+
+        guard let appearance = Appearance(rawValue: row) else { return }
+        
+        switch appearance {
+        case .Themes:
+            let vc = ThemeViewController(delegate: delegate, viewModel: ThemeViewModel(theme: delegate.viewModel?.theme))
+            vc.viewModel?.delegate = vc
+            DispatchQueue.main.async {
+                delegate.present(vc, animated: true, completion: nil)
+            }
+        }
+        
+    }
     func about(row: Int) {
         
-        guard let svc = settingsViewControllerDelegate else {
+        guard let svc = delegate else {
             return
         }
         
@@ -127,12 +159,15 @@ extension SettingsMainView: UITableViewDelegate, UITableViewDataSource {
         
         switch support {
             case .About:
-                let vc = AboutViewController()
+                guard let theme = svc.viewModel?.theme else {
+                    return
+                }
+                let vc = AboutViewController(viewModel: AboutViewModel(theme: theme))
                 DispatchQueue.main.async {
                     svc.present(vc, animated: true, completion: nil)
                 }
             case .Review:
-                SKStoreReviewController.requestReview()
+                writeReview()
             case .Share:
                 svc.share()
             case .Feedback:
@@ -142,41 +177,99 @@ extension SettingsMainView: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    func writeReview() {
+        let productURL = URL(string: "https://itunes.apple.com/app/id1454444680?mt=8")!
+        var components = URLComponents(url: productURL, resolvingAgainstBaseURL: false)
+        
+        // 2.
+        components?.queryItems = [
+            URLQueryItem(name: "action", value: "write-review")
+        ]
+        
+        // 3.
+        guard let writeReviewURL = components?.url else {
+            return
+        }
+        
+        // 4.
+        UIApplication.shared.open(writeReviewURL)
+    }
+    
+    //https://itunes.apple.com/app/id1454444680?mt=8
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let svc = settingsViewControllerDelegate else {
+        guard let delegate = delegate else {
             return
         }
         
         guard let settingsSections = SettingsSections(rawValue: indexPath.section) else {
             return
         }
+        guard let theme = delegate.viewModel?.theme else {
+            return
+        }
         
         switch settingsSections {
             case .Data:
                 if (indexPath.row == Data.Clear.rawValue) {
-                    svc.deleteAllAction()
+                    delegate.deleteAllAction()
                 }
+            case .Appearance:
+                appearance(row: indexPath.row)
+
             case .Support:
                 about(row: indexPath.row)
             case .ChangeLog:
-                let vc = SettingsWhatsNewViewController(delegate: svc)
+                let vc = SettingsWhatsNewViewController(delegate: delegate, viewModel: WhatsNewViewModel(whatsNew: WhatsNewFactory.getLatestWhatsNew(), theme: theme))
                 DispatchQueue.main.async {
-                    svc.present(vc, animated: true, completion: nil)
+                    delegate.present(vc, animated: true, completion: nil)
                 }
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return settingsViewControllerDelegate!.settingsViewModel.dataSource[section].count
+        return delegate?.viewModel?.dataSource[section].count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: settingsCellId, for: indexPath) as! SettingsViewCell
-        cell.updateLabel(text: settingsViewControllerDelegate!.settingsViewModel.dataSource[indexPath.section][indexPath.row])
+        cell.theme = delegate?.viewModel?.theme
+        cell.backgroundColor = .clear
+        cell.updateLabel(text: delegate?.viewModel?.dataSource[indexPath.section][indexPath.row] ?? "Unknown Setting")
         if (indexPath.section == SettingsSections.Data.rawValue && indexPath.item == Data.Clear.rawValue) {
-            cell.label.textColor = UIColor.red
+            cell.imageView?.image = UIImage(named: "delete_icon")?.withRenderingMode(.alwaysTemplate)
+
+        } else {
+            
+            if (indexPath.section == SettingsSections.Appearance.rawValue && indexPath.item == Appearance.Themes.rawValue) {
+                cell.imageView?.image = UIImage(named: "theme_small_icon")?.withRenderingMode(.alwaysTemplate)
+            }
+            
+            if (indexPath.section == SettingsSections.ChangeLog.rawValue && indexPath.item == ChangeLog.Whatsnew.rawValue) {
+                cell.imageView?.image = UIImage(named: "whatsnew_icon")?.withRenderingMode(.alwaysTemplate)
+            }
+            
+            if (indexPath.section == SettingsSections.Support.rawValue && indexPath.item == Support.About.rawValue) {
+                cell.imageView?.image = UIImage(named: "about_icon")?.withRenderingMode(.alwaysTemplate)
+            }
+            
+            if (indexPath.section == SettingsSections.Support.rawValue && indexPath.item == Support.Feedback.rawValue) {
+                cell.imageView?.image = UIImage(named: "email_icon")?.withRenderingMode(.alwaysTemplate)
+            }
+            
+            if (indexPath.section == SettingsSections.Support.rawValue && indexPath.item == Support.Share.rawValue) {
+                cell.imageView?.image = UIImage(named: "share_icon")?.withRenderingMode(.alwaysTemplate)
+            }
+            
+            if (indexPath.section == SettingsSections.Support.rawValue && indexPath.item == Support.Review.rawValue) {
+                cell.imageView?.image = UIImage(named: "review_icon")?.withRenderingMode(.alwaysTemplate)
+            }
+            
+
         }
+        cell.imageView?.tintColor = delegate?.viewModel?.theme?.currentTheme.font.TextColour
+
         return cell
     }
     
@@ -193,6 +286,8 @@ extension SettingsMainView: UITableViewDelegate, UITableViewDataSource {
         switch settingsSection {
             case .Data:
                 return "Data"
+            case .Appearance:
+                return "Appearance"
             case .Support:
                 return "Support"
             case .ChangeLog:
@@ -201,8 +296,6 @@ extension SettingsMainView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return settingsViewControllerDelegate!.settingsViewModel.dataSource.count
+        return delegate?.viewModel?.dataSource.count ?? 0
     }
-    
-
 }

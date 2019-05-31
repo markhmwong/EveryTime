@@ -16,28 +16,28 @@ class WhatsNewView: UIView {
     
     private lazy var dismissButton: UIButton = {
         let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "Back", attributes: Theme.Font.Nav.Item), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Back", attributes: delegate?.viewModel?.theme?.currentTheme.navigation.item), for: .normal)
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    lazy var navView: NavView = {
-        let view = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: nil)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.attributedText = NSAttributedString(string: "What's New", attributes: Theme.Font.Nav.Title)
+        label.attributedText = NSAttributedString(string: "What's New", attributes: delegate?.viewModel?.theme?.currentTheme.navigation.title)
         return label
+    }()
+    
+    lazy var navView: NavView = {
+        let view = NavView(frame: .zero, leftNavItem: dismissButton, rightNavItem: nil, titleLabel: titleLabel, topScreenAnchor: self.topAnchor)
+        view.backgroundFillerColor(color: delegate?.viewModel?.theme?.currentTheme.navigation.backgroundColor)
+        return view
     }()
     
     lazy var patchNotesTextView: UITextView = {
         let view = UITextView()
-        view.backgroundColor = Theme.Background.Color.Clear
+        view.backgroundColor = .clear
         view.isSelectable = false
         view.isEditable = false
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -46,15 +46,14 @@ class WhatsNewView: UIView {
     
     lazy var dateLabel: UILabel = {
         let view = UILabel()
-        view.backgroundColor = Theme.Background.Color.Clear
+        view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     lazy var patchNotesHeader: UILabel = {
         let view = UILabel()
-        view.attributedText = NSAttributedString(string: "The Highlights of \(AppMetaData.version!)", attributes: Theme.Font.PatchNotes.SubHeading)
-        view.backgroundColor = Theme.Background.Color.Clear
+        view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -62,19 +61,19 @@ class WhatsNewView: UIView {
     private let textContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = Theme.Background.Color.Clear
+        view.backgroundColor = .clear
         return view
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupView()
-        self.setupAutoLayout()
     }
     
     convenience init(delegate: SettingsWhatsNewViewController) {
         self.init(frame: .zero)
         self.delegate = delegate
+        self.setupView()
+        self.setupAutoLayout()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -82,14 +81,19 @@ class WhatsNewView: UIView {
     }
     
     private func setupView() {
+        guard let vm = delegate?.viewModel else {
+            return
+        }
+        
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = Theme.Background.Color.GeneralBackgroundColor
+        backgroundColor = vm.theme?.currentTheme.generalBackgroundColour
         addSubview(navView)
         addSubview(textContainer)
         addSubview(patchNotesHeader)
         addSubview(dateLabel)
         navView.addSubview(titleLabel)
         textContainer.addSubview(patchNotesTextView)
+        patchNotesHeader.attributedText = NSAttributedString(string: "The Highlights of \(AppMetaData.version!)", attributes: vm.theme?.currentTheme.font.bodyText)
     }
     
     private func setupAutoLayout() {
@@ -115,11 +119,17 @@ class WhatsNewView: UIView {
     }
     
     func updatedPatchNotes(patchNotes: String) {
-        patchNotesTextView.attributedText = NSAttributedString(string: patchNotes, attributes: Theme.Font.PatchNotes.Text)
+        guard let vm = delegate?.viewModel else {
+            return
+        }
+        patchNotesTextView.attributedText = NSAttributedString(string: patchNotes, attributes: vm.theme?.currentTheme.font.bodyText)
     }
     
     func updateDateLabel(date: String) {
-        dateLabel.attributedText = NSAttributedString(string: date, attributes: Theme.Font.PatchNotes.Date)
+        guard let vm = delegate?.viewModel else {
+            return
+        }
+        dateLabel.attributedText = NSAttributedString(string: date, attributes: vm.theme?.currentTheme.font.bodyText)
     }
     
     @objc func handleDismiss() {

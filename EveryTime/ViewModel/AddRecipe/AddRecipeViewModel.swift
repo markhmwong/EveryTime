@@ -16,10 +16,13 @@ class AddRecipeViewModel {
     
     var delegate: AddRecipeViewController?
     
-    init(dataSource: [StepEntity] = [], mainDelegate: MainViewController?, delegate: AddRecipeViewController?) {
+    var theme: ThemeManager?
+    
+    init(dataSource: [StepEntity] = [], mainDelegate: MainViewController?, delegate: AddRecipeViewController?, theme: ThemeManager?) {
         self.dataSource = dataSource
-        self.recipeEntity = RecipeEntity(name: "Recipe \(mainDelegate?.dataSource.count ?? 0)")
+        self.recipeEntity = RecipeEntity(name: "Recipe \(mainDelegate?.viewModel?.dataSource.count ?? 0)")
         self.delegate = delegate
+        self.theme = theme
     }
     
     func checkTextField() throws {

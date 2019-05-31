@@ -9,19 +9,30 @@
 import Foundation
 
 extension MainViewController: TimerProtocol {
+    
     func startTimer() {
-        if (timer == nil) {
-            timer?.invalidate()
+        
+        guard let vm = viewModel else {
+            return
+        }
+        
+        if (vm.timer == nil) {
+            vm.timer?.invalidate()
             let timerInterval = 0.1
-            timer = Timer.scheduledTimer(timeInterval: timerInterval, target: self, selector: #selector(update), userInfo: nil, repeats: true)
-            RunLoop.current.add(timer!, forMode: .common)
+            vm.timer = Timer.scheduledTimer(timeInterval: timerInterval, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+            RunLoop.current.add(vm.timer!, forMode: .common)
         }
     }
     
     func stopTimer() {
-        if (timer != nil) {
-            timer?.invalidate()
-            timer = nil
+        
+        guard let vm = viewModel else {
+            return
+        }
+        
+        if (vm.timer != nil) {
+            vm.timer?.invalidate()
+            vm.timer = nil
         }
     }
     

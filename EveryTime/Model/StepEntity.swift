@@ -75,7 +75,7 @@ extension StepEntity {
     
     func timeRemainingToString() -> String {
         let (h,m,s) = self.timeRemaining.secondsToHoursMinutesSeconds()
-        return "\(h.prefixZeroToInteger())h \(m.prefixZeroToInteger())m \(s.prefixZeroToInteger())s"
+        return "\(h.prefixZeroToInteger()) : \(m.prefixZeroToInteger()) : \(s.prefixZeroToInteger())"
     }
     
     func timeRemainingPausedState() -> String {
@@ -84,7 +84,7 @@ extension StepEntity {
     }
     
     func hrsMinsSecsToString(h: Int, m: Int, s: Int) -> String {
-        return "\(h)h\(m)m\(s)s"
+        return "\(h) : \(m) : \(s)"
     }
     
     func updatePauseState() {

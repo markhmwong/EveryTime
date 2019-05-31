@@ -6,7 +6,7 @@
 //  Copyright © 2019 Mark Wong. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import CoreData
 import AVFoundation
 
@@ -136,7 +136,7 @@ extension RecipeEntity {
     
     func timeRemainingForCurrentStepToString() -> String {
         let (h,m,s) = currStepTimeRemaining.secondsToHoursMinutesSeconds()
-        return "\(h.prefixZeroToInteger())h \(m.prefixZeroToInteger())m \(s.prefixZeroToInteger())s"
+        return "\(h.prefixZeroToInteger()) : \(m.prefixZeroToInteger()) : \(s.prefixZeroToInteger())"
     }
     
     func sumStepsForExpectedElapsedTime() {
@@ -162,9 +162,11 @@ extension RecipeEntity {
     /**
         Reset entire recipe
      
-        Returns indexPaths to reload
+        Returns IndexPaths to reload. The IndexPaths to reload are needed in the recipe view
+        when the steps are reset, the specific cells in the tableview must all be reloaded to reflect
+        the new data.
      
-        Doubles as a full reset and a partial reset
+        Doubles as a recipe reset and a partial recipe reset
      */
     func resetEntireRecipeTo(toStep: Int = 0) -> [IndexPath] {
         let sortedSet = sortStepsByPriority()
@@ -180,9 +182,7 @@ extension RecipeEntity {
             
             if (index >= toStep) {
                 step.resetStep()
-
-                totalTimeRemaining += step.timeRemaining
-                
+                totalTimeRemaining += step.timeRemaining                
                 if (step.priority == toStep) {
                     currStepPriority = step.priority
                     currStepTimeRemaining = step.timeRemaining
@@ -334,5 +334,14 @@ extension RecipeEntity {
     
     func stepsComplete() -> Int {
         return Int(self.currStepPriority) + 1
+    }
+    
+    func colorArchive(color: UIColor) {
+        self.color = NSKeyedArchiver.archivedData(withRootObject: color)
+    }
+    
+    func colorUnarchive() -> UIColor {
+        guard let color = color else { return UIColor.clear }
+        return NSKeyedUnarchiver.unarchiveObject(with: color) as! UIColor
     }
 }

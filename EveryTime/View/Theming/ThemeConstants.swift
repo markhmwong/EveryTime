@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 struct Theme {
+    
     struct View {
         private struct Style {
             static var Medium: String { return "Avenir-Medium" }
@@ -36,7 +37,7 @@ struct Theme {
         }
     }
     struct Font {
-        fileprivate typealias tf = Theme.Font
+        private typealias tf = Theme.Font
         static let standardTextSize: CGFloat = 12.0
         
         struct Error {
@@ -97,7 +98,7 @@ struct Theme {
                 case UIDevice.ScreenType.iPhones_5_5s_5c_SE.rawValue:
                     return 45.0
                 default:
-                    return 60.0
+                    return 55.0
                 }
             }
             static var LargeStepCount: CGFloat {

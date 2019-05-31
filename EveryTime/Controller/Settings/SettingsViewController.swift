@@ -1,5 +1,5 @@
 //
-//  AboutViewController.swift
+//  SettingsViewController.swift
 //  SimpleRecipeTimer
 //
 //  Created by Mark Wong on 12/2/19.
@@ -17,25 +17,30 @@ extension SettingsViewController: MFMailComposeViewControllerDelegate {
 
 class SettingsViewController: ViewControllerBase  {
     
-    var settingsViewModel: SettingsViewModel!
+    var viewModel: SettingsViewModel?
     
     private var delegate: MainViewController?
     
-    private lazy var mainView: SettingsMainView = {
-        let view = SettingsMainView(delegate: self)
-        view.backgroundColor = Theme.Background.Color.NavTopFillBackgroundColor
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    var mainView: SettingsMainView?
+//        = {
+//        let view = SettingsMainView(delegate: self)
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        return view
+//    }()
     
     init(delegate: MainViewController, viewModel: SettingsViewModel) {
         super.init(nibName: nil, bundle: nil)
         self.delegate = delegate
-        self.settingsViewModel = viewModel
+        self.viewModel = viewModel
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
     }
     
     override func viewDidLoad() {
@@ -43,45 +48,68 @@ class SettingsViewController: ViewControllerBase  {
         //The super will call prepare_ functions
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        view.backgroundColor = viewModel?.theme?.currentTheme.generalBackgroundColour
+        mainView?.removeFromSuperview()
+        mainView = nil
+        guard let mainView = mainView else {
+            self.mainView = SettingsMainView(delegate: self)
+            self.mainView?.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(self.mainView!)
+            self.mainView?.fillSuperView()
+            view.layoutIfNeeded()
+            return
+        }
+        
+
+    }
+    
     override func prepareView() {
         super.prepareView()
-        view.addSubview(mainView)
     }
     
     override func prepareAutoLayout() {
         super.prepareAutoLayout()
-        mainView.fillSuperView()
     }
     
     override func prepareViewController() {
         super.prepareViewController()
-        view.backgroundColor = Theme.Background.Color.GeneralBackgroundColor
     }
     
     func handleDismiss() {
         guard let mvc = delegate else {
             return
         }
-        
+        //if the theme has changed
+        mvc.reloadMainViewIfThemeChanges()
         mvc.startTimer()
         
         dismiss(animated: true, completion: nil)
     }
     
     // leave these functions here. place data type like setToRecipients in a variable
-    func emailFeedback() {        
+    func emailFeedback() {
+        
+        guard let vm = viewModel else {
+            return
+        }
+        
         let picker: MFMailComposeViewController = MFMailComposeViewController(nibName: nil, bundle: nil)
         picker.mailComposeDelegate = self
-        picker.setToRecipients([settingsViewModel.emailToRecipient])
-        picker.setSubject(settingsViewModel.emailSubject)
+        picker.setToRecipients([vm.emailToRecipient])
+        picker.setSubject(vm.emailSubject)
 
-        picker.setMessageBody(settingsViewModel.emailBody(), isHTML: true)
+        picker.setMessageBody(vm.emailBody(), isHTML: true)
         present(picker, animated: true, completion: nil)
     }
     
     func share() {
-        let text = settingsViewModel.shareText
-        let url: URL = URL(string: settingsViewModel.shareURL)!
+        guard let vm = viewModel else {
+            return
+        }
+        let text = vm.shareText
+        let url: URL = URL(string: vm.shareURL)!
         let vc = UIActivityViewController(activityItems: [text, url], applicationActivities: [])
         
         self.present(vc, animated: true, completion: nil)
@@ -98,5 +126,4 @@ class SettingsViewController: ViewControllerBase  {
         present(alert, animated: true, completion: nil)
     }
 }
-
 

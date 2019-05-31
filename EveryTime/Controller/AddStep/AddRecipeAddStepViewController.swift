@@ -23,8 +23,10 @@ class AddRecipeAddStepViewController: AddStepViewControllerBase {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        mainView.labelTextField.attributedText = NSAttributedString(string: "\(viewModel.grabEntity()?.stepName ?? "Step")", attributes: Theme.Font.Recipe.TextFieldAttribute)
+        guard let theme = viewModel.theme else {
+            return
+        }
+        mainView.labelTextField.attributedText = NSAttributedString(string: "\(viewModel.grabEntity()?.stepName ?? "Step")", attributes: theme.currentTheme.font.stepName)
     }
     
     override func grabValuesFromInput() {

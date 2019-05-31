@@ -10,8 +10,10 @@ import Foundation
 
 struct SettingsDataSource {
     static let dataSource: [[String]] = [
-        ["Clear All Recipes"],
+        ["Theme"],
+        ["What's New"],
         ["About", "Review In App Store", "Share with Friends", "Email Feedback"],
-        ["What's New"]
+        ["Clear All Recipes"],
+        
     ]
 }

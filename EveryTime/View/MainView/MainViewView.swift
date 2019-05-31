@@ -11,14 +11,67 @@ import AVFoundation
 
 class MainViewView: UIView {
     
-    private lazy var navView: NavView? = nil
-    
     private let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     private var player: AVAudioPlayer?
     
     private var delegate: MainViewController!
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private lazy var rightNavItemButton: UIButton = {
+        let button = UIButton()
+        button.setAttributedTitle(NSAttributedString(string: "Add", attributes: delegate.viewModel?.theme?.currentTheme.navigation.item), for: .normal)
+        button.addTarget(self, action: #selector(handleAddRecipe), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private lazy var leftNavItemButton: UIButton = {
+        let button = UIButton()
+        button.setAttributedTitle(NSAttributedString(string: "Settings", attributes: delegate.viewModel?.theme?.currentTheme.navigation.item), for: .normal)
+        button.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private lazy var appNameLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.attributedText = NSAttributedString(string: Bundle.appName(), attributes: delegate?.viewModel?.theme?.currentTheme.navigation.item)
+        return label
+    }()
+    
+    lazy var navView: NavView = {
+        let view = NavView(frame: .zero, leftNavItem: leftNavItemButton, rightNavItem: rightNavItemButton, titleLabel: appNameLabel, topScreenAnchor: self.topAnchor)
+        view.backgroundFillerColor(color: delegate?.viewModel?.theme?.currentTheme.navigation.backgroundColor)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
+    /// Test data button
+//    private lazy var leftNavItemButtonTest: UIButton = {
+//        let button = UIButton()
+//        button.setAttributedTitle(NSAttributedString(string: "Test Random Data", attributes: Theme.Font.Nav.Item), for: .normal)
+//        button.addTarget(self, action: #selector(handleTest), for: .touchUpInside)
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        return button
+//    }()
+    
+    lazy var collView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        view.dataSource = delegate
+        view.delegate = delegate
+        view.dragInteractionEnabled = true
+        view.backgroundColor = delegate?.viewModel?.theme?.currentTheme.tableView.backgroundColor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -30,91 +83,48 @@ class MainViewView: UIView {
         self.setupAutoLayout()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private lazy var rightNavItemButton: UIButton = {
-        let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "Add", attributes: Theme.Font.Nav.Item), for: .normal)//revert back to add recipe
-        button.addTarget(self, action: #selector(handleAddRecipe), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    private lazy var leftNavItemButton: UIButton = {
-        let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "Settings", attributes: Theme.Font.Nav.Item), for: .normal)
-        button.addTarget(self, action: #selector(handleAbout), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-
-    private lazy var appNameLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.attributedText = NSAttributedString(string: Bundle.appName(), attributes: Theme.Font.Nav.Title)
-        return label
-    }()
-    
-    /// Test data button
-    private lazy var leftNavItemButtonA: UIButton = {
-        let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "Test Random Data", attributes: Theme.Font.Nav.Item), for: .normal)
-        button.addTarget(self, action: #selector(handleTest), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    lazy var collView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.dataSource = delegate
-        view.delegate = delegate
-        view.dragInteractionEnabled = true
-        view.backgroundColor = Theme.Background.Color.Clear
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     func setupView() {
-        navView = NavView(frame: .zero, leftNavItem: leftNavItemButton, rightNavItem: rightNavItemButton)
-        guard let nav = navView else {
+        guard let theme = delegate?.viewModel?.theme else {
             return
         }
+        theme.currentTheme.applyTheme()
+        backgroundColor = theme.currentTheme.generalBackgroundColour
         addSubview(collView)
-        nav.addSubview(appNameLabel)
-        addSubview(nav)        
+        addSubview(navView)
         collView.register(MainViewCell.self, forCellWithReuseIdentifier: CollectionCellIds.RecipeCell.rawValue)
+        collView.register(UpgradeHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionCellIds.UpgradeHeader.rawValue)
     }
     
     override func updateConstraints() {
         super.updateConstraints()
         if (appDelegate.hasTopNotch) {
             let safeAreaInsets = self.safeAreaInsets
-            guard let nav = navView else {
-                return
-            }
-            nav.topAnchor.constraint(equalTo: topAnchor, constant: safeAreaInsets.top).isActive = true //keeps the bar in position as the view performs the transition
+
+            navView.topAnchor.constraint(equalTo: topAnchor, constant: safeAreaInsets.top).isActive = true //keeps the bar in position as the view performs the transition
         }
     }
-
-    func setupAutoLayout() {
-        guard let nav = navView else {
-            return
-        }
+    
+    func setupNavViewLayout() {
         let navTopConstraint = !appDelegate.hasTopNotch ? topAnchor : nil
         let heightByNotch = !appDelegate.hasTopNotch ? Theme.View.Nav.HeightWithoutNotch : Theme.View.Nav.HeightWithNotch
         
-        nav.anchorView(top: navTopConstraint, bottom: collView.topAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
-        nav.heightAnchor.constraint(equalTo: heightAnchor, multiplier: heightByNotch).isActive = true
+        navView.anchorView(top: navTopConstraint, bottom: collView.topAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: .zero, size: .zero)
+        navView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: heightByNotch).isActive = true
 
-        leftNavItemButton.anchorView(top: nil, bottom: nil, leading: nav.leadingAnchor, trailing: nil, centerY: nav.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 10.0, bottom: 0.0, right: 0.0), size: .zero)
-        rightNavItemButton.anchorView(top: nil, bottom: nil, leading: nil, trailing: nav.trailingAnchor, centerY: nav.centerYAnchor, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: -10.0), size: .zero)
-        appNameLabel.anchorView(top: nil, bottom: nil, leading: nil, trailing: nil, centerY: nav.centerYAnchor, centerX: nav.centerXAnchor, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0), size: .zero)
-        
-        collView.anchorView(top: nav.bottomAnchor, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0), size: .zero)
+    }
+
+    func setupAutoLayout() {
+        setupNavViewLayout()
+        collView.anchorView(top: navView.bottomAnchor, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, centerY: nil, centerX: nil, padding: UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0), size: .zero)
+    }
+    
+    func refreshNavView() {
+        guard let theme = delegate.viewModel?.theme else { return }
+        backgroundColor = theme.currentTheme.generalBackgroundColour
+        navView.backgroundFillerColor(color: theme.currentTheme.navigation.backgroundColor)
+        navView.rightNavItem?.setAttributedTitle(NSAttributedString(string: "Add", attributes: theme.currentTheme.navigation.item), for: .normal)
+        navView.leftNavItem?.setAttributedTitle(NSAttributedString(string: "Settings", attributes: theme.currentTheme.navigation.item), for: .normal)
+        navView.titleLabel?.attributedText = NSAttributedString(string: Bundle.appName(), attributes: theme.currentTheme.navigation.title)
     }
     
     func willReloadCellData(indexPath: IndexPath) {
@@ -130,18 +140,28 @@ class MainViewView: UIView {
     }
     
     func addToCollectionView() {
+        
+        guard let vm = self.delegate.viewModel else {
+            return
+        }
+        
         DispatchQueue.main.async {
-            self.collView.insertItems(at: [IndexPath(item: self.delegate.dataSource.count - 1, section: 0)])
+            self.collView.insertItems(at: [IndexPath(item: vm.dataSource.count - 1, section: 0)])
         }
     }
     
     func stepComplete(_ date: Date) {
         playSound()
-        let index = delegate.searchForIndex(date)
+        
+        guard let vm = delegate.viewModel else {
+            return
+        }
+        
+        let index = vm.searchForIndex(date)
         if (index != -1) {
             let cell = collView.cellForItem(at: IndexPath(row: index, section: 0)) as! MainViewCell
             //animate bg colour
-            cell.animateCellForCompleteStep()
+//            cell.animateCellForCompleteStep()
         }
     }
     
@@ -157,8 +177,8 @@ class MainViewView: UIView {
         delegate.handleAddRecipe()
     }
     
-    @objc func handleAbout() {
-        delegate.handleAbout()
+    @objc func handleSettings() {
+        delegate.handleSettings()
     }
     
     
@@ -188,12 +208,39 @@ class MainViewView: UIView {
                 self.delegate.addToRecipeCollection(r: rEntity)
             }
             CoreDataHandler.saveContext()
+            
+            guard let vm = self.delegate.viewModel else {
+                return
+            }
+            
             DispatchQueue.main.async {
                 self.collView.performBatchUpdates({
-                    let insertIndexPaths = Array(0..<self.delegate.dataSource.count).map { IndexPath(item: $0, section: 0) }
+                    let insertIndexPaths = Array(0..<vm.dataSource.count).map { IndexPath(item: $0, section: 0) }
                     self.collView.insertItems(at: insertIndexPaths)
                 }, completion: nil)
             }
         }
     }
+    
+    func deleteRecipesFromCollectionView(indexPaths: [IndexPath]) {
+        DispatchQueue.main.async {
+            self.collView.performBatchUpdates({
+                self.collView.deleteItems(at: indexPaths)
+            }, completion: nil)
+            if (CoreDataHandler.deleteAllRecordsIn(entity: RecipeEntity.self)) {
+                CoreDataHandler.saveContext()
+            }
+        }
+    }
+    
+    func showSettings() {
+        guard let theme = delegate?.viewModel?.theme else {
+            return
+        }
+        let vc = SettingsViewController(delegate:delegate, viewModel: SettingsViewModel(dataSource: SettingsDataSource.dataSource, theme: theme))
+        DispatchQueue.main.async {
+            self.delegate?.present(vc, animated: true, completion: nil)
+        }
+    }
+
 }

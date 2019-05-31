@@ -31,50 +31,55 @@ class AddStepMainView: UIView {
     
     lazy var labelTextField: UITextField = {
         let input = UITextField()
-        input.defaultTextAttributes = Theme.Font.Recipe.TextFieldAttribute
-        input.attributedPlaceholder = NSAttributedString(string: "Step Name", attributes: Theme.Font.Recipe.TextFieldAttribute)
-        input.attributedText = NSAttributedString(string: "", attributes: Theme.Font.Recipe.TextFieldAttribute)
         input.returnKeyType = UIReturnKeyType.done
         input.clearButtonMode = .never
         input.autocorrectionType = .no
         input.enablesReturnKeyAutomatically = true
         input.backgroundColor = UIColor.clear
         input.becomeFirstResponder()
-        input.textAlignment = .center
         input.translatesAutoresizingMaskIntoConstraints = false
+
+        guard let theme = delegate?.viewModel.theme else {
+            input.text = "An interesting name.."
+            return input
+        }
+        input.defaultTextAttributes = theme.currentTheme.font.stepName
+        input.attributedPlaceholder = NSAttributedString(string: "Step Name", attributes: theme.currentTheme.font.stepName)
+        input.attributedText = NSAttributedString(string: "", attributes: theme.currentTheme.font.stepName)
+        input.textAlignment = .center
+
         return input
     }()
     
     private lazy var backButton: UIButton = {
         let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "Back", attributes: Theme.Font.Nav.Item), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Back", attributes: delegate?.viewModel.theme?.currentTheme.navigation.item), for: .normal)
         button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    private lazy var navView: NavView = {
-        let view = NavView(frame: .zero, leftNavItem: backButton, rightNavItem: addButton)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.attributedText = NSAttributedString(string: "New Step", attributes: Theme.Font.Nav.Title)
+        label.attributedText = NSAttributedString(string: "New Step", attributes: delegate?.viewModel.theme?.currentTheme.navigation.title)
         return label
     }()
     
     lazy var addButton: UIButton = {
         let button = UIButton()
-        button.setAttributedTitle(NSAttributedString(string: "Add", attributes: Theme.Font.Nav.Item), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Add", attributes: delegate?.viewModel.theme?.currentTheme.navigation.item), for: .normal)
         button.addTarget(self, action: #selector(handleAdd), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-
+    private lazy var navView: NavView = {
+        let view = NavView(frame: .zero, leftNavItem: backButton, rightNavItem: addButton, titleLabel: titleLabel, topScreenAnchor: self.topAnchor)
+        view.backgroundFillerColor(color: delegate?.viewModel?.theme?.currentTheme.navigation.backgroundColor)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
     init(delegate: AddStepViewControllerBase) {
         self.delegate = delegate
@@ -133,6 +138,7 @@ class AddStepMainView: UIView {
         guard let delegate = delegate else {
             return
         }
+        guard let theme = delegate.viewModel.theme else { return }
         
         let hoursLabel: UILabel = UILabel()
         hoursLabel.text = "hours"
@@ -152,7 +158,7 @@ class AddStepMainView: UIView {
         countDownPicker.delegate = delegate
         countDownPicker.dataSource = delegate
         countDownPicker.translatesAutoresizingMaskIntoConstraints = false
-        countDownPicker.setPickerLabels(labels: labelDict, containedView: delegate.view)
+        countDownPicker.setPickerLabels(labels: labelDict, containedView: delegate.view, theme: theme)
         addSubview(countDownPicker)
     }
     

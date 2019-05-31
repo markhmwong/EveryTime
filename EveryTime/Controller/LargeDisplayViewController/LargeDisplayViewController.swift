@@ -24,6 +24,7 @@ class LargeDisplayViewController: ViewControllerBase {
         super.init(nibName: nil, bundle: nil)
         self.delegate = delegate
         self.viewModel = viewModel
+        self.viewModel?.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -76,9 +77,10 @@ class LargeDisplayViewController: ViewControllerBase {
     
     override func prepareViewController() {
         super.prepareViewController()
-        view.backgroundColor = UIColor.white
-//        let value = UIInterfaceOrientation.landscapeLeft.rawValue
-//        UIDevice.current.setValue(value, forKey: "orientation")
+        guard let vm = viewModel else {
+            return
+        }
+        view.backgroundColor = vm.theme?.currentTheme.generalBackgroundColour
     }
     
     override func prepareView() {
@@ -147,10 +149,9 @@ class LargeDisplayViewController: ViewControllerBase {
         if (priority < stepSet.count) {
             do {
                 try recipe.adjustTime(by: time, selectedStep: Int(priority))
-            } catch StepOptionsError.StepAlreadyComplete(let message) {
+            } catch StepOptionsError.StepAlreadyComplete(let _) {
+//                print(message)
                 ()//show alert box
-            } catch StepOptionsError.StepAlreadyComplete(let message) {
-                ()
             } catch {
                 ()
             }
@@ -175,7 +176,24 @@ class LargeDisplayViewController: ViewControllerBase {
         
     }
     
-    /// Executes 10 April 2019
+    func handlePauseButton() {
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.prepare()
+        generator.impactOccurred()
+        
+        guard let vm = viewModel else {
+            return
+        }
+        
+        //update button text
+        guard let delegate = delegate else {
+            return
+        }
+        mainView.updateViewPauseButton(pausedState:  !delegate.recipe.isPaused)
+        mainView.updateControls(pauseState: !delegate.recipe.isPaused)
+        delegate.handlePauseRecipe()
+    }
+    
     deinit {
 //        print("LargeDisplayViewController - deinit")
     }

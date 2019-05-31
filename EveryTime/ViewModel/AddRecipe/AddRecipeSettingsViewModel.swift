@@ -12,8 +12,11 @@ class AddRecipeSettingsViewModel {
     
     var options: [RecipeOptions : String]
     
-    init(options: [RecipeOptions : String]) {
+    var theme: ThemeManager?
+    
+    init(options: [RecipeOptions : String], theme: ThemeManager?) {
         self.options = options
+        self.theme = theme
     }
     
 }

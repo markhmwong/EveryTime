@@ -49,7 +49,7 @@ class BasicMarqueeLabel: UILabel {
 
     func applyAnimation() {
         guard animationProperties != nil else {
-            print("must prepare animation properties")
+//            print("must prepare animation properties")
             return
         }
 //        UIView.animateKeyframes(withDuration: ap.animationDuration, delay: 1.5, options: [.calculationModeCubicPaced, .autoreverse, .repeat], animations: {
